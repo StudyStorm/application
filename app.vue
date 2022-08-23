@@ -6,6 +6,6 @@ console.log(title);
 <template>
   <div>
     <h1 class="font-bold text-blue-600">{{ title }}</h1>
-    <SCard />
+    <SCard title="Hello World" />
   </div>
 </template>

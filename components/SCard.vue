@@ -1,3 +1,9 @@
+<script setup lang="ts">
+defineProps<{
+  title: string;
+}>();
+</script>
+
 <template>
   <a
     href="#"
@@ -6,7 +12,7 @@
     <h5
       class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
     >
-      Title of card
+      {{ title }}
     </h5>
     <p class="font-normal text-gray-700 dark:text-gray-400">Text of card</p>
   </a>
