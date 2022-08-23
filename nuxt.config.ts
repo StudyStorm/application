@@ -6,7 +6,23 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "@nuxtjs/i18n",
+    "@kevinmarrec/nuxt-pwa",
   ],
+  pwa: {
+    meta: {
+      theme_color: "#374561",
+      mobileAppIOS: true,
+    },
+    manifest: {
+      name: "StudyStorm",
+    },
+    icon: {
+      maskablePadding: 0,
+      splash: {
+        backgroundColor: "#374561",
+      },
+    },
+  },
   i18n: {
     locales: [
       { code: "fr", iso: "fr-FR", file: "fr-FR.yaml" },
