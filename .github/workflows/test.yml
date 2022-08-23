@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: "16.x"
       - name: Prepare nuxt folder
-        run: npx nuxi prepare
+        run: yarn nuxi prepare
       - name: Install dependencies
         run: yarn install
       - name: Run tests
