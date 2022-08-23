@@ -13,9 +13,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16.x"
-      - name: Prepare nuxt folder
-        run: yarn nuxi prepare
       - name: Install dependencies
         run: yarn install
+      - name: Prepare nuxt folder
+        run: yarn prepare
       - name: Run tests
         run: yarn test
