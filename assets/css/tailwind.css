@@ -4,7 +4,7 @@
 @layer {
    @font-face {
       font-family: 'ZwoDrei';
-      src: local('ZwoDrei'), url(./fonts/ZwoDrei.woff) format('woff');
+      src: local('ZwoDrei'), url(fonts/ZwoDrei.woff) format('woff');
    }
 }
 
