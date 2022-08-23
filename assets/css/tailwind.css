@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
+
+@layer {
+   @font-face {
+      font-family: 'ZwoDrei';
+      src: local('ZwoDrei'), url(./fonts/ZwoDrei.woff) format('woff');
+   }
+}
+
 @tailwind utilities;
