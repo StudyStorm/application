@@ -12,6 +12,13 @@ const links = [
     url: "#team",
   },
 ];
+
+let showMobileMenu = ref(false);
+
+const toggleMobileMenu = () => {
+  showMobileMenu.value = !showMobileMenu.value;
+};
+
 </script>
 
 <template>
@@ -35,7 +42,7 @@ const links = [
       <div class="flex items-center lg:order-2">
         <button
           href="#"
-          class="text-white bg-storm-blue hover:bg-primary-800 hover:bg-storm-darkblue focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
+          class="text-white bg-storm-blue hover:bg-primary-800 hover:bg-storm-darkblue focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 focus:outline-none"
         >
           {{ $t("landing.navbar.start") }}
         </button>
@@ -45,6 +52,7 @@ const links = [
           class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
           aria-controls="mobile-menu-2"
           aria-expanded="false"
+          @click="toggleMobileMenu"
         >
           <span class="sr-only">{{ $t("landing.navbar.openMenu") }}</span>
           <svg
@@ -75,7 +83,8 @@ const links = [
       </div>
       <div
         id="mobile-menu-2"
-        class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
+        class="justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
+        :class="{ hidden: !showMobileMenu }"
       >
         <ul
           class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0"
