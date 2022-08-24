@@ -34,25 +34,25 @@ const features = [
     title: "Cartes",
     description:
       "Les cartes de révisions représentent un moyen simple et efficace d’apprendre et de tester la connaissance sur un sujet.",
-    image: "/images/members/ncrausaz.jpg",
+    image: "/images/Logo.svg",
   },
   {
     title: "Salles de classe",
     description:
       "Mettez en place une manière de créer et partager les collections de cartes selon vos préférences.",
-    image: "/images/members/ncrausaz.jpg",
+    image: "/images/Logo.svg",
   },
   {
     title: "Communauté",
     description:
       "Organisez, créez et partagez du contenu avec vos collègues et amis.",
-    image: "/images/members/ncrausaz.jpg",
+    image: "/images/Logo.svg",
   },
   {
     title: "Votes",
     description:
       "Votez sur la qualité d’une collection de cartes. Une collection avec des votes positifs sera propulsée dans la liste des meilleures cartes.",
-    image: "/images/members/ncrausaz.jpg",
+    image: "/images/Logo.svg",
   },
 ];
 </script>
@@ -67,7 +67,7 @@ const features = [
       >
         <div class="place-self-center mr-auto lg:col-span-7">
           <h1
-            class="font-[ZwoDrei] text-storm-dark mb-4 max-w-2xl text-4xl font-extrabold leading-none md:text-5xl xl:text-6xl"
+            class="font-[ZwoDrei] text-storm-dark mb-4 max-w-2xl text-4xl font-extrabold leading-none md:text-5xl xl:text-6xl hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-storm-grad-left hover:to-storm-grad-right"
           >
             StudyStorm
           </h1>
@@ -119,11 +119,11 @@ const features = [
             class="flex flex-col items-center pb-10"
           >
             <img
-              class="mb-3 w-24 h-24 rounded-full shadow-lg"
+              class="mb-3 w-24 h-24"
               :src="feature.image"
-              alt="Bonnie image"
             />
-            <h3 class="mb-2 text-xl font-bold">
+
+            <h3 class="mb-2 text-xl font-bold text-storm-dark">
               {{ feature.title }}
             </h3>
             <p class="text-gray-500">

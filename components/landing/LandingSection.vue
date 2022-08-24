@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  backgroundClass: string;
+  backgroundClass?: string;
   id: string;
 }>();
 </script>
