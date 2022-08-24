@@ -25,6 +25,7 @@ landing:
         Users have the possibility to report a map with a better answer. 
         It is then the responsibility of the card creator to implement the change.
     features:
+      title: Features
       cards:
         title: Cards
         description: Review cards are a simple and effective way to learn and test knowledge on a subject.

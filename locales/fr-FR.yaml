@@ -12,7 +12,7 @@ landing:
   homePage:
     catchPhrase: Collaborez pour apprendre d’une manière nouvelle…
     about:
-      title: Conçu pour les étudiants pensé par des étudiants.
+      title: Conçu pour les étudiants, pensé par des étudiants.
       text: >-
         L’application StudyStorm permet aux utilisateurs de créer des collections de cartes de révisions et de les partager. 
         Le créateur d’une salle de classe peut partager ses collections à tout le monde ou rendre la salle de classe privée,
@@ -25,6 +25,7 @@ landing:
         Les utilisateurs ont la possibilité de signaler une carte en proposant une meilleure réponse. 
         C’est ensuite de la responsabilité du créateur de la carte d’appliquer le changement.
     features:
+      title: Fonctionnalités
       cards:
         title: Cartes
         description: Les cartes de révisions représentent un moyen simple et efficace d’apprendre et de tester la connaissance sur un sujet.

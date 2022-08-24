@@ -23,10 +23,7 @@ defineProps<{
     <p>{{ title }}</p>
     <ul class="flex justify-center mt-4 space-x-4">
       <li>
-        <a
-          :href="github"
-          class="text-gray-900 hover:text-gray-900 dark:hover:text-white dark:text-gray-300"
-        >
+        <a :href="github" class="text-gray-900 hover:text-gray-900">
           <svg
             class="w-6 h-6"
             fill="currentColor"
@@ -42,10 +39,7 @@ defineProps<{
         </a>
       </li>
       <li>
-        <a
-          :href="linkedin"
-          class="text-storm-blue hover:text-gray-900 dark:hover:text-white dark:text-gray-300"
-        >
+        <a :href="linkedin" class="text-storm-blue hover:text-gray-900">
           <svg
             class="w-6 h-6"
             fill="currentColor"

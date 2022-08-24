@@ -46,22 +46,22 @@ const features = [
   {
     title: t("landing.homePage.features.cards.title"),
     description: t("landing.homePage.features.cards.description"),
-    image: "/images/Logo.svg",
+    image: "/icons/cards.svg",
   },
   {
     title: t("landing.homePage.features.classroom.title"),
     description: t("landing.homePage.features.classroom.description"),
-    image: "/images/Logo.svg",
+    image: "/icons/classroom.svg",
   },
   {
     title: t("landing.homePage.features.community.title"),
     description: t("landing.homePage.features.community.description"),
-    image: "/images/Logo.svg",
+    image: "/icons/community.svg",
   },
   {
     title: t("landing.homePage.features.rating.title"),
     description: t("landing.homePage.features.rating.description"),
-    image: "/images/Logo.svg",
+    image: "/icons/like.svg",
   },
 ];
 </script>
@@ -78,9 +78,9 @@ const features = [
           <h1
             class="font-[ZwoDrei] text-storm-dark mb-4 max-w-2xl text-4xl font-extrabold leading-none md:text-5xl xl:text-6xl flex items-center hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-storm-grad-left hover:to-storm-grad-right"
           >
-            <AnimatedLogo class="h-28 md:h-32 xl:h-40 mr-3" />
-            <span>
-              StudyStorm<span class="font-sans text-base align-super"
+            <AnimatedLogo class="h-20 lg:h-28 md:h-32 xl:h-40 mr-3" />
+            <span
+              >StudyStorm<span class="font-sans text-base align-super"
                 >™</span
               ></span
             >
@@ -92,10 +92,7 @@ const features = [
           </p>
         </div>
         <div class="lg:mt-0 lg:col-span-5 lg:flex">
-          <img
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
-            alt="mockup"
-          />
+          <img src="/images/mockup_iphone_crop.png" alt="mockup" />
         </div>
       </div>
     </LandingSection>
@@ -110,6 +107,9 @@ const features = [
             {{ $t("landing.homePage.about.text") }}
           </p>
         </div>
+        <h2 class="mb-4 text-4xl font-extrabold text-storm-dark text-center">
+          {{ $t("landing.homePage.features.title") }}
+        </h2>
         <div
           class="space-y-8 md:grid md:grid-cols-4 lg:grid-cols-2 md:gap-24 md:space-y-2 p-10"
         >
@@ -135,7 +135,7 @@ const features = [
       <div class="py-8">
         <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
           <h2
-            class="mb-4 text-4xl tracking-tight font-extrabold text-storm-dark"
+            class="mb-4 text-3xl xl:text-4xl tracking-tight font-extrabold text-storm-dark"
           >
             {{ $t("landing.homePage.team.title") }}
           </h2>
