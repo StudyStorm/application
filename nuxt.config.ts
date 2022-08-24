@@ -9,6 +9,9 @@ export default defineNuxtConfig({
     "@kevinmarrec/nuxt-pwa",
   ],
   pwa: {
+    workbox: {
+      enabled: true,
+    },
     meta: {
       name: "StudyStorm",
       theme_color: "#374561",
