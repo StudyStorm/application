@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "@nuxtjs/i18n",
-    "@kevinmarrec/nuxt-pwa",
+    "@studystorm/nuxt-pwa",
   ],
   pwa: {
     workbox: {
