@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "start": "node .output/server/index.mjs",
     "prepare": "nuxt prepare",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
@@ -40,5 +41,8 @@
     "@pinia/nuxt": "^0.4.1",
     "@vueuse/nuxt": "^9.1.0",
     "vue-i18n": "^9.2.2"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
