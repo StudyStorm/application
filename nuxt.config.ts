@@ -6,21 +6,31 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "@nuxtjs/i18n",
-    "@kevinmarrec/nuxt-pwa",
+    "@studystorm/nuxt-pwa",
   ],
   pwa: {
+    workbox: {
+      enabled: true,
+    },
     meta: {
+      name: "StudyStorm",
       theme_color: "#374561",
+      description: "StudyStorm is a tool for all students.",
+      mobileApp: true,
       mobileAppIOS: true,
     },
     manifest: {
       name: "StudyStorm",
+      short_name: "StudyStorm",
+      theme_color: "#374561",
+      icons: [],
+      start_url: "/",
+      description: "StudyStorm is a tool for all students.",
+      background_color: "#2E333F",
+      display: "standalone",
     },
     icon: {
       maskablePadding: 0,
-      splash: {
-        backgroundColor: "#374561",
-      },
     },
   },
   i18n: {
