@@ -1,0 +1,59 @@
+### en-US - English
+### © 2022 StudyStorm Inc. All rights reserved.
+
+### ----------------------------------------------- LANDING SECTION ------------------------------------------------ ###
+landing:
+  navbar:
+    openMenu: Open menu
+    start: Get started
+    links:
+      teams: The Team
+      about: About
+  homePage:
+    catchPhrase: Collaborate to learn in a new way...
+    about:
+      title: Designed for students by students.
+      text: >-
+        StudyStorm application allows users to create collections of review cards and share them. 
+        The creator of a classroom can share his collections to everyone or make the classroom private,
+        by inviting only the users he/she wants to join the classroom. 
+        The organization of the collections is similar to a folder system. 
+        This allows cards to be grouped by topic, chapter, course unit, etc. 
+        The community can rate the content they liked or not. 
+        The collections with the most positive votes will be displayed on the homepage. 
+        Since the cards are made by people, it is possible that there are errors in the answer of a card, or that there is a more relevant answer. 
+        Users have the possibility to report a map with a better answer. 
+        It is then the responsibility of the card creator to implement the change.
+    features:
+      cards:
+        title: Cards
+        description: Review cards are a simple and effective way to learn and test knowledge on a subject.
+      classroom:
+        title: Classroom
+        description: Set up a way to create and share card collections according to your preferences.
+      community:
+        title: Community
+        description: Organize, create and share content with your colleagues and friends.
+      rating:
+        title: Ratings
+        description: Rate the quality of a card collection. A collection with positive votes will be promoted to the list of best cards.
+    team:
+      title: Who are we?
+      text: We are a team of five students in software engineering from the HEIG-VD.
+      members:
+        bijelic_alen: Giga Chad
+        crausaz_nicolas: Mega Chad
+        friedli_jonathan: Super Chad
+        pavicevic_lazar:  Hyper Chad
+        scharwath_maxime: Ultra Chad
+    startNow:
+      title: Start learning now!
+      text: StudyStorm is completely free and open source
+      button: Start learning
+  footer:
+    copyright: © {year} StudyStorm. All rights reserved.
+
+### ------------------------------------------------- APP SECTION ------------------------------------------------- ###
+app:
+# HERE THE CONTENT FOR THE APP
+

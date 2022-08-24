@@ -1,11 +1,14 @@
 <script setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const links = [
   {
-    name: "A propos",
+    name: t("landing.navbar.links.about"),
     url: "#about",
   },
   {
-    name: "Equipe",
+    name: t("landing.navbar.links.teams"),
     url: "#team",
   },
 ];
@@ -22,7 +25,7 @@ const links = [
         <img
           src="/images/Logo.svg"
           class="mr-3 h-6 sm:h-9 text-gradient-to-r from-cyan-500 to-blue-500"
-          alt="Flowbite Logo"
+          alt="StudyStorm Logo"
         />
         <span
           class="self-center text-xl font-semibold whitespace-nowrap font-[ZwoDrei]"
@@ -34,7 +37,7 @@ const links = [
           href="#"
           class="text-white bg-blue-900 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
         >
-          Démarrer
+          {{ $t("landing.navbar.start") }}
         </button>
         <button
           data-collapse-toggle="mobile-menu-2"
@@ -43,7 +46,7 @@ const links = [
           aria-controls="mobile-menu-2"
           aria-expanded="false"
         >
-          <span class="sr-only">Open main menu</span>
+          <span class="sr-only">{{ $t("landing.navbar.openMenu") }}</span>
           <svg
             class="w-6 h-6"
             fill="currentColor"
@@ -77,7 +80,7 @@ const links = [
         <ul
           class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0"
         >
-          <li v-for="link in links" :key="link.name">
+          <li v-for="link in links" :key="link">
             <a
               :href="link.url"
               class="block py-2 pr-4 pl-3 text-black rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0"

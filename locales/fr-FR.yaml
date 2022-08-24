@@ -1,0 +1,61 @@
+### fr-FR - Français
+### © 2022 StudyStorm Inc. All rights reserved.
+
+### ----------------------------------------------- LANDING SECTION ------------------------------------------------ ###
+landing:
+  navbar:
+    openMenu: Ouvrir menu
+    start: Démarrer
+    links:
+      teams: L'Equipe
+      about: A propos
+  homePage:
+    catchPhrase: Collaborez pour apprendre d’une manière nouvelle…
+    about:
+      title: Conçu pour les étudiants pensé par des étudiants.
+      text: >-
+        L’application StudyStorm permet aux utilisateurs de créer des collections de cartes de révisions et de les partager. 
+        Le créateur d’une salle de classe peut partager ses collections à tout le monde ou rendre la salle de classe privée,
+        en invitant uniquement les utilisateurs qu’il souhaite, à rejoindre la salle de classe. 
+        L'organisation des collections est semblable à un système de dossier. 
+        Cela permet de regrouper les cartes par sujet, chapitre, unité de cours, etc… 
+        La communauté peut évaluer le contenu qu’il a apprécié ou pas. 
+        Les collections avec le plus de votes positifs seront affichées sur la page d’accueil. 
+        Les cartes étant réalisées par des personnes, il est possible qu’il y ait des erreurs dans la réponse d’une carte, ou qu’il y ait une réponse plus pertinente. 
+        Les utilisateurs ont la possibilité de signaler une carte en proposant une meilleure réponse. 
+        C’est ensuite de la responsabilité du créateur de la carte d’appliquer le changement.
+    features:
+      cards:
+        title: Cartes
+        description: Les cartes de révisions représentent un moyen simple et efficace d’apprendre et de tester la connaissance sur un sujet.
+      classroom:
+        title: Salles de classe
+        description: Mettez en place une manière de créer et partager les collections de cartes selon vos préférences.
+      community:
+        title: Communauté
+        description: Organisez, créez et partagez du contenu avec vos collègues et amis.
+      rating:
+        title: Votes
+        description: Votez sur la qualité d’une collection de cartes. Une collection avec des votes positifs sera propulsée dans la liste des meilleures cartes.
+    team:
+      title: Qui sommes-nous ?
+      text: Nous sommes une équipe de cinq étudiants en ingénierie logicielle de la HEIG-VD.
+      members:
+        bijelic_alen: Giga Chad
+        crausaz_nicolas: Mega Chad
+        friedli_jonathan: Super Chad
+        pavicevic_lazar:  Hyper Chad
+        scharwath_maxime: Ultra Chad
+    startNow:
+      title: Commencez dès maintenant à apprendre !
+      text: StudyStorm est complètement gratuit et open source
+      button: Démarrer
+  footer:
+    copyright: © {year} StudyStorm. Tout droits réservés.
+
+### ------------------------------------------------- APP SECTION ------------------------------------------------- ###
+app:
+  # HERE THE CONTENT FOR THE APP
+
+
+

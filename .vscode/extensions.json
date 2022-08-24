@@ -4,6 +4,7 @@
     "esbenp.prettier-vscode",
     "SonarSource.sonarlint-vscode",
     "Vue.volar",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "lokalise.i18n-ally"
   ]
 }
