@@ -66,12 +66,14 @@ const features = [
       >
         <div class="place-self-center mr-auto lg:col-span-7">
           <h1
-            class="font-[ZwoDrei] text-storm-dark mb-4 max-w-2xl text-4xl font-extrabold leading-none md:text-5xl xl:text-6xl"
+            class="font-[ZwoDrei] text-storm-dark mb-4 max-w-2xl text-4xl font-extrabold leading-none md:text-5xl xl:text-6xl flex items-center hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-storm-grad-left hover:to-storm-grad-right"
           >
             <AnimatedLogo class="h-28 md:h-32 xl:h-40 mr-3" />
             <span>
-              StudyStorm<span class="font-sans text-base align-super">™</span>
-            </span>
+              StudyStorm<span class="font-sans text-base align-super"
+                >™</span
+              ></span
+            >
           </h1>
           <p
             class="mb-6 max-w-2xl font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl"
@@ -106,10 +108,7 @@ const features = [
             :key="i"
             class="flex flex-col items-center pb-10"
           >
-            <img
-              class="mb-3 w-24 h-24"
-              :src="feature.image"
-            />
+            <img class="mb-3 w-24 h-24" :src="feature.image" />
 
             <h3 class="mb-2 text-xl font-bold text-storm-dark">
               {{ feature.title }}
@@ -163,7 +162,7 @@ const features = [
           </p>
           <button
             href="#"
-            class="text-white bg-blue-900 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            class="text-white bg-storm-blue hover:bg-storm-darkblue focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
           >
             {{ $t("landing.homePage.startNow.button") }}
           </button>

@@ -8,4 +8,13 @@
    }
 }
 
+:root {
+   --storm-dark: theme('colors.storm-dark');
+   --storm-darkblue: theme('colors.storm-darkblue');
+   --storm-blue: theme('colors.storm-blue');
+   --storm-purple: theme('colors.storm-purple');
+   --storm-grad-left: theme('colors.storm-grad-left');
+   --storm-grad-right: theme('colors.storm-grad-right');
+}
+
 @tailwind utilities;

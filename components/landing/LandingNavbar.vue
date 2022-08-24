@@ -35,7 +35,7 @@ const links = [
       <div class="flex items-center lg:order-2">
         <button
           href="#"
-          class="text-white bg-blue-900 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
+          class="text-white bg-storm-blue hover:bg-primary-800 hover:bg-storm-darkblue focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
         >
           {{ $t("landing.navbar.start") }}
         </button>
