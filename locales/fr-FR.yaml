@@ -19,7 +19,7 @@ landing:
         en invitant uniquement les utilisateurs qu’il souhaite, à rejoindre la salle de classe. 
         L'organisation des collections est semblable à un système de dossier. 
         Cela permet de regrouper les cartes par sujet, chapitre, unité de cours, etc… 
-        La communauté peut évaluer le contenu qu’il a apprécié ou pas. 
+        La communauté peut évaluer le contenu qu’elle a apprécié ou pas. 
         Les collections avec le plus de votes positifs seront affichées sur la page d’accueil. 
         Les cartes étant réalisées par des personnes, il est possible qu’il y ait des erreurs dans la réponse d’une carte, ou qu’il y ait une réponse plus pertinente. 
         Les utilisateurs ont la possibilité de signaler une carte en proposant une meilleure réponse. 
@@ -28,16 +28,16 @@ landing:
       title: Fonctionnalités
       cards:
         title: Cartes
-        description: Les cartes de révisions représentent un moyen simple et efficace d’apprendre et de tester la connaissance sur un sujet.
+        description: Les cartes de révisions représentent un moyen simple et efficace d’apprendre et de tester la connaissance sur un sujet. Créez vos cartes et vous pourrez lancer une série de révisions. Dans le train, sur le chemin de l’école, partout, lancez l’application et apprenez.
       classroom:
         title: Salles de classe
-        description: Mettez en place une manière de créer et partager les collections de cartes selon vos préférences.
+        description: Mettez en place une manière de créer et partager les collections de cartes selon vos préférences. Avec une classroom publique, tout le monde pourra apprendre à l’aide de vos cartes. Avec une classroom privée, limitez la visibilité de vos cartes et invitez uniquement les utilisateurs que vous souhaitez.
       community:
         title: Communauté
-        description: Organisez, créez et partagez du contenu avec vos collègues et amis.
+        description: Organisez, créez et partagez du contenu avec vos collègues et amis. Lancer le mode multijoueur pour défier vos amis.
       rating:
         title: Votes
-        description: Votez sur la qualité d’une collection de cartes. Une collection avec des votes positifs sera propulsée dans la liste des meilleures cartes.
+        description: Votez sur la qualité d’une collection de cartes. Une collection avec des votes positifs sera propulsée dans la liste des meilleures cartes. Vous avez trouvé une erreur dans les cartes ? Signalez la carte et proposez une meilleure réponse.
     team:
       title: Qui sommes-nous ?
       text: Nous sommes une équipe de cinq étudiants en ingénierie logicielle de la HEIG-VD.
