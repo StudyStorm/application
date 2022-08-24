@@ -8,27 +8,37 @@ const teamMembers = [
   {
     name: "Bijelic Alen",
     title: t("landing.homePage.team.members.bijelic_alen"),
-    image: "/images/members/ncrausaz.jpg",
+    image: "/images/members/alen.jpg",
+    github: "https://github.com/AlenBijelic99",
+    linkedin: "https://www.linkedin.com/in/alen-bijelic/",
   },
   {
     name: "Crausaz Nicolas",
     title: t("landing.homePage.team.members.crausaz_nicolas"),
     image: "/images/members/ncrausaz.jpg",
+    github: "https://github.com/nicrausaz",
+    linkedin: "https://www.linkedin.com/in/nicolas-crausaz-861876104/",
   },
   {
     name: "Friedli Jonathan",
     title: t("landing.homePage.team.members.friedli_jonathan"),
-    image: "/images/members/ncrausaz.jpg",
+    image: "/images/members/jonathan.jpg",
+    github: "https://github.com/Marinlestylo",
+    linkedin: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
     name: "Pavicevic Lazar",
     title: t("landing.homePage.team.members.pavicevic_lazar"),
-    image: "/images/members/ncrausaz.jpg",
+    image: "/images/members/lazar.jpeg",
+    github: "https://github.com/Lazzzer",
+    linkedin: "https://www.linkedin.com/in/lazar-pavicevic/",
   },
   {
     name: "Scharwath Maxime",
     title: t("landing.homePage.team.members.scharwath_maxime"),
-    image: "/images/members/ncrausaz.jpg",
+    image: "/images/members/maxime.jpeg",
+    github: "https://github.com/maxscharwath",
+    linkedin: "https://www.linkedin.com/in/maximescharwath/",
   },
 ];
 
@@ -142,6 +152,8 @@ const features = [
             :name="member.name"
             :title="member.title"
             :image="member.image"
+            :github="member.github"
+            :linkedin="member.linkedin"
           />
         </div>
       </div>

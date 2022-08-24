@@ -34,4 +34,17 @@ export default defineNuxtConfig({
       fallbackLocale: "fr",
     },
   },
+  head: {
+    title: "StudyStorm",
+    meta: [
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        hid: "description",
+        name: "description",
+        content: "StudyStorm",
+      },
+    ],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/icon.png" }],
+  },
 });
