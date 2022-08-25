@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxtjs/i18n",
     "@studystorm/nuxt-pwa",
+    "@nuxt/image-edge",
   ],
   pwa: {
     workbox: {
@@ -57,4 +58,5 @@ export default defineNuxtConfig({
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/icon.png" }],
   },
+  image: {}
 });

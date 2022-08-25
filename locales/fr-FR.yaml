@@ -7,40 +7,44 @@ landing:
     openMenu: Ouvrir menu
     start: Démarrer
     links:
-      teams: L'Equipe
+      teams: L'Équipe
       about: A propos
   homePage:
-    catchPhrase: Collaborez pour apprendre d’une manière nouvelle…
+    catchPhrase: >-
+      Collaborez pour apprendre d’une manière originale et nouvelle.
+      Avec les cartes de révision collaborative, partagez votre savoir !
+
     about:
       title: Conçu pour les étudiants, pensé par des étudiants.
       text: >-
-        L’application StudyStorm permet aux utilisateurs de créer des collections de cartes de révisions et de les partager. 
-        Le créateur d’une salle de classe peut partager ses collections à tout le monde ou rendre la salle de classe privée,
-        en invitant uniquement les utilisateurs qu’il souhaite, à rejoindre la salle de classe. 
-        L'organisation des collections est semblable à un système de dossier. 
-        Cela permet de regrouper les cartes par sujet, chapitre, unité de cours, etc… 
-        La communauté peut évaluer le contenu qu’elle a apprécié ou pas. 
-        Les collections avec le plus de votes positifs seront affichées sur la page d’accueil. 
-        Les cartes étant réalisées par des personnes, il est possible qu’il y ait des erreurs dans la réponse d’une carte, ou qu’il y ait une réponse plus pertinente. 
-        Les utilisateurs ont la possibilité de signaler une carte en proposant une meilleure réponse. 
-        C’est ensuite de la responsabilité du créateur de la carte d’appliquer le changement.
+        L’application StudyStorm permet aux utilisateurs de créer des collections de cartes de révision et de les partager avec d’autres utilisateurs de la plateforme.
+
+
+        Vous souhaitez contribuer au savoir commun ? Créez une salle de classe !
+
+        Le créateur d’une salle de classe peut partager ses collections à tout le monde ou rendre la salle de classe privée, en invitant uniquement les utilisateurs qu’il souhaite, à rejoindre la salle de classe. Organisez votre salle de classe d’une manière semblable à un système de dossier afin de regrouper les cartes par sujet, chapitre, unité de cours, etc…
+
+
+        La communauté peut évaluer le contenu qu’elle a apprécié ou pas. Les collections avec le plus de votes positifs sont mises en avant sur la page d’accueil. Les cartes étant réalisées par des personnes, il est possible qu’il y ait des erreurs dans la réponse d’une carte, ou qu’il y ait une réponse plus pertinente. Les utilisateurs ont la possibilité de signaler une carte en proposant une meilleure réponse. C’est ensuite de la responsabilité du créateur de la carte d’appliquer le changement.
+
     features:
       title: Fonctionnalités
       cards:
         title: Cartes
-        description: Les cartes de révisions représentent un moyen simple et efficace d’apprendre et de tester la connaissance sur un sujet. Créez vos cartes et vous pourrez lancer une série de révisions. Dans le train, sur le chemin de l’école, partout, lancez l’application et apprenez.
+        description: Les cartes de révisions représentent un moyen simple et efficace d’apprendre et de tester la connaissance sur un sujet. Créez vos cartes et vous pourrez lancer une série de révisions. Dans le train, sur le chemin de l’école, partout où vous êtes, lancez simplement l’application et apprenez.
       classroom:
         title: Salles de classe
         description: Mettez en place une manière de créer et partager les collections de cartes selon vos préférences. Avec une classroom publique, tout le monde pourra apprendre à l’aide de vos cartes. Avec une classroom privée, limitez la visibilité de vos cartes et invitez uniquement les utilisateurs que vous souhaitez.
       community:
         title: Communauté
-        description: Organisez, créez et partagez du contenu avec vos collègues et amis. Lancer le mode multijoueur pour défier vos amis.
+        description: Organisez, créez et partagez du contenu avec vos collègues et amis. Contribuez à la qualité des questions et signalant les erreurs qui se sont glissés parmi les cartes.
+
       rating:
         title: Votes
-        description: Votez sur la qualité d’une collection de cartes. Une collection avec des votes positifs sera propulsée dans la liste des meilleures cartes. Vous avez trouvé une erreur dans les cartes ? Signalez la carte et proposez une meilleure réponse.
+        description: Votez sur la qualité d’une collection de cartes. Une collection avec des votes positifs sera propulsée dans la liste des meilleures cartes. Découvrez de nouveaux sujets grâce à la recherche et les propositions des decks les plus appréciés.
     team:
       title: Qui sommes-nous ?
-      text: Nous sommes une équipe de cinq étudiants en ingénierie logicielle de la HEIG-VD.
+      text: Nous sommes une équipe de cinq étudiants en ingénierie logicielle de la HEIG-VD. Durant l’HES d’été 2022, nous devons réaliser un travail de groupe sur une durée de 3 semaines, qui doit aboutir à une application web. L’idée de l’application StudyStorm nous est alors venue en tête.
       members:
         bijelic_alen: Giga Chad
         crausaz_nicolas: Mega Chad

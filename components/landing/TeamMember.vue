@@ -10,13 +10,14 @@ defineProps<{
 
 <template>
   <div class="text-center text-gray-500">
-    <img
-      class="mx-auto mb-4 w-36 h-36 rounded-full object-cover"
+    <nuxt-img
+      format="webp"
+      class="mx-auto mb-4 w-36 h-36 rounded-full object-cover shadow bg-white hover:scale-100"
       :src="image"
       alt="team_avatar"
     />
     <h3
-      class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      class="mb-1 text-2xl font-bold tracking-tight text-gray-900"
     >
       {{ name }}
     </h3>
