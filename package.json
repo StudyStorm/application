@@ -13,8 +13,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .eslintignore .",
-    "fix": "yarn lint --fix",
-    "test": "vitest"
+    "format": "yarn lint --fix",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@studystorm/nuxt-pwa": "^0.4.4",
