@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@studystorm/nuxt-pwa",
     "@nuxt/image-edge",
+    "nuxt-svgo",
   ],
   pwa: {
     workbox: {
@@ -58,5 +59,9 @@ export default defineNuxtConfig({
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/icon.png" }],
   },
-  image: {}
+  image: {},
+  svgoOptions: {
+    svgo: false,
+    defaultImport: "component",
+  },
 });
