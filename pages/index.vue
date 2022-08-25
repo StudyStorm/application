@@ -8,35 +8,35 @@ const teamMembers = [
   {
     name: "Bijelic Alen",
     title: t("landing.homePage.team.members.bijelic_alen"),
-    image: "/images/members/alen.jpg",
+    image: "/images/members/alen.png",
     github: "https://github.com/AlenBijelic99",
     linkedin: "https://www.linkedin.com/in/alen-bijelic/",
   },
   {
     name: "Crausaz Nicolas",
     title: t("landing.homePage.team.members.crausaz_nicolas"),
-    image: "/images/members/ncrausaz.jpg",
+    image: "/images/members/nicolas.png",
     github: "https://github.com/nicrausaz",
     linkedin: "https://www.linkedin.com/in/nicolas-crausaz-861876104/",
   },
   {
     name: "Friedli Jonathan",
     title: t("landing.homePage.team.members.friedli_jonathan"),
-    image: "/images/members/jonathan.jpg",
+    image: "/images/members/jonathan.png",
     github: "https://github.com/Marinlestylo",
     linkedin: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
     name: "Pavicevic Lazar",
     title: t("landing.homePage.team.members.pavicevic_lazar"),
-    image: "/images/members/lazar.jpeg",
+    image: "/images/members/lazar.png",
     github: "https://github.com/Lazzzer",
     linkedin: "https://www.linkedin.com/in/lazar-pavicevic/",
   },
   {
     name: "Scharwath Maxime",
     title: t("landing.homePage.team.members.scharwath_maxime"),
-    image: "/images/members/maxime.jpeg",
+    image: "/images/members/maxime.png",
     github: "https://github.com/maxscharwath",
     linkedin: "https://www.linkedin.com/in/maximescharwath/",
   },
@@ -86,13 +86,13 @@ const features = [
             >
           </h1>
           <p
-            class="mb-6 max-w-2xl font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl"
+            class="mb-6 max-w-2xl font-light text-gray-500 lg:mb-8 md:text-lg lg:text-2xl"
           >
             {{ $t("landing.homePage.catchPhrase") }}
           </p>
         </div>
         <div class="lg:mt-0 lg:col-span-5 lg:flex">
-          <img src="/images/mockup_iphone_crop.png" alt="mockup" />
+          <nuxt-img src="/images/mockup_iphone_crop.png" alt="mockup" />
         </div>
       </div>
     </LandingSection>
@@ -100,10 +100,10 @@ const features = [
     <LandingSection id="about">
       <div class="py-8 px-4 sm:py-16 lg:px-6">
         <div class="mb-8 lg:mb-16 text-center">
-          <h2 class="mb-4 text-4xl font-extrabold text-storm-dark">
+          <h2 class="mb-4 text-4xl font-extrabold text-storm-dark pb-8">
             {{ $t("landing.homePage.about.title") }}
           </h2>
-          <p class="text-gray-500 sm:text-xl">
+          <p class="text-gray-500 sm:text-xl whitespace-pre-wrap px-20">
             {{ $t("landing.homePage.about.text") }}
           </p>
         </div>
@@ -118,7 +118,7 @@ const features = [
             :key="i"
             class="flex flex-col items-center pb-10"
           >
-            <img class="mb-3 w-24 h-24" :src="feature.image" />
+            <nuxt-img class="mb-3 w-24 h-24" :src="feature.image" alt="feature_icon" />
 
             <h3 class="mb-2 text-xl font-bold text-storm-dark">
               {{ feature.title }}
@@ -163,7 +163,7 @@ const features = [
       <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
         <div class="mx-auto max-w-screen-sm text-center">
           <h2
-            class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-gray-900 dark:text-white"
+            class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-gray-900"
           >
             {{ $t("landing.homePage.startNow.title") }}
           </h2>
