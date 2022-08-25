@@ -4,7 +4,7 @@
       <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0">
           <a href="#" class="flex items-center">
-            <img
+            <nuxt-img
               src="/images/Logo.svg"
               class="mr-3 h-6 sm:h-9 text-gradient-to-r from-cyan-500 to-blue-500"
               alt="StudyStorm Logo"
