@@ -86,7 +86,7 @@ const features = [
             >
           </h1>
           <p
-            class="mb-6 max-w-2xl font-light text-gray-500 lg:mb-8 md:text-lg lg:text-2xl"
+            class="mb-6 ml-16 max-w-2xl font-light text-gray-500 lg:mb-8 md:text-lg lg:text-2xl"
           >
             {{ $t("landing.homePage.catchPhrase") }}
           </p>
@@ -99,11 +99,11 @@ const features = [
 
     <LandingSection id="about">
       <div class="py-8 px-4 sm:py-16 lg:px-6">
-        <div class="mb-8 lg:mb-16 text-center">
-          <h2 class="mb-4 text-4xl font-extrabold text-storm-dark pb-8">
+        <div class="mb-8 lg:mb-16">
+          <h2 class="mb-4 text-4xl font-extrabold text-storm-dark pb-8 text-center">
             {{ $t("landing.homePage.about.title") }}
           </h2>
-          <p class="text-gray-500 sm:text-xl whitespace-pre-wrap px-20">
+          <p class="text-gray-500 sm:text-xl whitespace-pre-wrap lg:px-20">
             {{ $t("landing.homePage.about.text") }}
           </p>
         </div>
@@ -111,14 +111,18 @@ const features = [
           {{ $t("landing.homePage.features.title") }}
         </h2>
         <div
-          class="space-y-8 md:grid md:grid-cols-4 lg:grid-cols-2 md:gap-24 md:space-y-2 p-10"
+          class="space-y-8 md:grid lg:grid-cols-2 md:gap-24 md:space-y-2 p-10"
         >
           <div
             v-for="(feature, i) in features"
             :key="i"
             class="flex flex-col items-center pb-10"
           >
-            <nuxt-img class="mb-3 w-24 h-24" :src="feature.image" alt="feature_icon" />
+            <nuxt-img
+              class="mb-3 w-24 h-24"
+              :src="feature.image"
+              alt="feature_icon"
+            />
 
             <h3 class="mb-2 text-xl font-bold text-storm-dark">
               {{ feature.title }}
