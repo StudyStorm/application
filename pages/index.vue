@@ -100,7 +100,9 @@ const features = [
     <LandingSection id="about">
       <div class="py-8 px-4 sm:py-16 lg:px-6">
         <div class="mb-8 lg:mb-16">
-          <h2 class="mb-4 text-4xl font-extrabold text-storm-dark pb-8 text-center">
+          <h2
+            class="mb-4 text-4xl font-extrabold text-storm-dark pb-8 text-center"
+          >
             {{ $t("landing.homePage.about.title") }}
           </h2>
           <p class="text-gray-500 sm:text-xl whitespace-pre-wrap lg:px-20">
