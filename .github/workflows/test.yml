@@ -1,4 +1,4 @@
-name: "[Frontend] Unit & Component tests"
+name: "[Frontend] Build + Unit & Component tests"
 on:
   push:
     branches: [main, master, dev]
@@ -17,5 +17,7 @@ jobs:
         run: yarn install
       - name: Prepare nuxt folder
         run: yarn prepare
+      - name: Build output
+        run: yarn build
       - name: Run tests
         run: yarn test
