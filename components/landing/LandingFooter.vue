@@ -60,6 +60,7 @@
           >{{
             $t("landing.footer.copyright", { year: new Date().getFullYear() })
           }}
+          Version: {{ rev }}
         </span>
         <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
           <a
@@ -85,3 +86,8 @@
     </div>
   </footer>
 </template>
+
+<script setup lang="ts">
+import useGitRev from "~/composables/useGitRev";
+const rev = useGitRev();
+</script>

@@ -8,11 +8,9 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@studystorm/nuxt-pwa",
     "@nuxt/image-edge",
+    "nuxt-svgo",
   ],
   pwa: {
-    workbox: {
-      enabled: true,
-    },
     meta: {
       name: "StudyStorm",
       theme_color: "#374561",
@@ -58,5 +56,18 @@ export default defineNuxtConfig({
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/icon.png" }],
   },
-  image: {}
+  image: {},
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL || "http://localhost:3000",
+      apiURL:
+        process.env.NODE_ENV === "production"
+          ? process.env.PRODUCTION_API_URL
+          : process.env.LOCAL_API_URL,
+    },
+  },
+  svgoOptions: {
+    svgo: false,
+    defaultImport: "component",
+  },
 });
