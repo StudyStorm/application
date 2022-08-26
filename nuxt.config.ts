@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from "nuxt";
+import { execSync } from "node:child_process";
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   modules: [
@@ -60,6 +61,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL || "http://localhost:3000",
+      gitRef: execSync("git rev-parse --short HEAD").toString().trim(),
       apiURL:
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_API_URL

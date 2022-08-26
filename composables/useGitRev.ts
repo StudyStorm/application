@@ -1,6 +1,9 @@
-import { execSync } from "child_process";
+import { useRuntimeConfig } from "#app";
 
-const gitRev = execSync("git rev-parse --short HEAD").toString().trim();
-export default function useGitRev() {
-  return gitRev;
+/**
+ * Hook to get Git revision from the Nuxt instance.
+ */
+export default function useGitRev(): string {
+  const config = useRuntimeConfig();
+  return config.gitRef;
 }
