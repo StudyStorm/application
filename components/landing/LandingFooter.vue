@@ -1,58 +1,26 @@
+<script setup lang="ts">
+import useGitRev from "~/composables/useGitRev";
+const rev = useGitRev();
+</script>
+
 <template>
   <footer class="p-4 bg-gray-50 sm:p-6 dark:bg-gray-800">
     <div class="mx-auto max-w-screen-xl">
       <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0">
-          <a href="#" class="flex items-center">
+          <NuxtLink to="/" title="Landing page link" class="flex items-center">
             <nuxt-img
               src="/images/Logo.svg"
-              class="mr-3 h-6 sm:h-9 text-gradient-to-r from-cyan-500 to-blue-500"
+              class="h-6 mr-3 sm:h-9 text-gradient-to-r from-cyan-500 to-blue-500"
               alt="StudyStorm Logo"
+              loading="lazy"
             />
             <span
               class="self-center text-xl font-semibold whitespace-nowrap font-[ZwoDrei]"
               >StudyStorm</span
             >
-          </a>
+          </NuxtLink>
         </div>
-        <!--<div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-          <div>
-            <h2
-              class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
-            >
-              Follow us
-            </h2>
-            <ul class="text-gray-600 dark:text-gray-400">
-              <li class="mb-4">
-                <a
-                  href="https://github.com/themesberg/flowbite"
-                  class="hover:underline"
-                  >Github</a
-                >
-              </li>
-              <li>
-                <a href="https://discord.gg/4eeurUVvTy" class="hover:underline"
-                  >Discord</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h2
-              class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
-            >
-              Legal
-            </h2>
-            <ul class="text-gray-600 dark:text-gray-400">
-              <li class="mb-4">
-                <a href="#" class="hover:underline">Privacy Policy</a>
-              </li>
-              <li>
-                <a href="#" class="hover:underline">Terms &amp; Conditions</a>
-              </li>
-            </ul>
-          </div>
-        </div>  -->
       </div>
       <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
@@ -60,14 +28,15 @@
           >{{
             $t("landing.footer.copyright", { year: new Date().getFullYear() })
           }}
-          Version: {{ rev }}
         </span>
-        <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
-          <a
-            href="https://github.com/StudyStorm"
+        <div>
+          <NuxtLink
+            to="https://github.com/StudyStorm"
             target="_blank"
-            class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+            title="GitHub page link"
+            class="flex mt-4 space-x-2 sm:justify-center sm:mt-0 text-gray-500 hover:text-gray-900 dark:hover:text-white"
           >
+            <span class="text-sm sm:text-center"> Version: {{ rev }}</span>
             <svg
               class="w-5 h-5"
               fill="currentColor"
@@ -80,14 +49,9 @@
                 clip-rule="evenodd"
               />
             </svg>
-          </a>
+          </NuxtLink>
         </div>
       </div>
     </div>
   </footer>
 </template>
-
-<script setup lang="ts">
-import useGitRev from "~/composables/useGitRev";
-const rev = useGitRev();
-</script>

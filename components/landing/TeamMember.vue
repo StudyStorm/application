@@ -9,12 +9,13 @@ defineProps<{
 </script>
 
 <template>
-  <div class="text-center text-gray-500">
+  <div class="text-center text-gray-500 md:w-56 my-6">
     <nuxt-img
       format="webp"
       class="mx-auto mb-4 w-36 h-36 rounded-full object-cover shadow bg-white hover:scale-100"
       :src="image"
       alt="team_avatar"
+      loading="lazy"
     />
     <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">
       {{ name }}
@@ -22,9 +23,10 @@ defineProps<{
     <p>{{ title }}</p>
     <ul class="flex justify-center mt-4 space-x-4">
       <li>
-        <a
-          :href="github"
+        <NuxtLink
+          :to="github"
           target="_blank"
+          title="GitHub page link"
           class="text-gray-900 hover:text-gray-900"
         >
           <svg
@@ -39,12 +41,13 @@ defineProps<{
               clip-rule="evenodd"
             />
           </svg>
-        </a>
+        </NuxtLink>
       </li>
       <li>
-        <a
-          :href="linkedin"
+        <NuxtLink
+          :to="linkedin"
           target="_blank"
+          title="LinkedIn page link"
           class="text-storm-blue hover:text-gray-900"
         >
           <svg
@@ -57,7 +60,7 @@ defineProps<{
               d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
             />
           </svg>
-        </a>
+        </NuxtLink>
       </li>
     </ul>
   </div>

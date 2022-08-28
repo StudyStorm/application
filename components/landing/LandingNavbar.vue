@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { onClickOutside } from "@vueuse/core";
 import useFetchAPI from "../../composables/useFetchAPI";
 
 const { t } = useI18n();
@@ -17,6 +18,8 @@ const links = [
 
 let showMobileMenu = ref(false);
 
+const target = ref(null);
+
 const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value;
 };
@@ -29,16 +32,19 @@ const testApiInteraction = async () => {
   }
   alert(data.value.hello);
 };
+
+onClickOutside(target, () => (showMobileMenu.value = false));
 </script>
 
 <template>
   <nav
+    ref="target"
     class="sticky top-0 border-b border-b-gray-100 px-4 lg:px-6 py-2.5 backdrop-blur text-storm-dark"
   >
     <div
       class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"
     >
-      <a href="#" class="flex items-center">
+      <NuxtLink to="/" title="Landing page link" class="flex items-center">
         <nuxt-img
           src="/images/Logo.svg"
           class="mr-3 h-6 sm:h-9 text-gradient-to-r from-cyan-500 to-blue-500"
@@ -48,11 +54,11 @@ const testApiInteraction = async () => {
           class="self-center text-xl font-semibold whitespace-nowrap font-[ZwoDrei]"
           >StudyStorm</span
         >
-      </a>
+      </NuxtLink>
       <div class="flex items-center lg:order-2">
         <button
           href="#"
-          class="text-white bg-storm-blue hover:bg-primary-800 hover:bg-storm-darkblue focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 focus:outline-none"
+          class="text-white bg-storm-blue hover:bg-primary-800 hover:bg-storm-darkblue focus:ring-4 focus:ring-storm-darkblue/50 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 focus:outline-none"
           @click="testApiInteraction"
         >
           {{ $t("landing.navbar.start") }}
@@ -98,13 +104,15 @@ const testApiInteraction = async () => {
         :class="{ hidden: !showMobileMenu }"
       >
         <ul
-          class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0"
+          class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 space-y-2 lg:space-y-0 lg:mt-0"
         >
-          <li v-for="link in links" :key="link">
+          <li v-for="(link, index) in links" :key="index">
             <a
               :href="link.url"
-              class="block py-2 pr-4 pl-3 text-black rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0"
               aria-current="page"
+              :title="link.name"
+              rel="noopener noreferrer"
+              class="block py-2 pr-4 pl-3 text-storm-dark bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 lg:hover:bg-transparent hover:text-gray-500 hover:lg:text-gray-500 focus:outline-none focus:ring-2 lg:focus:ring-0 focus:ring-gray-200 rounded-lg hover:bg-gray-100"
               >{{ link.name }}</a
             >
           </li>
