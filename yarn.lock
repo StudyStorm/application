@@ -323,10 +323,10 @@
   resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.6.7.tgz#433b86e5f86203606e7ac4851777173a327dd8c4"
   integrity sha512-5sTCBpkUoFE7zhANn/6Z+pf3PUA7MD6BBaTsJcQybq9E4fnNiMM9agOJI9meXbtcawE6Dm8EeB5A8HAJEnZCbQ==
 
-"@heroicons/vue@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@heroicons/vue/-/vue-2.0.7.tgz#3c5856a611f1e3397c9981d13e1688e00d1657a1"
-  integrity sha512-1F8BsETTVuSjJ6fHzHuHx9tthLzEjgR0NCa/aiwmj4ViMHMXLwfMUS1fZnPME333XMZMv66SYz3cMi3Tl9kNQA==
+"@heroicons/vue@^2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@heroicons/vue/-/vue-2.0.8.tgz#0ceea8c55b86b5e0ddd9d4b44ee22b161013268c"
+  integrity sha512-m5sALwH9ezG6KzGWUXjvM0s5DScgS6+PukGgoBvv0wUx6cC6kq+slVVGXPbsDKuWc9q2aAguP7h/fjHPnkGjnQ==
 
 "@humanwhocodes/config-array@^0.10.4":
   version "0.10.4"
@@ -894,6 +894,13 @@
     hasha "^5.2.2"
     sharp "^0.30.7"
     std-env "^3.1.1"
+
+"@tailwindcss/forms@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/forms/-/forms-0.5.2.tgz#4ef45f9916dcb37838cbe7fecdcc4ba7a7c2ab59"
+  integrity sha512-pSrFeJB6Bg1Mrg9CdQW3+hqZXAKsBrSG9MAfFLKy1pVA4Mb4W7C0k7mEhlmS2Dfo/otxrQOET7NJiJ9RrS563w==
+  dependencies:
+    mini-svg-data-uri "^1.2.3"
 
 "@testing-library/dom@^8.5.0":
   version "8.17.1"
@@ -4626,7 +4633,7 @@ mimic-response@^3.1.0:
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-3.1.0.tgz#2d1d59af9c1b129815accc2c46a022a5ce1fa3c9"
   integrity sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==
 
-mini-svg-data-uri@^1.4.3:
+mini-svg-data-uri@^1.2.3, mini-svg-data-uri@^1.4.3:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.4.tgz#8ab0aabcdf8c29ad5693ca595af19dd2ead09939"
   integrity sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==

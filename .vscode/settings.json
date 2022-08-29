@@ -1,5 +1,16 @@
 {
+    "prettier.enable": false,
+    "eslint.format.enable": true,
+    "eslint.run": "onType",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "files.insertFinalNewline": true,
+    "files.associations": {
+      "*.css": "tailwindcss"
+    },
     "i18n-ally.localesPaths": [
-        "locales"
-    ]
+      "locales"
+    ],
 }
