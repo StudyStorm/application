@@ -4,13 +4,7 @@
       <h2
         class="mt-6 text-3xl font-bold tracking-tight text-center text-gray-900"
       >
-        Create a
-        <span
-          >StudyStorm<span class="font-sans text-base align-super"
-            >™</span
-          ></span
-        >
-        account
+        {{ $t("app.register.title") }}
       </h2>
     </div>
 
@@ -39,7 +33,7 @@
               for="firstname"
               class="block text-sm font-medium text-gray-700"
             >
-              Firstname
+              {{ $t("app.register.labels.firstname") }}
             </label>
             <div class="mt-1">
               <input
@@ -58,7 +52,7 @@
               for="lastname"
               class="block text-sm font-medium text-gray-700"
             >
-              Lastname
+              {{ $t("app.register.labels.lastname") }}
             </label>
             <div class="mt-1">
               <input
@@ -73,7 +67,7 @@
           </div>
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">
-              Email address
+              {{ $t("app.register.labels.email") }}
             </label>
             <div class="mt-1">
               <input
@@ -92,7 +86,7 @@
               for="password"
               class="block text-sm font-medium text-gray-700"
             >
-              Password
+              {{ $t("app.register.labels.password") }}
             </label>
             <div class="mt-1">
               <input
@@ -111,7 +105,7 @@
               for="password"
               class="block text-sm font-medium text-gray-700"
             >
-              Confirm password
+              {{ $t("app.register.labels.confirmPassword") }}
             </label>
             <div class="mt-1">
               <input
@@ -129,17 +123,17 @@
               type="submit"
               class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Register
+              {{ $t("app.register.buttons.register") }}
             </button>
           </div>
           <div class="text-sm">
             <p class="mt-2 text-sm text-center text-gray-600">
-              Already have an account ?
+              {{ $t("app.register.text.alreadyHaveAccount") }}
               <a
                 href="login"
                 class="font-medium text-indigo-600 hover:text-indigo-500"
               >
-                Login here
+                {{ $t("app.register.text.loginHere") }}
               </a>
             </p>
           </div>

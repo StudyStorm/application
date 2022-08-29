@@ -60,6 +60,19 @@ landing:
 
 ### ------------------------------------------------- APP SECTION ------------------------------------------------- ###
 app:
+  register:
+    title: Créez un compte StudyStorm
+    labels:
+      firstname: Prénom
+      lastname: Nom
+      email: Email
+      password: Mot de passe
+      confirmPassword: Confirmez le mot de passe
+    buttons:
+      register: S'inscrire
+    text:
+      alreadyHaveAccount: Vous avez déjà un compte ?
+      loginHere: Connectez vous ici
   # HERE THE CONTENT FOR THE APP
 
 
