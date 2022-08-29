@@ -56,5 +56,12 @@ landing:
 
 ### ------------------------------------------------- APP SECTION ------------------------------------------------- ###
 app:
+  login:
+    title: Sign in to your account
+    email: Email address
+    password: Password
+    forgotPassword: Forgot your password?
+    noAccount: Don't have an account ? Sign up
+    signInButton: Sign in
 # HERE THE CONTENT FOR THE APP
 
