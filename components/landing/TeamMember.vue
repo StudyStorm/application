@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="text-center text-gray-500 md:w-56 my-6">
+  <div class="my-6 text-center text-gray-500 md:w-56">
     <nuxt-img
       format="webp"
       class="mx-auto mb-4 h-36 w-36 rounded-full bg-white object-cover shadow hover:scale-100"
