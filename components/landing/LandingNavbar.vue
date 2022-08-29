@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import useFetchAPI from "../../composables/useFetchAPI";
+import { useFetchAPI } from "~/composables/useFetchAPI";
 
 const { t } = useI18n();
 
