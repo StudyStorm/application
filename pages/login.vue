@@ -1,6 +1,12 @@
 <script setup lang="ts">
-  const img = '/images/post-it-for-login.png'
-  const { t } = useI18n();
+const img = '/images/post-it-for-login.png'
+const credentials = ref({
+  email: '',
+  password: ''
+})
+async function login() {
+
+}
 </script>
 
 <template>
@@ -14,59 +20,62 @@
             <span class="self-center text-2xl font-semibold whitespace-nowrap font-[ZwoDrei]">StudyStorm</span>
           </div>
           <h2 class="mt-6 text-2xl font-bold tracking-tight text-gray-900">
-            {{ $t("app.login.title") }}
+            {{  $t("app.login.title")  }}
           </h2>
         </div>
 
         <div class="mt-8">
           <div class="mt-6">
-            <form action="#" method="POST" class="space-y-6">
+            <form @submit.prevent="login" class="space-y-6">
               <div>
-                <label for="email" class="block text-sm font-medium text-gray-700"> {{ $t("app.login.email") }} </label>
+                <label for="email" class="block text-sm font-medium text-gray-700"> {{  $t("app.login.email")  }} </label>
                 <div class="mt-1">
-                  <input id="email" name="email" type="email" autocomplete="email" required
+                  <input id="email" name="email" v-model="credentials.email" type="email" autocomplete="email" required
                     class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 </div>
               </div>
 
               <div class="space-y-1">
-                <label for="password" class="block text-sm font-medium text-gray-700"> {{ $t("app.login.password") }} </label>
+                <label for="password" class="block text-sm font-medium text-gray-700"> {{  $t("app.login.password")  }}
+                </label>
                 <div class="mt-1">
-                  <input id="password" name="password" type="password" autocomplete="current-password" required
+                  <input id="password" name="password" type="password" v-model="credentials.password"
+                    autocomplete="current-password" required
                     class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 </div>
               </div>
 
               <div class="flex items-center justify-end">
                 <div class="text-sm">
-                  <a href="#" class="font-medium text-black hover:text-storm-blue"> {{ $t("app.login.forgotPassword") }} </a>
+                  <a href="#" class="font-medium text-black hover:text-storm-blue"> {{  $t("app.login.forgotPassword")  }}
+                  </a>
                 </div>
               </div>
 
               <div>
                 <button type="submit"
                   class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-storm-blue hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  {{ $t("app.login.signInButton") }}
+                  {{  $t("app.login.signInButton")  }}
                 </button>
               </div>
             </form>
             <div class="flex items-center justify-start mt-6">
               <div class="text-sm">
-                <a href="#" class="font-medium text-black hover:text-storm-blue"> {{ $t("app.login.noAccount") }} </a>
+                <a href="#" class="font-medium text-black hover:text-storm-blue"> {{  $t("app.login.noAccount")  }} </a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="relative flex-1 hidden lg:block background-image" :style="{backgroundImage:`url(${img})`}">
+    <div class="relative flex-1 hidden lg:block background-image" :style="{ backgroundImage: `url(${img})` }">
     </div>
   </div>
 </template>
 <style scoped>
-  .background-image{
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-  }
+.background-image {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
 </style>
