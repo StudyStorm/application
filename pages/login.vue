@@ -1,6 +1,6 @@
 <template>
-  <div class="flex justify-between min-h-full">
-    <div class="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 xl:flex-none lg:px-20 xl:px-24">
+  <div class="flex justify-between h-screen">
+    <div class="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <div class="w-full max-w-sm mx-auto lg:w-96">
         <div>
           <div class="flex items-center justify-center">
@@ -51,8 +51,17 @@
         </div>
       </div>
     </div>
-    <div class="relative flex-1 hidden w-0 xl:block">
-      <img class="absolute inset-0 object-cover" src="/images/post-it-for-login.png" alt="Image post it" />
+    <div class="relative flex-1 hidden lg:block background-image" :style="{backgroundImage:`url(${img})`}">
     </div>
   </div>
 </template>
+<style scoped>
+  .background-image{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+</style>
+<script setup lang="ts">
+  const img = '/images/post-it-for-login.png'
+</script>
