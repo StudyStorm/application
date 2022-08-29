@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { useFetchAPI } from "~/composables/useFetchAPI";
 import { onClickOutside } from "@vueuse/core";
-import useFetchAPI from "../../composables/useFetchAPI";
 
 const { t } = useI18n();
 

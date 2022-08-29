@@ -14,8 +14,9 @@ module.exports = {
     "plugin:nuxt/recommended",
     "plugin:vue/vue3-recommended",
     "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended",
   ],
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "tailwindcss"],
   rules: {
     "vue/multi-word-component-names": [
       "error",
