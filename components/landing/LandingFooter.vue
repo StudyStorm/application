@@ -1,16 +1,16 @@
 <template>
-  <footer class="p-4 bg-gray-50 sm:p-6 dark:bg-gray-800">
+  <footer class="bg-gray-50 p-4 dark:bg-gray-800 sm:p-6">
     <div class="mx-auto max-w-screen-xl">
       <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0">
           <a href="#" class="flex items-center">
             <nuxt-img
               src="/images/Logo.svg"
-              class="mr-3 h-6 sm:h-9 text-gradient-to-r from-cyan-500 to-blue-500"
+              class="text-gradient-to-r mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
               alt="StudyStorm Logo"
             />
             <span
-              class="self-center text-xl font-semibold whitespace-nowrap font-[ZwoDrei]"
+              class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold"
               >StudyStorm</span
             >
           </a>
@@ -62,14 +62,14 @@
           }}
           Version: {{ rev }}
         </span>
-        <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
+        <div class="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
           <a
             href="https://github.com/StudyStorm"
             target="_blank"
             class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
           >
             <svg
-              class="w-5 h-5"
+              class="h-5 w-5"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
