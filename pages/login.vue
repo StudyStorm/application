@@ -39,20 +39,20 @@
 
               <div class="flex items-center justify-end">
                 <div class="text-sm">
-                  <a href="#" class="font-medium text-black hover:text-indigo-500"> {{ $t("app.login.forgotPassword") }} </a>
+                  <a href="#" class="font-medium text-black hover:text-storm-blue"> {{ $t("app.login.forgotPassword") }} </a>
                 </div>
               </div>
 
               <div>
                 <button type="submit"
-                  class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-storm-blue hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   {{ $t("app.login.signInButton") }}
                 </button>
               </div>
             </form>
             <div class="flex items-center justify-start mt-6">
               <div class="text-sm">
-                <a href="#" class="font-medium text-black hover:text-indigo-500"> {{ $t("app.login.noAccount") }} </a>
+                <a href="#" class="font-medium text-black hover:text-storm-blue"> {{ $t("app.login.noAccount") }} </a>
               </div>
             </div>
           </div>
