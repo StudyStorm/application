@@ -1,3 +1,28 @@
+<script setup lang="ts">
+  
+  import useFetchAPI from "../composables/useFetchAPI";
+  
+  const userInformation = ref({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+  })
+  const err = ref<null | any>(null);
+
+  async function register(){
+    console.log(userInformation);
+    /*const { data: answer, error } = await useFetchAPI('/register', {
+      method: 'POST',
+      body: (userInformation.value),
+      initialCache: false
+    });
+    
+    err.value = !answer.value;*/
+  }
+
+</script>
+  
 <template>
   <div class="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -10,7 +35,7 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-        <form class="space-y-6" action="#" method="POST">
+        <form @submit.prevent="register" class="space-y-6" method="POST">
           <div class="w-48 h-48 mx-auto text-center previewer">
             <div class="mb-4">
               <label class="mt-6 cursor-pointer">
@@ -22,12 +47,11 @@
                 <input
                   type="file"
                   class="hidden"
-                  :multiple="multiple"
-                  :accept="accept"
                 />
               </label>
             </div>
           </div>
+          
           <div>
             <label
               for="firstname"
@@ -39,6 +63,7 @@
               <input
                 id="firstname"
                 name="firstname"
+                v-model="userInformation.firstName"
                 type="text"
                 autocomplete="firstname"
                 required=""
@@ -46,7 +71,7 @@
               />
             </div>
           </div>
-
+          
           <div>
             <label
               for="lastname"
@@ -58,6 +83,7 @@
               <input
                 id="lastname"
                 name="lastname"
+                v-model="userInformation.lastName"
                 type="text"
                 autocomplete="lastname"
                 required=""
@@ -73,6 +99,7 @@
               <input
                 id="email"
                 name="email"
+                v-model="userInformation.email"
                 type="email"
                 autocomplete="email"
                 required=""
@@ -92,6 +119,7 @@
               <input
                 id="password"
                 name="password"
+                v-model="userInformation.password"
                 type="password"
                 autocomplete="current-password"
                 required=""
