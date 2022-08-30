@@ -14,7 +14,7 @@ async function login() {
   });
   err.value = !answer.value;
   if (answer.value) {
-    router.push('/');
+    router.push('/dashboard');
   }
 }
 
@@ -39,7 +39,7 @@ definePageMeta({
         </div>
         <div v-if="err" class="relative px-4 py-3 mt-6 text-red-700 bg-red-100 border border-red-400 rounded"
           role="alert">
-          <span class="block sm:inline">{{  $t("app.login.errorLogin") }}</span>
+          <span class="block sm:inline">{{  $t("app.login.errorLogin")  }}</span>
           <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
             <svg class="w-6 h-6 text-red-500 fill-current" role="button" xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20">
