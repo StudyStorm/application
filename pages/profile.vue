@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script setup lang="ts">
 const userInformation = ref({
   firstName: "",
@@ -30,10 +31,13 @@ async function save() {
 }
 </script>
 
+=======
+>>>>>>> dev
 <template>
   <div
     class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
   >
+<<<<<<< HEAD
     <div class="min-w-0">
       <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
         {{ $t("app.profile.title") }}
@@ -155,4 +159,12 @@ async function save() {
       </form>
     </div>
   </div>
+=======
+    <div class="min-w-0 flex-1">
+      <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+        Profile
+      </h1>
+    </div>
+  </div>
+>>>>>>> dev
 </template>

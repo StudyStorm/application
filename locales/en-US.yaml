@@ -83,6 +83,7 @@ app:
     firstParagraph: Please check your email for a link to verify your email address.
     secondParagraph: Once verified, you’ll be able to continue.
     noEmail: Didn't receive an email ? Resend one.
+<<<<<<< HEAD
   profile:
     title: Profile
     labels:
@@ -94,5 +95,7 @@ app:
     buttons:
       save: Save
       delete: Delete
+=======
+>>>>>>> dev
 # HERE THE CONTENT FOR THE APP
 

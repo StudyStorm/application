@@ -87,6 +87,7 @@ app:
     firstParagraph: Un lien de vérification a été envoyé sur votre adresse mail.
     secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
     noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau.
+<<<<<<< HEAD
   profile:
     title: Profile
     labels:
@@ -98,6 +99,8 @@ app:
     buttons:
       save: Enregistrer
       delete: Supprimer
+=======
+>>>>>>> dev
   # HERE THE CONTENT FOR THE APP
 
 
