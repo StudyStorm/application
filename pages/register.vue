@@ -1,24 +1,30 @@
 <script setup lang="ts">
-  
-  import useFetchAPI from "../composables/useFetchAPI";
-  
+  const router = useRouter();
   const userInformation = ref({
     firstName: '',
     lastName: '',
     email: '',
     password: ''
   })
+  const confirmPassword = ref('');
   const err = ref<null | any>(null);
 
+console.log(confirmPassword);
+
   async function register(){
-    console.log(userInformation);
-    /*const { data: answer, error } = await useFetchAPI('/register', {
-      method: 'POST',
-      body: (userInformation.value),
-      initialCache: false
-    });
-    
-    err.value = !answer.value;*/
+    if (userInformation.value.password === confirmPassword.value) {
+      const { data: answer, error } = await useFetchAPI('/register', {
+        method: 'POST',
+        body: (userInformation.value),
+        initialCache: false
+      });
+      
+      err.value = !answer.value;
+      
+      if (answer.value) {
+        router.push('/verify-page');
+      }
+    }
   }
 
 </script>
@@ -35,7 +41,7 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-        <form @submit.prevent="register" class="space-y-6" method="POST">
+        <form @submit.prevent="register" class="space-y-6">
           <div class="w-48 h-48 mx-auto text-center previewer">
             <div class="mb-4">
               <label class="mt-6 cursor-pointer">
@@ -66,7 +72,7 @@
                 v-model="userInformation.firstName"
                 type="text"
                 autocomplete="firstname"
-                required=""
+                required
                 class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -86,7 +92,7 @@
                 v-model="userInformation.lastName"
                 type="text"
                 autocomplete="lastname"
-                required=""
+                required
                 class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -102,7 +108,7 @@
                 v-model="userInformation.email"
                 type="email"
                 autocomplete="email"
-                required=""
+                required
                 class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -122,7 +128,7 @@
                 v-model="userInformation.password"
                 type="password"
                 autocomplete="current-password"
-                required=""
+                required
                 class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -139,9 +145,10 @@
               <input
                 id="confirm_password"
                 name="confirm_password"
+                v-model="confirmPassword"
                 type="password"
-                autocomplete="current-password"
-                required=""
+                autocomplete="curent-password"
+                required
                 class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
