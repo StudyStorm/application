@@ -41,7 +41,7 @@ async function save() {
     </div>
   </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-    <div class="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+    <div class="bg-white px-4 py-8 sm:rounded-lg sm:px-10">
       <form class="space-y-6" @submit.prevent="save">
         <div class="mx-auto h-48 w-48 text-center">
           <div class="mb-4">
@@ -140,14 +140,14 @@ async function save() {
         <div>
           <button
             type="submit"
-            class="flex w-full justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            class="hover:bg-storm-darkblue flex w-full justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             {{ $t("app.profile.buttons.save") }}
           </button>
         </div>
         <div>
           <button
-            class="flex w-full justify-center rounded-md border border-transparent bg-storm-red px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-red-hover focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            class="bg-storm-red hover:bg-storm-red-hover flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             {{ $t("app.profile.buttons.delete") }}
           </button>
