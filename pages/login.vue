@@ -17,6 +17,10 @@ async function login() {
     router.push('/');
   }
 }
+
+definePageMeta({
+  layout: "nosidebar",
+});
 </script>
 
 <template>
@@ -95,6 +99,7 @@ async function login() {
     </div>
   </div>
 </template>
+
 <style scoped>
 .background-image {
   background-repeat: no-repeat;
