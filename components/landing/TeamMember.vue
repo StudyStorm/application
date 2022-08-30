@@ -12,7 +12,7 @@ defineProps<{
   <div class="text-center text-gray-500">
     <nuxt-img
       format="webp"
-      class="mx-auto mb-4 w-36 h-36 rounded-full object-cover shadow bg-white hover:scale-100"
+      class="mx-auto mb-4 h-36 w-36 rounded-full bg-white object-cover shadow hover:scale-100"
       :src="image"
       alt="team_avatar"
     />
@@ -20,7 +20,7 @@ defineProps<{
       {{ name }}
     </h3>
     <p>{{ title }}</p>
-    <ul class="flex justify-center mt-4 space-x-4">
+    <ul class="mt-4 flex justify-center space-x-4">
       <li>
         <a
           :href="github"
@@ -28,7 +28,7 @@ defineProps<{
           class="text-gray-900 hover:text-gray-900"
         >
           <svg
-            class="w-6 h-6"
+            class="h-6 w-6"
             fill="currentColor"
             viewBox="0 0 24 24"
             aria-hidden="true"
@@ -48,7 +48,7 @@ defineProps<{
           class="text-storm-blue hover:text-gray-900"
         >
           <svg
-            class="w-6 h-6"
+            class="h-6 w-6"
             fill="currentColor"
             viewBox="0 0 24 24"
             aria-hidden="true"

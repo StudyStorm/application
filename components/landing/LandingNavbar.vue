@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import useFetchAPI from "../../composables/useFetchAPI";
+import { useFetchAPI } from "~/composables/useFetchAPI";
 
 const { t } = useI18n();
 
@@ -33,26 +33,26 @@ const testApiInteraction = async () => {
 
 <template>
   <nav
-    class="sticky top-0 border-b border-b-gray-100 px-4 lg:px-6 py-2.5 backdrop-blur text-storm-dark"
+    class="sticky top-0 border-b border-b-gray-100 px-4 py-2.5 text-storm-dark backdrop-blur lg:px-6"
   >
     <div
-      class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"
+      class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between"
     >
       <a href="#" class="flex items-center">
         <nuxt-img
           src="/images/Logo.svg"
-          class="mr-3 h-6 sm:h-9 text-gradient-to-r from-cyan-500 to-blue-500"
+          class="text-gradient-to-r mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
           alt="StudyStorm Logo"
         />
         <span
-          class="self-center text-xl font-semibold whitespace-nowrap font-[ZwoDrei]"
+          class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold"
           >StudyStorm</span
         >
       </a>
       <div class="flex items-center lg:order-2">
         <button
           href="#"
-          class="text-white bg-storm-blue hover:bg-primary-800 hover:bg-storm-darkblue focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 focus:outline-none"
+          class="hover:bg-primary-800 focus:ring-primary-300 mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4"
           @click="testApiInteraction"
         >
           {{ $t("landing.navbar.start") }}
@@ -60,14 +60,14 @@ const testApiInteraction = async () => {
         <button
           data-collapse-toggle="mobile-menu-2"
           type="button"
-          class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          class="ml-1 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:hidden"
           aria-controls="mobile-menu-2"
           aria-expanded="false"
           @click="toggleMobileMenu"
         >
           <span class="sr-only">{{ $t("landing.navbar.openMenu") }}</span>
           <svg
-            class="w-6 h-6"
+            class="h-6 w-6"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ const testApiInteraction = async () => {
             ></path>
           </svg>
           <svg
-            class="hidden w-6 h-6"
+            class="hidden h-6 w-6"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -94,16 +94,16 @@ const testApiInteraction = async () => {
       </div>
       <div
         id="mobile-menu-2"
-        class="justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
+        class="w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
         :class="{ hidden: !showMobileMenu }"
       >
         <ul
-          class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0"
+          class="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8"
         >
           <li v-for="link in links" :key="link">
             <a
               :href="link.url"
-              class="block py-2 pr-4 pl-3 text-black rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0"
+              class="bg-primary-700 lg:text-primary-700 block rounded py-2 pr-4 pl-3 text-black lg:bg-transparent lg:p-0"
               aria-current="page"
               >{{ link.name }}</a
             >
