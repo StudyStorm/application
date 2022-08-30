@@ -80,11 +80,11 @@ definePageMeta({
       >
         <div class="mr-auto place-self-center lg:col-span-7">
           <h1
-            class="font-[ZwoDrei] text-storm-dark mb-4 max-w-2xl text-4xl font-extrabold leading-none md:text-5xl xl:text-6xl flex items-center hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-storm-grad-left hover:to-storm-grad-right"
+            class="mb-4 flex max-w-2xl items-center font-[ZwoDrei] text-4xl font-extrabold leading-none text-storm-dark hover:bg-gradient-to-r hover:from-storm-grad-left hover:to-storm-grad-right hover:bg-clip-text hover:text-transparent md:text-5xl xl:text-6xl"
           >
             <AnimatedLogo class="h-20 mr-3 lg:h-28 md:h-32 xl:h-40" />
             <span
-              >StudyStorm<span class="font-sans text-base align-super"
+              >StudyStorm<span class="align-super font-sans text-base"
                 >™</span
               ></span
             >
@@ -95,7 +95,7 @@ definePageMeta({
             {{ $t("landing.homePage.catchPhrase") }}
           </p>
         </div>
-        <div class="lg:mt-0 lg:col-span-5 lg:flex">
+        <div class="lg:col-span-5 lg:mt-0 lg:flex">
           <nuxt-img src="/images/mockup_iphone_crop.png" alt="mockup" />
         </div>
       </div>
@@ -154,7 +154,7 @@ definePageMeta({
           </p>
         </div>
         <div
-          class="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
+          class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-16"
         >
           <TeamMember
             v-for="(member, i) in teamMembers"
@@ -184,7 +184,7 @@ definePageMeta({
           </p>
           <button
             href="#"
-            class="text-white bg-storm-blue hover:bg-storm-darkblue focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            class="focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 mr-2 mb-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4"
           >
             {{ $t("landing.homePage.startNow.button") }}
           </button>
