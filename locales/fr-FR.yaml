@@ -87,6 +87,14 @@ app:
     firstParagraph: Un lien de vérification a été envoyé sur votre adresse mail.
     secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
     noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau.
+  reset:
+    title: Réinitialiser le mot de passe
+    returnLogin: Retour à la page de connexion
+    password: Nouveau mot de passe
+    confirmPassword: Confirmer le mot de passe
+    showPw: Afficher
+    hidePw: Cacher
+    button: Réinitialiser le mot de passe
   # HERE THE CONTENT FOR THE APP
 
 
