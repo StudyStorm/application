@@ -1,12 +1,24 @@
 <template>
-    <div class="h-screen mx-auto">
-        <div class="flex flex-col items-center justify-center w-full h-full max-w-xs mx-auto">
-            <nuxt-img src="/images/Logo.svg" class="w-full h-16 pr-10" alt="StudyStorm Logo" />
-            <div class="w-full mt-16 text-4xl font-bold">{{ $t("app.verify.title")}}</div>
-            <div class="w-full mt-10 text-xl">{{ $t("app.verify.firstParagraph")}}</div>
-            <br>
-            <div class="w-full text-xl">{{ $t("app.verify.secondParagraph")}}</div>
-            <a href="#" class="w-full mt-16 hover:text-storm-blue hover:underline">{{ $t("app.verify.noEmail")}}</a>
-        </div>
+  <div class="mx-auto h-screen">
+    <div
+      class="mx-auto flex h-full w-full max-w-xs flex-col items-center justify-center"
+    >
+      <nuxt-img
+        src="/images/Logo.svg"
+        class="h-16 w-full pr-10"
+        alt="StudyStorm Logo"
+      />
+      <div class="mt-16 w-full text-4xl font-bold">
+        {{ $t("app.verify.title") }}
+      </div>
+      <div class="mt-10 w-full text-xl">
+        {{ $t("app.verify.firstParagraph") }}
+      </div>
+      <br />
+      <div class="w-full text-xl">{{ $t("app.verify.secondParagraph") }}</div>
+      <a href="#" class="mt-16 w-full hover:text-storm-blue hover:underline">{{
+        $t("app.verify.noEmail")
+      }}</a>
     </div>
+  </div>
 </template>
