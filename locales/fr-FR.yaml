@@ -73,6 +73,19 @@ app:
     text:
       alreadyHaveAccount: Vous avez déjà un compte ?
       loginHere: Connectez vous ici
+  login:
+    title: Connectez-vous à votre compte
+    email: Adresse email
+    password: Mot de passe
+    forgotPassword: Mot de passe oublié ?
+    noAccount: Pas encore de compte ? Inscrivez-vous !
+    errorLogin: L'email ou le mot de passe est incorrect.
+    signInButton: Se connecter
+  verify:
+    title: Vérification de l'adresse mail
+    firstParagraph: Un lien de vérification a été envoyé sur votre adresse mail.
+    secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
+    noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau.
   # HERE THE CONTENT FOR THE APP
 
 

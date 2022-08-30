@@ -64,6 +64,10 @@ const features = [
     image: "/icons/like.svg",
   },
 ];
+
+definePageMeta({
+  layout: "landing",
+});
 </script>
 
 <template>
@@ -72,13 +76,13 @@ const features = [
 
     <LandingSection id="main">
       <div
-        class="mx-auto grid max-w-screen-xl py-8 px-4 lg:grid-cols-12 lg:gap-8 lg:py-16 xl:gap-0"
+        class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12"
       >
         <div class="mr-auto place-self-center lg:col-span-7">
           <h1
             class="mb-4 flex max-w-2xl items-center font-[ZwoDrei] text-4xl font-extrabold leading-none text-storm-dark hover:bg-gradient-to-r hover:from-storm-grad-left hover:to-storm-grad-right hover:bg-clip-text hover:text-transparent md:text-5xl xl:text-6xl"
           >
-            <AnimatedLogo class="mr-3 h-20 md:h-32 lg:h-28 xl:h-40" />
+            <AnimatedLogo class="h-20 mr-3 lg:h-28 md:h-32 xl:h-40" />
             <span
               >StudyStorm<span class="align-super font-sans text-base"
                 >™</span
@@ -86,7 +90,7 @@ const features = [
             >
           </h1>
           <p
-            class="mb-6 ml-16 max-w-2xl font-light text-gray-500 md:text-lg lg:mb-8 lg:text-2xl"
+            class="max-w-2xl mb-6 ml-16 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-2xl"
           >
             {{ $t("landing.homePage.catchPhrase") }}
           </p>
@@ -98,22 +102,22 @@ const features = [
     </LandingSection>
 
     <LandingSection id="about">
-      <div class="py-8 px-4 sm:py-16 lg:px-6">
+      <div class="px-4 py-8 sm:py-16 lg:px-6">
         <div class="mb-8 lg:mb-16">
           <h2
-            class="mb-4 pb-8 text-center text-4xl font-extrabold text-storm-dark"
+            class="pb-8 mb-4 text-4xl font-extrabold text-center text-storm-dark"
           >
             {{ $t("landing.homePage.about.title") }}
           </h2>
-          <p class="whitespace-pre-wrap text-gray-500 sm:text-xl lg:px-20">
+          <p class="text-gray-500 whitespace-pre-wrap sm:text-xl lg:px-20">
             {{ $t("landing.homePage.about.text") }}
           </p>
         </div>
-        <h2 class="mb-4 text-center text-4xl font-extrabold text-storm-dark">
+        <h2 class="mb-4 text-4xl font-extrabold text-center text-storm-dark">
           {{ $t("landing.homePage.features.title") }}
         </h2>
         <div
-          class="space-y-8 p-10 md:grid md:gap-24 md:space-y-2 lg:grid-cols-2"
+          class="p-10 space-y-8 md:grid lg:grid-cols-2 md:gap-24 md:space-y-2"
         >
           <div
             v-for="(feature, i) in features"
@@ -121,7 +125,7 @@ const features = [
             class="flex flex-col items-center pb-10"
           >
             <nuxt-img
-              class="mb-3 h-24 w-24"
+              class="w-24 h-24 mb-3"
               :src="feature.image"
               alt="feature_icon"
             />
@@ -139,9 +143,9 @@ const features = [
 
     <LandingSection id="team" background-class="bg-gray-50">
       <div class="py-8">
-        <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
+        <div class="max-w-screen-sm mx-auto mb-8 lg:mb-16">
           <h2
-            class="mb-4 text-3xl font-extrabold tracking-tight text-storm-dark xl:text-4xl"
+            class="mb-4 text-3xl font-extrabold tracking-tight xl:text-4xl text-storm-dark"
           >
             {{ $t("landing.homePage.team.title") }}
           </h2>
@@ -166,8 +170,8 @@ const features = [
     </LandingSection>
 
     <section class="bg-white dark:bg-gray-900">
-      <div class="mx-auto max-w-screen-xl py-8 px-4 sm:py-16 lg:px-6">
-        <div class="mx-auto max-w-screen-sm text-center">
+      <div class="max-w-screen-xl px-4 py-8 mx-auto sm:py-16 lg:px-6">
+        <div class="max-w-screen-sm mx-auto text-center">
           <h2
             class="mb-4 text-4xl font-extrabold leading-tight tracking-tight text-gray-900"
           >

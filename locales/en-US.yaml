@@ -69,5 +69,18 @@ app:
     text:
       alreadyHaveAccount: Already have an account ?
       loginHere: Login here
+  login:
+    title: Sign in to your account
+    email: Email address
+    password: Password
+    forgotPassword: Forgot your password?
+    noAccount: Don't have an account ? Sign up
+    errorLogin: The email or password is incorrect.
+    signInButton: Sign in
+  verify:
+    title: Verify your email
+    firstParagraph: Please check your email for a link to verify your email address.
+    secondParagraph: Once verified, you’ll be able to continue.
+    noEmail: Didn't receive an email ? Resend one.
 # HERE THE CONTENT FOR THE APP
 

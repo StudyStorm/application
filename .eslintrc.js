@@ -18,11 +18,6 @@ module.exports = {
   ],
   plugins: ["@typescript-eslint", "tailwindcss"],
   rules: {
-    "vue/multi-word-component-names": [
-      "error",
-      {
-        ignores: ["index", "default"],
-      },
-    ],
+    "vue/multi-word-component-names": 0,
   },
 };
