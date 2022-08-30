@@ -35,7 +35,7 @@ definePageMeta({
           <div class="flex items-center justify-center">
             <nuxt-img
               src="/images/Logo.svg"
-              class="text-gradient-to-r mr-3 h-16 from-cyan-500 to-blue-500"
+              class="mr-3 h-16 text-storm-dark"
               alt="StudyStorm Logo"
             />
             <span
@@ -43,7 +43,7 @@ definePageMeta({
               >StudyStorm</span
             >
           </div>
-          <h2 class="mt-6 text-2xl font-bold tracking-tight text-gray-900">
+          <h2 class="mt-6 text-2xl font-bold tracking-tight text-storm-dark">
             {{ $t("app.login.title") }}
           </h2>
         </div>
@@ -55,7 +55,7 @@ definePageMeta({
           <span class="block sm:inline">{{ $t("app.login.errorLogin") }}</span>
         </div>
         <div>
-          <div class="mt-2">
+          <div class="mt-4">
             <form class="space-y-6" @submit.prevent="login">
               <div>
                 <label
@@ -101,7 +101,7 @@ definePageMeta({
                 <div class="text-sm">
                   <a
                     href="#"
-                    class="font-medium text-black hover:text-storm-blue"
+                    class="font-medium text-storm-dark hover:text-storm-blue"
                   >
                     {{ $t("app.login.forgotPassword") }}
                   </a>
@@ -111,7 +111,7 @@ definePageMeta({
               <div>
                 <button
                   type="submit"
-                  class="flex w-full justify-center rounded-md border border-transparent bg-storm-blue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  class="flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   {{ $t("app.login.signInButton") }}
                 </button>
@@ -119,12 +119,15 @@ definePageMeta({
             </form>
             <div class="mt-6 flex items-center justify-start">
               <div class="text-sm">
-                <a
-                  href="/register"
-                  class="font-medium text-black hover:text-storm-blue"
-                >
+                <p class="mt-2 text-center text-sm text-gray-600">
                   {{ $t("app.login.noAccount") }}
-                </a>
+                  <NuxtLink
+                    to="/register"
+                    class="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    {{ $t("app.login.registerHere") }}
+                  </NuxtLink>
+                </p>
               </div>
             </div>
           </div>

@@ -74,7 +74,8 @@ app:
     email: Email address
     password: Password
     forgotPassword: Forgot your password?
-    noAccount: Don't have an account ? Sign up
+    noAccount: Don't have an account yet ?
+    registerHere: Sign up here
     errorLogin: The email or password is incorrect.
     signInButton: Sign in
   verify:

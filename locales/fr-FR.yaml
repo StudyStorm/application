@@ -78,7 +78,8 @@ app:
     email: Adresse email
     password: Mot de passe
     forgotPassword: Mot de passe oublié ?
-    noAccount: Pas encore de compte ? Inscrivez-vous !
+    noAccount: Vous n'avez pas encore de compte ?
+    registerHere: Inscrivez-vous ici
     errorLogin: L'email ou le mot de passe est incorrect.
     signInButton: Se connecter
   verify:
