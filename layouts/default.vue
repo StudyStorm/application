@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup lang="ts">
+useHead({
+  titleTemplate: (title) =>
+    title !== "StudyStorm" ? `${title} - StudyStorm` : title,
+});
+</script>
+
 <template>
   <div class="min-h-full">
     <SideBar />

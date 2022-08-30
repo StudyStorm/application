@@ -8,6 +8,11 @@
    }
 }
 
+html {
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
 :root {
    --storm-dark: theme('colors.storm-dark');
    --storm-darkblue: theme('colors.storm-darkblue');
