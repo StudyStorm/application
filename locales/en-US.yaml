@@ -62,6 +62,7 @@ app:
     password: Password
     forgotPassword: Forgot your password?
     noAccount: Don't have an account ? Sign up
+    errorLogin: The email or password is incorrect.
     signInButton: Sign in
 # HERE THE CONTENT FOR THE APP
 
