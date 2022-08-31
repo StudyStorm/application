@@ -19,7 +19,7 @@ const err = ref<null | any>(null);
 //     }
 // }
 
-function test() {
+function reset() {
     console.log(datas.value);
 }
 
@@ -38,7 +38,7 @@ definePageMeta({
                 <div class="mt-6 mb-1 text-2xl text-center text-black md:mt-24">
                     {{  $t('app.reset.title')  }}
                 </div>
-                <form class="mt-6 space-y-4 md:mt-24 lg:mt-24 md:space-y-5" @submit.prevent="test">
+                <form class="mt-6 space-y-4 md:mt-24 lg:mt-24 md:space-y-5" @submit.prevent="reset">
                     <div>
                         <div class="block mb-2 text-sm text-gray-900">
                             {{  $t('app.reset.email')  }}
@@ -46,8 +46,7 @@ definePageMeta({
                         <input type="email" disabled value="marinelepen@gmail.com" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                     </div>
                     <div>
-                        <label for="password" class="block mb-2 text-sm text-gray-900">{{  $t('app.reset.password') 
-                            }}</label>
+                        <label for="password" class="block mb-2 text-sm text-gray-900">{{  $t('app.reset.password') }}</label>
                         <div class="relative">
                             <SPasswordInput name="password" id="password" placeholder="••••••••"
                                 v-model="datas.password" />

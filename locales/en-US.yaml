@@ -92,5 +92,9 @@ app:
     showPw: Show
     hidePw: Hide
     button: Reset
+  forgottenPassword:
+    title: Reinitialize your password
+    email: Enter your email address
+    submit: Send reset email
 # HERE THE CONTENT FOR THE APP
 

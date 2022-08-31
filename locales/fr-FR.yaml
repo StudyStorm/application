@@ -96,6 +96,10 @@ app:
     showPw: Afficher
     hidePw: Cacher
     button: Réinitialiser le mot de passe
+  forgottenPassword:
+    title: Réinitialiser votre mot de passe
+    email: Entrez l'email lié à votre compte
+    submit: Envoyer l'email de réinitialisation
   # HERE THE CONTENT FOR THE APP
 
 
