@@ -1,0 +1,65 @@
+<script setup lang="ts">
+import Deck from "../models/Deck";
+
+import {
+  ChevronUpIcon,
+  ChevronDownIcon,
+} from "@heroicons/vue/24/solid/index.js";
+
+const props = defineProps<{
+  deck: Deck;
+}>();
+
+const upvote = () => {
+  console.log("upvote");
+};
+
+const downvote = () => {
+  console.log("downvote");
+};
+
+const formattedVotes = computed(() => {
+  let formatter = Intl.NumberFormat("en", { notation: "compact" });
+  return formatter.format(props.deck.votes);
+});
+
+const color = computed((): string => {
+  return `background-color: hsl(${props.deck.id
+    .split("")
+    .reduce((a, b) => (a + b.charCodeAt(0)) % 360, 0)}, 100%, 80%)`;
+});
+</script>
+
+<template>
+  <NuxtLink
+    :to="`/decks/${deck.id}`"
+    class="block max-w-sm rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
+    :style="color"
+  >
+    <div class="flex items-center justify-between">
+      <span>4 card</span>
+      <span>HEIG</span>
+    </div>
+    <div class="my-4 flex items-center justify-between">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-storm-dark">
+        {{ deck.name }}
+      </h5>
+      <div
+        class="flex flex-col items-center text-sm font-medium text-storm-dark"
+      >
+        <ChevronUpIcon
+          class="h-6 w-6 hover:text-emerald-500"
+          @click.prevent="upvote"
+        />
+        <span>{{ formattedVotes }}</span>
+        <ChevronDownIcon
+          class="h-6 w-6 hover:text-red-500"
+          @click.prevent="downvote"
+        />
+      </div>
+    </div>
+    <div>
+      <p class="font-normal text-storm-dark">Created by {{ "Di dou" }}</p>
+    </div>
+  </NuxtLink>
+</template>

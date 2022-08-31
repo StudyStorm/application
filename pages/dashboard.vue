@@ -1,5 +1,30 @@
-<script setup>
+<script setup lang="ts">
 import { ChevronRightIcon } from "@heroicons/vue/24/solid/index.js";
+import Deck from "../models/Deck";
+
+const topDecks: Deck[] = [
+  {
+    id: "af13b1c8-331c-4266-8c7d-4887bed851cd",
+    name: "Deck 1",
+    votes: 1,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: "da5c255c-a804-4e5e-ae84-8f2e6e03129d",
+    name: "Deck 2",
+    votes: 100,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: "6e79358a-8ca3-4dd7-b99e-3640cb91a420",
+    name: "Deck 3",
+    votes: 100000,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+];
 </script>
 
 <template>
@@ -8,16 +33,27 @@ import { ChevronRightIcon } from "@heroicons/vue/24/solid/index.js";
       class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
     >
       <div class="min-w-0 flex-1">
-        <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-          Dashboard
+        <h1 class="text-lg font-medium leading-6 text-storm-dark sm:truncate">
+          Home
         </h1>
+      </div>
+    </div>
+    <div class="p-4 sm:px-6 lg:px-8">
+      <h1
+        class="mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
+      >
+        Top decks
+      </h1>
+
+      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
+        <DeckCard v-for="deck in topDecks" :key="deck.id" :deck="deck" />
       </div>
     </div>
 
     <!-- Projects list (mobile) -->
     <div class="mt-10 sm:hidden">
       <div class="px-4 sm:px-6">
-        <h2 class="text-sm font-medium text-gray-900">Projects</h2>
+        <h2 class="text-sm font-medium text-storm-dark">Projects</h2>
       </div>
       <ul
         role="list"
