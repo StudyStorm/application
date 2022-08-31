@@ -8,9 +8,21 @@ const credentials = ref({
     password: ''
 })
 const err = ref<null | any>(null);
-let show = true;
+let show = false;
+let fieldType = 'password';
 // pas fait
-async function reset() {
+function showPassword() {
+    show = !show;
+    if (show) {
+        fieldType = 'text';
+    } else {
+        fieldType = 'password';
+    }
+    console.log(show);
+    console.log(fieldType);
+}
+
+async function send(){
     const { data: answer, error } = await useFetchAPI('/login', {
         method: 'POST',
         body: (credentials.value),
@@ -41,15 +53,7 @@ definePageMeta({
                         <label for="password" class="block mb-2 text-sm text-gray-900">{{  $t('app.reset.password') 
                             }}</label>
                         <div class="relative">
-                            <input type="password" name="password" id="password" placeholder="••••••••"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                required>
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
-
-                                <!-- :class="{ 'hidden': !show, 'block': show }" -->
-                                <button>{{  $t('app.reset.showPw')  }}</button>
-                                <!-- <button>{{ $t('app.reset.hidePw') }}</button> -->
-                            </div>
+                            <SPasswordInput name="password" id="password" placeholder="••••••••"/>
                         </div>
                     </div>
 
@@ -57,15 +61,7 @@ definePageMeta({
                         <label for="confirmPw" class="block mb-2 text-sm text-gray-900">{{
                              $t('app.reset.confirmPassword')  }}</label>
                         <div class="relative">
-                            <input type="password" name="confirmPw" id="confirmPw" placeholder="••••••••"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                required>
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
-
-                                <!-- :class="{ 'hidden': !show, 'block': show }" -->
-                                <button>{{  $t('app.reset.showPw')  }}</button>
-                                <!-- <button>{{ $t('app.reset.hidePw') }}</button> -->
-                            </div>
+                            <SPasswordInput name="confirmPw" id="confirmPw" placeholder="••••••••"/>
                         </div>
                     </div>
 
