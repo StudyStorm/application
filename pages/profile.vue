@@ -9,11 +9,16 @@ const userInformation = ref({
 });
 const confirmPassword = ref("");
 const err = ref<null | any>(null);
-let showModal = false;
+const showModal = ref(false);
 
 const updatePicture = (picture: File) => {
   console.log("Save got", picture);
 };
+
+// TODO: Retrieve user information apart from password
+userInformation.value.firstName = "John";
+userInformation.value.lastName = "Doe";
+userInformation.value.email = "john.@gmail.com";
 
 async function save() {
   if (userInformation.value.password === confirmPassword.value) {
@@ -26,13 +31,14 @@ async function save() {
     err.value = !answer.value;
 
     if (answer.value) {
-      //showModal = false;
+
     }
   }
 }
 
 async function deleteAccount() {
   // TODO: Delete user account through backend
+  showModal.value = true;
 }
 </script>
 
@@ -154,7 +160,7 @@ async function deleteAccount() {
           <button
             type="button"
             class="flex w-full justify-center rounded-md border border-transparent bg-storm-red px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-red-hover focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            @click="showModal = true"
+            @click="deleteAccount"
           >
             {{ $t("app.profile.buttons.delete") }}
           </button>
@@ -162,8 +168,9 @@ async function deleteAccount() {
       </form>
     </div>
   </div>
-  <Modal v-bind:show=showModal ref="deleteModal">
-    <template #icons
+  
+  <Modal v-model="showModal">
+    <template #icon
       ><div
         class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
       >
@@ -183,7 +190,7 @@ async function deleteAccount() {
       <button
         type="confirmDeleteRef"
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="show = false"
+        @click="showModal = false"
       >
         {{ $t("app.profile.modal.buttons.confirmDelete") }}
       </button>
@@ -191,7 +198,7 @@ async function deleteAccount() {
         ref="cancelButtonRef"
         type="button"
         class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="show = false"
+        @click="showModal = false"
       >
         {{ $t("app.profile.modal.buttons.cancel") }}
       </button>

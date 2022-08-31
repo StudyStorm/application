@@ -1,6 +1,26 @@
-<template>
-  <TransitionRoot as="template" :show="show">
-    <Dialog as="div" class="relative z-10" @close="show = false">
+<script setup lang="ts">
+  import {
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+    TransitionChild,
+    TransitionRoot,
+  } from "@headlessui/vue";
+  
+  defineProps({
+    modelValue: Boolean
+  });
+  
+  const emit = defineEmits(['update:modelValue'])
+  
+  const close = () => {
+      emit('update:modelValue', false)
+  }
+  </script>
+  
+  <template>
+  <TransitionRoot as="template" :show="modelValue">
+    <Dialog as="div" class="relative z-10" @close="close">
       <TransitionChild
         as="template"
         enter="ease-out duration-300"
@@ -61,20 +81,3 @@
     </Dialog>
   </TransitionRoot>
 </template>
-
-<script setup lang="ts">
-import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue";
-
-const props = defineProps({
-  show: {
-    type: Boolean,
-    required: true
-  }
-});
-</script>
