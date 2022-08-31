@@ -117,5 +117,9 @@ app:
       buttons:
         cancel: Cancel
         confirmDelete: Delete
+  error:
+    error404: Error 404 - Page not found
+    standardError: An error has occurred.
+    linkToHome: Click here to return to the home page.
 # HERE THE CONTENT FOR THE APP
 

@@ -25,10 +25,10 @@ definePageMeta({
                     </div>
                     <div v-if="error.statusCode == 404"
                         class="mt-6 text-2xl font-bold tracking-tight text-center text-storm-dark">
-                        Erreur 404 - Page non trouvée
+                        {{ $t("app.error.error404") }}
                     </div>
                     <div v-else class="mt-6 text-2xl font-bold tracking-tight text-center text-storm-dark">
-                        Une erreur est survenue
+                        {{ $t("app.error.standardError") }}
                     </div>
                 </div>
                 <div>
@@ -38,7 +38,7 @@ definePageMeta({
                                 <p class="mt-2 text-sm text-center text-gray-600">
                                     <NuxtLink to="/dashboard"
                                         class="w-full text-2xl font-medium text-indigo-600 hover:underline hover:text-indigo-500">
-                                        Cliquez-ici pour revenir à l'accueil
+                                        {{ $t("app.error.linkToHome") }}
                                     </NuxtLink>
                                 </p>
                             </div>
@@ -48,7 +48,7 @@ definePageMeta({
             </div>
         </div>
         <div class="relative flex-1 hidden background-image lg:block"
-            :style="{ backgroundImage: `url(images/post-it-for-login.png)` }"></div>
+            :style="{ backgroundImage: `url(/public/images/post-it-for-login.png)` }"></div>
     </div>
 </template>
       
