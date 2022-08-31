@@ -87,6 +87,40 @@ app:
     firstParagraph: Un lien de vérification a été envoyé sur votre adresse mail.
     secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
     noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau.
+  reset:
+    title: Réinitialiser le mot de passe
+    email: Adresse email liée au compte
+    returnLogin: Retour à la page de connexion
+    password: Nouveau mot de passe
+    confirmPassword: Confirmer le mot de passe
+    showPw: Afficher
+    hidePw: Cacher
+    pwTooShort: Le mot de passe doit contenir au moins 8 caractères.
+    pwLongEnough: Le mot de passe est assez long.
+    pwNotTheSame: Les mots de passe ne correspondent pas.
+    pwAreTheSame: Les mots de passe sont identiques.
+    button: Réinitialiser le mot de passe
+  forgottenPassword:
+    title: Réinitialiser votre mot de passe
+    email: Entrez l'email lié à votre compte
+    submit: Envoyer l'email de réinitialisation
+  profile:
+    title: Profile
+    labels:
+      firstname: Prénom
+      lastname: Nom
+      email: Email
+      password: Mot de passe
+      confirmPassword: Confirmez le mot de passe
+    buttons:
+      save: Enregistrer
+      delete: Supprimer le compte
+    modal:
+      title: Désactiver votre compte
+      content: Êtes-vous sûr de vouloir désactiver votre compte ? Toutes vos données seront définitivement supprimées. Cette action ne peut pas être annulée.
+      buttons:
+        cancel: Annuler
+        confirmDelete: Supprimer
   # HERE THE CONTENT FOR THE APP
 
 

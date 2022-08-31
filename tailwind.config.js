@@ -17,6 +17,8 @@ module.exports = {
         "storm-darkblue": "#384661",
         "storm-blue": "#3B517F",
         "storm-purple": "#AF46E2",
+        "storm-red": "#EF4444",
+        "storm-red-hover": "#B91C1C",
         "storm-grad-left": "#00DDFF",
         "storm-grad-right": "#FF00D4",
       },
