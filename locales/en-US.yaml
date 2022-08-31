@@ -117,5 +117,14 @@ app:
       buttons:
         cancel: Cancel
         confirmDelete: Delete
+  learn:
+    buttons:
+      signal: Signal card
+    modal:
+      title: Signal card
+      message: Suggest a better answer. A message will be sent to the card creator to review your suggestion.
+      buttons:
+        confirmSignal: Signal
+        cancel: Cancel
 # HERE THE CONTENT FOR THE APP
 

@@ -121,6 +121,15 @@ app:
       buttons:
         cancel: Annuler
         confirmDelete: Supprimer
+  learn:
+    buttons:
+      signal: Signalez la carte
+    modal:
+      title: Signalez une carte
+      message: Proposez une meilleure réponse. Un message sera envoyé au créateur de la carte afin qu'il évalue votre suggestion.
+      buttons:
+        confirmSignal: Signaler
+        cancel: Annuler
   # HERE THE CONTENT FOR THE APP
 
 
