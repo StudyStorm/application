@@ -83,5 +83,22 @@ app:
     firstParagraph: Please check your email for a link to verify your email address.
     secondParagraph: Once verified, you’ll be able to continue.
     noEmail: Didn't receive an email ? Resend one.
+  profile:
+    title: Profile
+    labels:
+      firstname: Firstname
+      lastname: Lastname
+      email: Email
+      password: Password
+      confirmPassword: Confirm password
+    buttons:
+      save: Save
+      delete: Delete account
+    modal:
+      title: Delete accounte
+      content: Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
+      buttons:
+        cancel: Cancel
+        confirmDelete: Delete
 # HERE THE CONTENT FOR THE APP
 
