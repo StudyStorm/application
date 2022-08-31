@@ -1,37 +1,26 @@
 <script setup lang="ts">
 import { ArrowLeftIcon } from "@heroicons/vue/24/outline/index.js";
-
-const img = '/images/post-it-for-login.png';
 const router = useRouter();
-const credentials = ref({
-    email: '',
-    password: ''
-})
+const datas = ref({
+    password: '',
+    confirmPassword: ''
+});
 const err = ref<null | any>(null);
-let show = false;
-let fieldType = 'password';
-// pas fait
-function showPassword() {
-    show = !show;
-    if (show) {
-        fieldType = 'text';
-    } else {
-        fieldType = 'password';
-    }
-    console.log(show);
-    console.log(fieldType);
-}
 
-async function send(){
-    const { data: answer, error } = await useFetchAPI('/login', {
-        method: 'POST',
-        body: (credentials.value),
-        initialCache: false
-    });
-    err.value = !answer.value;
-    if (answer.value) {
-        router.push('/dashboard');
-    }
+// async function send(){
+//     const { data: answer, error } = await useFetchAPI('/login', {
+//         method: 'POST',
+//         body: (datas.value),
+//         initialCache: false
+//     });
+//     err.value = !answer.value;
+//     if (answer.value) {
+//         router.push('/dashboard');
+//     }
+// }
+
+function test(){
+    console.log(datas.value);
 }
 
 definePageMeta({
@@ -47,13 +36,13 @@ definePageMeta({
                 <div class="mt-6 mb-1 text-2xl text-center text-black md:mt-24">
                     {{  $t('app.reset.title')  }}
                 </div>
-                <form class="mt-6 space-y-4 md:mt-24 lg:mt-24 md:space-y-5" action="#">
+                <form class="mt-6 space-y-4 md:mt-24 lg:mt-24 md:space-y-5" @submit.prevent="test">
 
                     <div>
                         <label for="password" class="block mb-2 text-sm text-gray-900">{{  $t('app.reset.password') 
                             }}</label>
                         <div class="relative">
-                            <SPasswordInput name="password" id="password" placeholder="••••••••"/>
+                            <SPasswordInput name="password" id="password" placeholder="••••••••" v-model="datas.password" />
                         </div>
                     </div>
 
@@ -61,7 +50,7 @@ definePageMeta({
                         <label for="confirmPw" class="block mb-2 text-sm text-gray-900">{{
                              $t('app.reset.confirmPassword')  }}</label>
                         <div class="relative">
-                            <SPasswordInput name="confirmPw" id="confirmPw" placeholder="••••••••"/>
+                            <SPasswordInput name="confirmPw" id="confirmPw" placeholder="••••••••" v-model="datas.confirmPassword" />
                         </div>
                     </div>
 
