@@ -85,6 +85,7 @@ app:
     noEmail: Didn't receive an email ? Resend one.
   reset:
     title: Reset your password
+    email: Mail address of the account
     returnLogin: Return to login page
     password: New password
     confirmPassword: Confirm new password

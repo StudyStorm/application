@@ -89,6 +89,7 @@ app:
     noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau.
   reset:
     title: Réinitialiser le mot de passe
+    email: Adresse email liée au compte
     returnLogin: Retour à la page de connexion
     password: Nouveau mot de passe
     confirmPassword: Confirmer le mot de passe
