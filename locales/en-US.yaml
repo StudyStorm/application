@@ -91,6 +91,10 @@ app:
     confirmPassword: Confirm new password
     showPw: Show
     hidePw: Hide
+    pwTooShort: Password must be at least 8 characters long.
+    pwLongEnough: Password is long enough.
+    pwNotTheSame: Passwords do not match.
+    pwAreTheSame: Passwords match.
     button: Reset
   forgottenPassword:
     title: Reinitialize your password

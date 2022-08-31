@@ -95,6 +95,10 @@ app:
     confirmPassword: Confirmer le mot de passe
     showPw: Afficher
     hidePw: Cacher
+    pwTooShort: Le mot de passe doit contenir au moins 8 caractères.
+    pwLongEnough: Le mot de passe est assez long.
+    pwNotTheSame: Les mots de passe ne correspondent pas.
+    pwAreTheSame: Les mots de passe sont identiques.
     button: Réinitialiser le mot de passe
   forgottenPassword:
     title: Réinitialiser votre mot de passe
