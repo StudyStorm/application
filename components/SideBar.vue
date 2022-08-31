@@ -87,7 +87,7 @@ const sidebarOpen = ref(false);
               <div class="flex shrink-0 items-center px-4">
                 <nuxt-img
                   src="/images/Logo.svg"
-                  class="text-gradient-to-r mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
+                  class="mr-3 h-6 sm:h-9"
                   alt="StudyStorm Logo"
                 />
                 <span
