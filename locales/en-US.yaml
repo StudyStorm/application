@@ -93,6 +93,12 @@ app:
       confirmPassword: Confirm password
     buttons:
       save: Save
-      delete: Delete
+      delete: Delete account
+    modal:
+      title: Delete accounte
+      content: Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
+      buttons:
+        cancel: Cancel
+        confirmDelete: Delete
 # HERE THE CONTENT FOR THE APP
 

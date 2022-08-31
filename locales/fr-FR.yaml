@@ -97,7 +97,13 @@ app:
       confirmPassword: Confirmez le mot de passe
     buttons:
       save: Enregistrer
-      delete: Supprimer
+      delete: Supprimer le compte
+    modal:
+      title: Désactiver votre compte
+      content: Êtes-vous sûr de vouloir désactiver votre compte ? Toutes vos données seront définitivement supprimées. Cette action ne peut pas être annulée.
+      buttons:
+        cancel: Annuler
+        confirmDelete: Supprimer
   # HERE THE CONTENT FOR THE APP
 
 
