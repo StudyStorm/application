@@ -104,6 +104,23 @@ app:
     title: Réinitialiser votre mot de passe
     email: Entrez l'email lié à votre compte
     submit: Envoyer l'email de réinitialisation
+  profile:
+    title: Profile
+    labels:
+      firstname: Prénom
+      lastname: Nom
+      email: Email
+      password: Mot de passe
+      confirmPassword: Confirmez le mot de passe
+    buttons:
+      save: Enregistrer
+      delete: Supprimer le compte
+    modal:
+      title: Désactiver votre compte
+      content: Êtes-vous sûr de vouloir désactiver votre compte ? Toutes vos données seront définitivement supprimées. Cette action ne peut pas être annulée.
+      buttons:
+        cancel: Annuler
+        confirmDelete: Supprimer
   # HERE THE CONTENT FOR THE APP
 
 

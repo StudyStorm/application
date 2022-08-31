@@ -100,5 +100,22 @@ app:
     title: Reinitialize your password
     email: Enter your email address
     submit: Send reset email
+  profile:
+    title: Profile
+    labels:
+      firstname: Firstname
+      lastname: Lastname
+      email: Email
+      password: Password
+      confirmPassword: Confirm password
+    buttons:
+      save: Save
+      delete: Delete account
+    modal:
+      title: Delete accounte
+      content: Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
+      buttons:
+        cancel: Cancel
+        confirmDelete: Delete
 # HERE THE CONTENT FOR THE APP
 
