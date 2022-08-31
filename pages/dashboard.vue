@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ChevronRightIcon, Bars4Icon } from "@heroicons/vue/24/solid/index.js";
+import { useDecksStore } from "~/store/decks";
 
 import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
 import User from "~~/models/User";
@@ -8,6 +9,8 @@ import Deck from "../models/Deck";
 const search = ref("");
 
 const displayStyle = ref("row");
+
+const store = useDecksStore();
 
 // TMP CODE - Remove when integrating API
 const tmpUser = new User();
@@ -85,7 +88,7 @@ const allDecks = [...topDecks, ...recentDecks];
       >
         Recent decks
       </h1>
-
+      {{ store.lastUsedDecksIds }}
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
         <DeckCard v-for="deck in recentDecks" :key="deck.id" :deck="deck" />
       </div>

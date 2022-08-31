@@ -20,10 +20,10 @@ export const useDecksStore = defineStore("decks", {
     },
   },
   actions: {
-    addUsedDeck(deckId: number) {
+    addUsedDeck(deckId: number | string) {
       // Remove the deck id if it's already in the list to prevent duplicates
       this.lastUsedDecksIds = this.lastUsedDecksIds.filter(
-        (id: number) => id !== deckId
+        (id: number | string) => id !== deckId
       );
 
       // Remove the oldest deck if we have reached the deck number limit
