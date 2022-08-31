@@ -44,7 +44,7 @@ definePageMeta({
                 </div>
                 <!-- <div v-if="passwordNotMatching == true"
                     class="relative px-4 py-3 mt-6 text-red-700 bg-red-100 border border-red-400 rounded" role="alert">
-                    <span class="block sm:inline">{{  $t("app.login.errorLogin")  }}</span>
+                    <span class="block sm:inline">Erreur backend</span>
                 </div> -->
                 <form class="mt-6 space-y-4 md:space-y-5" @submit.prevent="sendNewPassword">
                     <div>
