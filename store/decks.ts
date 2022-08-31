@@ -6,8 +6,6 @@ export const MAX_LAST_USED_DECKS = 3;
 
 export const useDecksStore = defineStore("decks", {
   state: () => ({
-    MAX_LAST_USED_DECKS: 3,
-
     bestRatedDecks: [],
 
     allDecks: [],
@@ -15,10 +13,11 @@ export const useDecksStore = defineStore("decks", {
     lastUsedDecksIds: useLocalStorage(LOCAL_STORAGE_KEY, [] as number[]),
   }),
   getters: {
-    // lastUsedDecks: (state) => {
-    //   // TODO: retrieve the last used decks from the local storage
-    //   return state.allDecks.slice(0, 2);
-    // },
+    lastUsedDecks: (state) => {
+      return state.allDecks.filter((deck) =>
+        state.lastUsedDecksIds.includes(deck.id)
+      );
+    },
   },
   actions: {
     addUsedDeck(deckId: number) {
