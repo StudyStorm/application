@@ -84,7 +84,16 @@ app:
     secondParagraph: Once verified, you’ll be able to continue.
     noEmail: Didn't receive an email ? Resend one.
   dashboard:
+    title: Home
     topDecks: Top decks
     recentDecks: Recent decks
+    browseDecks: Browse decks
+    noRecentDecks: No recent decks
+  decks:
+    name: Deck name
+    author: Author
+    nbCards: Number of cards
+    nbVotes: Number of votes
+    createdBy: Created by {name}
 # HERE THE CONTENT FOR THE APP
 

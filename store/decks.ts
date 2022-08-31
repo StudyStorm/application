@@ -6,6 +6,8 @@ export const MAX_LAST_USED_DECKS = 3;
 
 export const useDecksStore = defineStore("decks", {
   state: () => ({
+    searchFilter: "",
+
     bestRatedDecks: [],
 
     allDecks: [],
@@ -13,6 +15,13 @@ export const useDecksStore = defineStore("decks", {
     lastUsedDecksIds: useLocalStorage(LOCAL_STORAGE_KEY, [] as number[]),
   }),
   getters: {
+    filteredDecks(state) {
+      return state.allDecks.filter((deck) => {
+        return deck.name
+          .toLowerCase()
+          .includes(state.searchFilter.toLowerCase());
+      });
+    },
     lastUsedDecks: (state) => {
       return state.allDecks.filter((deck) =>
         state.lastUsedDecksIds.includes(deck.id)

@@ -6,11 +6,11 @@ import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
 import User from "~~/models/User";
 import Deck from "../models/Deck";
 
-const search = ref("");
-
 const displayStyle = ref("row");
 
 const store = useDecksStore();
+
+const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
 
 // TMP CODE - Remove when integrating API
 const tmpUser = new User();
@@ -39,25 +39,25 @@ deck3.creator = tmpUser;
 
 const deck4 = new Deck();
 deck4.id = "b89cfb5b-ebff-4b9e-8e81-d47f2403b9eb";
-deck4.name = "Recent Deck 1";
+deck4.name = "Deck 4";
 deck4.votes = -1000000;
 deck4.creator = tmpUser;
 
 const deck5 = new Deck();
 deck5.id = "266267b8-5f40-4464-94ef-717b53fef8f4";
-deck5.name = "Recent Deck 2";
+deck5.name = "Deck 5";
 deck5.votes = -545;
 deck5.creator = tmpUser;
 
 const deck6 = new Deck();
 deck6.id = "51338620-182c-4989-b004-334e47fe6765";
-deck6.name = "Recent Deck 3";
+deck6.name = "Deck 6";
 deck6.votes = 10000000000;
 deck6.creator = tmpUser;
 
-const topDecks: Deck[] = [deck1, deck2, deck3];
-const recentDecks: Deck[] = [deck4, deck5, deck6];
-const allDecks = [...topDecks, ...recentDecks];
+const topDecks: Deck[] = [deck1, deck2, deck3, deck4, deck5, deck6];
+store.allDecks = [...topDecks];
+
 // END OF TEMP CODE
 </script>
 
@@ -68,7 +68,7 @@ const allDecks = [...topDecks, ...recentDecks];
     >
       <div class="min-w-0 flex-1">
         <h1 class="text-lg font-medium leading-6 text-storm-dark sm:truncate">
-          Home
+          {{ $t("app.dashboard.title") }}
         </h1>
       </div>
     </div>
@@ -76,7 +76,7 @@ const allDecks = [...topDecks, ...recentDecks];
       <h1
         class="mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
       >
-        Top decks
+        {{ $t("app.dashboard.topDecks") }}
       </h1>
 
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
@@ -86,26 +86,30 @@ const allDecks = [...topDecks, ...recentDecks];
       <h1
         class="mt-8 mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
       >
-        Recent decks
+        {{ $t("app.dashboard.recentDecks") }}
       </h1>
-      {{ store.lastUsedDecksIds }}
+
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
-        <DeckCard v-for="deck in recentDecks" :key="deck.id" :deck="deck" />
+        <DeckCard
+          v-for="deck in store.lastUsedDecks"
+          :key="deck.id"
+          :deck="deck"
+        />
       </div>
 
       <h1
         class="mt-8 mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
       >
-        Browse decks
+        {{ $t("app.dashboard.browseDecks") }}
       </h1>
 
       <div class="flex items-center justify-between">
         <div>
           <input
-            v-model="search"
+            v-model="store.searchFilter"
             name="searchDeck"
             type="text"
-            class="block rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            class="block w-40 flex-auto rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:w-80 sm:text-sm md:w-96"
             placeholder="Search decks"
           />
         </div>
@@ -138,7 +142,7 @@ const allDecks = [...topDecks, ...recentDecks];
           role="list"
           class="mt-3 divide-y divide-gray-100 border-t border-gray-200"
         >
-          <li v-for="deck in allDecks" :key="deck.id">
+          <li v-for="deck in store.filteredDecks" :key="deck.id">
             <NuxtLink
               :to="`/deck/${deck.id}`"
               class="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"
@@ -167,55 +171,38 @@ const allDecks = [...topDecks, ...recentDecks];
             <thead>
               <tr class="border-t border-gray-200">
                 <th
+                  v-for="(header, i) in tableHeaders"
+                  :key="i"
                   class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                   scope="col"
                 >
-                  <span class="lg:pl-2">Project</span>
-                </th>
-                <th
-                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                  scope="col"
-                >
-                  Author
-                </th>
-                <th
-                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                  scope="col"
-                >
-                  Classroom
-                </th>
-                <th
-                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                  scope="col"
-                >
-                  # of cards
-                </th>
-                <th
-                  class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                  scope="col"
-                >
-                  Votes
+                  <span class="lg:pl-2">{{ header }}</span>
                 </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100 bg-white">
-              <tr v-for="deck in allDecks" :key="deck.id">
-                <td
-                  class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                >
+              <tr
+                v-for="(deck, i) in store.filteredDecks"
+                :key="deck.id"
+                :class="{ 'bg-gray-100': i % 2 === 0 }"
+              >
+                <td class="whitespace-nowrap px-6 py-3 text-sm font-medium">
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a href="#" class="truncate hover:text-gray-600">
+                    <NuxtLink
+                      :to="`deck/${deck.id}`"
+                      class="truncate hover:text-gray-600"
+                    >
                       <span>
                         {{ deck.name }}
                       </span>
-                    </a>
+                    </NuxtLink>
                   </div>
                 </td>
                 <td
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a href="#" class="truncate hover:text-gray-600">
+                    <a class="truncate hover:text-gray-600">
                       <span>
                         {{ deck.creator.fullname }}
                       </span>
@@ -226,16 +213,7 @@ const allDecks = [...topDecks, ...recentDecks];
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a href="#" class="truncate hover:text-gray-600">
-                      <span> Classroom name </span>
-                    </a>
-                  </div>
-                </td>
-                <td
-                  class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                >
-                  <div class="flex items-center space-x-3 lg:pl-2">
-                    <a href="#" class="truncate hover:text-gray-600">
+                    <a class="truncate hover:text-gray-600">
                       <span> N cards </span>
                     </a>
                   </div>
@@ -244,7 +222,7 @@ const allDecks = [...topDecks, ...recentDecks];
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a href="#" class="truncate hover:text-gray-600">
+                    <a class="truncate hover:text-gray-600">
                       <span>
                         {{ deck.formattedVotes }}
                       </span>
@@ -257,7 +235,11 @@ const allDecks = [...topDecks, ...recentDecks];
         </div>
         <div v-else>
           <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:gap-8">
-            <DeckCard v-for="deck in allDecks" :key="deck.id" :deck="deck" />
+            <DeckCard
+              v-for="deck in store.filteredDecks"
+              :key="deck.id"
+              :deck="deck"
+            />
           </div>
         </div>
       </div>

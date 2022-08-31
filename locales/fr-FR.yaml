@@ -88,8 +88,17 @@ app:
     secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
     noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau.
   dashboard:
+    title: Accueil
     topDecks: Collections populaires
     recentDecks: Collections récentes
+    browseDecks: Explorer les collections
+    noRecentDecks: Aucune collection récente
+  decks:
+    name: Nom de la collection
+    author: Auteur
+    nbCards: Nombre de cartes
+    nbVotes: Nombre de votes
+    createdBy: Créé par {name}
   # HERE THE CONTENT FOR THE APP
 
 

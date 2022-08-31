@@ -45,19 +45,19 @@ const color = computed((): string => {
         class="flex flex-col items-center text-sm font-medium text-storm-dark"
       >
         <ChevronUpIcon
-          class="h-6 w-6 hover:text-emerald-500"
+          class="h-6 w-6 hover:scale-125 hover:text-emerald-500"
           @click.prevent="upvote"
         />
         <span>{{ deck.formattedVotes }}</span>
         <ChevronDownIcon
-          class="h-6 w-6 hover:text-red-500"
+          class="h-6 w-6 hover:scale-125 hover:text-red-500"
           @click.prevent="downvote"
         />
       </div>
     </div>
     <div>
       <p class="font-normal text-storm-dark">
-        Created by {{ deck.creator.fullname }}
+        {{ $t("app.decks.createdBy", { name: deck.creator.fullname }) }}
       </p>
     </div>
   </NuxtLink>
