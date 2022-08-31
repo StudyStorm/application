@@ -83,5 +83,8 @@ app:
     firstParagraph: Please check your email for a link to verify your email address.
     secondParagraph: Once verified, you’ll be able to continue.
     noEmail: Didn't receive an email ? Resend one.
+  dashboard:
+    topDecks: Top decks
+    recentDecks: Recent decks
 # HERE THE CONTENT FOR THE APP
 

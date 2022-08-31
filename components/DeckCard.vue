@@ -18,11 +18,6 @@ const downvote = () => {
   console.log("downvote");
 };
 
-const formattedVotes = computed(() => {
-  let formatter = Intl.NumberFormat("en", { notation: "compact" });
-  return formatter.format(props.deck.votes);
-});
-
 const color = computed((): string => {
   return `background-color: hsl(${props.deck.id
     .split("")
@@ -32,16 +27,18 @@ const color = computed((): string => {
 
 <template>
   <NuxtLink
-    :to="`/decks/${deck.id}`"
-    class="block max-w-sm rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
+    :to="`/deck/${deck.id}`"
+    class="block max-w-sm rounded-lg border border-gray-200 p-4 shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
     :style="color"
   >
     <div class="flex items-center justify-between">
-      <span>4 card</span>
-      <span>HEIG</span>
+      <span>N card</span>
+      <span>Classroom name</span>
     </div>
     <div class="my-4 flex items-center justify-between">
-      <h5 class="mb-2 text-2xl font-bold tracking-tight text-storm-dark">
+      <h5
+        class="mb-2 truncate text-2xl font-bold tracking-tight text-storm-dark"
+      >
         {{ deck.name }}
       </h5>
       <div
@@ -51,7 +48,7 @@ const color = computed((): string => {
           class="h-6 w-6 hover:text-emerald-500"
           @click.prevent="upvote"
         />
-        <span>{{ formattedVotes }}</span>
+        <span>{{ deck.formattedVotes }}</span>
         <ChevronDownIcon
           class="h-6 w-6 hover:text-red-500"
           @click.prevent="downvote"
@@ -59,7 +56,9 @@ const color = computed((): string => {
       </div>
     </div>
     <div>
-      <p class="font-normal text-storm-dark">Created by {{ "Di dou" }}</p>
+      <p class="font-normal text-storm-dark">
+        Created by {{ deck.creator.fullname }}
+      </p>
     </div>
   </NuxtLink>
 </template>

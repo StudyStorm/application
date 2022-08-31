@@ -87,6 +87,9 @@ app:
     firstParagraph: Un lien de vérification a été envoyé sur votre adresse mail.
     secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
     noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau.
+  dashboard:
+    topDecks: Collections populaires
+    recentDecks: Collections récentes
   # HERE THE CONTENT FOR THE APP
 
 
