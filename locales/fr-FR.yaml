@@ -127,6 +127,9 @@ app:
     public: Salle de classe publique
     cancel: Annuler
     create: Créer
+  sideNav:
+    home: Accueil
+    class: Salles de classe
   # HERE THE CONTENT FOR THE APP
 
 

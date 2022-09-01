@@ -123,5 +123,8 @@ app:
     public: Public classroom
     cancel: Cancel
     create: Create
+  sideNav:
+    home: Home
+    class: My classrooms
 # HERE THE CONTENT FOR THE APP
 

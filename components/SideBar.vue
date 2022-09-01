@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 import {
   Dialog,
   DialogPanel,
@@ -21,9 +23,14 @@ import {
 } from "@heroicons/vue/24/solid/index.js";
 
 const navigation = [
-  { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
   {
-    name: "My classrooms",
+    name: t("app.sideNav.home"),
+    href: "/dashboard",
+    icon: HomeIcon,
+    current: true,
+  },
+  {
+    name: t("app.sideNav.class"),
     href: "/classrooms",
     icon: AcademicCapIcon,
     current: false,
@@ -293,7 +300,7 @@ async function createClassroom() {
               {{ item.name }}
               <div
                 v-if="item.options"
-                class="ml-12"
+                class="ml-14"
                 @click="showButton = !showButton"
               >
                 <ChevronUpIcon
