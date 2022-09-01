@@ -29,14 +29,43 @@ const navigation = [
   },
 ];
 
+//Modal for room creation
+const datas = ref({
+  className: "",
+  visibility: true,
+});
+
+//const err = ref<null | any>(null);
+
 const sidebarOpen = ref(false);
 const showModal = ref(false);
 
-async function createClassroom() {
-  showModal.value = true;
+async function create() {
+  // const { data: answer } = await useFetchAPI("/createClassroom", {
+  //   method: "POST",
+  //   body: datas.value,
+  //   initialCache: false,
+  // });
+  // err.value = !answer.value;
+  // if (answer.value) {
+  //   resetField();
+  //   router.push("/classrooms");
+  // }
+  showModal.value = false;
+  console.log(datas.value);
 }
 
-async function createClassroomMobile() {
+async function closeModal() {
+  resetField();
+  showModal.value = false;
+}
+
+function resetField() {
+  datas.value.className = "";
+  datas.value.visibility = true;
+}
+
+async function createClassroom() {
   sidebarOpen.value = false;
   showModal.value = true;
 }
@@ -135,7 +164,7 @@ async function createClassroomMobile() {
                     <div class="flex justify-start">
                       <button
                         class="mx-6 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        @click="createClassroomMobile"
+                        @click="createClassroom"
                       >
                         {{ $t("app.createClassroom.title") }}
                       </button>
@@ -353,18 +382,19 @@ async function createClassroomMobile() {
         <div class="mt-1">
           <input
             id="name"
+            v-model="datas.className"
             name="name"
             type="text"
             required
             autocomplete="off"
-            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
           />
         </div>
         <div class="mt-1">
           <input
             id="isPublic"
+            v-model="datas.visibility"
             name="isPublic"
-            checked
             type="checkbox"
             value="isPublic"
             class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600"
@@ -381,7 +411,7 @@ async function createClassroomMobile() {
       <button
         type="confirmCreation"
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="showModal = false"
+        @click="create"
       >
         {{ $t("app.createClassroom.create") }}
       </button>
@@ -389,7 +419,7 @@ async function createClassroomMobile() {
         ref="cancelButtonRef"
         type="button"
         class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="showModal = false"
+        @click="closeModal"
       >
         {{ $t("app.createClassroom.cancel") }}
       </button>
