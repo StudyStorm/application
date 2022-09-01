@@ -3,11 +3,16 @@
 
    const isFlipped = ref(false)
 
-   const card = {
-      question: "Where am i?",
-      response: "I am here"
-   };
+    defineProps({
+      question: String,
+      response: String
+    });
 
+    const emit = defineEmits(['update:card'])
+
+    const updateValues = (event) => {
+        emit('update:card', event.target.value)
+    }
 </script>
 
 <template>
@@ -18,10 +23,10 @@
         v-bind:class="{ flipCard: isFlipped }"
       >
         <div class="cardFace">
-          {{ card.question }}
+          {{ question }}
         </div>
         <div class="cardFace flipCardBack">
-          {{ card.response }}
+          {{ response }}
         </div>
       </div>
     </div>

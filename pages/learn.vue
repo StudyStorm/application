@@ -4,6 +4,31 @@
    const err = ref<null | any>(null);
    const showModal = ref(false);
 
+   let i = 0;
+
+   const cards = [
+      { 
+         question: "Where am I?",
+         response: "I am here"
+      },
+      {
+         question: "What is the capital of switzerland?",
+         response: "Berne"
+      }
+   ];
+
+   function previousCard(){
+      if (i){
+         --i;
+      }
+   }
+
+   function nextCard(){
+      if(i < cards.length - 1){
+         ++i
+      }
+   }
+
 
    async function signalCard() {
       // TODO: Signal current card
@@ -25,13 +50,13 @@
    </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white px-4 py-8 sm:rounded-lg sm:px-10">
-         <FlashCard></FlashCard>
+         <FlashCard v-model="cards[i]"></FlashCard>
          <div class=" flex flex-col" style="display: flex; align-items: center; justify-content: center;">
             <div class="inline-flex">
-               <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-l">
+               <button @click="previousCard" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-l">
                   <ChevronLeftIcon class="h-6 w-6" aria-hidden="true" />
                </button>
-               <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-r">
+               <button @click="nextCard" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-r">
                   <ChevronRightIcon class="h-6 w-6" aria-hidden="true" />
                </button>
             </div>
