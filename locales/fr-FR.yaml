@@ -121,6 +121,11 @@ app:
       buttons:
         cancel: Annuler
         confirmDelete: Supprimer
+  error:
+    error404: Erreur 404 - Page non trouvée
+    standardError: Une erreur est survenue
+    linkToHome: Cliquez-ici pour revenir à l'accueil
+
   # HERE THE CONTENT FOR THE APP
 
 
