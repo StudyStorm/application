@@ -30,6 +30,16 @@ const navigation = [
 ];
 
 const sidebarOpen = ref(false);
+const showModal = ref(false);
+
+async function createClassroom() {
+  showModal.value = true;
+}
+
+async function createClassroomMobile() {
+  sidebarOpen.value = false;
+  showModal.value = true;
+}
 </script>
 <template>
   <div>
@@ -125,6 +135,7 @@ const sidebarOpen = ref(false);
                     <div class="flex justify-center">
                       <button
                         class="mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        @click="createClassroomMobile"
                       >
                         Create classroom
                       </button>
@@ -250,6 +261,14 @@ const sidebarOpen = ref(false);
               />
               {{ item.name }}
             </NuxtLink>
+            <div class="flex justify-center">
+              <button
+                class="mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                @click="createClassroom"
+              >
+                Create classroom
+              </button>
+            </div>
           </div>
         </nav>
       </div>
@@ -324,4 +343,53 @@ const sidebarOpen = ref(false);
       </div>
     </div>
   </div>
+  <Modal v-model="showModal">
+    <template #title> Create a new classroom </template>
+    <template #content>
+      <form action="#">
+        <label for="name" class="block text-sm font-medium text-gray-700">
+          Classroom name
+        </label>
+        <div class="mt-1">
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            autocomplete="off"
+            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+        <div class="mt-1">
+          <input
+            id="isPublic"
+            name="isPublic"
+            type="checkbox"
+            value="isPublic"
+            class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600"
+          />
+          <label for="isPublic" class="ml-2 text-sm font-medium text-gray-900"
+            >Public classroom</label
+          >
+        </div>
+      </form>
+    </template>
+    <template #footer>
+      <button
+        type="confirmCreation"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="showModal = false"
+      >
+        Create
+      </button>
+      <button
+        ref="cancelButtonRef"
+        type="button"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="showModal = false"
+      >
+        Cancel
+      </button>
+    </template>
+  </Modal>
 </template>
