@@ -124,12 +124,15 @@ app:
   learn:
     buttons:
       signal: Signalez la carte
+      checkAnswer: Vérifier
     modal:
       title: Signalez une carte
       message: Proposez une meilleure réponse. Un message sera envoyé au créateur de la carte afin qu'il évalue votre suggestion.
       buttons:
         confirmSignal: Signaler
         cancel: Annuler
+    select:
+      defaultText: Choisissez un réponse
     text:
       by: par
   error:

@@ -20,7 +20,7 @@
      if (isFlipped.value){
        flippedCard.value.style.transform = 'rotateY(180deg)';
        isFlipped.value = false;
-       await sleep(300);
+       await sleep(800);
      }
    }
 
@@ -36,7 +36,7 @@
         ref="card"
         class="card"
         @click="flip"
-        v-bind:class="{ flipCard: isFlippable && isFlipped }"
+        v-bind:class="[{ flipCard: isFlippable && isFlipped}]"
       >
         <div class="cardFace flex items-center select-none">
           <slot name="cardFront"></slot>

@@ -37,6 +37,14 @@
 </template>
 
 <style scoped>
+  .cardFace {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: #F2F2F2;
+  }
+
   .cardText {
     color: #3F434A;
     text-align: center;

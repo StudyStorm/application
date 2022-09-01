@@ -6,22 +6,16 @@
    const err = ref<null | any>(null);
    const showModal = ref(false);
 
-   const cardIndex = ref(0);
-   const flashCard = ref();
-   const progressBar = ref();
-   const nextCardButton = ref();
-   const previousCardButton = ref();
-
    const cards = [
-      { 
-         question: "Where am I?",
-         answer: "I am here",
-         type: "string"
-      },
       {
          question: "What is the capital of switzerland?",
-         answer: "Berne",
+         answer: "Bern",
          type: "string"
+      },
+      { 
+         question: "Where am I ?",
+         answers: ["I am here", "I am not here", "I am maybe here", "Working"],
+         type: "option"
       },
       {
          question: "What is the capital of Germany?",
@@ -40,15 +34,24 @@
       }
    ];
 
+   const cardIndex = ref(0);
+   const card = ref();
+   const progressBar = ref();
+   const cardNumberProgression = ref<string>('');
+   const nextCardButton = ref();
+   const previousCardButton = ref();
+
+
    function updateProgressBar() {
       progressBar.value.style.width = 100 * (cardIndex.value / (cards.length - 1)) + '%';
+      cardNumberProgression.value.innerText = String(cardIndex.value + 1) + " / " + String(cards.length);
    }
 
    async function previousCard(){
       if (cardIndex.value){
          previousCardButton.value.style.disabled = false;
          // If card is flipped, flip card without showing the previous card answer
-         await flashCard.value.resetCard()
+         await card.value.resetCard()
          --cardIndex.value
          updateProgressBar();
       } else {
@@ -60,7 +63,7 @@
       if(cardIndex.value < cards.length - 1){
          nextCardButton.value.style.disabled = false;
          // If card is flipped, flip card without showing the next card answer
-         await flashCard.value.resetCard()
+         await card.value.resetCard()
          ++cardIndex.value
          updateProgressBar();
       } else{
@@ -92,10 +95,15 @@
    </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white px-4 py-8 sm:rounded-lg sm:px-10">
+      <div class="flex justify-between mb-1">
+      <span class="text-base font-medium text-blue-700 dark:text-white"></span>
+      <span ref="cardNumberProgression" class="text-sm font-medium text-purple-600 dark:text-white">1 / {{ cards.length }}</span>
+      </div>
       <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
          <div class="bg-purple-600 h-2.5 rounded-full dark:bg-purple-500" style="width: 0%" ref="progressBar"></div>
       </div>
-      <FlashCard v-if="cards[cardIndex].type === 'string'" ref="flashCard" :question="cards[cardIndex].question" :answer="cards[cardIndex].answer"></FlashCard>
+      <FlashCard v-if="cards[cardIndex].type === 'string'" ref="card" :question="cards[cardIndex].question" :answer="cards[cardIndex].answer"></FlashCard>
+      <OptionsCard v-if="cards[cardIndex].type === 'option'" ref="card" :question="cards[cardIndex].question" :answers="cards[cardIndex].answers"></OptionsCard>
       <div class=" flex flex-col" style="display: flex; align-items: center; justify-content: center;">
          <div class="inline-flex">
             <button ref="previousCardButton" @click="previousCard" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-l">
