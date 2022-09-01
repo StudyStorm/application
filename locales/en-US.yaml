@@ -126,5 +126,7 @@ app:
       buttons:
         confirmSignal: Signal
         cancel: Cancel
+    text:
+      by: by
 # HERE THE CONTENT FOR THE APP
 

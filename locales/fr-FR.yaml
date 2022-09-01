@@ -130,6 +130,8 @@ app:
       buttons:
         confirmSignal: Signaler
         cancel: Annuler
+    text:
+      by: par
   # HERE THE CONTENT FOR THE APP
 
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
    import { ChevronLeftIcon, ChevronRightIcon, FlagIcon } from "@heroicons/vue/24/outline/index.js";
-import { waitFor } from "@testing-library/dom";
+   const decksName = "Decks name";
+   const author = "Firstname Lastname";
 
    const err = ref<null | any>(null);
    const showModal = ref(false);
@@ -14,23 +15,28 @@ import { waitFor } from "@testing-library/dom";
    const cards = [
       { 
          question: "Where am I?",
-         response: "I am here"
+         answer: "I am here",
+         type: "string"
       },
       {
          question: "What is the capital of switzerland?",
-         response: "Berne"
+         answer: "Berne",
+         type: "string"
       },
       {
          question: "What is the capital of Germany?",
-         response: "Berlin"
+         answer: "Berlin",
+         type: "string"
       },
       {
          question: "What is the capital of France?",
-         response: "Paris"
+         answer: "Paris",
+         type: "string"
       },
       {
          question: "What is the capital of the United Stated of America?",
-         response: "Washington DC"
+         answer: "Washington DC",
+         type: "string"
       }
    ];
 
@@ -77,7 +83,10 @@ import { waitFor } from "@testing-library/dom";
   >
       <div class="min-w-0">
          <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-            Decks name
+            {{ decksName }}
+            <span class="text-sm font-small leading-6 text-gray-900 sm:truncate">
+               {{ $t("app.learn.text.by") }} {{ author }}
+            </span>
          </h1>
       </div>
    </div>
@@ -86,7 +95,7 @@ import { waitFor } from "@testing-library/dom";
       <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
          <div class="bg-purple-600 h-2.5 rounded-full dark:bg-purple-500" style="width: 0%" ref="progressBar"></div>
       </div>
-      <FlashCard ref="flashCard" :question="cards[cardIndex].question" :response="cards[cardIndex].response"></FlashCard>
+      <FlashCard v-if="cards[cardIndex].type === 'string'" ref="flashCard" :question="cards[cardIndex].question" :answer="cards[cardIndex].answer"></FlashCard>
       <div class=" flex flex-col" style="display: flex; align-items: center; justify-content: center;">
          <div class="inline-flex">
             <button ref="previousCardButton" @click="previousCard" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-l">
@@ -146,7 +155,7 @@ import { waitFor } from "@testing-library/dom";
       class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
       @click="showModal = false"
       >
-      {{ $t("app.profile.modal.buttons.cancel") }}
+      {{ $t("app.learn.modal.buttons.cancel") }}
       </button>
    </template>
   </Modal>
