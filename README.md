@@ -1,7 +1,8 @@
 # StudyStorm - Frontend application
 
 ## Stack du frontend
-* [Nuxt 3](https://v3.nuxtjs.org/)
+* [Typescript](https://www.typescriptlang.org/)
+* [Nuxt 3](https://v3.nuxtjs.org/getting-started/quick-start/)
 * [TailwindCSS](https://tailwindcss.com/)
 * [Vitest](https://vitest.dev/)
 * [Eslint](https://eslint.org/)
@@ -13,8 +14,6 @@
 
 
 ## Lancer le serveur de développement
-
-Le frontend utilise le frameworek Nuxt 3. N'hésitez pas à consulter la [documentation](https://v3.nuxtjs.org/getting-started/quick-start/) pour plus d'informations.
 
 Installer toutes les dépendances :
 
