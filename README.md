@@ -1,10 +1,22 @@
-# Nuxt 3 Minimal Starter
+# StudyStorm frontend
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+## Stack du frontend
+* [Nuxt 3](https://v3.nuxtjs.org/)
+* [TailwindCSS](https://tailwindcss.com/)
+* [Vitest](https://vitest.dev/)
+* [Eslint](https://eslint.org/)
 
-## Setup
+## Prérequis
+* [NodeJS](https://nodejs.org/en/download/) version 16.17.0
+* [NPM](https://www.npmjs.com/package/download) version 8.15.0
+* [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) version 1.22.19
 
-Make sure to install the dependencies:
+
+## Lancer le serveur de développement
+
+Le frontend utilise le frameworek Nuxt 3. N'hésitez pas à consulter la [documentation](https://v3.nuxtjs.org/getting-started/quick-start/) pour plus d'informations.
+
+Installer toutes les dépendances :
 
 ```bash
 # yarn
@@ -12,31 +24,36 @@ yarn install
 
 # npm
 npm install
-
-# pnpm
-pnpm install --shamefully-hoist
 ```
+Dupliquez le fichier [.env.example](https://github.com/StudyStorm/application/blob/main/.env.example), renommez le en .env et  remplacez les valeurs par vos propres.
+* BASE_URL : l'url locale du frontend
+* LOCAL_API_URL : l'url locale de l'api du backend
+* PRODUCTION_API_URL : l'url de l'api du backend en production
 
-## Development Server
+TODO : utile de préciser les 3 valeurs ?  
 
-Start the development server on http://localhost:3000
+Lancer le serveur de développement à l'adresse http://localhost:3000
 
 ```bash
+# yarn
+yarn dev
+
+# npm
 npm run dev
 ```
 
 ## Production
 
-Build the application for production:
+Build l'application pour la production:
 
 ```bash
 npm run build
 ```
 
-Locally preview production build:
+Pour avoir une preview de la production:
 
 ```bash
 npm run preview
 ```
 
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+N'hésitez pas à consulter la [documentation de déploiement](https://v3.nuxtjs.org/guide/deploy/presets) pour plus d'informations.
