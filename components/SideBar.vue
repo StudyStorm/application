@@ -14,6 +14,7 @@ import {
 import {
   XMarkIcon,
   ChevronDownIcon,
+  ChevronUpIcon,
   Bars3CenterLeftIcon,
   AcademicCapIcon,
   HomeIcon,
@@ -26,6 +27,7 @@ const navigation = [
     href: "/classrooms",
     icon: AcademicCapIcon,
     current: false,
+    options: true,
   },
 ];
 
@@ -36,7 +38,7 @@ const datas = ref({
 });
 
 //const err = ref<null | any>(null);
-
+const showButton = ref(false);
 const sidebarOpen = ref(false);
 const showModal = ref(false);
 
@@ -289,8 +291,24 @@ async function createClassroom() {
                 aria-hidden="true"
               />
               {{ item.name }}
+              <div
+                v-if="item.options"
+                class="ml-12"
+                @click="showButton = !showButton"
+              >
+                <ChevronUpIcon
+                  v-if="showButton"
+                  class="h-5 w-5 shrink-0 text-gray-400 group-hover:text-blue-600"
+                  aria-hidden="true"
+                />
+                <ChevronDownIcon
+                  v-else
+                  class="h-5 w-5 shrink-0 text-gray-400 group-hover:text-blue-600"
+                  aria-hidden="true"
+                />
+              </div>
             </NuxtLink>
-            <div class="flex justify-center">
+            <div v-if="showButton" class="flex justify-center">
               <button
                 class="mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click="createClassroom"
