@@ -1,4 +1,4 @@
-# StudyStorm frontend
+# StudyStorm - Frontend application
 
 ## Stack du frontend
 * [Nuxt 3](https://v3.nuxtjs.org/)
