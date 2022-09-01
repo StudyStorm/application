@@ -132,6 +132,10 @@ app:
         cancel: Annuler
     text:
       by: par
+  error:
+    error404: Erreur 404 - Page non trouvée
+    standardError: Une erreur est survenue
+    linkToHome: Cliquez-ici pour revenir à l'accueil
   # HERE THE CONTENT FOR THE APP
 
 
