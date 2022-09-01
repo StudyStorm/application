@@ -1,10 +1,15 @@
 <script setup lang="ts">
    import { ChevronLeftIcon, ChevronRightIcon, FlagIcon } from "@heroicons/vue/24/outline/index.js";
+import { waitFor } from "@testing-library/dom";
 
    const err = ref<null | any>(null);
    const showModal = ref(false);
 
-   let i = 0;
+   const cardIndex = ref(0);
+   const flashCard = ref();
+   const progressBar = ref();
+   const nextCardButton = ref();
+   const previousCardButton = ref();
 
    const cards = [
       { 
@@ -14,18 +19,46 @@
       {
          question: "What is the capital of switzerland?",
          response: "Berne"
+      },
+      {
+         question: "What is the capital of Germany?",
+         response: "Berlin"
+      },
+      {
+         question: "What is the capital of France?",
+         response: "Paris"
+      },
+      {
+         question: "What is the capital of the United Stated of America?",
+         response: "Washington DC"
       }
    ];
 
-   function previousCard(){
-      if (i){
-         --i;
+   function updateProgressBar() {
+      progressBar.value.style.width = 100 * (cardIndex.value / (cards.length - 1)) + '%';
+   }
+
+   async function previousCard(){
+      if (cardIndex.value){
+         previousCardButton.value.style.disabled = false;
+         // If card is flipped, flip card without showing the previous card answer
+         await flashCard.value.resetCard()
+         --cardIndex.value
+         updateProgressBar();
+      } else {
+         previousCardButton.value.style.disabled = true;
       }
    }
 
-   function nextCard(){
-      if(i < cards.length - 1){
-         ++i
+   async function nextCard(){
+      if(cardIndex.value < cards.length - 1){
+         nextCardButton.value.style.disabled = false;
+         // If card is flipped, flip card without showing the next card answer
+         await flashCard.value.resetCard()
+         ++cardIndex.value
+         updateProgressBar();
+      } else{
+         nextCardButton.value.style.disabled = true;
       }
    }
 
@@ -50,17 +83,20 @@
    </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white px-4 py-8 sm:rounded-lg sm:px-10">
-         <FlashCard v-model="cards[i]"></FlashCard>
-         <div class=" flex flex-col" style="display: flex; align-items: center; justify-content: center;">
-            <div class="inline-flex">
-               <button @click="previousCard" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-l">
-                  <ChevronLeftIcon class="h-6 w-6" aria-hidden="true" />
-               </button>
-               <button @click="nextCard" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-r">
-                  <ChevronRightIcon class="h-6 w-6" aria-hidden="true" />
-               </button>
-            </div>
+      <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+         <div class="bg-purple-600 h-2.5 rounded-full dark:bg-purple-500" style="width: 0%" ref="progressBar"></div>
+      </div>
+      <FlashCard ref="flashCard" :question="cards[cardIndex].question" :response="cards[cardIndex].response"></FlashCard>
+      <div class=" flex flex-col" style="display: flex; align-items: center; justify-content: center;">
+         <div class="inline-flex">
+            <button ref="previousCardButton" @click="previousCard" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-l">
+               <ChevronLeftIcon class="h-6 w-6" aria-hidden="true" />
+            </button>
+            <button ref="nextCardButton" @click="nextCard" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-r">
+               <ChevronRightIcon class="h-6 w-6" aria-hidden="true" />
+            </button>
          </div>
+      </div>
     </div>
   </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
