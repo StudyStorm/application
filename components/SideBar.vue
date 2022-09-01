@@ -132,12 +132,12 @@ async function createClassroomMobile() {
                       />
                       {{ item.name }}
                     </NuxtLink>
-                    <div class="flex justify-center">
+                    <div class="flex justify-start">
                       <button
-                        class="mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        class="mx-6 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         @click="createClassroomMobile"
                       >
-                        Create classroom
+                        {{ $t("app.createClassroom.title") }}
                       </button>
                     </div>
                   </div>
