@@ -121,6 +121,12 @@ app:
       buttons:
         cancel: Annuler
         confirmDelete: Supprimer
+  createClassroom:
+    title: Créer une salle de classe
+    name: Nom de la salle de classe
+    public: Salle de classe publique
+    cancel: Annuler
+    create: Créer
   # HERE THE CONTENT FOR THE APP
 
 

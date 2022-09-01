@@ -117,5 +117,11 @@ app:
       buttons:
         cancel: Cancel
         confirmDelete: Delete
+  createClassroom:
+    title: Create a new classroom
+    name: Classroom name
+    public: Public classroom
+    cancel: Cancel
+    create: Create
 # HERE THE CONTENT FOR THE APP
 

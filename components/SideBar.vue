@@ -266,7 +266,7 @@ async function createClassroomMobile() {
                 class="mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click="createClassroom"
               >
-                Create classroom
+                {{ $t("app.createClassroom.title") }}
               </button>
             </div>
           </div>
@@ -344,11 +344,11 @@ async function createClassroomMobile() {
     </div>
   </div>
   <Modal v-model="showModal">
-    <template #title> Create a new classroom </template>
+    <template #title> {{ $t("app.createClassroom.title") }} </template>
     <template #content>
       <form action="#">
         <label for="name" class="block text-sm font-medium text-gray-700">
-          Classroom name
+          {{ $t("app.createClassroom.name") }}
         </label>
         <div class="mt-1">
           <input
@@ -364,12 +364,15 @@ async function createClassroomMobile() {
           <input
             id="isPublic"
             name="isPublic"
+            checked
             type="checkbox"
             value="isPublic"
             class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600"
           />
-          <label for="isPublic" class="ml-2 text-sm font-medium text-gray-900"
-            >Public classroom</label
+          <label
+            for="isPublic"
+            class="ml-2 text-sm font-medium text-gray-900"
+            >{{ $t("app.createClassroom.public") }}</label
           >
         </div>
       </form>
@@ -380,7 +383,7 @@ async function createClassroomMobile() {
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="showModal = false"
       >
-        Create
+        {{ $t("app.createClassroom.create") }}
       </button>
       <button
         ref="cancelButtonRef"
@@ -388,7 +391,7 @@ async function createClassroomMobile() {
         class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         @click="showModal = false"
       >
-        Cancel
+        {{ $t("app.createClassroom.cancel") }}
       </button>
     </template>
   </Modal>
