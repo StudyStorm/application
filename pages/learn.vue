@@ -13,7 +13,7 @@
       },
       cards: [
          {
-            id: "b8a7c042-d537-45c4-b3da-ac1c20c0bae7",
+            id: "a8a7c042-d537-45c4-b3da-ac1c20c0bae7",
             content: {
                question: "What is the capital of switzerland?",
                answer: "Bern",
@@ -36,9 +36,9 @@
             type: "options"
          },
          {
-            id: "b8a7c042-d537-45c4-b3da-ac1c20c0bae7",
+            id: "c8a7c042-d537-45c4-b3da-ac1c20c0bae7",
             content: {
-               question: "Quelle(s) déclaration(s) C correspond(es) à l'énoncé suivant ? t est un tableau de 10 pointeurs pointant chacun sur un int constant",
+               question: "Quelle(s) déclaration(s) C correspond(ent) à l'énoncé suivant ? t est un tableau de 10 pointeurs pointant chacun sur un int constant",
                answers: [
                   {label: "const int* t[10]", isTheAnswer: true},
                   {label: "int* const t[10]", isTheAnswer: false},
@@ -50,7 +50,7 @@
             type: "options"
          },
          {
-            id: "b8a7c042-d537-45c4-b3da-ac1c20c0bae7",
+            id: "d8a7c042-d537-45c4-b3da-ac1c20c0bae7",
             content: {
                question: "What is the capital of Germany?",
                answer: "Berlin",
@@ -59,7 +59,7 @@
             type: "flashCard"
          },
          {
-            id: "b8a7c042-d537-45c4-b3da-ac1c20c0bae7",
+            id: "e8a7c042-d537-45c4-b3da-ac1c20c0bae7",
             content: {
                question: "What is the capital of France?",
                answer: "Paris",
@@ -68,7 +68,7 @@
             type: "flashCard"
          },
          {
-            id: "b8a7c042-d537-45c4-b3da-ac1c20c0bae7",
+            id: "f8a7c042-d537-45c4-b3da-ac1c20c0bae7",
             content: {
                question: "What is the capital of the United Stated of America?",
                answer: "Washington DC",
@@ -86,6 +86,7 @@
    const cardNumberProgression = ref();
    const nextCardButton = ref();
    const previousCardButton = ref();
+   const signalMessage = ref('');
 
 
    function updateProgressBar() {
@@ -119,7 +120,11 @@
 
 
    async function signalCard() {
-
+      const signalCardID = deck.cards[cardIndex.value].id;
+      console.log("Signal card with ID: " + signalCardID + " with message " + signalMessage.value);
+      
+      // Clear input and hide modal
+      signalMessage.value = "";
       showModal.value = false;
    }
 
@@ -192,7 +197,7 @@
    <template #content>
       <div class="mb-6">
          <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $t("app.learn.modal.message") }}</label>
-         <input type="text" id="message" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+         <input v-model="signalMessage" type="text" id="message" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
       </div>
    </template>
    <template #footer>
