@@ -102,6 +102,7 @@ const folders = [
 const deckName = ref<string>(" ");
 const folderName = ref<string>("");
 
+const viewAllMembers = ref(false);
 const showModalDeck = ref(false);
 const showModalFolder = ref(false);
 
@@ -189,6 +190,7 @@ async function createFolder() {
         <button
           type="submit"
           class="ml-0 h-12 rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue sm:ml-6"
+          @click="viewAllMembers = true"
         >
           {{ $t("app.myClassroom.membersButton") }}
         </button>
@@ -268,7 +270,7 @@ async function createFolder() {
       <div
         class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6 2xl:grid-cols-7"
       >
-        <FolderCard v-for="folder in folders" :id="folder" :name="folder" />
+        <FolderCard v-for="folder in folders" :name="folder" />
       </div>
 
       <!-- Projects list (mobile) -->
@@ -459,6 +461,14 @@ async function createFolder() {
       >
         {{ $t("app.myClassroom.folderModal.cancel") }}
       </button>
+    </template>
+  </Modal>
+
+  <Modal v-model="viewAllMembers">
+    <template #title>
+      <div class="mt-4">
+        {{ $t("app.myClassroom.allMembers") }}
+      </div>
     </template>
   </Modal>
 </template>
