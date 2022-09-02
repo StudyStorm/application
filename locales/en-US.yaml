@@ -121,5 +121,46 @@ app:
     error404: Error 404 - Page not found
     standardError: An error has occurred.
     linkToHome: Click here to return to the home page.
+  dashboard:
+    title: Home
+    topDecks: Top decks
+    recentDecks: Recent decks
+    browseDecks: Browse decks
+    noRecentDecks: No recent decks
+  decks:
+    name: Deck name
+    author: Author
+    nbCards: Number of cards
+    nbVotes: Number of votes
+    createdBy: Created by {name}
+  myClassroom:
+    title: My classrooms
+    manageButton: Manage
+    topDecks: Top classroom decks
+    members: members
+    membersButton: See all members
+    exploreDecks: Explore all classroom decks
+    decksButton: New deck
+    decksPlaceholder: Search for a deck
+    folderButton: New folder
+    decksCard:
+      nbCards: N cards
+      created: Created by {name}
+    deckList:
+      name: Deck name
+      author: Author
+      nbCards: Number of cards
+      votes: Votes
+    deckModal:
+      title: Add a deck
+      name: Deck name
+      cancel: Cancel
+      submit: Create
+    folderModal:
+      title: Add a folder
+      name: Name of the folder
+      cancel: Cancel
+      submit: Create
+    allMembers: This feature will be available soon.
 # HERE THE CONTENT FOR THE APP
 
