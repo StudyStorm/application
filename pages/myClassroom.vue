@@ -19,6 +19,24 @@ tmpUser.firstName = "John";
 tmpUser.lastName = "Doe";
 tmpUser.email = "test@test.ch";
 
+const tmpUser2 = new User();
+tmpUser.id = "1";
+tmpUser.firstName = "John";
+tmpUser.lastName = "Doe";
+tmpUser.email = "test@test.ch";
+
+const tmpUser3 = new User();
+tmpUser.id = "1";
+tmpUser.firstName = "John";
+tmpUser.lastName = "Doe";
+tmpUser.email = "test@test.ch";
+
+const tmpUser4 = new User();
+tmpUser.id = "1";
+tmpUser.firstName = "John";
+tmpUser.lastName = "Doe";
+tmpUser.email = "test@test.ch";
+
 const deck1 = new Deck();
 deck1.id = "af13b1c8-331c-4266-8c7d-4887bed851cd";
 deck1.name = "Deck 1";
@@ -56,7 +74,19 @@ deck6.votes = 10000000000;
 deck6.creator = tmpUser;
 
 const topDecks: Deck[] = [deck1, deck2, deck3, deck4, deck5, deck6];
+const members: User[] = [tmpUser, tmpUser2, tmpUser3, tmpUser4];
 store.allDecks = [...topDecks];
+const folders = [
+  "Pointeurs de pointeurs",
+  "Folder 2",
+  "Folder 3",
+  "Folder 4",
+  "Folder 5",
+  "Folder 5",
+  "Folder 5",
+  "Folder 5",
+  "Folder 5",
+];
 
 // END OF TEMP CODE
 </script>
@@ -66,17 +96,32 @@ store.allDecks = [...topDecks];
     <div
       class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
     >
-      <div class="min-w-0 flex-1">
-        <h1 class="text-lg font-medium leading-6 text-storm-dark sm:truncate">
-          {{ $t("app.dashboard.title") }}
+      <div class="flex min-w-0 flex-1 items-center justify-between">
+        <h1
+          class="flex text-lg font-medium leading-6 text-storm-dark sm:truncate"
+        >
+          <a href="#" class="hover:text-storm-blue hover:underline"
+            >My classroom</a
+          >
+          <ChevronRightIcon
+            class="mx-1 mt-1 h-5 w-5 text-storm-dark"
+            aria-hidden="true"
+          />
+          <a href="#" class="hover:text-storm-blue hover:underline">HEIG</a>
         </h1>
+        <div>
+          <button
+            type="submit"
+            class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Manage
+          </button>
+        </div>
       </div>
     </div>
     <div class="p-4 sm:px-6 lg:px-8">
-      <h1
-        class="mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
-      >
-        {{ $t("app.dashboard.topDecks") }}
+      <h1 class="mb-8 text-3xl font-medium leading-6 text-storm-dark">
+        Top classroom decks
       </h1>
 
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
@@ -84,23 +129,36 @@ store.allDecks = [...topDecks];
       </div>
 
       <h1
-        class="mt-8 mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
+        class="mt-8 mb-4 text-3xl font-medium leading-6 text-storm-dark sm:truncate"
       >
-        {{ $t("app.dashboard.recentDecks") }}
+        Members
       </h1>
-
-      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
-        <DeckCard
-          v-for="deck in store.lastUsedDecks"
-          :key="deck.id"
-          :deck="deck"
+      <div class="flex items-center justify-start">
+        <img
+          v-for="index in 3"
+          :key="members[index].id"
+          class="mr-4 h-16 w-16 rounded-full"
+          src="/images/anonymousProfile.png"
+          alt="Profile pic"
         />
+        <button
+          type="submit"
+          class="ml-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue"
+        >
+          See all members
+        </button>
       </div>
 
       <h1
         class="mt-8 mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
       >
         {{ $t("app.dashboard.browseDecks") }}
+        <button
+          type="submit"
+          class="ml-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-8 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue"
+        >
+          New deck
+        </button>
       </h1>
 
       <div class="flex items-center justify-between">
@@ -131,6 +189,39 @@ store.allDecks = [...topDecks];
             ><Square2StackIcon class="h-5 w-5"
           /></span>
         </div>
+      </div>
+
+      <div
+        class="mt-6 block items-center justify-start text-2xl font-medium leading-6 text-storm-dark sm:flex sm:truncate"
+      >
+        <div class="flex items-center">
+          <a href="#" class="hover:text-storm-blue hover:underline">HEIG</a>
+          <ChevronRightIcon
+            class="mx-1 mt-1 h-5 w-5 text-storm-dark"
+            aria-hidden="true"
+          />
+          <a href="#" class="hover:text-storm-blue hover:underline">PRG2</a>
+          <ChevronRightIcon
+            class="mx-1 mt-1 h-5 w-5 text-storm-dark"
+            aria-hidden="true"
+          />
+          <a href="#" class="hover:text-storm-blue hover:underline"
+            >Pointeurs</a
+          >
+        </div>
+
+        <button
+          type="submit"
+          class="mt-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-14 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue sm:ml-16 sm:mt-0"
+        >
+          New folder
+        </button>
+      </div>
+
+      <div
+        class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8"
+      >
+        <FolderCard v-for="folder in folders" :id="folder" :name="folder" />
       </div>
 
       <!-- Projects list (mobile) -->
