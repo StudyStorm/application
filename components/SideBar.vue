@@ -2,6 +2,17 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
+
+const classrooms = [
+  "Heig",
+  "EPFL",
+  "UNIL",
+  "MIT",
+  "Harvard",
+  "Boston",
+  "Oxford",
+];
+
 import {
   Dialog,
   DialogPanel,
@@ -31,7 +42,7 @@ const navigation = [
   },
   {
     name: t("app.sideNav.class"),
-    href: "/classrooms",
+    href: "",
     icon: AcademicCapIcon,
     current: false,
     options: true,
@@ -301,7 +312,7 @@ async function createClassroom() {
               </NuxtLink>
               <div
                 v-if="item.options"
-                class="p-2"
+                class="p-4"
                 @click="showButton = !showButton"
               >
                 <ChevronUpIcon
@@ -316,9 +327,18 @@ async function createClassroom() {
                 />
               </div>
             </div>
-            <div v-if="showButton" class="flex justify-center">
+            <div
+              v-if="showButton"
+              class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
+            >
+              <a
+                v-for="classroom in classrooms"
+                href="/myClassroom"
+                class="rounded-md pl-4 hover:bg-gray-300"
+                >{{ classroom }}</a
+              >
               <button
-                class="mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="mb-2 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-1 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue"
                 @click="createClassroom"
               >
                 {{ $t("app.createClassroom.title") }}
