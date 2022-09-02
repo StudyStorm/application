@@ -45,9 +45,12 @@ export const useDecksStore = defineStore("decks", {
     },
 
     async fetchDecks() {
-      useFetchAPI("/dashboard", {
+      const { data, error } = await useFetchAPI("/decks", {
         method: "GET",
       });
+
+      console.log(data);
+      console.log(error);
     },
   },
 });

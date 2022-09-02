@@ -12,6 +12,10 @@ const store = useDecksStore();
 
 const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
 
+// Fetch data - top decks
+// Fetch data - decks list
+store.fetchDecks();
+
 // TMP CODE - Remove when integrating API
 const tmpUser = new User();
 tmpUser.id = "1";
@@ -90,11 +94,13 @@ store.allDecks = [...topDecks];
       </h1>
 
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
-        <DeckCard
-          v-for="deck in store.lastUsedDecks"
-          :key="deck.id"
-          :deck="deck"
-        />
+        <ClientOnly>
+          <DeckCard
+            v-for="deck in store.lastUsedDecks"
+            :key="deck.id"
+            :deck="deck"
+          />
+        </ClientOnly>
       </div>
 
       <h1

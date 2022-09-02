@@ -3,8 +3,9 @@ import { useDecksStore } from "~/store/decks";
 const store = useDecksStore();
 const route = useRoute();
 
-// TODO: Fetch the deck / Check deck access
-store.addUsedDeck(route.params.id as string);
+onMounted(() => {
+  store.addUsedDeck(route.params.id as string);
+});
 </script>
 
 <template>
