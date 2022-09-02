@@ -82,10 +82,10 @@ const folders = [
   "Folder 3",
   "Folder 4",
   "Folder 5",
-  "Folder 5",
-  "Folder 5",
-  "Folder 5",
-  "Folder 5",
+  "Folder 6",
+  "Folder 7",
+  "Folder 8",
+  "Folder 9",
 ];
 
 // END OF TEMP CODE
@@ -219,7 +219,7 @@ const folders = [
       </div>
 
       <div
-        class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8"
+        class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6 2xl:grid-cols-7"
       >
         <FolderCard v-for="folder in folders" :id="folder" :name="folder" />
       </div>
