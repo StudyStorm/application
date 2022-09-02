@@ -59,6 +59,10 @@ const topDecks: Deck[] = [deck1, deck2, deck3, deck4, deck5, deck6];
 store.allDecks = [...topDecks];
 
 // END OF TEMP CODE
+
+definePageMeta({
+  middleware: ["auth"],
+});
 </script>
 
 <template>
