@@ -121,5 +121,17 @@ app:
     error404: Error 404 - Page not found
     standardError: An error has occurred.
     linkToHome: Click here to return to the home page.
+  dashboard:
+    title: Home
+    topDecks: Top decks
+    recentDecks: Recent decks
+    browseDecks: Browse decks
+    noRecentDecks: No recent decks
+  decks:
+    name: Deck name
+    author: Author
+    nbCards: Number of cards
+    nbVotes: Number of votes
+    createdBy: Created by {name}
 # HERE THE CONTENT FOR THE APP
 

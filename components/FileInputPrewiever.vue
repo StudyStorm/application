@@ -6,7 +6,7 @@ const input = ref(null);
 
 const emit = defineEmits(["validFile"]);
 
-const dropFile = (e: DragEvent) => {
+const dropFile = (e: DragEvent): void => {
   const file = e.dataTransfer.files[0];
   if (file) {
     renderPreview(file);
@@ -14,7 +14,7 @@ const dropFile = (e: DragEvent) => {
   }
 };
 
-const selectPicture = () => {
+const selectPicture = (): void => {
   const files = input.value.files;
 
   if (files && files[0]) {
@@ -24,7 +24,9 @@ const selectPicture = () => {
   }
 };
 
-const renderPreview = (file: File) => {
+const renderPreview = (file: File): void => {
+  if (!file) return;
+
   let reader = new FileReader();
   reader.onload = (e) => {
     filePreview.value = e.target.result;
