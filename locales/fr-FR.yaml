@@ -138,6 +138,29 @@ app:
     nbCards: Nombre de cartes
     nbVotes: Nombre de votes
     createdBy: Créé par {name}
+  myClassroom:
+    title: Mes salles de classe
+    manageButton: Gérer
+    topDecks: Decks les plus populaires
+    members: Membres
+    membersButton: Voir les membres
+    exploreDecks: Explorer les decks
+    decksButton: Nouveau deck
+    decksPlaceholder: Rechercher un deck
+    folderButton: Nouveau dossier
+    decksCard:
+      nbCards: N cartes
+      created: Créé par
+    deckList:
+      name: Nom du deck
+      author: Auteur
+      nbCards: N° de cartes
+      votes: Votes
+    deckModal:
+      title: Ajouter un dossier
+      name: Nom du dossier
+      cancel: Annuler
+      submit: Créer
   # HERE THE CONTENT FOR THE APP
 
 

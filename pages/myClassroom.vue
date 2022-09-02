@@ -89,6 +89,36 @@ const folders = [
 ];
 
 // END OF TEMP CODE
+const folderName = ref({
+  fold: "",
+});
+
+const showModalDeck = ref(false);
+
+async function create() {
+  // const { data: answer } = await useFetchAPI("/createClassroom", {
+  //   method: "POST",
+  //   body: datas.value,
+  //   initialCache: false,
+  // });
+  // err.value = !answer.value;
+  // if (answer.value) {
+  //   resetField();
+  //   router.push("/classrooms");
+  // }
+  showModalDeck.value = false;
+  console.log(folderName.value);
+}
+async function closeModal() {
+  resetField();
+  showModalDeck.value = false;
+}
+function resetField() {
+  folderName.value.fold = "";
+}
+async function openModalDeck() {
+  showModalDeck.value = true;
+}
 </script>
 
 <template>
@@ -100,9 +130,9 @@ const folders = [
         <h1
           class="flex text-lg font-medium leading-6 text-storm-dark sm:truncate"
         >
-          <a href="#" class="hover:text-storm-blue hover:underline"
-            >My classroom</a
-          >
+          <a href="#" class="hover:text-storm-blue hover:underline">
+            {{ $t("app.myClassroom.title") }}
+          </a>
           <ChevronRightIcon
             class="mx-1 mt-1 h-5 w-5 text-storm-dark"
             aria-hidden="true"
@@ -114,14 +144,14 @@ const folders = [
             type="submit"
             class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            Manage
+            {{ $t("app.myClassroom.manageButton") }}
           </button>
         </div>
       </div>
     </div>
     <div class="p-4 sm:px-6 lg:px-8">
       <h1 class="mb-8 text-3xl font-medium leading-6 text-storm-dark">
-        Top classroom decks
+        {{ $t("app.myClassroom.topDecks") }}
       </h1>
 
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
@@ -131,7 +161,7 @@ const folders = [
       <h1
         class="mt-8 mb-4 text-3xl font-medium leading-6 text-storm-dark sm:truncate"
       >
-        Members
+        {{ $t("app.myClassroom.members") }}
       </h1>
       <div class="flex items-center justify-start">
         <img
@@ -145,7 +175,7 @@ const folders = [
           type="submit"
           class="ml-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue"
         >
-          See all members
+          {{ $t("app.myClassroom.membersButton") }}
         </button>
       </div>
 
@@ -156,8 +186,9 @@ const folders = [
         <button
           type="submit"
           class="ml-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-8 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue"
+          @click="openModalDeck"
         >
-          New deck
+          {{ $t("app.myClassroom.decksButton") }}
         </button>
       </h1>
 
@@ -168,7 +199,7 @@ const folders = [
             name="searchDeck"
             type="text"
             class="block w-40 flex-auto rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:w-80 sm:text-sm md:w-96"
-            placeholder="Search decks"
+            placeholder=""
           />
         </div>
 
@@ -336,4 +367,43 @@ const folders = [
       </div>
     </div>
   </div>
+
+  <Modal v-model="showModalDeck">
+    <template #title> {{ $t("app.createClassroom.title") }} </template>
+    <template #content>
+      <form action="#">
+        <label for="name" class="block text-sm font-medium text-gray-700">
+          {{ $t("app.createClassroom.name") }}
+        </label>
+        <div class="mt-1">
+          <input
+            id="name"
+            v-model="folderName.fold"
+            name="name"
+            type="text"
+            required
+            autocomplete="off"
+            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+      </form>
+    </template>
+    <template #footer>
+      <button
+        type="submit"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="create"
+      >
+        {{ $t("app.createClassroom.create") }}
+      </button>
+      <button
+        ref="cancelButtonRef"
+        type="reset"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="closeModal"
+      >
+        {{ $t("app.createClassroom.cancel") }}
+      </button>
+    </template>
+  </Modal>
 </template>
