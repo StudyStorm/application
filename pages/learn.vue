@@ -10,7 +10,8 @@
       {
          question: "What is the capital of switzerland?",
          answer: "Bern",
-         type: "string"
+         type: "string",
+         card_type: "flashCard"
       },
       { 
          question: "Where am I ?",
@@ -19,23 +20,37 @@
             {label: "I am not here", isTheAnswer: false},
             {label: "I am maybe here", isTheAnswer: false},
             {label: "Working", isTheAnswer: true}
-      ],
-         type: "option"
+         ],
+         type: "string",
+         card_type: "options"
+      },{ 
+         question: "Quelle(s) déclaration(s) C correspond(es) à l'énoncé suivant ? t est un tableau de 10 pointeurs pointant chacun sur un int constant",
+         answers: [
+            {label: "const int* t[10]", isTheAnswer: true},
+            {label: "int* const t[10]", isTheAnswer: false},
+            {label: "const int* t[10", isTheAnswer: false},
+            {label: "int** const t[10]", isTheAnswer: false}
+         ],
+         type: "string",
+         card_type: "options"
       },
       {
          question: "What is the capital of Germany?",
          answer: "Berlin",
-         type: "string"
+         type: "string",
+         card_type: "flashCard"
       },
       {
          question: "What is the capital of France?",
          answer: "Paris",
-         type: "string"
+         type: "string",
+         card_type: "flashCard"
       },
       {
          question: "What is the capital of the United Stated of America?",
          answer: "Washington DC",
-         type: "string"
+         type: "string",
+         card_type: "flashCard"
       }
    ];
 
@@ -107,8 +122,8 @@
       <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
          <div class="bg-purple-600 h-2.5 rounded-full dark:bg-purple-500" style="width: 0%" ref="progressBar"></div>
       </div>
-      <FlashCard v-if="cards[cardIndex].type === 'string'" ref="card" :question="cards[cardIndex].question" :answer="cards[cardIndex].answer"></FlashCard>
-      <OptionsCard v-if="cards[cardIndex].type === 'option'" ref="card" :question="cards[cardIndex].question" :answers="cards[cardIndex].answers.map((answer) => { return answer.label })" :is-the-answer="cards[cardIndex].answers.map((answer) => { return answer.isTheAnswer })"></OptionsCard>
+      <FlashCard v-if="cards[cardIndex].card_type === 'flashCard'" ref="card" :question="cards[cardIndex].question" :answer="cards[cardIndex].answer"></FlashCard>
+      <OptionsCard v-if="cards[cardIndex].card_type === 'options'" ref="card" :question="cards[cardIndex].question" :answers="cards[cardIndex].answers.map((answer) => { return answer.label })" :is-the-answer="cards[cardIndex].answers.map((answer) => { return answer.isTheAnswer })"></OptionsCard>
       <div class=" flex flex-col" style="display: flex; align-items: center; justify-content: center;">
          <div class="inline-flex">
             <button ref="previousCardButton" @click="previousCard" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-l">

@@ -43,8 +43,8 @@
   <Card ref="card" :isFlippable="false">
     <template #cardFront>
       <div class="grid grid-rows-1 space-y-6 items-center" style="margin-left: auto; margin-right: auto;">
-        <div class="text-center">
-          <h1 class="cardText">
+        <div class="text-center font-medium ">
+          <h1 class="text-gray-600 ">
             {{ question }}
           </h1>
         </div>
@@ -76,7 +76,6 @@
 
 <style scoped>
   .cardText {
-    color: #3F434A;
     text-align: center;
     font-weight: bold;
     font-size: 22px;
