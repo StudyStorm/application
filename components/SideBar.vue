@@ -275,46 +275,47 @@ async function createClassroom() {
         </Menu>
         <nav class="mt-6 px-3">
           <div class="space-y-1">
-            <NuxtLink
-              v-for="item in navigation"
-              :key="item.name"
-              :to="item.href"
-              :class="[
-                item.current
-                  ? 'bg-gray-200 text-gray-900'
-                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
-                'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
-              ]"
-              :aria-current="item.current ? 'page' : undefined"
-            >
-              <component
-                :is="item.icon"
+            <div v-for="item in navigation" class="flex items-center">
+              <NuxtLink
+                :key="item.name"
+                :to="item.href"
                 :class="[
                   item.current
-                    ? 'text-gray-500'
-                    : 'text-gray-400 group-hover:text-gray-500',
-                  'mr-3 flex-shrink-0 h-6 w-6',
+                    ? 'bg-gray-200 text-gray-900'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
+                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md w-48',
                 ]"
-                aria-hidden="true"
-              />
-              {{ item.name }}
+                :aria-current="item.current ? 'page' : undefined"
+              >
+                <component
+                  :is="item.icon"
+                  :class="[
+                    item.current
+                      ? 'text-gray-500'
+                      : 'text-gray-400 group-hover:text-gray-500',
+                    'mr-3 flex-shrink-0 h-6 w-6',
+                  ]"
+                  aria-hidden="true"
+                />
+                {{ item.name }}
+              </NuxtLink>
               <div
                 v-if="item.options"
-                class="ml-14"
+                class="p-2"
                 @click="showButton = !showButton"
               >
                 <ChevronUpIcon
                   v-if="showButton"
-                  class="h-5 w-5 shrink-0 text-gray-400 group-hover:text-blue-600"
+                  class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
                   aria-hidden="true"
                 />
                 <ChevronDownIcon
                   v-else
-                  class="h-5 w-5 shrink-0 text-gray-400 group-hover:text-blue-600"
+                  class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
                   aria-hidden="true"
                 />
               </div>
-            </NuxtLink>
+            </div>
             <div v-if="showButton" class="flex justify-center">
               <button
                 class="mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
