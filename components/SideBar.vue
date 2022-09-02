@@ -181,9 +181,25 @@ async function createClassroom() {
                       />
                       {{ item.name }}
                     </NuxtLink>
-                    <div class="flex justify-start">
+                    <!-- <div class="flex justify-start">
                       <button
                         class="mx-6 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        @click="createClassroom"
+                      >
+                        {{ $t("app.createClassroom.title") }}
+                      </button>
+                    </div> -->
+                    <div
+                      class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
+                    >
+                      <a
+                        v-for="classroom in classrooms"
+                        href="/myClassroom"
+                        class="mb-2 rounded-md pl-4 hover:bg-gray-300"
+                        >{{ classroom }}</a
+                      >
+                      <button
+                        class="mb-2 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-1 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue"
                         @click="createClassroom"
                       >
                         {{ $t("app.createClassroom.title") }}
