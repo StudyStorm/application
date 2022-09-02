@@ -17,10 +17,10 @@
    }
 
    async function resetCard(){
-     if (isFlipped.value){
-       flippedCard.value.style.transform = 'rotateY(180deg)';
-       isFlipped.value = false;
-       await sleep(800);
+     if (props.isFlippable && isFlipped.value){
+        flippedCard.value.style.transform = 'rotateY(180deg)';
+        isFlipped.value = false;
+          await sleep(800);
      }
    }
 
