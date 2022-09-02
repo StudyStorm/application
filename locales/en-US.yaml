@@ -117,6 +117,20 @@ app:
       buttons:
         cancel: Cancel
         confirmDelete: Delete
+  learn:
+    buttons:
+      signal: Signal card
+      checkAnswer: Check
+    modal:
+      title: Signal card
+      message: Suggest a better answer. A message will be sent to the card creator to review your suggestion.
+      buttons:
+        confirmSignal: Signal
+        cancel: Cancel
+    select:
+      defaultText: Choose an answer
+    text:
+      by: by
   createClassroom:
     title: Create a new classroom
     name: Classroom name
