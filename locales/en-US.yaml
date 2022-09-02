@@ -152,8 +152,13 @@ app:
       nbCards: Number of cards
       votes: Votes
     deckModal:
+      title: Add a deck
+      name: Deck name
+      cancel: Cancel
+      submit: Create
+    folderModal:
       title: Add a folder
-      name: Folder name
+      name: Name of the folder
       cancel: Cancel
       submit: Create
 # HERE THE CONTENT FOR THE APP

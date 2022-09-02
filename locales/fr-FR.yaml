@@ -157,6 +157,11 @@ app:
       nbCards: Nombre de cartes
       votes: Votes
     deckModal:
+      title: Ajouter un deck
+      name: Nom du deck
+      cancel: Annuler
+      submit: Créer
+    folderModal:
       title: Ajouter un dossier
       name: Nom du dossier
       cancel: Annuler

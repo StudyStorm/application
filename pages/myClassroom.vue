@@ -98,13 +98,14 @@ const folders = [
 ];
 
 // END OF TEMP CODE
-const folderName = ref({
-  fold: "",
-});
+
+const deckName = ref<string>(" ");
+const folderName = ref<string>("");
 
 const showModalDeck = ref(false);
+const showModalFolder = ref(false);
 
-async function create() {
+async function createDeck() {
   // const { data: answer } = await useFetchAPI("/createClassroom", {
   //   method: "POST",
   //   body: datas.value,
@@ -115,19 +116,23 @@ async function create() {
   //   resetField();
   //   router.push("/classrooms");
   // }
+  console.log(deckName.value);
   showModalDeck.value = false;
+}
+
+async function createFolder() {
+  // const { data: answer } = await useFetchAPI("/createClassroom", {
+  //   method: "POST",
+  //   body: datas.value,
+  //   initialCache: false,
+  // });
+  // err.value = !answer.value;
+  // if (answer.value) {
+  //   resetField();
+  //   router.push("/classrooms");
+  // }
   console.log(folderName.value);
-}
-async function closeModal() {
-  resetField();
-  showModalDeck.value = false;
-}
-function resetField() {
-  folderName.value.fold = "";
-}
-async function openModalDeck() {
-  console.log(t("app.myClassroom.title"));
-  showModalDeck.value = true;
+  showModalFolder.value = false;
 }
 </script>
 
@@ -196,7 +201,7 @@ async function openModalDeck() {
         <button
           type="submit"
           class="ml-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-8 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue"
-          @click="openModalDeck"
+          @click="showModalDeck = true"
         >
           {{ $t("app.myClassroom.decksButton") }}
         </button>
@@ -254,6 +259,7 @@ async function openModalDeck() {
         <button
           type="submit"
           class="mt-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-14 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue sm:ml-16 sm:mt-0"
+          @click="showModalFolder = true"
         >
           {{ $t("app.myClassroom.folderButton") }}
         </button>
@@ -388,7 +394,7 @@ async function openModalDeck() {
         <div class="mt-1">
           <input
             id="name"
-            v-model="folderName.fold"
+            v-model="deckName"
             name="name"
             type="text"
             required
@@ -402,7 +408,7 @@ async function openModalDeck() {
       <button
         type="submit"
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="create"
+        @click="createDeck"
       >
         {{ $t("app.myClassroom.deckModal.submit") }}
       </button>
@@ -410,9 +416,48 @@ async function openModalDeck() {
         ref="cancelButtonRef"
         type="reset"
         class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="closeModal"
+        @click="showModalDeck = false"
       >
         {{ $t("app.myClassroom.deckModal.cancel") }}
+      </button>
+    </template>
+  </Modal>
+
+  <Modal v-model="showModalFolder">
+    <template #title> {{ $t("app.myClassroom.folderModal.title") }} </template>
+    <template #content>
+      <form action="#">
+        <label for="name" class="block text-sm font-medium text-gray-700">
+          {{ $t("app.myClassroom.folderModal.name") }}
+        </label>
+        <div class="mt-1">
+          <input
+            id="name"
+            v-model="folderName"
+            name="name"
+            type="text"
+            required
+            autocomplete="off"
+            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+      </form>
+    </template>
+    <template #footer>
+      <button
+        type="submit"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="createFolder"
+      >
+        {{ $t("app.myClassroom.folderModal.submit") }}
+      </button>
+      <button
+        ref="cancelButtonRef"
+        type="reset"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="showModalFolder = false"
+      >
+        {{ $t("app.myClassroom.folderModal.cancel") }}
       </button>
     </template>
   </Modal>
