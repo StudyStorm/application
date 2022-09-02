@@ -1,5 +1,18 @@
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
+const classrooms = [
+  "Heig",
+  "EPFL",
+  "UNIL",
+  "MIT",
+  "Harvard",
+  "Boston",
+  "Oxford",
+];
+
 import {
   Dialog,
   DialogPanel,
@@ -14,22 +27,68 @@ import {
 import {
   XMarkIcon,
   ChevronDownIcon,
+  ChevronUpIcon,
   Bars3CenterLeftIcon,
   AcademicCapIcon,
   HomeIcon,
 } from "@heroicons/vue/24/solid/index.js";
 
 const navigation = [
-  { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
   {
-    name: "My classrooms",
-    href: "/classrooms",
+    name: t("app.sideNav.home"),
+    href: "/dashboard",
+    icon: HomeIcon,
+    current: true,
+  },
+  {
+    name: t("app.sideNav.class"),
+    href: "",
     icon: AcademicCapIcon,
     current: false,
+    options: true,
   },
 ];
 
+//Modal for room creation
+const datas = ref({
+  className: "",
+  visibility: true,
+});
+
+//const err = ref<null | any>(null);
+const showButton = ref(false);
 const sidebarOpen = ref(false);
+const showModal = ref(false);
+
+async function create() {
+  // const { data: answer } = await useFetchAPI("/createClassroom", {
+  //   method: "POST",
+  //   body: datas.value,
+  //   initialCache: false,
+  // });
+  // err.value = !answer.value;
+  // if (answer.value) {
+  //   resetField();
+  //   router.push("/classrooms");
+  // }
+  showModal.value = false;
+  console.log(datas.value);
+}
+
+async function closeModal() {
+  resetField();
+  showModal.value = false;
+}
+
+function resetField() {
+  datas.value.className = "";
+  datas.value.visibility = true;
+}
+
+async function createClassroom() {
+  sidebarOpen.value = false;
+  showModal.value = true;
+}
 </script>
 <template>
   <div>
@@ -122,6 +181,14 @@ const sidebarOpen = ref(false);
                       />
                       {{ item.name }}
                     </NuxtLink>
+                    <div class="flex justify-start">
+                      <button
+                        class="mx-6 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        @click="createClassroom"
+                      >
+                        {{ $t("app.createClassroom.title") }}
+                      </button>
+                    </div>
                   </div>
                 </nav>
               </div>
@@ -219,30 +286,64 @@ const sidebarOpen = ref(false);
         </Menu>
         <nav class="mt-6 px-3">
           <div class="space-y-1">
-            <NuxtLink
-              v-for="item in navigation"
-              :key="item.name"
-              :to="item.href"
-              :class="[
-                item.current
-                  ? 'bg-gray-200 text-gray-900'
-                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
-                'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
-              ]"
-              :aria-current="item.current ? 'page' : undefined"
-            >
-              <component
-                :is="item.icon"
+            <div v-for="item in navigation" class="flex items-center">
+              <NuxtLink
+                :key="item.name"
+                :to="item.href"
                 :class="[
                   item.current
-                    ? 'text-gray-500'
-                    : 'text-gray-400 group-hover:text-gray-500',
-                  'mr-3 flex-shrink-0 h-6 w-6',
+                    ? 'bg-gray-200 text-gray-900'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
+                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md w-48',
                 ]"
-                aria-hidden="true"
-              />
-              {{ item.name }}
-            </NuxtLink>
+                :aria-current="item.current ? 'page' : undefined"
+              >
+                <component
+                  :is="item.icon"
+                  :class="[
+                    item.current
+                      ? 'text-gray-500'
+                      : 'text-gray-400 group-hover:text-gray-500',
+                    'mr-3 flex-shrink-0 h-6 w-6',
+                  ]"
+                  aria-hidden="true"
+                />
+                {{ item.name }}
+              </NuxtLink>
+              <div
+                v-if="item.options"
+                class="p-4"
+                @click="showButton = !showButton"
+              >
+                <ChevronUpIcon
+                  v-if="showButton"
+                  class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                  aria-hidden="true"
+                />
+                <ChevronDownIcon
+                  v-else
+                  class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+            <div
+              v-if="showButton"
+              class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
+            >
+              <a
+                v-for="classroom in classrooms"
+                href="/myClassroom"
+                class="rounded-md pl-4 hover:bg-gray-300"
+                >{{ classroom }}</a
+              >
+              <button
+                class="mb-2 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-1 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue"
+                @click="createClassroom"
+              >
+                {{ $t("app.createClassroom.title") }}
+              </button>
+            </div>
           </div>
         </nav>
       </div>
@@ -317,4 +418,57 @@ const sidebarOpen = ref(false);
       </div>
     </div>
   </div>
+  <Modal v-model="showModal">
+    <template #title> {{ $t("app.createClassroom.title") }} </template>
+    <template #content>
+      <form action="#">
+        <label for="name" class="block text-sm font-medium text-gray-700">
+          {{ $t("app.createClassroom.name") }}
+        </label>
+        <div class="mt-1">
+          <input
+            id="name"
+            v-model="datas.className"
+            name="name"
+            type="text"
+            required
+            autocomplete="off"
+            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+        <div class="mt-1">
+          <input
+            id="isPublic"
+            v-model="datas.visibility"
+            name="isPublic"
+            type="checkbox"
+            value="isPublic"
+            class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600"
+          />
+          <label
+            for="isPublic"
+            class="ml-2 text-sm font-medium text-gray-900"
+            >{{ $t("app.createClassroom.public") }}</label
+          >
+        </div>
+      </form>
+    </template>
+    <template #footer>
+      <button
+        type="confirmCreation"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="create"
+      >
+        {{ $t("app.createClassroom.create") }}
+      </button>
+      <button
+        ref="cancelButtonRef"
+        type="button"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="closeModal"
+      >
+        {{ $t("app.createClassroom.cancel") }}
+      </button>
+    </template>
+  </Modal>
 </template>

@@ -117,6 +117,15 @@ app:
       buttons:
         cancel: Cancel
         confirmDelete: Delete
+  createClassroom:
+    title: Create a new classroom
+    name: Classroom name
+    public: Public classroom
+    cancel: Cancel
+    create: Create
+  sideNav:
+    home: Home
+    class: My classrooms
   error:
     error404: Error 404 - Page not found
     standardError: An error has occurred.

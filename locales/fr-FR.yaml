@@ -121,6 +121,15 @@ app:
       buttons:
         cancel: Annuler
         confirmDelete: Supprimer
+  createClassroom:
+    title: Créer une salle de classe
+    name: Nom de la salle de classe
+    public: Salle de classe publique
+    cancel: Annuler
+    create: Créer
+  sideNav:
+    home: Accueil
+    class: Salles de classe
   error:
     error404: Erreur 404 - Page non trouvée
     standardError: Une erreur est survenue
