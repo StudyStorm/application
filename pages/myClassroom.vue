@@ -180,11 +180,11 @@ async function createFolder() {
         {{ $t("app.myClassroom.members") }}
       </h1>
       <div class="flex items-center justify-start">
-        <img
+        <NuxtImg
           v-for="index in 3"
           :key="members[index].id"
           class="mr-4 h-16 w-16 rounded-full"
-          src="images/anonymousProfile.png"
+          src="/images/anonymousProfile.png"
           alt="Profile pic"
         />
         <button
