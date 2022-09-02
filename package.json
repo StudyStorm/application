@@ -35,6 +35,7 @@
     "eslint-plugin-vue": "^9.3.0",
     "flowbite": "^1.5.2",
     "happy-dom": "^6.0.4",
+    "husky": "^8.0.1",
     "nuxt": "3.0.0-rc.8",
     "nuxt-svgo": "^1.0.0",
     "prettier": "^2.7.1",

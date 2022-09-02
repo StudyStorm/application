@@ -135,10 +135,60 @@ app:
       defaultText: Choisissez un réponse
     text:
       by: par
+  createClassroom:
+    title: Créer une salle de classe
+    name: Nom de la salle de classe
+    public: Salle de classe publique
+    cancel: Annuler
+    create: Créer
+  sideNav:
+    home: Accueil
+    class: Salles de classe
   error:
     error404: Erreur 404 - Page non trouvée
     standardError: Une erreur est survenue
     linkToHome: Cliquez-ici pour revenir à l'accueil
+  dashboard:
+    title: Accueil
+    topDecks: Collections populaires
+    recentDecks: Collections récentes
+    browseDecks: Explorer les collections
+    noRecentDecks: Aucune collection récente
+  decks:
+    name: Nom de la collection
+    author: Auteur
+    nbCards: Nombre de cartes
+    nbVotes: Nombre de votes
+    createdBy: Créé par {name}
+  myClassroom:
+    title: Mes salles de classe
+    manageButton: Gérer
+    topDecks: Decks les plus populaires
+    members: Membres
+    membersButton: Voir les membres
+    exploreDecks: Explorer les decks
+    decksButton: Nouveau deck
+    decksPlaceholder: Rechercher un deck
+    folderButton: Nouveau dossier
+    decksCard:
+      nbCards: N cartes
+      created: Créé par
+    deckList:
+      name: Nom du deck
+      author: Auteur
+      nbCards: Nombre de cartes
+      votes: Votes
+    deckModal:
+      title: Ajouter un deck
+      name: Nom du deck
+      cancel: Annuler
+      submit: Créer
+    folderModal:
+      title: Ajouter un dossier
+      name: Nom du dossier
+      cancel: Annuler
+      submit: Créer
+    allMembers: Cette fonctionnalité sera bientôt disponible.
   # HERE THE CONTENT FOR THE APP
 
 
