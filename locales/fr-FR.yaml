@@ -125,6 +125,20 @@ app:
     error404: Erreur 404 - Page non trouvée
     standardError: Une erreur est survenue
     linkToHome: Cliquez-ici pour revenir à l'accueil
+  deck:
+    modal:
+      create:
+        title: Créer une nouvelle carte
+        selectType: Sélectionnez un type de carte
+      edit:
+        title: Modifier une carte
+      labels:
+        question: Question
+        answer: Réponse
+        answers: Réponses
+      buttons:
+        create: Créer
+        cancel: Annuler
 
   # HERE THE CONTENT FOR THE APP
 
