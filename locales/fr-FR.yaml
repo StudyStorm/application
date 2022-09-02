@@ -154,7 +154,7 @@ app:
     deckList:
       name: Nom du deck
       author: Auteur
-      nbCards: N° de cartes
+      nbCards: Nombre de cartes
       votes: Votes
     deckModal:
       title: Ajouter un dossier

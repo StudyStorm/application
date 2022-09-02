@@ -6,11 +6,20 @@ import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
 import User from "~~/models/User";
 import Deck from "../models/Deck";
 
+import { useI18n } from "vue-i18n";
+
 const displayStyle = ref("row");
+
+const { t } = useI18n();
 
 const store = useDecksStore();
 
-const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
+const tableHeaders = [
+  t("app.myClassroom.deckList.name"),
+  t("app.myClassroom.deckList.author"),
+  t("app.myClassroom.deckList.nbCards"),
+  t("app.myClassroom.deckList.votes"),
+];
 
 // TMP CODE - Remove when integrating API
 const tmpUser = new User();
@@ -117,6 +126,7 @@ function resetField() {
   folderName.value.fold = "";
 }
 async function openModalDeck() {
+  console.log(t("app.myClassroom.title"));
   showModalDeck.value = true;
 }
 </script>
@@ -173,7 +183,7 @@ async function openModalDeck() {
         />
         <button
           type="submit"
-          class="ml-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue"
+          class="ml-0 h-12 rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue sm:ml-6"
         >
           {{ $t("app.myClassroom.membersButton") }}
         </button>
@@ -182,7 +192,7 @@ async function openModalDeck() {
       <h1
         class="mt-8 mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
       >
-        {{ $t("app.dashboard.browseDecks") }}
+        {{ $t("app.myClassroom.exploreDecks") }}
         <button
           type="submit"
           class="ml-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-8 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue"
@@ -199,7 +209,7 @@ async function openModalDeck() {
             name="searchDeck"
             type="text"
             class="block w-40 flex-auto rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:w-80 sm:text-sm md:w-96"
-            placeholder=""
+            :placeholder="$t('app.myClassroom.decksPlaceholder')"
           />
         </div>
 
@@ -245,7 +255,7 @@ async function openModalDeck() {
           type="submit"
           class="mt-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-14 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue sm:ml-16 sm:mt-0"
         >
-          New folder
+          {{ $t("app.myClassroom.folderButton") }}
         </button>
       </div>
 
@@ -369,11 +379,11 @@ async function openModalDeck() {
   </div>
 
   <Modal v-model="showModalDeck">
-    <template #title> {{ $t("app.createClassroom.title") }} </template>
+    <template #title> {{ $t("app.myClassroom.deckModal.title") }} </template>
     <template #content>
       <form action="#">
         <label for="name" class="block text-sm font-medium text-gray-700">
-          {{ $t("app.createClassroom.name") }}
+          {{ $t("app.myClassroom.deckModal.name") }}
         </label>
         <div class="mt-1">
           <input
@@ -394,7 +404,7 @@ async function openModalDeck() {
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="create"
       >
-        {{ $t("app.createClassroom.create") }}
+        {{ $t("app.myClassroom.deckModal.submit") }}
       </button>
       <button
         ref="cancelButtonRef"
@@ -402,7 +412,7 @@ async function openModalDeck() {
         class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         @click="closeModal"
       >
-        {{ $t("app.createClassroom.cancel") }}
+        {{ $t("app.myClassroom.deckModal.cancel") }}
       </button>
     </template>
   </Modal>
