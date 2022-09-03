@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { XCircleIcon, XMarkIcon } from "@heroicons/vue/24/solid/index.js";
 import useAuth from "~/composables/useAuth";
+import SPasswordInput from "~/components/SPasswordInput.vue";
 
 const router = useRouter();
 const auth = useAuth();
@@ -87,7 +88,7 @@ definePageMeta({
                   {{ $t("app.login.password") }}
                 </label>
                 <div class="mt-1">
-                  <input
+                  <s-password-input
                     id="password"
                     v-model="credentials.password"
                     name="password"

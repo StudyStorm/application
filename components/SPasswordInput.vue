@@ -1,17 +1,12 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
 <script setup lang="ts">
+import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/solid/index.js";
+
 defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
-  id: {
-    type: String,
-    required: true,
-  },
-  placeholder: {
-    type: String,
-    required: true,
-  },
   modelValue: String,
 });
 
@@ -25,23 +20,27 @@ const isShown = ref(false);
 const fieldType = computed(() => {
   return isShown.value ? "text" : "password";
 });
+
+const icon = computed(() => {
+  return isShown.value ? EyeIcon : EyeSlashIcon;
+});
 </script>
 <template>
-  <input
-    :id="id"
-    :type="fieldType"
-    :name="name"
-    :placeholder="placeholder"
-    :value="modelValue"
-    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
-    required
-    @input="updateValue"
-  />
-  <div
-    class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
-  >
-    <NuxtLink href="#" class="hover:underline" @click="isShown = !isShown">{{
-      isShown ? $t("app.reset.hidePw") : $t("app.reset.showPw")
-    }}</NuxtLink>
-  </div>
+  <label class="relative m-0 border-none">
+    <span class="absolute inset-y-0 right-3 flex items-center pl-2">
+      <component
+        :is="icon"
+        class="h-5 w-5 cursor-pointer text-storm-blue"
+        aria-hidden="true"
+        @click="isShown = !isShown"
+      />
+    </span>
+    <input
+      class="pr-9"
+      v-bind="$attrs"
+      :type="fieldType"
+      :value="modelValue"
+      @input="updateValue"
+    />
+  </label>
 </template>
