@@ -26,21 +26,22 @@ const icon = computed(() => {
 });
 </script>
 <template>
-  <label class="relative m-0 border-none">
-    <div class="absolute inset-y-0 right-3 flex items-center pl-2">
+  <div class="relative" @click="$refs.input.focus()">
+    <span class="absolute inset-y-0 right-3 flex items-center pl-2">
       <component
         :is="icon"
         class="h-5 w-5 cursor-pointer text-storm-blue"
         aria-hidden="true"
         @click="isShown = !isShown"
       />
-    </div>
+    </span>
     <input
+      ref="input"
       class="pr-9"
       v-bind="$attrs"
       :type="fieldType"
       :value="modelValue"
       @input="updateValue"
     />
-  </label>
+  </div>
 </template>
