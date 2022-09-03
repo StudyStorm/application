@@ -73,6 +73,9 @@ app:
     title: Sign in to your account
     email: Email address
     password: Password
+    placeholder:
+      email: Your email address
+      password: Your password
     forgotPassword: Forgot your password?
     noAccount: Don't have an account yet ?
     registerHere: Sign up here

@@ -77,6 +77,9 @@ app:
     title: Connectez-vous à votre compte
     email: Adresse email
     password: Mot de passe
+    placeholder:
+      email: Votre adresse email
+      password: Votre mot de passe
     forgotPassword: Mot de passe oublié ?
     noAccount: Vous n'avez pas encore de compte ?
     registerHere: Inscrivez-vous ici

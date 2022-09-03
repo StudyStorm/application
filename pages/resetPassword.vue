@@ -27,6 +27,7 @@ async function sendNewPassword() {
 
 definePageMeta({
   layout: "nosidebar",
+  auth: "guest",
 });
 </script>
 

@@ -11,6 +11,7 @@ function sendEmail() {
 
 definePageMeta({
   layout: "nosidebar",
+  auth: "guest",
 });
 </script>
 
