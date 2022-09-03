@@ -32,6 +32,7 @@ import {
   AcademicCapIcon,
   HomeIcon,
 } from "@heroicons/vue/24/solid/index.js";
+import { useNuxtApp } from "#app";
 
 const navigation = [
   {

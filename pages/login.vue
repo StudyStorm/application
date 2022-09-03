@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useNuxtApp } from "#app";
+import useAuth from "~/composables/useAuth";
 
 const img = "/images/post-it-for-login.png";
 const router = useRouter();
@@ -10,9 +10,9 @@ const credentials = ref({
 
 const err = ref<null | any>(null);
 
-const { $auth } = useNuxtApp();
+const auth = useAuth();
 async function login() {
-  await $auth
+  await auth
     .login({
       body: credentials.value,
     })
