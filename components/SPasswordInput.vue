@@ -27,14 +27,14 @@ const icon = computed(() => {
 </script>
 <template>
   <label class="relative m-0 border-none">
-    <span class="absolute inset-y-0 right-3 flex items-center pl-2">
+    <div class="absolute inset-y-0 right-3 flex items-center pl-2">
       <component
         :is="icon"
         class="h-5 w-5 cursor-pointer text-storm-blue"
         aria-hidden="true"
         @click="isShown = !isShown"
       />
-    </span>
+    </div>
     <input
       class="pr-9"
       v-bind="$attrs"
