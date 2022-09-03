@@ -89,7 +89,7 @@ app:
     title: Vérification de l'adresse mail
     firstParagraph: Un lien de vérification a été envoyé sur votre adresse mail.
     secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
-    noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau.
+    noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau
   reset:
     title: Réinitialiser le mot de passe
     email: Adresse email liée au compte
@@ -106,7 +106,14 @@ app:
   forgottenPassword:
     title: Réinitialiser votre mot de passe
     email: Entrez l'email lié à votre compte
+    placeholder:
+      email: Votre adresse email
+      password: Votre mot de passe
     submit: Envoyer l'email de réinitialisation
+    noEmail: Aucun email reçu ?
+    clickResend: Cliquez ici pour en recevoir un nouveau
+    error: Une erreur est survenue pendant l'envoi de l'email de réinitialisation
+    success: L'email de réinitialisation a été envoyé avec succès
   profile:
     title: Profile
     labels:

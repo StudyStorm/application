@@ -78,7 +78,6 @@ definePageMeta({
                 name="password"
                 placeholder="••••••••"
               />
-              />
             </div>
           </div>
 
@@ -92,7 +91,6 @@ definePageMeta({
                 v-model="datas.confirmPassword"
                 name="confirmPw"
                 placeholder="••••••••"
-              />
               />
             </div>
           </div>

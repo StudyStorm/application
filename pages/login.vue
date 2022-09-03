@@ -10,6 +10,8 @@ const credentials = ref({
   password: "",
 });
 
+const bgImg = `/images/background_${Math.round(Math.random())}.jpg`;
+
 const error = ref<boolean>(false);
 
 async function login() {
@@ -36,14 +38,14 @@ definePageMeta({
 <template>
   <div class="flex h-screen justify-between">
     <div
-      class="flex flex-1 flex-col justify-center px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 2xl:px-40"
+      class="flex flex-1 flex-col justify-center px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 2xl:px-32"
     >
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
           <div class="flex items-center justify-center">
             <nuxt-img
               src="/images/Logo.svg"
-              class="h-24 text-storm-dark 2xl:h-32"
+              class="h-24 text-storm-dark 2xl:h-28"
               alt="StudyStorm Logo"
             />
           </div>
@@ -166,8 +168,9 @@ definePageMeta({
     <div
       class="relative hidden flex-1 lg:block"
       :style="{
-        backgroundImage: `url(/images/post-it-for-login.png)`,
+        backgroundImage: `url(${bgImg})`,
         backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
         backgroundSize: 'cover',
       }"
     ></div>

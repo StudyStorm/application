@@ -47,14 +47,14 @@ onClickOutside(target, () => (showMobileMenu.value = false));
       </NuxtLink>
       <div class="flex items-center lg:order-2">
         <NuxtLink
-          v-slot="{ navigate: navigateToRegister }"
+          v-slot="{ navigate: navigateToLogin }"
           custom
           to="/login"
           rel="noopener"
         >
           <button
             class="mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4 focus:ring-storm-darkblue/50"
-            @click="navigateToRegister"
+            @click="navigateToLogin"
           >
             {{ $t("landing.navbar.start") }}
           </button>
