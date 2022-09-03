@@ -3,6 +3,9 @@ import { execSync } from "node:child_process";
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   modules: [
+    "@nuxtjs-alt/auth",
+    "@nuxtjs-alt/http",
+    "@nuxtjs-alt/proxy",
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "@vueuse/nuxt",
@@ -71,5 +74,27 @@ export default defineNuxtConfig({
   svgoOptions: {
     svgo: false,
     defaultImport: "component",
+  },
+  http: {
+    credentials: "include",
+    baseURL: process.env.BASE_URL,
+  },
+  auth: {
+    watchLoggedIn: true,
+    globalMiddleware: true,
+    strategies: {
+      studyStorm: {
+        name: "studyStorm",
+        scheme: "~/schemes/StudyStormScheme",
+        cookie: {
+          server: true,
+          name: "studystorm-session",
+        },
+        baseURL:
+          process.env.NODE_ENV === "production"
+            ? process.env.PRODUCTION_API_URL
+            : process.env.LOCAL_API_URL,
+      },
+    },
   },
 });

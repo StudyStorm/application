@@ -232,11 +232,12 @@ async function createClassroom() {
                   />
                   <span class="flex min-w-0 flex-1 flex-col">
                     <span class="truncate text-sm font-medium text-gray-900"
-                      >Jessy Schwarz</span
+                      >{{ $auth.user.first_name }}
+                      {{ $auth.user.last_name }}</span
                     >
-                    <span class="truncate text-sm text-gray-500"
-                      >@jessyschwarz</span
-                    >
+                    <span class="truncate text-sm text-gray-500">{{
+                      $auth.user.email
+                    }}</span>
                   </span>
                 </span>
                 <ChevronDownIcon
@@ -286,7 +287,11 @@ async function createClassroom() {
         </Menu>
         <nav class="mt-6 px-3">
           <div class="space-y-1">
-            <div v-for="item in navigation" class="flex items-center">
+            <div
+              v-for="(item, index) in navigation"
+              :key="index"
+              class="flex items-center"
+            >
               <NuxtLink
                 :key="item.name"
                 :to="item.href"
@@ -332,7 +337,8 @@ async function createClassroom() {
               class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
             >
               <a
-                v-for="classroom in classrooms"
+                v-for="(classroom, index) in classrooms"
+                :key="index"
                 href="/myClassroom"
                 class="rounded-md pl-4 hover:bg-gray-300"
                 >{{ classroom }}</a

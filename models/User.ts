@@ -5,17 +5,15 @@ export default class User extends Model {
 
   public email: string;
 
-  public password: string;
+  public first_name: string;
 
-  public firstName: string;
-
-  public lastName: string;
+  public last_name: string;
 
   public profilePicture: string;
 
   public isEmailVerified: boolean;
 
   get fullname(): string {
-    return `${this.firstName} ${this.lastName}`;
+    return `${this.first_name} ${this.last_name}`;
   }
 }

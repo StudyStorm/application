@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useNuxtApp } from "#app";
+
 const img = "/images/post-it-for-login.png";
 const router = useRouter();
 const credentials = ref({
@@ -8,16 +10,20 @@ const credentials = ref({
 
 const err = ref<null | any>(null);
 
+const { $auth } = useNuxtApp();
 async function login() {
-  const { data: answer } = await useFetchAPI("/v1/login", {
-    method: "POST",
-    body: credentials.value,
-    initialCache: false,
-  });
-  err.value = !answer.value;
-  if (answer.value) {
-    router.push("/dashboard");
-  }
+  await $auth
+    .login({
+      body: credentials.value,
+    })
+    .catch((e) => {
+      console.log(e);
+      err.value = e;
+    })
+    .then((e) => {
+      console.log(e);
+      router.push("/dashboard");
+    });
 }
 
 definePageMeta({

@@ -31,7 +31,6 @@ async function save() {
     err.value = !answer.value;
 
     if (answer.value) {
-
     }
   }
 }
@@ -168,7 +167,7 @@ async function deleteAccount() {
       </form>
     </div>
   </div>
-  
+
   <Modal v-model="showModal">
     <template #icon
       ><div

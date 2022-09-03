@@ -67,6 +67,7 @@ const features = [
 
 definePageMeta({
   layout: "landing",
+  auth: "guest",
 });
 </script>
 

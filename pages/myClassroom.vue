@@ -24,26 +24,26 @@ const tableHeaders = [
 // TMP CODE - Remove when integrating API
 const tmpUser = new User();
 tmpUser.id = "1";
-tmpUser.firstName = "John";
-tmpUser.lastName = "Doe";
+tmpUser.first_name = "John";
+tmpUser.last_name = "Doe";
 tmpUser.email = "test@test.ch";
 
 const tmpUser2 = new User();
 tmpUser.id = "1";
-tmpUser.firstName = "John";
-tmpUser.lastName = "Doe";
+tmpUser.first_name = "John";
+tmpUser.last_name = "Doe";
 tmpUser.email = "test@test.ch";
 
 const tmpUser3 = new User();
 tmpUser.id = "1";
-tmpUser.firstName = "John";
-tmpUser.lastName = "Doe";
+tmpUser.first_name = "John";
+tmpUser.last_name = "Doe";
 tmpUser.email = "test@test.ch";
 
 const tmpUser4 = new User();
 tmpUser.id = "1";
-tmpUser.firstName = "John";
-tmpUser.lastName = "Doe";
+tmpUser.first_name = "John";
+tmpUser.last_name = "Doe";
 tmpUser.email = "test@test.ch";
 
 const deck1 = new Deck();
@@ -270,7 +270,11 @@ async function createFolder() {
       <div
         class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6 2xl:grid-cols-7"
       >
-        <FolderCard v-for="folder in folders" :name="folder" />
+        <FolderCard
+          v-for="(folder, index) in folders"
+          :key="index"
+          :name="folder"
+        />
       </div>
 
       <!-- Projects list (mobile) -->

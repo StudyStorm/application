@@ -19,6 +19,7 @@ export function useFetchAPI<
   return useFetch(request, {
     ...opts,
     baseURL: config.apiURL,
+    credentials: "include",
   });
 }
 
