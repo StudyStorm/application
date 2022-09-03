@@ -1,17 +1,16 @@
 <script setup>
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-const { t } = useI18n();
 
-const classrooms = [
-  "Heig",
-  "EPFL",
-  "UNIL",
-  "MIT",
-  "Harvard",
-  "Boston",
-  "Oxford",
-];
+import {
+  XMarkIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Bars3CenterLeftIcon,
+  AcademicCapIcon,
+  HomeIcon,
+} from "@heroicons/vue/24/solid/index.js";
+import { useNuxtApp } from "#app";
 
 import {
   Dialog,
@@ -24,14 +23,19 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-import {
-  XMarkIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  Bars3CenterLeftIcon,
-  AcademicCapIcon,
-  HomeIcon,
-} from "@heroicons/vue/24/solid/index.js";
+const { t } = useI18n();
+
+const auth = useAuth();
+
+const classrooms = [
+  "Heig",
+  "EPFL",
+  "UNIL",
+  "MIT",
+  "Harvard",
+  "Boston",
+  "Oxford",
+];
 
 const navigation = [
   {
@@ -107,7 +111,7 @@ async function createClassroom() {
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <div class="fixed inset-0 bg-gray-600 bg-opacity-75" />
+          <div class="fixed inset-0 bg-gray-600/75" />
         </TransitionChild>
 
         <div class="fixed inset-0 z-40 flex">
@@ -205,7 +209,7 @@ async function createClassroom() {
       <div class="flex shrink-0 items-center px-6">
         <nuxt-img
           src="/images/Logo.svg"
-          class="text-gradient-to-r mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
+          class="mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
           alt="StudyStorm Logo"
         />
         <span
@@ -232,11 +236,12 @@ async function createClassroom() {
                   />
                   <span class="flex min-w-0 flex-1 flex-col">
                     <span class="truncate text-sm font-medium text-gray-900"
-                      >Jessy Schwarz</span
+                      >{{ $auth.user.first_name }}
+                      {{ $auth.user.last_name }}</span
                     >
-                    <span class="truncate text-sm text-gray-500"
-                      >@jessyschwarz</span
-                    >
+                    <span class="truncate text-sm text-gray-500">{{
+                      $auth.user.email
+                    }}</span>
                   </span>
                 </span>
                 <ChevronDownIcon
@@ -255,7 +260,7 @@ async function createClassroom() {
             leave-to-class="transform scale-95 opacity-0"
           >
             <MenuItems
-              class="absolute inset-x-0 z-10 mx-3 mt-1 origin-top divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              class="absolute inset-x-0 z-10 mx-3 mt-1 origin-top divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
             >
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
@@ -271,13 +276,14 @@ async function createClassroom() {
               </div>
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a
-                    href="#"
+                  <NuxtLink
+                    to="/"
                     :class="[
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 text-sm',
                     ]"
-                    >Logout</a
+                    @click="auth.logout()"
+                    >Logout</NuxtLink
                   >
                 </MenuItem>
               </div>
@@ -286,7 +292,11 @@ async function createClassroom() {
         </Menu>
         <nav class="mt-6 px-3">
           <div class="space-y-1">
-            <div v-for="item in navigation" class="flex items-center">
+            <div
+              v-for="(item, index) in navigation"
+              :key="index"
+              class="flex items-center"
+            >
               <NuxtLink
                 :key="item.name"
                 :to="item.href"
@@ -332,7 +342,8 @@ async function createClassroom() {
               class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
             >
               <a
-                v-for="classroom in classrooms"
+                v-for="(classroom, index) in classrooms"
+                :key="index"
                 href="/myClassroom"
                 class="rounded-md pl-4 hover:bg-gray-300"
                 >{{ classroom }}</a
@@ -385,7 +396,7 @@ async function createClassroom() {
               leave-to-class="transform scale-95 opacity-0"
             >
               <MenuItems
-                class="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
               >
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
@@ -401,13 +412,14 @@ async function createClassroom() {
                 </div>
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
-                    <a
-                      href="#"
+                    <NuxtLink
+                      to="/"
                       :class="[
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm',
                       ]"
-                      >Logout</a
+                      @click="auth.logout()"
+                      >Logout</NuxtLink
                     >
                   </MenuItem>
                 </div>

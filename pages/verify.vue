@@ -1,25 +1,29 @@
 <script setup lang="ts">
-
 definePageMeta({
   layout: "nosidebar",
+  auth: "guest",
 });
 </script>
 
 <template>
-  <div class="h-screen mx-auto mt-10 md:mt-0">
-    <div class="flex flex-col w-full h-full max-w-xs mx-auto md:justify-center">
-      <nuxt-img src="/images/Logo.svg" class="w-full h-16 pr-10" alt="StudyStorm Logo" />
-      <div class="w-full mt-16 text-4xl font-bold">
-        {{  $t("app.verify.title")  }}
+  <div class="mx-auto mt-10 h-screen md:mt-0">
+    <div class="mx-auto flex h-full w-full max-w-xs flex-col md:justify-center">
+      <nuxt-img
+        src="/images/Logo.svg"
+        class="h-16 w-full pr-10"
+        alt="StudyStorm Logo"
+      />
+      <div class="mt-16 w-full text-4xl font-bold">
+        {{ $t("app.verify.title") }}
       </div>
-      <div class="w-full mt-10 text-xl">
-        {{  $t("app.verify.firstParagraph")  }}
+      <div class="mt-10 w-full text-xl">
+        {{ $t("app.verify.firstParagraph") }}
       </div>
       <br />
-      <div class="w-full text-xl">{{  $t("app.verify.secondParagraph")  }}</div>
-      <a href="#" class="w-full mt-16 hover:text-storm-blue hover:underline">{{
-         $t("app.verify.noEmail") 
-        }}</a>
+      <div class="w-full text-xl">{{ $t("app.verify.secondParagraph") }}</div>
+      <a href="#" class="mt-16 w-full hover:text-storm-blue hover:underline">{{
+        $t("app.verify.noEmail")
+      }}</a>
     </div>
   </div>
 </template>
