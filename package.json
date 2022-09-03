@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nuxt build",
     "start": "node .output/server/index.mjs",
-    "prepare": "nuxt prepare",
+    "prepare": "husky install & nuxt prepare",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -43,6 +43,9 @@
     "vitest": "^0.22.1"
   },
   "dependencies": {
+    "@nuxtjs-alt/auth": "^2.0.5",
+    "@nuxtjs-alt/http": "^1.2.9",
+    "@nuxtjs-alt/proxy": "^1.3.2",
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
     "@pinia/nuxt": "^0.4.1",
     "@tailwindcss/forms": "^0.5.2",

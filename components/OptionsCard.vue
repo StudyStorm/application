@@ -70,6 +70,7 @@ const answerStyle = computed(() => (isTheAnswer: boolean) => {
             type="button"
             class="flex w-full justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             @click="displayRightAnswers = true"
+            @click="displayRightAnswers = true"
           >
             {{ $t("app.learn.buttons.checkAnswer") }}
           </button>
@@ -78,3 +79,15 @@ const answerStyle = computed(() => (isTheAnswer: boolean) => {
     </template>
   </FlippableCard>
 </template>
+<<<<<<< HEAD =======
+
+<style scoped>
+.cardText {
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+>>>>>>> dev

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { onClickOutside } from "@vueuse/core";
-import { useFetchAPI } from "~/composables/useFetchAPI";
 
 const { t } = useI18n();
 
@@ -24,15 +23,6 @@ const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value;
 };
 
-const testApiInteraction = async () => {
-  const { data, error } = await useFetchAPI<{ hello: string }>("/");
-  if (error.value) {
-    console.log(error.value);
-    return;
-  }
-  alert(data.value.hello);
-};
-
 onClickOutside(target, () => (showMobileMenu.value = false));
 </script>
 
@@ -47,7 +37,7 @@ onClickOutside(target, () => (showMobileMenu.value = false));
       <NuxtLink to="/" title="Landing page link" class="flex items-center">
         <nuxt-img
           src="/images/Logo.svg"
-          class="text-gradient-to-r mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
+          class="mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
           alt="StudyStorm Logo"
         />
         <span
@@ -56,13 +46,19 @@ onClickOutside(target, () => (showMobileMenu.value = false));
         >
       </NuxtLink>
       <div class="flex items-center lg:order-2">
-        <button
-          href="#"
-          class="hover:bg-primary-800 mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4 focus:ring-storm-darkblue/50"
-          @click="testApiInteraction"
+        <NuxtLink
+          v-slot="{ navigate: navigateToRegister }"
+          custom
+          to="/login"
+          rel="noopener"
         >
-          {{ $t("landing.navbar.start") }}
-        </button>
+          <button
+            class="mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4 focus:ring-storm-darkblue/50"
+            @click="navigateToRegister"
+          >
+            {{ $t("landing.navbar.start") }}
+          </button>
+        </NuxtLink>
         <button
           data-collapse-toggle="mobile-menu-2"
           type="button"

@@ -16,7 +16,7 @@ const updatePicture = (picture: File) => {
 async function register() {
   // TODO: class store
   if (userInformation.value.password === confirmPassword.value) {
-    const { data: answer } = await useFetchAPI("/register", {
+    const { data: answer, error } = await useFetchAPI("/v1/register", {
       method: "POST",
       body: userInformation.value,
       initialCache: false,
@@ -25,13 +25,14 @@ async function register() {
     err.value = !answer.value;
 
     if (answer.value) {
-      router.push("/verify-page");
+      router.push("/verify");
     }
   }
 }
 
 definePageMeta({
   layout: "nosidebar",
+  auth: "guest",
 });
 </script>
 

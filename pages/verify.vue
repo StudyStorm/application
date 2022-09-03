@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "nosidebar",
+  auth: "guest",
 });
 </script>
 

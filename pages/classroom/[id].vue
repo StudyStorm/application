@@ -33,26 +33,26 @@ const tableHeaders = [
 // TMP CODE - Remove when integrating API
 const tmpUser = new User();
 tmpUser.id = "1";
-tmpUser.firstName = "John";
-tmpUser.lastName = "Doe";
+tmpUser.first_name = "John";
+tmpUser.last_name = "Doe";
 tmpUser.email = "test@test.ch";
 
 const tmpUser2 = new User();
 tmpUser.id = "1";
-tmpUser.firstName = "John";
-tmpUser.lastName = "Doe";
+tmpUser.first_name = "John";
+tmpUser.last_name = "Doe";
 tmpUser.email = "test@test.ch";
 
 const tmpUser3 = new User();
 tmpUser.id = "1";
-tmpUser.firstName = "John";
-tmpUser.lastName = "Doe";
+tmpUser.first_name = "John";
+tmpUser.last_name = "Doe";
 tmpUser.email = "test@test.ch";
 
 const tmpUser4 = new User();
 tmpUser.id = "1";
-tmpUser.firstName = "John";
-tmpUser.lastName = "Doe";
+tmpUser.first_name = "John";
+tmpUser.last_name = "Doe";
 tmpUser.email = "test@test.ch";
 
 const deck1 = new Deck();
