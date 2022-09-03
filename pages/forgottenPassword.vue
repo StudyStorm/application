@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ArrowLeftIcon } from "@heroicons/vue/24/outline/index.js";
-definePageMeta({
-  layout: "nosidebar",
-});
 
 function sendEmail() {
   console.log("L'envoie de l'email est encore à faire");
 }
+
+definePageMeta({
+  layout: "nosidebar",
+});
 </script>
 
 <template>

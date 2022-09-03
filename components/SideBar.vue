@@ -338,7 +338,7 @@ async function createClassroom() {
               <NuxtLink
                 v-for="classroom in classrooms"
                 :key="classroom"
-                to="/myClassroom"
+                to="/classroom"
                 class="rounded-md pl-4 hover:bg-gray-300"
                 >{{ classroom }}
               </NuxtLink>

@@ -160,7 +160,7 @@ app:
     nbCards: Nombre de cartes
     nbVotes: Nombre de votes
     createdBy: Créé par {name}
-  myClassroom:
+  classroom:
     title: Mes salles de classe
     manageButton: Gérer
     topDecks: Decks les plus populaires

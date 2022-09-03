@@ -156,7 +156,7 @@ app:
     nbCards: Number of cards
     nbVotes: Number of votes
     createdBy: Created by {name}
-  myClassroom:
+  classroom:
     title: My classrooms
     manageButton: Manage
     topDecks: Top classroom decks

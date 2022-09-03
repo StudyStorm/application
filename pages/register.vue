@@ -14,6 +14,7 @@ const updatePicture = (picture: File) => {
 };
 
 async function register() {
+  // TODO: class store
   if (userInformation.value.password === confirmPassword.value) {
     const { data: answer } = await useFetchAPI("/register", {
       method: "POST",

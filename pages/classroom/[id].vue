@@ -2,11 +2,20 @@
 import { ChevronRightIcon, Bars4Icon } from "@heroicons/vue/24/solid/index.js";
 import { useDecksStore } from "~/store/decks";
 
-import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
+import {
+  Square2StackIcon,
+  FolderPlusIcon,
+} from "@heroicons/vue/24/outline/index.js";
 import User from "~~/models/User";
-import Deck from "../models/Deck";
+import Deck from "~~/models/Deck";
 
 import { useI18n } from "vue-i18n";
+import { useClassroomStore } from "../../store/classroom";
+
+const route = useRoute();
+const classroomStore = useClassroomStore();
+
+await classroomStore.fetchClassroom(route.params.id as string);
 
 const displayStyle = ref("row");
 
@@ -15,10 +24,10 @@ const { t } = useI18n();
 const store = useDecksStore();
 
 const tableHeaders = [
-  t("app.myClassroom.deckList.name"),
-  t("app.myClassroom.deckList.author"),
-  t("app.myClassroom.deckList.nbCards"),
-  t("app.myClassroom.deckList.votes"),
+  t("app.classroom.deckList.name"),
+  t("app.classroom.deckList.author"),
+  t("app.classroom.deckList.nbCards"),
+  t("app.classroom.deckList.votes"),
 ];
 
 // TMP CODE - Remove when integrating API
@@ -105,36 +114,6 @@ const folderName = ref<string>("");
 const viewAllMembers = ref(false);
 const showModalDeck = ref(false);
 const showModalFolder = ref(false);
-
-async function createDeck() {
-  // const { data: answer } = await useFetchAPI("/createClassroom", {
-  //   method: "POST",
-  //   body: datas.value,
-  //   initialCache: false,
-  // });
-  // err.value = !answer.value;
-  // if (answer.value) {
-  //   resetField();
-  //   router.push("/classrooms");
-  // }
-  console.log(deckName.value);
-  showModalDeck.value = false;
-}
-
-async function createFolder() {
-  // const { data: answer } = await useFetchAPI("/createClassroom", {
-  //   method: "POST",
-  //   body: datas.value,
-  //   initialCache: false,
-  // });
-  // err.value = !answer.value;
-  // if (answer.value) {
-  //   resetField();
-  //   router.push("/classrooms");
-  // }
-  console.log(folderName.value);
-  showModalFolder.value = false;
-}
 </script>
 
 <template>
@@ -147,7 +126,7 @@ async function createFolder() {
           class="flex text-lg font-medium leading-6 text-storm-dark sm:truncate"
         >
           <a href="#" class="hover:text-storm-blue hover:underline">
-            {{ $t("app.myClassroom.title") }}
+            {{ $t("app.classroom.title") }}
           </a>
           <ChevronRightIcon
             class="mx-1 mt-1 h-5 w-5 text-storm-dark"
@@ -160,53 +139,51 @@ async function createFolder() {
             type="submit"
             class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            {{ $t("app.myClassroom.manageButton") }}
+            {{ $t("app.classroom.manageButton") }}
           </button>
         </div>
       </div>
     </div>
     <div class="p-4 sm:px-6 lg:px-8">
-      <h1 class="mb-8 text-3xl font-medium leading-6 text-storm-dark">
-        {{ $t("app.myClassroom.topDecks") }}
+      <h1
+        class="mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
+      >
+        {{ $t("app.classroom.topDecks") }}
       </h1>
 
-      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
+      <div class="mb-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
         <DeckCard v-for="deck in topDecks" :key="deck.id" :deck="deck" />
       </div>
 
       <h1
-        class="mt-8 mb-4 text-3xl font-medium leading-6 text-storm-dark sm:truncate"
+        class="mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
       >
-        {{ $t("app.myClassroom.members") }}
+        {{ $t("app.classroom.members") }}
       </h1>
-      <div class="flex items-center justify-start">
-        <NuxtImg
-          v-for="index in 3"
-          :key="members[index].id"
-          class="mr-4 h-16 w-16 rounded-full"
-          src="/images/anonymousProfile.png"
-          alt="Profile pic"
-        />
-        <button
-          type="submit"
-          class="ml-0 h-12 rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue sm:ml-6"
-          @click="viewAllMembers = true"
-        >
-          {{ $t("app.myClassroom.membersButton") }}
-        </button>
+      <div class="flex min-w-0 flex-1 items-center justify-between">
+        <div class="flex">
+          <NuxtImg
+            v-for="index in 3"
+            :key="members[index].id"
+            class="mx-1 h-10 w-10 rounded-full"
+            src="/images/anonymousProfile.png"
+            alt="Profile pic"
+          />
+        </div>
+        <div>
+          <button
+            type="submit"
+            class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            {{ $t("app.classroom.membersButton") }}
+          </button>
+        </div>
       </div>
 
       <h1
         class="mt-8 mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
       >
-        {{ $t("app.myClassroom.exploreDecks") }}
-        <button
-          type="submit"
-          class="ml-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-8 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue"
-          @click="showModalDeck = true"
-        >
-          {{ $t("app.myClassroom.decksButton") }}
-        </button>
+        {{ $t("app.classroom.exploreDecks") }}
       </h1>
 
       <div class="flex items-center justify-between">
@@ -216,62 +193,89 @@ async function createFolder() {
             name="searchDeck"
             type="text"
             class="block w-40 flex-auto rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:w-80 sm:text-sm md:w-96"
-            :placeholder="$t('app.myClassroom.decksPlaceholder')"
+            :placeholder="$t('app.classroom.decksPlaceholder')"
           />
         </div>
 
-        <div
-          class="flex cursor-pointer divide-x-2 rounded-sm border text-storm-dark"
-        >
-          <span
-            class="p-2 hover:scale-110"
-            :class="{ 'bg-gray-200': displayStyle === 'row' }"
-            @click="displayStyle = 'row'"
+        <div class="flex">
+          <div
+            class="mr-4 flex cursor-pointer divide-x-2 rounded-sm border text-storm-dark"
           >
-            <Bars4Icon class="h-5 w-5"
-          /></span>
-          <span
-            class="p-2 hover:scale-110"
-            :class="{ 'bg-gray-200': displayStyle === 'card' }"
-            @click="displayStyle = 'card'"
-            ><Square2StackIcon class="h-5 w-5"
-          /></span>
+            <span
+              class="p-2 hover:scale-110"
+              :class="{ 'bg-gray-200': displayStyle === 'row' }"
+              @click="displayStyle = 'row'"
+            >
+              <Bars4Icon class="h-5 w-5"
+            /></span>
+            <span
+              class="p-2 hover:scale-110"
+              :class="{ 'bg-gray-200': displayStyle === 'card' }"
+              @click="displayStyle = 'card'"
+              ><Square2StackIcon class="h-5 w-5"
+            /></span>
+          </div>
+          <div>
+            <button
+              type="submit"
+              class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              @click="showModalDeck = true"
+            >
+              {{ $t("app.classroom.decksButton") }}
+            </button>
+          </div>
         </div>
       </div>
 
       <div
         class="mt-6 block items-center justify-start text-2xl font-medium leading-6 text-storm-dark sm:flex sm:truncate"
       >
-        <div class="flex items-center">
-          <a href="#" class="hover:text-storm-blue hover:underline">HEIG</a>
-          <ChevronRightIcon
-            class="mx-1 mt-1 h-5 w-5 text-storm-dark"
-            aria-hidden="true"
-          />
-          <a href="#" class="hover:text-storm-blue hover:underline">PRG2</a>
-          <ChevronRightIcon
-            class="mx-1 mt-1 h-5 w-5 text-storm-dark"
-            aria-hidden="true"
-          />
-          <a href="#" class="hover:text-storm-blue hover:underline"
-            >Pointeurs</a
+        <div class="flex min-w-0 flex-1 items-center justify-between">
+          <h1
+            class="flex text-lg font-medium leading-6 text-storm-dark sm:truncate"
           >
+            <a href="#" class="hover:text-storm-blue hover:underline">HEIG</a>
+            <ChevronRightIcon
+              class="mx-1 mt-1 h-5 w-5 text-storm-dark"
+              aria-hidden="true"
+            />
+            <a href="#" class="hover:text-storm-blue hover:underline">PRG2</a>
+            <ChevronRightIcon
+              class="mx-1 mt-1 h-5 w-5 text-storm-dark"
+              aria-hidden="true"
+            />
+            <a href="#" class="hover:text-storm-blue hover:underline"
+              >Pointeurs</a
+            >
+          </h1>
         </div>
-
-        <button
-          type="submit"
-          class="mt-6 h-12 rounded-md border border-transparent bg-storm-darkblue px-14 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue sm:ml-16 sm:mt-0"
-          @click="showModalFolder = true"
-        >
-          {{ $t("app.myClassroom.folderButton") }}
-        </button>
       </div>
 
       <div
         class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6 2xl:grid-cols-7"
       >
+        <div
+          to="#"
+          class="rounded-lg p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
+          @click="showModalFolder = true"
+        >
+          <div class="flex items-center space-x-4">
+            <div class="w-10 shrink-0">
+              <FolderPlusIcon />
+            </div>
+            <div class="min-w-0 flex-1">
+              <p
+                class="truncate text-sm font-medium text-gray-900 dark:text-white"
+              >
+                {{ $t("app.classroom.folderButton") }}
+              </p>
+            </div>
+          </div>
+        </div>
         <FolderCard v-for="folder in folders" :key="folder" :name="folder" />
       </div>
+
+      <hr class="my-8" />
 
       <!-- Projects list (mobile) -->
       <div class="mt-10 sm:hidden">
@@ -387,11 +391,11 @@ async function createFolder() {
   </div>
 
   <Modal v-model="showModalDeck">
-    <template #title> {{ $t("app.myClassroom.deckModal.title") }} </template>
+    <template #title> {{ $t("app.classroom.deckModal.title") }} </template>
     <template #content>
       <form action="#">
         <label for="name" class="block text-sm font-medium text-gray-700">
-          {{ $t("app.myClassroom.deckModal.name") }}
+          {{ $t("app.classroom.deckModal.name") }}
         </label>
         <div class="mt-1">
           <input
@@ -410,9 +414,8 @@ async function createFolder() {
       <button
         type="submit"
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="createDeck"
       >
-        {{ $t("app.myClassroom.deckModal.submit") }}
+        {{ $t("app.classroom.deckModal.submit") }}
       </button>
       <button
         ref="cancelButtonRef"
@@ -420,17 +423,17 @@ async function createFolder() {
         class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         @click="showModalDeck = false"
       >
-        {{ $t("app.myClassroom.deckModal.cancel") }}
+        {{ $t("app.classroom.deckModal.cancel") }}
       </button>
     </template>
   </Modal>
 
   <Modal v-model="showModalFolder">
-    <template #title> {{ $t("app.myClassroom.folderModal.title") }} </template>
+    <template #title> {{ $t("app.classroom.folderModal.title") }} </template>
     <template #content>
       <form action="#">
         <label for="name" class="block text-sm font-medium text-gray-700">
-          {{ $t("app.myClassroom.folderModal.name") }}
+          {{ $t("app.classroom.folderModal.name") }}
         </label>
         <div class="mt-1">
           <input
@@ -449,9 +452,9 @@ async function createFolder() {
       <button
         type="submit"
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="createFolder"
+        @click="classroomStore.createFolder"
       >
-        {{ $t("app.myClassroom.folderModal.submit") }}
+        {{ $t("app.classroom.folderModal.submit") }}
       </button>
       <button
         ref="cancelButtonRef"
@@ -459,7 +462,7 @@ async function createFolder() {
         class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         @click="showModalFolder = false"
       >
-        {{ $t("app.myClassroom.folderModal.cancel") }}
+        {{ $t("app.classroom.folderModal.cancel") }}
       </button>
     </template>
   </Modal>
@@ -467,7 +470,7 @@ async function createFolder() {
   <Modal v-model="viewAllMembers">
     <template #title>
       <div class="mt-4">
-        {{ $t("app.myClassroom.allMembers") }}
+        {{ $t("app.classroom.allMembers") }}
       </div>
     </template>
   </Modal>

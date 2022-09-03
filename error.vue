@@ -4,8 +4,6 @@ export default {
   props: ["error"], // you can set a custom layout for the error page
 };
 
-const img = "images/post-it-for-login.png";
-
 definePageMeta({
   layout: "nosidebar",
 });
