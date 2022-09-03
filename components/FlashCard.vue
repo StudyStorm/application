@@ -1,30 +1,34 @@
 <script setup lang="ts">
-   const card = ref()
+const card = ref();
 
-    const props = defineProps({
-      question: String,
-      answer: String
-    });
+const props = defineProps({
+  question: {
+    type: String,
+    required: true,
+  },
+  answers: {
+    type: Array<string>,
+    required: true,
+  },
+});
 
+// async function sleep(ms) {
+//   return await new Promise((resolve) => setTimeout(resolve, ms));
+// }
 
-    async function sleep(ms) {
-      return await new Promise(resolve => setTimeout(resolve, ms));
-    }
+async function resetCard() {
+  await card.value.resetCard();
+}
 
-    async function resetCard(){
-      await card.value.resetCard();
-    }
-
-    defineExpose({
-      resetCard
-    });
-
+defineExpose({
+  resetCard,
+});
 </script>
 
 <template>
-  <Card ref="card" :isFlippable="true">
+  <Card ref="card" :is-flippable="true">
     <template #cardFront>
-      <span class="cardText">
+      <span class="p-6 text-center text-xl font-bold text-storm-dark">
         {{ question }}
       </span>
     </template>
@@ -37,20 +41,20 @@
 </template>
 
 <style scoped>
-  .cardFace {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    background: #F2F2F2;
-  }
+.cardFace {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: #f2f2f2;
+}
 
-  .cardText {
-    color: #3F434A;
-    text-align: center;
-    font-weight: bold;
-    font-size: 22px;
-    margin-left:auto;
-    margin-right:auto;
-  }
+.cardText {
+  color: #3f434a;
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

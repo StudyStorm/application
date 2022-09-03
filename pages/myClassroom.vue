@@ -270,7 +270,7 @@ async function createFolder() {
       <div
         class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6 2xl:grid-cols-7"
       >
-        <FolderCard v-for="folder in folders" :name="folder" />
+        <FolderCard v-for="folder in folders" :key="folder" :name="folder" />
       </div>
 
       <!-- Projects list (mobile) -->

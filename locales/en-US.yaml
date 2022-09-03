@@ -130,7 +130,7 @@ app:
     select:
       defaultText: Choose an answer
     text:
-      by: by
+      by: by {author}
   createClassroom:
     title: Create a new classroom
     name: Classroom name

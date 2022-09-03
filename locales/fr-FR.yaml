@@ -134,7 +134,7 @@ app:
     select:
       defaultText: Choisissez un réponse
     text:
-      by: par
+      by: par {author}
   createClassroom:
     title: Créer une salle de classe
     name: Nom de la salle de classe
