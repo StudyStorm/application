@@ -4,8 +4,6 @@ export default {
   props: ["error"], // you can set a custom layout for the error page
 };
 
-const img = "images/post-it-for-login.png";
-
 definePageMeta({
   layout: "nosidebar",
 });
@@ -62,7 +60,7 @@ definePageMeta({
     </div>
     <div
       class="background-image relative hidden flex-1 lg:block"
-      :style="{ backgroundImage: `url(/public/images/post-it-for-login.png)` }"
+      :style="{ backgroundImage: `url(/images/post-it-for-login.png)` }"
     ></div>
   </div>
 </template>
