@@ -2,6 +2,7 @@
 import { ArrowLeftIcon } from "@heroicons/vue/24/outline/index.js";
 definePageMeta({
   layout: "nosidebar",
+  auth: "guest",
 });
 
 function sendEmail() {

@@ -82,6 +82,12 @@ export default defineNuxtConfig({
   auth: {
     watchLoggedIn: true,
     globalMiddleware: true,
+    redirect: {
+      home: "/dashboard",
+      login: "/login",
+      logout: "/",
+      callback: "/login",
+    },
     strategies: {
       studyStorm: {
         name: "studyStorm",
@@ -89,6 +95,9 @@ export default defineNuxtConfig({
         cookie: {
           server: true,
           name: "studystorm-session",
+          options: {
+            secure: true,
+          },
         },
         baseURL:
           process.env.NODE_ENV === "production"

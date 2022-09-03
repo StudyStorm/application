@@ -31,6 +31,7 @@ async function register() {
 
 definePageMeta({
   layout: "nosidebar",
+  auth: "guest",
 });
 </script>
 
