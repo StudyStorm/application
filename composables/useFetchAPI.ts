@@ -19,6 +19,7 @@ export function useFetchAPI<
   return useFetch(request, {
     ...opts,
     baseURL: config.apiURL,
+    initialCache: false,
     credentials: "include",
   });
 }
@@ -38,5 +39,7 @@ export function useLazyFetchAPI<
   return useLazyFetch(request, {
     ...opts,
     baseURL: config.apiURL,
+    initialCache: false,
+    credentials: "include",
   });
 }
