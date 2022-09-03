@@ -183,12 +183,19 @@ definePageMeta({
           >
             {{ $t("landing.homePage.startNow.text") }}
           </p>
-          <button
-            href="#"
-            class="mr-2 mb-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4"
+          <NuxtLink
+            v-slot="{ navigate: navigateTo }"
+            custom
+            to="/login"
+            rel="noopener"
           >
-            {{ $t("landing.homePage.startNow.button") }}
-          </button>
+            <button
+              class="mr-2 mb-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4"
+              @click="navigateTo"
+            >
+              {{ $t("landing.homePage.startNow.button") }}
+            </button>
+          </NuxtLink>
         </div>
       </div>
     </section>
