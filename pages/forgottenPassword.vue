@@ -49,7 +49,7 @@ definePageMeta({
       }"
     ></div>
     <div
-      class="flex flex-1 flex-col justify-center px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 2xl:px-32"
+      class="z-40 flex flex-1 flex-col justify-center px-4 sm:px-6 lg:flex-none lg:px-20 lg:shadow-[0_0_50px_0_rgba(0,0,0,0.75)] xl:px-24 2xl:px-32"
     >
       <div class="mx-4 mt-6 md:mx-2 md:mt-4">
         <div

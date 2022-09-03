@@ -2,6 +2,7 @@
 import { XCircleIcon, XMarkIcon } from "@heroicons/vue/24/solid/index.js";
 import useAuth from "~/composables/useAuth";
 import SPasswordInput from "~/components/SPasswordInput.vue";
+import SLangSwitcher from "~/components/SLangSwitcher.vue";
 
 const router = useRouter();
 const auth = useAuth();
@@ -39,7 +40,7 @@ definePageMeta({
 <template>
   <div class="flex h-screen justify-between">
     <div
-      class="flex flex-1 flex-col justify-center px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 2xl:px-32"
+      class="z-40 flex flex-1 flex-col justify-center px-4 sm:px-6 lg:flex-none lg:px-20 lg:shadow-[0_0_50px_0_rgba(0,0,0,0.75)] xl:px-24 2xl:px-32"
     >
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
@@ -161,6 +162,19 @@ definePageMeta({
                   </NuxtLink>
                 </p>
               </div>
+            </div>
+            <div class="mt-6 flex items-center justify-center">
+              <s-lang-switcher
+                v-slot="{ locale, active, onClick }"
+                class="mt-6 flex items-center justify-center"
+              >
+                <span
+                  class="mx-1 cursor-pointer"
+                  :class="{ 'font-extrabold': active }"
+                  @click="onClick"
+                  >{{ locale.name }}</span
+                >
+              </s-lang-switcher>
             </div>
           </div>
         </div>

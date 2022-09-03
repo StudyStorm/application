@@ -30,4 +30,8 @@ input[type=password]::-ms-clear
    display: none;
 }
 
+img{
+   -webkit-user-drag: none;
+}
+
 @tailwind utilities;
