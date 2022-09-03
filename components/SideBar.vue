@@ -10,7 +10,6 @@ import {
   AcademicCapIcon,
   HomeIcon,
 } from "@heroicons/vue/24/solid/index.js";
-import { useNuxtApp } from "#app";
 
 import {
   Dialog,
@@ -341,10 +340,10 @@ async function createClassroom() {
               v-if="showButton"
               class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
             >
-              <a
+              <NuxtLink
                 v-for="(classroom, index) in classrooms"
                 :key="index"
-                href="/myClassroom"
+                href="/classroom"
                 class="rounded-md pl-4 hover:bg-gray-300"
                 >{{ classroom }}
               </NuxtLink>
