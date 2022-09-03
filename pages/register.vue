@@ -161,12 +161,12 @@ definePageMeta({
           <div class="text-sm">
             <p class="mt-2 text-center text-sm text-gray-600">
               {{ $t("app.register.text.alreadyHaveAccount") }}
-              <a
-                href="login"
+              <NuxtLink
+                to="/login"
                 class="font-medium text-indigo-600 hover:text-indigo-500"
               >
                 {{ $t("app.register.text.loginHere") }}
-              </a>
+              </NuxtLink>
             </p>
           </div>
         </form>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -271,14 +271,14 @@ async function createClassroom() {
               </div>
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a
-                    href="#"
+                  <NuxtLink
+                    to="#"
                     :class="[
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 text-sm',
                     ]"
-                    >Logout</a
-                  >
+                    >Logout
+                  </NuxtLink>
                 </MenuItem>
               </div>
             </MenuItems>
@@ -286,7 +286,11 @@ async function createClassroom() {
         </Menu>
         <nav class="mt-6 px-3">
           <div class="space-y-1">
-            <div v-for="item in navigation" class="flex items-center">
+            <div
+              v-for="item in navigation"
+              :key="item.name"
+              class="flex items-center"
+            >
               <NuxtLink
                 :key="item.name"
                 :to="item.href"
@@ -331,12 +335,13 @@ async function createClassroom() {
               v-if="showButton"
               class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
             >
-              <a
+              <NuxtLink
                 v-for="classroom in classrooms"
-                href="/myClassroom"
+                :key="classroom"
+                to="/myClassroom"
                 class="rounded-md pl-4 hover:bg-gray-300"
-                >{{ classroom }}</a
-              >
+                >{{ classroom }}
+              </NuxtLink>
               <button
                 class="mb-2 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-1 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue"
                 @click="createClassroom"
@@ -401,14 +406,14 @@ async function createClassroom() {
                 </div>
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
-                    <a
+                    <NuxtLink
                       href="#"
                       :class="[
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm',
                       ]"
-                      >Logout</a
-                    >
+                      >Logout
+                    </NuxtLink>
                   </MenuItem>
                 </div>
               </MenuItems>
@@ -455,7 +460,6 @@ async function createClassroom() {
     </template>
     <template #footer>
       <button
-        type="confirmCreation"
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="create"
       >

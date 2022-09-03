@@ -202,31 +202,31 @@ store.allDecks = [...topDecks];
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a class="truncate hover:text-gray-600">
+                    <span class="truncate hover:text-gray-600">
                       <span>
                         {{ deck.creator.fullname }}
                       </span>
-                    </a>
+                    </span>
                   </div>
                 </td>
                 <td
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a class="truncate hover:text-gray-600">
+                    <span class="truncate hover:text-gray-600">
                       <span> N cards </span>
-                    </a>
+                    </span>
                   </div>
                 </td>
                 <td
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a class="truncate hover:text-gray-600">
+                    <span class="truncate hover:text-gray-600">
                       <span>
                         {{ deck.formattedVotes }}
                       </span>
-                    </a>
+                    </span>
                   </div>
                 </td>
               </tr>

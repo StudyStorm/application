@@ -26,16 +26,16 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="flex justify-between h-screen">
+  <div class="flex h-screen justify-between">
     <div
-      class="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24"
+      class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24"
     >
-      <div class="w-full max-w-sm mx-auto lg:w-96">
+      <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
           <div class="flex items-center justify-center">
             <nuxt-img
               src="/images/Logo.svg"
-              class="h-16 mr-3 text-storm-dark"
+              class="mr-3 h-16 text-storm-dark"
               alt="StudyStorm Logo"
             />
             <span
@@ -49,7 +49,7 @@ definePageMeta({
         </div>
         <div
           v-if="err"
-          class="relative px-4 py-3 mt-6 text-red-700 bg-red-100 border border-red-400 rounded"
+          class="relative mt-6 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700"
           role="alert"
         >
           <span class="block sm:inline">{{ $t("app.login.errorLogin") }}</span>
@@ -72,7 +72,7 @@ definePageMeta({
                     type="email"
                     autocomplete="email"
                     required
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm appearance-none placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -92,34 +92,34 @@ definePageMeta({
                     type="password"
                     autocomplete="current-password"
                     required
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm appearance-none placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
 
               <div class="flex items-center justify-end">
                 <div class="text-sm">
-                  <a
-                    href="forgottenPassword"
+                  <NuxtLink
+                    to="/forgottenPassword"
                     class="font-medium text-storm-dark hover:text-storm-blue"
                   >
                     {{ $t("app.login.forgotPassword") }}
-                  </a>
+                  </NuxtLink>
                 </div>
               </div>
 
               <div>
                 <button
                   type="submit"
-                  class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-storm-darkblue hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  class="flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   {{ $t("app.login.signInButton") }}
                 </button>
               </div>
             </form>
-            <div class="flex items-center justify-start mt-6">
+            <div class="mt-6 flex items-center justify-start">
               <div class="text-sm">
-                <p class="mt-2 text-sm text-center text-gray-600">
+                <p class="mt-2 text-center text-sm text-gray-600">
                   {{ $t("app.login.noAccount") }}
                   <NuxtLink
                     to="/register"
@@ -135,7 +135,7 @@ definePageMeta({
       </div>
     </div>
     <div
-      class="relative flex-1 hidden background-image lg:block"
+      class="background-image relative hidden flex-1 lg:block"
       :style="{ backgroundImage: `url(${img})` }"
     ></div>
   </div>
