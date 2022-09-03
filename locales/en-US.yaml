@@ -103,10 +103,12 @@ app:
     title: Reinitialize your password
     email: Enter your email address
     submit: Send reset email
+    placeholder:
+      email: Your email address
     noEmail: Didn't receive an email ?
     clickResend: Click here to resend one
     error: An error occurred while sending the reset email
-    success: dqwdq
+    success: The reset email was sent successfully
   profile:
     title: Profile
     labels:

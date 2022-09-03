@@ -8,7 +8,7 @@ import { ArrowLeftIcon } from "@heroicons/vue/24/outline/index.js";
 
 const email = ref("");
 const status = ref({
-  error: false,
+  err: false,
   success: false,
 });
 
@@ -24,8 +24,8 @@ async function sendEmail() {
   });
 
   if (error.value) {
-    status.value.error = true;
-    console.log(error);
+    status.value.err = true;
+    console.log(error.value);
   } else {
     status.value.success = true;
   }
@@ -88,7 +88,7 @@ definePageMeta({
               >
                 {{ $t("app.forgottenPassword.submit") }}
               </button>
-              <div v-if="status.error" class="mt-6 rounded-md bg-red-50 p-4">
+              <div v-if="status.err" class="mt-6 rounded-md bg-red-50 p-4">
                 <div class="flex items-center">
                   <div class="shrink-0">
                     <XCircleIcon
@@ -106,7 +106,7 @@ definePageMeta({
                       <button
                         type="button"
                         class="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-1 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
-                        @click="status.error = false"
+                        @click="status.err = false"
                       >
                         <XMarkIcon class="h-5 w-5" aria-hidden="true" />
                       </button>
@@ -150,7 +150,7 @@ definePageMeta({
                   </p>
                   <button
                     class="inline-block font-medium text-storm-darkblue hover:text-storm-blue focus:outline-storm-blue"
-                    @click="sendEmail"
+                    @click="email !== '' ? sendEmail : ''"
                   >
                     {{ $t("app.forgottenPassword.clickResend") }}
                   </button>
