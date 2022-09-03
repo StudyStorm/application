@@ -2,7 +2,13 @@
   // https://v3.nuxtjs.org/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "types": ["@types/node", "@pinia/nuxt", "vitest/globals", "@nuxtjs/i18n"]
+    "types": [
+      "@types/node",
+      "@pinia/nuxt",
+      "vitest/globals",
+      "@nuxtjs/i18n",
+      "@nuxtjs-alt/auth",
+    ]
   }
 }
 
