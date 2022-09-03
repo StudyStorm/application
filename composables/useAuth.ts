@@ -1,19 +1,9 @@
-import { Auth } from "#auth/runtime";
 import { useNuxtApp } from "#app";
+import { AppAuth } from "~/types/auth";
 
 /**
  * Hook to get the auth instance.
  */
-export default function useAuth(): Auth {
+export default function useAuth(): AppAuth {
   return useNuxtApp().$auth;
-}
-
-// use to type AuthModule
-declare module "@vue/runtime-core" {
-  export interface ComponentCustomProperties {
-    /**
-     * Access to the application's Auth
-     */
-    $auth: Auth;
-  }
 }
