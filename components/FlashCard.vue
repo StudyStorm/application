@@ -1,60 +1,41 @@
 <script setup lang="ts">
-const card = ref();
+import Card from "~~/models/Card";
 
 const props = defineProps({
-  question: {
-    type: String,
-    required: true,
-  },
-  answers: {
-    type: Array<string>,
+  card: {
+    type: Card,
     required: true,
   },
 });
 
-// async function sleep(ms) {
-//   return await new Promise((resolve) => setTimeout(resolve, ms));
-// }
+const question = computed(() => {
+  return props.card.content.question;
+});
 
-async function resetCard() {
-  await card.value.resetCard();
-}
+const answer = computed(() => {
+  return props.card.content.answers[0].label;
+});
+
+const reset = () => {
+  console.log("reset");
+};
 
 defineExpose({
-  resetCard,
+  reset,
 });
 </script>
 
 <template>
-  <Card ref="card" :is-flippable="true">
+  <FlippableCard :is-flippable="true">
     <template #cardFront>
       <span class="p-6 text-center text-xl font-bold text-storm-dark">
         {{ question }}
       </span>
     </template>
     <template #cardBack>
-      <span class="cardText">
+      <span class="p-6 text-center text-xl font-bold text-storm-dark">
         {{ answer }}
       </span>
     </template>
-  </Card>
+  </FlippableCard>
 </template>
-
-<style scoped>
-.cardFace {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  background: #f2f2f2;
-}
-
-.cardText {
-  color: #3f434a;
-  text-align: center;
-  font-weight: bold;
-  font-size: 22px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>

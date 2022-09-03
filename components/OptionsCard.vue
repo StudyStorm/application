@@ -1,36 +1,38 @@
 <script setup lang="ts">
-import { PropType } from "vue";
+import Card from "~~/models/Card";
 
-const card = ref();
-const inputs = ref([]);
 const displayRightAnswers = ref(false);
 
 const props = defineProps({
-  question: {
-    type: String,
-    required: true,
-  },
-  answers: {
-    type: Array<string>,
+  card: {
+    type: Card,
     required: true,
   },
 });
 
-// for (let i = 0; i < props.answers.length; ++i) {
-//   inputs.value.push(ref("input" + (i + 1)));
-// }
+const question = computed(() => {
+  return props.card.content.question;
+});
 
-// async function resetCard() {
-//   await card.value.resetCard();
-// }
+const answers = computed(() => {
+  return props.card.content.answers;
+});
 
-// defineExpose({
-//   resetCard,
-// });
+const answerStyle = computed(() => (isTheAnswer: boolean) => {
+  if (!displayRightAnswers.value) {
+    return "peer-checked:border-purple-600 hover:bg-gray-200";
+  }
+
+  if (isTheAnswer) {
+    return "peer-checked:border-green-600 bg-green-200 hover:bg-green-200 border-red-600";
+  } else {
+    return "peer-checked:border-red-600";
+  }
+});
 </script>
 
 <template>
-  <Card ref="card" :is-flippable="false">
+  <FlippableCard :is-flippable="false">
     <template #cardFront>
       <div
         class="grid grid-rows-1 items-center space-y-6"
@@ -43,41 +45,24 @@ const props = defineProps({
         </div>
         <div>
           <ul class="grid w-full gap-2 md:grid-cols-2">
-            <!-- <li v-for="i in answers.length" :key="i">
+            <li v-for="(answer, i) in answers" :key="i">
               <input
-                :id="'input' + i"
-                :ref="inputs[i]"
-                :key="i"
+                :id="`input${i}`"
                 :disabled="displayRightAnswers"
                 type="checkbox"
-                :value="answers[i - 1]"
+                :value="answer.label"
                 class="peer hidden"
               />
               <label
-                :for="'input' + i"
-                :class="[
-                  { 'peer-checked:border-purple-600': !displayRightAnswers },
-                  {
-                    'peer-checked:border-green-600':
-                      displayRightAnswers && isTheAnswer[i - 1],
-                  },
-                  {
-                    'bg-green-200 hover:bg-green-200 border-red-600':
-                      displayRightAnswers && isTheAnswer[i - 1],
-                  },
-                  { 'hover:bg-gray-200': !displayRightAnswers },
-                  {
-                    'peer-checked:border-red-600':
-                      displayRightAnswers && !isTheAnswer[i - 1],
-                  },
-                ]"
+                :for="`input${i}`"
+                :class="answerStyle(answer.isTheAnswer)"
                 class="inline-flex w-full cursor-pointer items-center justify-center rounded-lg border-2 border-gray-200 bg-white p-3 text-gray-500 hover:text-gray-600 peer-checked:text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:peer-checked:text-gray-300"
               >
                 <div class="block">
-                  <div class="w-full text-sm">{{ answers[i - 1] }}</div>
+                  <div class="w-full text-sm">{{ answer.label }}</div>
                 </div>
               </label>
-            </li> -->
+            </li>
           </ul>
         </div>
         <div class="w-40" style="margin-left: auto; margin-right: auto">
@@ -91,15 +76,5 @@ const props = defineProps({
         </div>
       </div>
     </template>
-  </Card>
+  </FlippableCard>
 </template>
-
-<style scoped>
-.cardText {
-  text-align: center;
-  font-weight: bold;
-  font-size: 22px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>

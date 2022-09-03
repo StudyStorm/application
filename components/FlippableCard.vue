@@ -4,11 +4,6 @@ const props = defineProps({
 });
 
 const isFlipped = ref(false);
-const flippedCard = ref();
-
-// async function sleep(ms: number) {
-//   return await new Promise((resolve) => setTimeout(resolve, ms));
-// }
 
 function flip() {
   isFlipped.value = !isFlipped.value;
@@ -16,9 +11,7 @@ function flip() {
 
 async function resetCard() {
   if (props.isFlippable && isFlipped.value) {
-    // flippedCard.value.style.transform = "rotateY(180deg)";
     isFlipped.value = false;
-    // await sleep(800);
   }
 }
 
@@ -35,12 +28,11 @@ defineExpose({
       @click="flip"
     >
       <div
-        class="cardFace flex h-full w-full select-none items-center bg-gray-50"
+        class="cardFace flex h-full w-full select-none items-center bg-gray-50 text-center"
       >
         <slot name="cardFront"></slot>
       </div>
       <div
-        ref="flippedCard"
         class="cardFace flipCardBack flex h-full w-full select-none items-center bg-gray-50"
       >
         <slot name="cardBack"></slot>

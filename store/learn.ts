@@ -53,7 +53,7 @@ export const useLearnStore = defineStore("learn", {
             id: "a8a7c042-d537-45c4-b3da-ac1c20c0bae7",
             content: {
               question: "What is the capital of switzerland?",
-              answer: "Bern",
+              answers: [{ label: "Bern", isTheAnswer: true }],
               type: "flashCard",
             },
           },
@@ -88,7 +88,7 @@ export const useLearnStore = defineStore("learn", {
             id: "d8a7c042-d537-45c4-b3da-ac1c20c0bae7",
             content: {
               question: "What is the capital of Germany?",
-              answer: "Berlin",
+              answers: [{ label: "Berlin", isTheAnswer: true }],
               type: "flashCard",
             },
           },
@@ -96,7 +96,7 @@ export const useLearnStore = defineStore("learn", {
             id: "e8a7c042-d537-45c4-b3da-ac1c20c0bae7",
             content: {
               question: "What is the capital of France?",
-              answer: "Paris",
+              answers: [{ label: "Paris", isTheAnswer: true }],
               type: "flashCard",
             },
           },
@@ -104,7 +104,7 @@ export const useLearnStore = defineStore("learn", {
             id: "f8a7c042-d537-45c4-b3da-ac1c20c0bae7",
             content: {
               question: "What is the capital of the United Stated of America?",
-              answer: "Washington DC",
+              answers: [{ label: "Washington DC", isTheAnswer: true }],
               type: "flashCard",
             },
           },
@@ -113,6 +113,11 @@ export const useLearnStore = defineStore("learn", {
       // END OF TMP CODE
 
       this.deck = deck;
+    },
+
+    async reportCard(report: { card: Card; message: string }) {
+      console.log("report card", report.card, report.message);
+      // TODO: call API: /v1/decks/cards/report/{cardId}
     },
   },
 });

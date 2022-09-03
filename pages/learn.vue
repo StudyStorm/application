@@ -1,9 +1,7 @@
-import { useLearnStore } from '../store/learn';
 <script setup lang="ts">
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  FlagIcon,
 } from "@heroicons/vue/24/outline/index.js";
 import { useLearnStore } from "~~/store/learn";
 
@@ -21,62 +19,30 @@ const progress = computed(() => {
   return (learnStore.currentStep / learnStore.numberOfCards) * 100;
 });
 
-// const showModal = ref(false);
+const card = ref(null);
 
-// TODO call store to fetch deck id
+const showModal = ref(false);
+const signalMessage = ref("");
 
-// const cardIndex = ref(0);
-// const card = ref();
-// const progressBar = ref();
-// const cardNumberProgression = ref();
-// const nextCardButton = ref();
-// const previousCardButton = ref();
-// const signalMessage = ref("");
+const closeModal = () => {
+  showModal.value = false;
+  signalMessage.value = "";
+};
 
-// function updateProgressBar() {
-//   progressBar.value.style.width =
-//     100 * (cardIndex.value / (deck.cards.length - 1)) + "%";
-//   cardNumberProgression.value.innerText =
-//     String(cardIndex.value + 1) + " / " + String(deck.cards.length);
-// }
+const reportCard = async () => {
+  await learnStore.reportCard({
+    card: learnStore.currentCard,
+    message: signalMessage.value,
+  });
+  closeModal();
+};
 
-// async function previousCard() {
-//   if (cardIndex.value) {
-//     previousCardButton.value.style.disabled = false;
-//     // If card is flipped, flip card without showing the previous card answer
-//     await card.value.resetCard();
-//     --cardIndex.value;
-//     updateProgressBar();
-//   } else {
-//     previousCardButton.value.style.disabled = true;
-//   }
-// }
+const nextCard = () => {
+  learnStore.nextCard();
+  card.reset();
+};
 
-// async function nextCard() {
-//   if (cardIndex.value < deck.cards.length - 1) {
-//     nextCardButton.value.style.disabled = false;
-//     // If card is flipped, flip card without showing the next card answer
-//     await card.value.resetCard();
-//     ++cardIndex.value;
-//     updateProgressBar();
-//   } else {
-//     nextCardButton.value.style.disabled = true;
-//   }
-// }
-
-// async function signalCard() {
-//   const signalCardID = deck.cards[cardIndex.value].id;
-//   console.log(
-//     "Signal card with ID: " +
-//       signalCardID +
-//       " with message " +
-//       signalMessage.value
-//   );
-
-//   // Clear input and hide modal
-//   signalMessage.value = "";
-//   showModal.value = false;
-// }
+// TODO: flip card when going to the next if needed
 </script>
 
 <template>
@@ -96,7 +62,7 @@ const progress = computed(() => {
       </h1>
     </div>
   </div>
-  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white px-4 py-8 sm:rounded-lg sm:px-10">
       <div class="mb-1 flex justify-between">
         <span
@@ -117,37 +83,11 @@ const progress = computed(() => {
 
       <component
         :is="cardTypes[learnStore.currentCard.content.type]"
-        :question="learnStore.currentCard.content.question"
-        :answers="learnStore.currentCard.content.answers"
+        ref="card"
+        :card="learnStore.currentCard"
       />
 
-      <!-- <FlashCard
-        v-if="deck.cards[cardIndex].type === 'flashCard'"
-        ref="card"
-        :key="cardIndex"
-        :question="deck.cards[cardIndex].content.question"
-        :answer="deck.cards[cardIndex].content.answer"
-      ></FlashCard> -->
-      <!-- <OptionsCard
-        v-if="deck.cards[cardIndex].type === 'options'"
-        ref="card"
-        :key="cardIndex"
-        :question="deck.cards[cardIndex].content.question"
-        :answers="
-          deck.cards[cardIndex].content.answers.map((answer) => {
-            return answer.label;
-          })
-        "
-        :is-the-answer="
-          deck.cards[cardIndex].content.answers.map((answer) => {
-            return answer.isTheAnswer;
-          })
-        "
-      ></OptionsCard> -->
-      <div
-        class="mt-8 flex flex-col"
-        style="display: flex; align-items: center; justify-content: center"
-      >
+      <div class="mt-8 flex flex-col items-center justify-center">
         <div class="inline-flex">
           <button
             ref="previousCardButton"
@@ -168,7 +108,7 @@ const progress = computed(() => {
               'cursor-not-allowed bg-gray-300 hover:bg-gray-300':
                 !learnStore.canGoForward,
             }"
-            @click="learnStore.nextCard"
+            @click="nextCard"
           >
             <ChevronRightIcon class="h-6 w-6" />
           </button>
@@ -176,62 +116,62 @@ const progress = computed(() => {
       </div>
     </div>
   </div>
-  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
     <div class="space-y-6 bg-white px-4 py-8 sm:rounded-lg sm:px-10">
       <div>
-        <!-- <button
+        <button
           type="button"
           class="flex w-full justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
           @click="showModal = true"
         >
           {{ $t("app.learn.buttons.signal") }}
-        </button> -->
+        </button>
       </div>
     </div>
-  </div>
-  <!-- <Modal v-model="showModal">
-    <template #icon
-      ><div
-        class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
-      >
-        <FlagIcon class="h-6 w-6 text-red-600" aria-hidden="true" />
-      </div>
-    </template>
-    <template #title>
-      {{ $t("app.learn.modal.title") }}
-    </template>
-    <template #content>
-      <div class="mb-6">
-        <label
-          for="message"
-          class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-          >{{ $t("app.learn.modal.message") }}</label
+    <Modal v-model="showModal">
+      <template #icon
+        ><div
+          class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
         >
-        <input
-          id="message"
-          v-model="signalMessage"
-          type="text"
-          class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          required
-        />
-      </div>
-    </template>
-    <template #footer>
-      <button
-        type="button"
-        class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="signalCard"
-      >
-        {{ $t("app.learn.modal.buttons.confirmSignal") }}
-      </button>
-      <button
-        ref="cancelButtonRef"
-        type="button"
-        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="showModal = false"
-      >
-        {{ $t("app.learn.modal.buttons.cancel") }}
-      </button>
-    </template>
-  </Modal> -->
+          <FlagIcon class="h-6 w-6 text-red-600" aria-hidden="true" />
+        </div>
+      </template>
+      <template #title>
+        {{ $t("app.learn.modal.title") }}
+      </template>
+      <template #content>
+        <div class="mb-6">
+          <label
+            for="message"
+            class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+            >{{ $t("app.learn.modal.message") }}</label
+          >
+          <input
+            id="message"
+            v-model="signalMessage"
+            type="text"
+            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            required
+          />
+        </div>
+      </template>
+      <template #footer>
+        <button
+          type="button"
+          class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+          @click="reportCard"
+        >
+          {{ $t("app.learn.modal.buttons.confirmSignal") }}
+        </button>
+        <button
+          ref="cancelButtonRef"
+          type="button"
+          class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+          @click="closeModal"
+        >
+          {{ $t("app.learn.modal.buttons.cancel") }}
+        </button>
+      </template>
+    </Modal>
+  </div>
 </template>
