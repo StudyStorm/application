@@ -76,7 +76,7 @@ app:
       register: S'inscrire
     text:
       alreadyHaveAccount: Vous avez déjà un compte ?
-      loginHere: Connectez vous ici
+      loginHere: Connectez-vous ici
     placeholder:
       firstname: Votre prénom
       lastname: Votre nom

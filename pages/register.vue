@@ -3,27 +3,39 @@ import SFileInputPrewiever from "~/components/SFileInputPrewiever.vue";
 
 const router = useRouter();
 const userInformation = ref({
-  first_name: "",
-  last_name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
 });
-const err = ref<boolean>(false);
+
 const bgImg = `/images/background_${Math.round(Math.random())}.jpg`;
 
 const updatePicture = (picture: File) => {
   console.log("Register got", picture);
 };
 
+type FormError = Array<{
+  rule: string;
+  field: string;
+  message: string;
+}>;
+
+const errors = ref<FormError | null>(null);
+
 async function register() {
-  // TODO: class store
-  const { error } = await useFetchAPI("/v1/register", {
-    method: "POST",
-    body: userInformation.value,
-  });
+  const { data, error } = await useFetchAPI<unknown, FormError>(
+    "/v1/register",
+    {
+      method: "POST",
+      server: false,
+      body: userInformation.value,
+    }
+  );
 
   if (error.value) {
-    err.value = true;
+    console.log(error);
+    errors.value = error.value.data;
   } else {
     router.push("/login");
   }
@@ -47,7 +59,7 @@ definePageMeta({
   >
     <div class="mx-auto w-full max-w-md">
       <div
-        class="flex h-screen flex-col items-center justify-center bg-white sm:h-fit sm:rounded-lg sm:py-10 sm:px-4 sm:shadow-[0_0_50px_0_rgba(0,0,0,0.75)]"
+        class="flex h-screen flex-col items-center justify-center bg-white shadow-[0_0_50px_0_rgba(0,0,0,0.75)] sm:h-fit sm:rounded-lg sm:py-10 sm:px-4"
       >
         <div class="mb-4 flex flex-col items-center justify-center space-x-2">
           <nuxt-img
@@ -73,19 +85,18 @@ definePageMeta({
 
           <div>
             <label
-              for="first_name"
+              for="firstName"
               class="block text-sm font-medium text-gray-700"
             >
               {{ $t("app.register.labels.firstname") }}
             </label>
             <div class="mt-1">
               <input
-                id="first_name"
-                v-model="userInformation.first_name"
-                name="first_name"
+                id="firstName"
+                v-model="userInformation.firstName"
+                name="firstName"
                 type="text"
-                autocomplete="first_name"
-                required
+                autocomplete="given-name"
                 :placeholder="$t('app.register.placeholder.firstname')"
                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
               />
@@ -94,18 +105,18 @@ definePageMeta({
 
           <div>
             <label
-              for="last_name"
+              for="lastName"
               class="block text-sm font-medium text-gray-700"
             >
               {{ $t("app.register.labels.lastname") }}
             </label>
             <div class="mt-1">
               <input
-                id="last_name"
-                v-model="userInformation.last_name"
-                name="last_name"
+                id="lastName"
+                v-model="userInformation.lastName"
+                name="lastName"
                 type="text"
-                autocomplete="last_name"
+                autocomplete="family-name"
                 required
                 :placeholder="$t('app.register.placeholder.lastname')"
                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
@@ -158,6 +169,7 @@ definePageMeta({
               {{ $t("app.register.buttons.register") }}
             </button>
           </div>
+          <!-- <RegisterAlert :errors="errors" /> -->
           <div class="text-sm">
             <p class="pt-2 text-center text-sm text-gray-600">
               {{ $t("app.register.text.alreadyHaveAccount") }}

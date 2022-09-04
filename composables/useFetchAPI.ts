@@ -3,10 +3,11 @@ import { NitroFetchRequest } from "nitropack";
 import { AsyncData, KeyOfRes, PickFrom } from "#app/composables/asyncData";
 import { Ref } from "vue";
 import { FetchResult, UseFetchOptions } from "#app/composables/fetch";
+import { FetchError } from "ohmyfetch";
 
 export function useFetchAPI<
   ResT = void,
-  ErrorT = Error,
+  ErrorT = void,
   ReqT extends NitroFetchRequest = NitroFetchRequest,
   _ResT = ResT extends void ? FetchResult<ReqT> : ResT,
   Transform extends (res: _ResT) => any = (res: _ResT) => _ResT,
@@ -14,19 +15,22 @@ export function useFetchAPI<
 >(
   request: Ref<ReqT> | ReqT | (() => ReqT),
   opts?: UseFetchOptions<_ResT, Transform, PickKeys>
-): AsyncData<PickFrom<ReturnType<Transform>, PickKeys>, ErrorT | null | true> {
+) {
   const config = useRuntimeConfig();
   return useFetch(request, {
     ...opts,
     baseURL: config.apiURL,
     initialCache: false,
     credentials: "include",
-  });
+  }) as AsyncData<
+    PickFrom<ReturnType<Transform>, PickKeys>,
+    FetchError<ErrorT> | null
+  >;
 }
 
 export function useLazyFetchAPI<
   ResT = void,
-  ErrorT = Error,
+  ErrorT = void,
   ReqT extends NitroFetchRequest = NitroFetchRequest,
   _ResT = ResT extends void ? FetchResult<ReqT> : ResT,
   Transform extends (res: _ResT) => any = (res: _ResT) => _ResT,
@@ -34,12 +38,15 @@ export function useLazyFetchAPI<
 >(
   request: Ref<ReqT> | ReqT | (() => ReqT),
   opts?: Omit<UseFetchOptions<_ResT, Transform, PickKeys>, "lazy">
-): AsyncData<PickFrom<ReturnType<Transform>, PickKeys>, ErrorT | null | true> {
+) {
   const config = useRuntimeConfig();
   return useLazyFetch(request, {
     ...opts,
     baseURL: config.apiURL,
     initialCache: false,
     credentials: "include",
-  });
+  }) as AsyncData<
+    PickFrom<ReturnType<Transform>, PickKeys>,
+    FetchError<ErrorT> | null
+  >;
 }
