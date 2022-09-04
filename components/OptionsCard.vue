@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { PropType } from "vue";
 import Card from "~~/models/Card";
 
 const displayRightAnswers = ref(false);
 
 const props = defineProps({
   card: {
-    type: Card,
+    type: Object as PropType<Card>,
     required: true,
   },
 });
@@ -24,10 +25,18 @@ const answerStyle = computed(() => (isTheAnswer: boolean) => {
   }
 
   if (isTheAnswer) {
-    return "peer-checked:border-green-600 bg-green-200 hover:bg-green-200 border-red-600";
+    return "peer-checked:border-green-600 bg-green-200 hover:bg-green-200 border-red-600 animate-pulse";
   } else {
     return "peer-checked:border-red-600";
   }
+});
+
+const reset = () => {
+  displayRightAnswers.value = false;
+};
+
+defineExpose({
+  reset,
 });
 </script>
 
@@ -35,7 +44,7 @@ const answerStyle = computed(() => (isTheAnswer: boolean) => {
   <FlippableCard :is-flippable="false">
     <template #cardFront>
       <div
-        class="grid grid-rows-1 items-center space-y-6"
+        class="grid grid-rows-1 items-center space-y-6 p-3"
         style="margin-left: auto; margin-right: auto"
       >
         <div class="text-center font-medium">
@@ -50,7 +59,6 @@ const answerStyle = computed(() => (isTheAnswer: boolean) => {
                 :id="`input${i}`"
                 :disabled="displayRightAnswers"
                 type="checkbox"
-                :value="answer.label"
                 class="peer hidden"
               />
               <label

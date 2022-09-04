@@ -1,12 +1,15 @@
 <script setup lang="ts">
 const props = defineProps({
   isFlippable: Boolean,
+  modelValue: Boolean,
 });
+
+const emit = defineEmits(["update:modelValue"]);
 
 const isFlipped = ref(false);
 
 function flip() {
-  isFlipped.value = !isFlipped.value;
+  emit("update:modelValue", !props.modelValue);
 }
 
 async function resetCard() {
@@ -24,7 +27,7 @@ defineExpose({
   <div class="h-96 w-full" style="perspective: 600px">
     <div
       class="card h-full w-full cursor-pointer shadow"
-      :class="[{ flipCard: isFlippable && isFlipped }]"
+      :class="[{ flipCard: isFlippable && modelValue }]"
       @click="flip"
     >
       <div
