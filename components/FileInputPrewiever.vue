@@ -38,7 +38,7 @@ const renderPreview = (file: File): void => {
 <template>
   <div>
     <div
-      class="h-24 w-24 flex-none cursor-pointer rounded-full bg-cover bg-center"
+      class="h-32 w-32 flex-none cursor-pointer rounded-full bg-cover bg-center"
       :style="{ 'background-image': `url(${filePreview})` }"
       @drop.prevent="dropFile"
       @dragover.prevent
@@ -46,7 +46,7 @@ const renderPreview = (file: File): void => {
     <input
       ref="input"
       type="file"
-      class="hidden h-24 w-24 flex-none rounded-full"
+      class="hidden h-32 w-32 flex-none rounded-full"
       @input="selectPicture"
     />
   </div>

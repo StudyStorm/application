@@ -26,22 +26,13 @@ const { t } = useI18n();
 
 const auth = useAuth();
 
-const classrooms = [
-  "Heig",
-  "EPFL",
-  "UNIL",
-  "MIT",
-  "Harvard",
-  "Boston",
-  "Oxford",
-];
-
-const navigation = [
+const navigation = ref([
   {
     name: t("app.sideNav.home"),
     href: "/dashboard",
     icon: HomeIcon,
     current: true,
+    hasDropdown: false,
   },
   {
     name: t("app.sideNav.class"),
@@ -49,8 +40,11 @@ const navigation = [
     icon: AcademicCapIcon,
     current: false,
     options: true,
+    hasDropdown: true,
+    dropped: true,
+    items: ["HEIG", "EPFL", "Random"],
   },
-];
+]);
 
 //Modal for room creation
 const datas = ref({
@@ -278,51 +272,77 @@ async function createClassroom() {
         <nav class="mt-6 px-3">
           <div class="space-y-1">
             <div
-              v-for="(item, index) in navigation"
-              :key="index"
-              class="flex items-center"
+              v-for="item in navigation"
+              :key="item.name"
+              class="cursor-pointer select-none"
             >
               <NuxtLink
-                :key="item.name"
                 :to="item.href"
+                class="flex items-center justify-between"
                 :class="[
                   item.current
                     ? 'bg-gray-200 text-gray-900'
                     : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
-                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md w-48',
+                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
                 ]"
                 :aria-current="item.current ? 'page' : undefined"
+                @click="item.dropped = !item.dropped"
               >
-                <component
-                  :is="item.icon"
-                  :class="[
-                    item.current
-                      ? 'text-gray-500'
-                      : 'text-gray-400 group-hover:text-gray-500',
-                    'mr-3 flex-shrink-0 h-6 w-6',
-                  ]"
-                  aria-hidden="true"
-                />
-                {{ item.name }}
-              </NuxtLink>
-              <div
-                v-if="item.options"
-                class="p-4"
-                @click="showButton = !showButton"
-              >
+                <div class="flex items-center">
+                  <component
+                    :is="item.icon"
+                    :class="[
+                      item.current
+                        ? 'text-gray-500'
+                        : 'text-gray-400 group-hover:text-gray-500',
+                      'mr-3 flex-shrink-0 h-6 w-6',
+                    ]"
+                    aria-hidden="true"
+                  />
+                  {{ item.name }}
+                </div>
                 <ChevronUpIcon
-                  v-if="showButton"
-                  class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                  v-if="item.hasDropdown && item.dropped"
+                  class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
                   aria-hidden="true"
+                  @click="item.dropped = !item.dropped"
                 />
                 <ChevronDownIcon
-                  v-else
-                  class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                  v-if="item.hasDropdown && !item.dropped"
+                  class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
                   aria-hidden="true"
+                  @click="item.dropped = !item.dropped"
                 />
+              </NuxtLink>
+              <div v-if="item.hasDropdown && item.dropped">
+                <!-- TODO: change this to match the classroom type -->
+                <div
+                  v-for="subitem in item.items"
+                  :key="subitem"
+                  class="group flex cursor-pointer items-center rounded-md p-2 pl-8 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                >
+                  {{ subitem }}
+                </div>
               </div>
             </div>
-            <div
+
+            <!-- <div
+              v-if="item.options"
+              class="p-4"
+              @click="showButton = !showButton"
+            >
+              <ChevronUpIcon
+                v-if="showButton"
+                class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                aria-hidden="true"
+              />
+              <ChevronDownIcon
+                v-else
+                class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                aria-hidden="true"
+              />
+            </div> -->
+            <!-- <div
               v-if="showButton"
               class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
             >
@@ -339,7 +359,7 @@ async function createClassroom() {
               >
                 {{ $t("app.createClassroom.title") }}
               </button>
-            </div>
+            </div> -->
           </div>
         </nav>
       </div>
@@ -455,7 +475,6 @@ async function createClassroom() {
     <template #footer>
       <button
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="create"
       >
         {{ $t("app.createClassroom.create") }}
       </button>

@@ -61,8 +61,8 @@ definePageMeta({
         </div>
 
         <form class="w-full max-w-sm space-y-2 px-7" @submit.prevent="register">
-          <div class="mx-auto h-24 w-24 text-center">
-            <div>
+          <div class="flex">
+            <div class="mx-auto">
               <label class="mt-6 cursor-pointer">
                 <FileInputPrewiever @valid-file="updatePicture" />
               </label>

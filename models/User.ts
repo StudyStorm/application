@@ -9,7 +9,7 @@ export default interface User {
 
   last_name: string;
 
-  profilePicture: string;
-
   isEmailVerified: boolean;
+
+  picture_url: string;
 }

@@ -1,41 +1,29 @@
 <script setup lang="ts">
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline/index.js";
+// import { useProfileStore } from "../store/profile";
 
-const userInformation = ref({
-  first_name: "",
-  last_name: "",
-  email: "",
-  password: "",
-});
+const userInformation = ref(useNuxtApp().$auth.user);
 const confirmPassword = ref("");
-const err = ref<null | any>(null);
+// const err = ref<null | any>(null);
 const showModal = ref(false);
+
+// const profileStore = useProfileStore();
 
 const updatePicture = (picture: File) => {
   console.log("Save got", picture);
 };
 
-// TODO: Retrieve user information apart from password
-// TODO: get user from store
-// userInformation.value.firstName = "John";
-// userInformation.value.lastName = "Doe";
-// userInformation.value.email = "john.@gmail.com";
-
 async function save() {
   if (userInformation.value.password === confirmPassword.value) {
-    const { data } = await useFetchAPI("/save", {
-      method: "PATCH",
-      body: userInformation.value,
-      initialCache: false,
-    });
-
-    err.value = !data.value;
+    // profileStore.updateProfile(userInformation.value);
+    // await profileStore.updateProfile(userInformation.value);
+    // err.value = !data.value;
   }
 }
 
 async function deleteAccount() {
-  // TODO: Delete user account through backend
   showModal.value = true;
+  // await profileStore.deleteProfile();
 }
 </script>
 
@@ -53,11 +41,13 @@ async function deleteAccount() {
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white px-4 py-8 sm:rounded-lg sm:px-10">
         <form class="space-y-6" @submit.prevent="save">
-          <div class="mx-auto h-48 w-48 text-center">
-            <div class="mb-4">
-              <label class="mt-6 cursor-pointer">
-                <FileInputPrewiever @valid-file="updatePicture" />
-              </label>
+          <div class="flex">
+            <div class="mx-auto text-center">
+              <div class="mb-4">
+                <label class="mt-6 cursor-pointer">
+                  <FileInputPrewiever @valid-file="updatePicture" />
+                </label>
+              </div>
             </div>
           </div>
 

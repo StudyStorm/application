@@ -6,5 +6,8 @@ export const useProfileStore = defineStore("profile", {
     async updateProfile() {
       // TODO +  update picture
     },
+    async deleteProfile() {
+      // TODO: delete
+    },
   },
 });
