@@ -95,7 +95,10 @@ app:
     title: Verify your email
     firstParagraph: Please check your email for a link to verify your email address.
     secondParagraph: Once verified, you’ll be able to continue.
-    noEmail: Didn't receive an email ? Click here to resend one
+    noEmail: Didn't receive an email ?
+    clickResend: Click here to resend one
+    error: An error occurred while sending the verification email
+    success: The verification email was sent successfully
   reset:
     title: Reset your password
     email: Mail address of the account

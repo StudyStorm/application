@@ -98,7 +98,10 @@ app:
     title: Vérification de l'adresse mail
     firstParagraph: Un lien de vérification a été envoyé sur votre adresse mail.
     secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
-    noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau
+    noEmail: Aucun email reçu ?
+    clickResend: Cliquez ici pour en recevoir un nouveau
+    error: Une erreur est survenue pendant l'envoi de l'email de vérification
+    success: L'email de vérification a été envoyé avec succès
   reset:
     title: Réinitialiser le mot de passe
     email: Adresse email liée au compte

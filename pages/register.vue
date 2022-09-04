@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SFileInputPrewiever from "~/components/SFileInputPrewiever.vue";
 
-const router = useRouter();
 const userInformation = ref({
   firstName: "",
   lastName: "",
@@ -23,21 +22,30 @@ type FormError = Array<{
 
 const errors = ref<FormError | null>(null);
 
+const showVerifyStep = ref(false);
+
+const resendToken = ref<string>(null);
+
 async function register() {
-  const { data, error } = await useFetchAPI<unknown, FormError>(
-    "/v1/register",
+  const { data, error } = await useFetchAPI<
     {
-      method: "POST",
-      server: false,
-      body: userInformation.value,
-    }
-  );
+      message: string;
+      resend_token: string;
+    },
+    FormError
+  >("/v1/register", {
+    method: "POST",
+    server: false,
+    body: userInformation.value,
+  });
 
   if (error.value) {
-    console.log(error);
     errors.value = error.value.data;
   } else {
-    router.push("/login");
+    showVerifyStep.value = true;
+    console.log("log data: " + data.value.resend_token);
+    resendToken.value = data.value.resend_token;
+    console.log("log data: " + resendToken.value);
   }
 }
 
@@ -59,6 +67,7 @@ definePageMeta({
   >
     <div class="mx-auto w-full max-w-md">
       <div
+        v-if="!showVerifyStep"
         class="flex h-screen flex-col items-center justify-center bg-white shadow-[0_0_50px_0_rgba(0,0,0,0.75)] sm:h-fit sm:rounded-lg sm:py-10 sm:px-4"
       >
         <div class="mb-4 flex flex-col items-center justify-center space-x-2">
@@ -185,6 +194,7 @@ definePageMeta({
           </div>
         </form>
       </div>
+      <RegisterInfo v-else :resend-token="resendToken" />
     </div>
   </div>
 </template>
