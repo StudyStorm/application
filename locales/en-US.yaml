@@ -62,7 +62,7 @@ app:
     profile: Voir le profil
     logout: Se déconnecter
   register:
-    title: Create a StudyStorm account
+    title: Create your account
     labels:
       firstname: Firstname
       lastname: Lastname
@@ -74,6 +74,11 @@ app:
     text:
       alreadyHaveAccount: Already have an account ?
       loginHere: Login here
+    placeholder:
+      firstname: Your first name
+      lastname: Your last name
+      email: Your email address
+      password: Your password
   login:
     title: Sign in to your account
     email: Email address

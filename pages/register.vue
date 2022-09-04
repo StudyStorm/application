@@ -6,8 +6,8 @@ const userInformation = ref({
   email: "",
   password: "",
 });
-const confirmPassword = ref("");
-const err = ref<null | any>(null);
+const err = ref<boolean>(false);
+const bgImg = `/images/background_${Math.round(Math.random())}.jpg`;
 
 const updatePicture = (picture: File) => {
   console.log("Register got", picture);
@@ -15,18 +15,15 @@ const updatePicture = (picture: File) => {
 
 async function register() {
   // TODO: class store
-  if (userInformation.value.password === confirmPassword.value) {
-    const { data: answer, error } = await useFetchAPI("/v1/register", {
-      method: "POST",
-      body: userInformation.value,
-      initialCache: false,
-    });
+  const { error } = await useFetchAPI("/v1/register", {
+    method: "POST",
+    body: userInformation.value,
+  });
 
-    err.value = !answer.value;
-
-    if (answer.value) {
-      router.push("/verify");
-    }
+  if (error.value) {
+    err.value = true;
+  } else {
+    router.push("/login");
   }
 }
 
@@ -37,20 +34,35 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <h2
-        class="mt-6 text-center text-3xl font-bold tracking-tight text-storm-dark"
+  <div
+    class="flex h-screen flex-col justify-center"
+    :style="{
+      backgroundImage: `url(${bgImg})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+    }"
+  >
+    <div class="mx-auto w-full max-w-md">
+      <div
+        class="flex h-screen flex-col items-center justify-center bg-white sm:h-fit sm:rounded-lg sm:py-10 sm:px-4 sm:shadow-[0_0_50px_0_rgba(0,0,0,0.75)]"
       >
-        {{ $t("app.register.title") }}
-      </h2>
-    </div>
+        <div class="mb-4 flex flex-col items-center justify-center space-x-2">
+          <nuxt-img
+            src="/images/Logo.svg"
+            class="inline-block h-8 text-storm-dark lg:h-10"
+            alt="StudyStorm Logo"
+          />
+          <h2
+            class="text-center text-2xl font-bold tracking-tight text-storm-dark"
+          >
+            {{ $t("app.register.title") }}
+          </h2>
+        </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-        <form class="space-y-6" @submit.prevent="register">
-          <div class="mx-auto h-48 w-48 text-center">
-            <div class="mb-4">
+        <form class="w-full max-w-sm space-y-2 px-7" @submit.prevent="register">
+          <div class="mx-auto h-24 w-24 text-center">
+            <div>
               <label class="mt-6 cursor-pointer">
                 <FileInputPrewiever @valid-file="updatePicture" />
               </label>
@@ -72,7 +84,8 @@ definePageMeta({
                 type="text"
                 autocomplete="first_name"
                 required
-                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                :placeholder="$t('app.register.placeholder.firstname')"
+                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
               />
             </div>
           </div>
@@ -92,7 +105,8 @@ definePageMeta({
                 type="text"
                 autocomplete="last_name"
                 required
-                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                :placeholder="$t('app.register.placeholder.lastname')"
+                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
               />
             </div>
           </div>
@@ -108,7 +122,8 @@ definePageMeta({
                 type="email"
                 autocomplete="email"
                 required
-                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                :placeholder="$t('app.register.placeholder.email')"
+                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
               />
             </div>
           </div>
@@ -121,53 +136,36 @@ definePageMeta({
               {{ $t("app.register.labels.password") }}
             </label>
             <div class="mt-1">
-              <input
+              <s-password-input
                 id="password"
                 v-model="userInformation.password"
                 name="password"
                 type="password"
                 autocomplete="current-password"
                 required
-                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                :placeholder="$t('app.register.placeholder.password')"
+                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
               />
             </div>
           </div>
-
-          <div>
-            <label
-              for="password"
-              class="block text-sm font-medium text-gray-700"
-            >
-              {{ $t("app.register.labels.confirmPassword") }}
-            </label>
-            <div class="mt-1">
-              <input
-                id="confirm_password"
-                v-model="confirmPassword"
-                name="confirm_password"
-                type="password"
-                autocomplete="curent-password"
-                required
-                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
-          <div>
+          <div class="pt-4">
             <button
               type="submit"
-              class="flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="flex w-full justify-center rounded-md border border-transparent bg-storm-blue py-3 text-base font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 md:py-2 md:text-sm"
             >
               {{ $t("app.register.buttons.register") }}
             </button>
           </div>
           <div class="text-sm">
-            <p class="mt-2 text-center text-sm text-gray-600">
+            <p class="pt-2 text-center text-sm text-gray-600">
               {{ $t("app.register.text.alreadyHaveAccount") }}
               <NuxtLink
                 to="/login"
-                class="font-medium text-indigo-600 hover:text-indigo-500"
+                class="font-medium text-storm-darkblue hover:text-storm-blue focus:outline-storm-blue"
               >
-                {{ $t("app.register.text.loginHere") }}
+                <span class="inline-block">
+                  {{ $t("app.register.text.loginHere") }}
+                </span>
               </NuxtLink>
             </p>
           </div>
