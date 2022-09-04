@@ -53,7 +53,7 @@ onClickOutside(target, () => (showMobileMenu.value = false));
           rel="noopener"
         >
           <button
-            class="mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4 focus:ring-storm-darkblue/50"
+            class="mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2"
             @click="navigateToLogin"
           >
             {{ $t("landing.navbar.start") }}
@@ -103,14 +103,14 @@ onClickOutside(target, () => (showMobileMenu.value = false));
           class="mt-4 flex flex-col space-y-2 font-medium lg:mt-0 lg:flex-row lg:space-x-8 lg:space-y-0"
         >
           <li v-for="(link, index) in links" :key="index">
-            <NuxtLink
+            <a
               :href="link.url"
               aria-current="page"
               :title="link.name"
               rel="noopener noreferrer"
               class="block rounded-lg py-2 pr-4 pl-3 text-storm-dark hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:hover:bg-transparent hover:lg:text-gray-500 lg:focus:ring-0"
               >{{ link.name }}
-            </NuxtLink>
+            </a>
           </li>
         </ul>
       </div>

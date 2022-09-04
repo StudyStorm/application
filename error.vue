@@ -60,7 +60,7 @@ definePageMeta({
     </div>
     <div
       class="background-image relative hidden flex-1 lg:block"
-      :style="{ backgroundImage: `url(/public/images/post-it-for-login.png)` }"
+      :style="{ backgroundImage: `url(/public/images/background_1.jpg)` }"
     ></div>
   </div>
 </template>
