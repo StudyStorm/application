@@ -6,14 +6,14 @@ export default {
 <script setup lang="ts">
 import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/solid/index.js";
 
-defineProps({
-  modelValue: String,
-});
+defineProps<{
+  modelValue?: string;
+}>();
 
 const emit = defineEmits(["update:modelValue"]);
 
-const updateValue = (event) => {
-  emit("update:modelValue", event.target.value);
+const updateValue = (value) => {
+  emit("update:modelValue", value);
 };
 
 const isShown = ref(false);
@@ -26,7 +26,14 @@ const icon = computed(() => {
 });
 </script>
 <template>
-  <div class="relative" @click="$refs.input.focus()">
+  <s-input
+    ref="input"
+    class="pr-9"
+    v-bind="$attrs"
+    :type="fieldType"
+    :model-value="modelValue"
+    @update:model-value="updateValue"
+  >
     <span class="absolute inset-y-0 right-3 flex items-center pl-2">
       <component
         :is="icon"
@@ -35,13 +42,5 @@ const icon = computed(() => {
         @click="isShown = !isShown"
       />
     </span>
-    <input
-      ref="input"
-      class="pr-9"
-      v-bind="$attrs"
-      :type="fieldType"
-      :value="modelValue"
-      @input="updateValue"
-    />
-  </div>
+  </s-input>
 </template>

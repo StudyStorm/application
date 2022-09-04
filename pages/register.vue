@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import SFileInputPrewiever from "~/components/SFileInputPrewiever.vue";
+import SFileInputPreview from "~/components/SFileInputPreview.vue";
+import { FormError } from "~/types/app";
+import { useFetchAPI } from "#imports";
 
 const userInformation = ref({
   firstName: "",
@@ -13,12 +15,6 @@ const bgImg = `/images/background_${Math.round(Math.random())}.jpg`;
 const updatePicture = (picture: File) => {
   console.log("Register got", picture);
 };
-
-type FormError = Array<{
-  rule: string;
-  field: string;
-  message: string;
-}>;
 
 const errors = ref<FormError | null>(null);
 
@@ -41,10 +37,11 @@ async function register() {
 
   if (error.value) {
     errors.value = error.value.data;
+    console.log("error", error.value.data);
   } else {
-    showVerifyStep.value = true;
-    console.log("log data: " + data.value.resend_token);
     resendToken.value = data.value.resend_token;
+    showVerifyStep.value = true;
+    console.log("log data: " + data.value);
     console.log("log data: " + resendToken.value);
   }
 }
@@ -83,9 +80,13 @@ definePageMeta({
           </h2>
         </div>
 
-        <form class="w-full max-w-sm space-y-2 px-7" @submit.prevent="register">
+        <s-form
+          class="w-full max-w-sm space-y-2 px-7"
+          :errors="errors"
+          @submit.prevent="register"
+        >
           <div class="mx-auto h-24 w-24 text-center">
-            <s-file-input-prewiever
+            <s-file-input-preview
               class="mt-6 cursor-pointer"
               accept="image/png, image/jpeg, image/jpg, image/gif"
               @valid-file="updatePicture"
@@ -100,11 +101,12 @@ definePageMeta({
               {{ $t("app.register.labels.firstname") }}
             </label>
             <div class="mt-1">
-              <input
+              <s-input
                 id="firstName"
                 v-model="userInformation.firstName"
                 name="firstName"
                 type="text"
+                required
                 autocomplete="given-name"
                 :placeholder="$t('app.register.placeholder.firstname')"
                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
@@ -120,7 +122,7 @@ definePageMeta({
               {{ $t("app.register.labels.lastname") }}
             </label>
             <div class="mt-1">
-              <input
+              <s-input
                 id="lastName"
                 v-model="userInformation.lastName"
                 name="lastName"
@@ -137,7 +139,7 @@ definePageMeta({
               {{ $t("app.register.labels.email") }}
             </label>
             <div class="mt-1">
-              <input
+              <s-input
                 id="email"
                 v-model="userInformation.email"
                 name="email"
@@ -192,7 +194,7 @@ definePageMeta({
               </NuxtLink>
             </p>
           </div>
-        </form>
+        </s-form>
       </div>
       <RegisterInfo v-else :resend-token="resendToken" />
     </div>

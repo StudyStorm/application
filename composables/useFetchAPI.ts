@@ -4,10 +4,11 @@ import { AsyncData, KeyOfRes, PickFrom } from "#app/composables/asyncData";
 import { Ref } from "vue";
 import { FetchResult, UseFetchOptions } from "#app/composables/fetch";
 import { FetchError } from "ohmyfetch";
+import { a } from "vite-node/types-b9c999e6";
 
 export function useFetchAPI<
-  ResT = void,
-  ErrorT = void,
+  ResT = any,
+  ErrorT = any,
   ReqT extends NitroFetchRequest = NitroFetchRequest,
   _ResT = ResT extends void ? FetchResult<ReqT> : ResT,
   Transform extends (res: _ResT) => any = (res: _ResT) => _ResT,
@@ -29,8 +30,8 @@ export function useFetchAPI<
 }
 
 export function useLazyFetchAPI<
-  ResT = void,
-  ErrorT = void,
+  ResT = any,
+  ErrorT = any,
   ReqT extends NitroFetchRequest = NitroFetchRequest,
   _ResT = ResT extends void ? FetchResult<ReqT> : ResT,
   Transform extends (res: _ResT) => any = (res: _ResT) => _ResT,

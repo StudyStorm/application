@@ -3,6 +3,9 @@ import { XCircleIcon, XMarkIcon } from "@heroicons/vue/24/solid/index.js";
 import useAuth from "~/composables/useAuth";
 import SPasswordInput from "~/components/SPasswordInput.vue";
 import SLangSwitcher from "~/components/SLangSwitcher.vue";
+import { FetchError } from "ohmyfetch";
+import SAlert from "~/components/SAlert.vue";
+import { ref, useFetchAPI } from "#imports";
 
 const router = useRouter();
 const auth = useAuth();
@@ -14,21 +17,43 @@ const credentials = ref({
 
 const bgImg = `/images/background_${Math.round(Math.random())}.jpg`;
 
-const error = ref<boolean>(false);
+const errors = ref<
+  FetchError<{
+    message: string;
+    resend_token?: string;
+  }>
+>(null);
 
-async function login() {
-  await auth
+auth.onError((e: FetchError) => {
+  console.log(e);
+  errors.value = e;
+});
+
+function login() {
+  auth
     .login({
       body: credentials.value,
     })
-    .catch((e) => {
-      console.log(e);
-      error.value = true;
-    })
+    .catch()
     .then((e) => {
       console.log(e);
       router.push("/dashboard");
     });
+}
+
+async function sendToken(token: string) {
+  const { error } = await useFetchAPI("/v1/resend", {
+    method: "POST",
+    body: {
+      key: token,
+    },
+    initialCache: false,
+  });
+  errors.value = error.value;
+}
+
+function closeError() {
+  errors.value = null;
 }
 
 definePageMeta({
@@ -101,32 +126,20 @@ definePageMeta({
                   />
                 </div>
               </div>
-              <div v-if="error" class="rounded-md bg-red-50 p-4">
-                <div class="flex items-center">
-                  <div class="shrink-0">
-                    <XCircleIcon
-                      class="h-5 w-5 text-red-400"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div class="ml-3">
-                    <p class="text-sm font-medium text-red-800">
-                      {{ $t("app.login.errorLogin") }}
-                    </p>
-                  </div>
-                  <div class="ml-auto pl-3">
-                    <div class="-m-1 md:-m-1.5">
-                      <button
-                        type="button"
-                        class="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-1 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
-                        @click="error = false"
-                      >
-                        <XMarkIcon class="h-5 w-5" aria-hidden="true" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <s-alert :on-close="closeError" :open="errors">
+                <span v-if="errors.data.resend_token">
+                  {{ $t("app.login.resend_token") }}
+                  <button
+                    class="text-storm-blue underline"
+                    @click.prevent="sendToken(errors.data.resend_token)"
+                  >
+                    {{ $t("app.login.resend_token_button") }}
+                  </button>
+                </span>
+                <span v-else>
+                  {{ $t("app.login.errorLogin") }}
+                </span>
+              </s-alert>
 
               <div class="flex items-center justify-end">
                 <div class="text-sm">

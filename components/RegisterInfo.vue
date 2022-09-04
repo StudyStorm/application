@@ -4,7 +4,9 @@ import {
   XMarkIcon,
   CheckCircleIcon,
 } from "@heroicons/vue/24/solid/index.js";
-const props = defineProps({ resendToken: { type: String, default: "" } });
+const props = defineProps<{
+  resendToken?: string;
+}>();
 
 const status = ref({
   err: false,
@@ -14,9 +16,9 @@ const status = ref({
 async function sendToken() {
   const { error } = await useFetchAPI("/v1/resend", {
     method: "POST",
-    body: JSON.stringify({
+    body: {
       key: props.resendToken,
-    }),
+    },
     initialCache: false,
   });
 
@@ -43,6 +45,7 @@ async function sendToken() {
       />
       <div class="mt-4 w-full text-center text-3xl font-bold tracking-normal">
         {{ $t("app.verify.title") }}
+        {{ resendToken }}
       </div>
       <div class="mt-10 w-full text-base text-storm-dark">
         {{ $t("app.verify.firstParagraph") }}
