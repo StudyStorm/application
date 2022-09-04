@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import SFileInputPrewiever from "~/components/SFileInputPrewiever.vue";
+
 const router = useRouter();
 const userInformation = ref({
   first_name: "",
@@ -61,12 +63,12 @@ definePageMeta({
         </div>
 
         <form class="w-full max-w-sm space-y-2 px-7" @submit.prevent="register">
-          <div class="flex">
-            <div class="mx-auto">
-              <label class="mt-6 cursor-pointer">
-                <FileInputPrewiever @valid-file="updatePicture" />
-              </label>
-            </div>
+          <div class="mx-auto h-24 w-24 text-center">
+            <s-file-input-prewiever
+              class="mt-6 cursor-pointer"
+              accept="image/png, image/jpeg, image/jpg, image/gif"
+              @valid-file="updatePicture"
+            />
           </div>
 
           <div>
