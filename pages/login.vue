@@ -131,7 +131,7 @@ definePageMeta({
               <div class="flex items-center justify-end">
                 <div class="text-sm">
                   <NuxtLink
-                    to="/forgottenPassword"
+                    to="/forgot-password"
                     class="font-medium text-storm-dark hover:text-storm-blue focus:outline-storm-blue"
                   >
                     {{ $t("app.login.forgotPassword") }}
