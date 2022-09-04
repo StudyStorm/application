@@ -63,21 +63,6 @@ const showButton = ref(false);
 const sidebarOpen = ref(false);
 const showModal = ref(false);
 
-async function create() {
-  // const { data: answer } = await useFetchAPI("/createClassroom", {
-  //   method: "POST",
-  //   body: datas.value,
-  //   initialCache: false,
-  // });
-  // err.value = !answer.value;
-  // if (answer.value) {
-  //   resetField();
-  //   router.push("/classrooms");
-  // }
-  showModal.value = false;
-  console.log(datas.value);
-}
-
 async function closeModal() {
   resetField();
   showModal.value = false;
@@ -230,14 +215,14 @@ async function createClassroom() {
                 >
                   <nuxt-img
                     class="h-10 w-10 shrink-0 rounded-full bg-gray-300"
-                    src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
+                    :src="$auth.user.picture_url"
                     alt=""
                   />
                   <span class="flex min-w-0 flex-1 flex-col">
                     <span class="truncate text-sm font-medium text-gray-900"
                       >{{ $auth.user.first_name }}
-                      {{ $auth.user.last_name }}</span
-                    >
+                      {{ $auth.user.last_name }}
+                    </span>
                     <span class="truncate text-sm text-gray-500">{{
                       $auth.user.email
                     }}</span>
@@ -250,6 +235,7 @@ async function createClassroom() {
               </span>
             </MenuButton>
           </div>
+
           <transition
             enter-active-class="transition duration-100 ease-out"
             enter-from-class="transform scale-95 opacity-0"
@@ -376,14 +362,14 @@ async function createClassroom() {
           <Menu as="div" class="relative ml-3">
             <div>
               <MenuButton
-                class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                class="flex max-w-xs rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
               >
                 <span class="sr-only"
                   >Open user menu {{ $t("app.navbar.openMenu") }}</span
                 >
                 <nuxt-img
                   class="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  :src="$auth.user.picture_url"
                   alt=""
                 />
               </MenuButton>
