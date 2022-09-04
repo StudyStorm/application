@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import Card from "~~/models/Card";
-import User from "~~/models/User";
+
 export const useLearnStore = defineStore("learn", {
   state: () => ({
     deck: null,
@@ -40,9 +40,10 @@ export const useLearnStore = defineStore("learn", {
       // TODO: fetch the real deck from API
 
       // TMP CODE
-      const creator = new User();
-      creator.firstName = "John";
-      creator.lastName = "Doe";
+      const creator = {
+        first_name: "John",
+        last_name: "Doe",
+      };
 
       const deck = {
         id: "01013eab-bbcc-4037-ae99-a08efb2a921b",

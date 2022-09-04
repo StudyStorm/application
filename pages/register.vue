@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const router = useRouter();
 const userInformation = ref({
-  firstName: "",
-  lastName: "",
+  first_name: "",
+  last_name: "",
   email: "",
   password: "",
 });
@@ -59,18 +59,18 @@ definePageMeta({
 
           <div>
             <label
-              for="firstname"
+              for="first_name"
               class="block text-sm font-medium text-gray-700"
             >
               {{ $t("app.register.labels.firstname") }}
             </label>
             <div class="mt-1">
               <input
-                id="firstname"
-                v-model="userInformation.firstName"
-                name="firstname"
+                id="first_name"
+                v-model="userInformation.first_name"
+                name="first_name"
                 type="text"
-                autocomplete="firstname"
+                autocomplete="first_name"
                 required
                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               />
@@ -79,18 +79,18 @@ definePageMeta({
 
           <div>
             <label
-              for="lastname"
+              for="last_name"
               class="block text-sm font-medium text-gray-700"
             >
               {{ $t("app.register.labels.lastname") }}
             </label>
             <div class="mt-1">
               <input
-                id="lastname"
-                v-model="userInformation.lastName"
-                name="lastname"
+                id="last_name"
+                v-model="userInformation.last_name"
+                name="last_name"
                 type="text"
-                autocomplete="lastname"
+                autocomplete="last_name"
                 required
                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               />

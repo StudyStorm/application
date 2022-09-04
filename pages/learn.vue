@@ -62,7 +62,7 @@ const nextCard = () => {
           <span class="text-sm leading-6 text-gray-900 sm:truncate">
             {{
               $t("app.learn.text.by", {
-                author: `${learnStore.deck.creator.firstName} ${learnStore.deck.creator.lastName}`,
+                author: `${learnStore.deck.creator.first_name} ${learnStore.deck.creator.last_name}`,
               })
             }}
           </span>

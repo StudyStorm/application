@@ -219,7 +219,7 @@ store.allDecks = [...topDecks];
                   <div class="flex items-center space-x-3 lg:pl-2">
                     <span class="truncate hover:text-gray-600">
                       <span>
-                        {{ deck.formattedVotes }}
+                        {{ deck.votes }}
                       </span>
                     </span>
                   </div>

@@ -56,6 +56,11 @@ landing:
 
 ### ------------------------------------------------- APP SECTION ------------------------------------------------- ###
 app:
+  title: StudyStorm
+  navbar:
+    openMenu: Ouvrir menu
+    profile: Voir le profil
+    logout: Se déconnecter
   register:
     title: Create a StudyStorm account
     labels:
@@ -169,7 +174,7 @@ app:
     title: My classrooms
     manageButton: Manage
     topDecks: Top classroom decks
-    members: members
+    members: Members
     membersButton: See all members
     exploreDecks: Explore all classroom decks
     decksButton: New deck

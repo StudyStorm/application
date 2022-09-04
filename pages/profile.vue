@@ -2,8 +2,8 @@
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline/index.js";
 
 const userInformation = ref({
-  firstName: "",
-  lastName: "",
+  first_name: "",
+  last_name: "",
   email: "",
   password: "",
 });
@@ -16,22 +16,20 @@ const updatePicture = (picture: File) => {
 };
 
 // TODO: Retrieve user information apart from password
-userInformation.value.firstName = "John";
-userInformation.value.lastName = "Doe";
-userInformation.value.email = "john.@gmail.com";
+// TODO: get user from store
+// userInformation.value.firstName = "John";
+// userInformation.value.lastName = "Doe";
+// userInformation.value.email = "john.@gmail.com";
 
 async function save() {
   if (userInformation.value.password === confirmPassword.value) {
-    const { data: answer, error } = await useFetchAPI("/save", {
+    const { data } = await useFetchAPI("/save", {
       method: "PATCH",
       body: userInformation.value,
       initialCache: false,
     });
 
-    err.value = !answer.value;
-
-    if (answer.value) {
-    }
+    err.value = !data.value;
   }
 }
 
@@ -65,18 +63,18 @@ async function deleteAccount() {
 
           <div>
             <label
-              for="firstname"
+              for="first_name"
               class="block text-sm font-medium text-gray-700"
             >
               {{ $t("app.profile.labels.firstname") }}
             </label>
             <div class="mt-1">
               <input
-                id="firstname"
-                v-model="userInformation.firstName"
-                name="firstname"
+                id="first_name"
+                v-model="userInformation.first_name"
+                name="first_name"
                 type="text"
-                autocomplete="firstname"
+                autocomplete="first_name"
                 required
                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               />
@@ -85,16 +83,16 @@ async function deleteAccount() {
 
           <div>
             <label
-              for="lastname"
+              for="last_name"
               class="block text-sm font-medium text-gray-700"
             >
               {{ $t("app.profile.labels.lastname") }}
             </label>
             <div class="mt-1">
               <input
-                id="lastname"
-                v-model="userInformation.lastName"
-                name="lastname"
+                id="last_name"
+                v-model="userInformation.last_name"
+                name="last_name"
                 type="text"
                 required
                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -203,7 +201,6 @@ async function deleteAccount() {
           {{ $t("app.profile.modal.buttons.confirmDelete") }}
         </button>
         <button
-          ref="cancelButtonRef"
           type="button"
           class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
           @click="showModal = false"

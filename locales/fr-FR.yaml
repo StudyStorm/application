@@ -60,6 +60,11 @@ landing:
 
 ### ------------------------------------------------- APP SECTION ------------------------------------------------- ###
 app:
+  title: StudyStorm
+  navbar:
+    openMenu: Ouvrir menu
+    profile: Voir le profil
+    logout: Se déconnecter
   register:
     title: Créez un compte StudyStorm
     labels:

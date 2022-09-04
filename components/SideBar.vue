@@ -154,7 +154,7 @@ async function createClassroom() {
                 />
                 <span
                   class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold"
-                  >StudyStorm</span
+                  >{{ $t("app.title") }}</span
                 >
               </div>
               <div class="mt-5 h-0 flex-1 overflow-y-auto">
@@ -213,7 +213,7 @@ async function createClassroom() {
         />
         <span
           class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold"
-          >StudyStorm</span
+          >{{ $t("app.title") }}</span
         >
       </div>
       <!-- Sidebar component, swap this element with another sidebar if you like -->
@@ -269,7 +269,7 @@ async function createClassroom() {
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 text-sm',
                     ]"
-                    >View profile
+                    >{{ $t("app.navbar.profile") }}
                   </NuxtLink>
                 </MenuItem>
               </div>
@@ -282,8 +282,8 @@ async function createClassroom() {
                       'block px-4 py-2 text-sm',
                     ]"
                     @click="auth.logout()"
-                    >Logout</NuxtLink
-                  >
+                    >{{ $t("app.navbar.logout") }}
+                  </NuxtLink>
                 </MenuItem>
               </div>
             </MenuItems>
@@ -366,7 +366,7 @@ async function createClassroom() {
         class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500 lg:hidden"
         @click="sidebarOpen = true"
       >
-        <span class="sr-only">Open sidebar</span>
+        <span class="sr-only">{{ $t("app.navbar.openMenu") }}</span>
         <Bars3CenterLeftIcon class="h-6 w-6" aria-hidden="true" />
       </button>
       <div class="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
@@ -378,7 +378,9 @@ async function createClassroom() {
               <MenuButton
                 class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
               >
-                <span class="sr-only">Open user menu</span>
+                <span class="sr-only"
+                  >Open user menu {{ $t("app.navbar.openMenu") }}</span
+                >
                 <nuxt-img
                   class="h-8 w-8 rounded-full"
                   src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -405,7 +407,7 @@ async function createClassroom() {
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm',
                       ]"
-                      >View profile
+                      >{{ $t("app.navbar.profile") }}
                     </NuxtLink>
                   </MenuItem>
                 </div>
@@ -418,7 +420,7 @@ async function createClassroom() {
                         'block px-4 py-2 text-sm',
                       ]"
                       @click="auth.logout()"
-                      >Logout</NuxtLink
+                      >{{ $t("app.navbar.logout") }}</NuxtLink
                     >
                   </MenuItem>
                 </div>
@@ -472,7 +474,6 @@ async function createClassroom() {
         {{ $t("app.createClassroom.create") }}
       </button>
       <button
-        ref="cancelButtonRef"
         type="button"
         class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         @click="closeModal"
