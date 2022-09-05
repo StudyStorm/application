@@ -178,7 +178,7 @@ app:
         cardType: Card type
         question: Question
         answer: Answer
-        answers: Answers
+        answers: Answers (check the right ones)
       buttons:
         create: Create
         cancel: Cancel

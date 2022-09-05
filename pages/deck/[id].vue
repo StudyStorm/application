@@ -3,6 +3,8 @@ import { useDecksStore } from "~/store/decks";
 import { SquaresPlusIcon } from "@heroicons/vue/24/outline/index.js";
 const store = useDecksStore();
 const route = useRoute();
+import { ref, useFetchAPI } from "#imports";
+import { FormError } from "~/types/app";
 
 // TODO: Fetch the deck / Check deck access
 store.addUsedDeck(route.params.id as string);
@@ -18,7 +20,12 @@ const cardInformation = ref({
   content: {
     question: "",
     answer: "",
-    answers: "",
+    answers: [
+      { label: "", isTheAnswer: false },
+      { label: "", isTheAnswer: false },
+      { label: "", isTheAnswer: false },
+      { label: "", isTheAnswer: false },
+    ],
     type: "string",
   },
   type: "",
@@ -27,20 +34,38 @@ const cardInformation = ref({
 async function createCard() {
   const payload = {
     deckId: route.params.id,
-    cardType: cardInformation.value.type,
+    //cardType: cardInformation.value.type,
     content: {
       question: cardInformation.value.content.question,
       type: cardInformation.value.content.type,
     },
   };
 
-  switch (payload.cardType) {
+  switch (cardInformation.value.type) {
     case cardTypes[0].type:
       payload.content["answer"] = cardInformation.value.content.answer;
       break;
     case cardTypes[1].type:
-      payload.content["answers"] = [{ label: "oui", isTheAnswer: true }];
+      payload.content["answers"] = cardInformation.value.content.answers;
       break;
+    default:
+      return;
+  }
+
+  const errors = ref<FormError | null>(null);
+
+  const { data, error } = await useFetchAPI("v1/decks/cards", {
+    method: "POST",
+    body: {
+      ...payload,
+    },
+  });
+
+  if (error) {
+    errors.value = error.data;
+    console.log(error.data);
+  } else {
+    showModal.value = false;
   }
 }
 </script>
@@ -67,29 +92,32 @@ async function createCard() {
       {{ $t("app.deck.modal.create.title") }}
     </template>
     <template #content>
-      <div class="w-full max-w-sm mt-8 space-y-2 px-7 sm:mx-auto sm:w-full">
+      <div class="w-full max-w-sm mt-8 space-y-6 px-7 sm:mx-auto sm:w-full">
         <div>
           <label
             for="cardType"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
             >{{ $t("app.deck.modal.labels.cardType") }}</label
           >
-          <select
-            id="cardType"
-            v-model="cardInformation.type"
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          <div
+            v-for="cardType in cardTypes"
+            :key="cardType"
+            class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700"
           >
-            <option selected disabled>
-              {{ $t("app.deck.modal.labels.select") }}
-            </option>
-            <option
-              v-for="cardType in cardTypes"
-              :key="cardType.type"
+            <input
+              :id="cardType + 'Input'"
+              v-model="cardInformation.type"
+              type="radio"
               :value="cardType.type"
+              :name="cardType + 'bordered-radio'"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+            />
+            <label
+              for="cardType + 'Input'"
+              class="w-full py-4 mx-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >{{ cardType.label }}</label
             >
-              {{ cardType.label }}
-            </option>
-          </select>
+          </div>
         </div>
         <div v-if="cardInformation.type">
           <label for="question" class="block text-sm font-medium text-gray-700">
@@ -125,18 +153,36 @@ async function createCard() {
         </div>
         <div v-if="cardInformation.type === 'optionsCard'">
           <label for="answers" class="block text-sm font-medium text-gray-700">
-            {{ $t("app.deck.modal.labels.answer") }}
+            {{ $t("app.deck.modal.labels.answers") }}
           </label>
-          <div class="mt-1">
-            <s-input
-              id="answers"
-              v-model="cardInformation.content.answers"
-              name="answers"
-              type="text"
-              required
-              :placeholder="$t('app.deck.modal.labels.answers')"
-              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm appearance-none placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
-            />
+          <div
+            v-for="index in cardInformation.content.answers.length"
+            :key="index"
+            class="mt-1"
+          >
+            <div class="flex">
+              <div class="flex items-center mr-4">
+                <input
+                  :id="'checkbox' + index"
+                  v-model="
+                    cardInformation.content.answers[index - 1].isTheAnswer
+                  "
+                  type="checkbox"
+                  class="w-4 h-4 mr-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                />
+                <s-input
+                  :id="'answers' + index"
+                  :key="index"
+                  v-model="cardInformation.content.answers[index - 1].label"
+                  :name="'answers' + index"
+                  type="text"
+                  :placeholder="
+                    $t('app.deck.modal.labels.answer') + ' ' + index
+                  "
+                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm appearance-none placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

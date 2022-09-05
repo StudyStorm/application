@@ -182,7 +182,7 @@ app:
         cardType: Type de carte
         question: Question
         answer: Réponse
-        answers: Réponses
+        answers: Réponses (cochez les réponses justes)
       buttons:
         create: Créer
         cancel: Annuler
