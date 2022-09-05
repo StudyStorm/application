@@ -108,6 +108,7 @@ app:
     title: Réinitialiser le mot de passe
     password: Nouveau mot de passe
     button: Réinitialiser le mot de passe
+    returnLogin: Retour à la page de connexion
   forgottenPassword:
     title: Réinitialiser votre mot de passe
     email: Entrez l'email lié à votre compte

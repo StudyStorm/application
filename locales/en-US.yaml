@@ -105,6 +105,7 @@ app:
     title: Reset your password
     password: New password
     button: Reset your password
+    returnLogin: Return to login page
   forgottenPassword:
     title: Reinitialize your password
     email: Enter your email address
