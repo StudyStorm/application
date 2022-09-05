@@ -26,7 +26,7 @@ const color = computed((): string => {
 
 const formattedVotes = computed(() => {
   const formatter = Intl.NumberFormat("en", { notation: "compact" });
-  return formatter.format(props.deck.votes);
+  return formatter.format(props.deck?.votes);
 });
 </script>
 
@@ -61,13 +61,7 @@ const formattedVotes = computed(() => {
       </div>
     </div>
     <div>
-      <p class="font-normal text-storm-dark">
-        {{
-          $t("app.decks.createdBy", {
-            name: `${deck.creator.first_name} ${deck.creator.last_name}`,
-          })
-        }}
-      </p>
+      <p class="font-normal text-storm-dark"></p>
     </div>
   </NuxtLink>
 </template>

@@ -2,6 +2,7 @@
 import { FolderPlusIcon } from "@heroicons/vue/24/outline/index.js";
 import Folder from "~/models/Folder";
 import FolderCard from "~/components/FolderCard.vue";
+import DeckCard from "~/components/DeckCard.vue";
 
 defineProps<{
   folder: Folder;
@@ -33,5 +34,11 @@ defineEmits(["showModalFolder"]);
       :key="subFolder.id"
       :folder="subFolder"
     />
+  </div>
+  <hr class="my-4" />
+  <div
+    class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6 2xl:grid-cols-7"
+  >
+    <deck-card v-for="deck in folder.decks" :key="deck.id" :deck="deck" />
   </div>
 </template>

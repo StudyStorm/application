@@ -7,6 +7,8 @@ export default interface Folder {
 
   name: string;
 
+  classroom_id: string;
+
   classroom: Classroom;
 
   creator: User;

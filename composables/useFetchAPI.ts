@@ -9,16 +9,18 @@ type Response<T, U> = Promise<{
 
 export function useFetchAPI<DataT = never, ErrorT = never>(
   path: string,
-  options: HTTPRequest
+  options?: HTTPRequest
 ): Response<DataT, ErrorT> {
   const config = useRuntimeConfig();
   const auth = useAuth();
   return auth
-    .request({
-      url: path,
-      baseURL: config.apiURL,
-      ...options,
-    })
+    .request(
+      {
+        url: path,
+        baseURL: config.apiURL,
+      },
+      options
+    )
     .then((data) => ({
       data: data as unknown as DataT,
       error: null,

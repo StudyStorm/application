@@ -6,11 +6,7 @@ export const useClassroomStore = defineStore("classroom", {
   }),
   actions: {
     async fetchClassroom(classroomId: string) {
-      console.log(classroomId);
-      // const { data } = await useFetchAPI<Classroom>(
-      //   `/v1/classrooms/${classroomId}`
-      // );
-      // this.classroom = data.value;
+      // todo
     },
 
     async createDeck() {
