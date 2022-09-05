@@ -132,44 +132,66 @@ async function createClassroom() {
                   alt="StudyStorm Logo"
                 />
                 <span
-                  class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold"
+                  class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold text-storm-dark"
                   >{{ $t("app.title") }}</span
                 >
               </div>
               <div class="mt-5 h-0 flex-1 overflow-y-auto">
                 <nav class="px-2">
-                  <div class="space-y-1">
+                  <div
+                    v-for="item in navigation"
+                    :key="item.name"
+                    class="cursor-pointer select-none"
+                  >
                     <NuxtLink
-                      v-for="item in navigation"
-                      :key="item.name"
                       :to="item.href"
+                      class="flex items-center justify-between"
                       :class="[
                         item.current
-                          ? 'bg-gray-100 text-gray-900'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
-                        'group flex items-center px-2 py-2 text-base leading-5 font-medium rounded-md',
+                          ? 'bg-gray-200 text-gray-900'
+                          : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
+                        'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
                       ]"
                       :aria-current="item.current ? 'page' : undefined"
+                      @click="item.dropped = !item.dropped"
                     >
-                      <component
-                        :is="item.icon"
-                        :class="[
-                          item.current
-                            ? 'text-gray-500'
-                            : 'text-gray-400 group-hover:text-gray-500',
-                          'mr-3 flex-shrink-0 h-6 w-6',
-                        ]"
+                      <div class="flex items-center">
+                        <component
+                          :is="item.icon"
+                          :class="[
+                            item.current
+                              ? 'text-gray-500'
+                              : 'text-gray-400 group-hover:text-gray-500',
+                            'mr-3 flex-shrink-0 h-6 w-6',
+                          ]"
+                          aria-hidden="true"
+                        />
+                        {{ item.name }}
+                      </div>
+                      <ChevronUpIcon
+                        v-if="item.hasDropdown && item.dropped"
+                        class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
                         aria-hidden="true"
+                        @click="item.dropped = !item.dropped"
                       />
-                      {{ item.name }}
+                      <ChevronDownIcon
+                        v-if="item.hasDropdown && !item.dropped"
+                        class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                        aria-hidden="true"
+                        @click="item.dropped = !item.dropped"
+                      />
                     </NuxtLink>
-                    <div class="flex justify-start">
-                      <button
-                        class="mx-6 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        @click="createClassroom"
+                    <div v-if="item.hasDropdown && item.dropped">
+                      <!-- TODO: change this to match the classroom type -->
+                      <!-- TODO: Change the link to /classroom/:id -->
+                      <NuxtLink
+                        v-for="subitem in item.items"
+                        :key="subitem"
+                        class="group flex cursor-pointer items-center rounded-md p-2 pl-8 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                        to="/classroom/id"
                       >
-                        {{ $t("app.createClassroom.title") }}
-                      </button>
+                        {{ subitem }}
+                      </NuxtLink>
                     </div>
                   </div>
                 </nav>
@@ -191,7 +213,7 @@ async function createClassroom() {
           alt="StudyStorm Logo"
         />
         <span
-          class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold"
+          class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold text-storm-dark"
           >{{ $t("app.title") }}</span
         >
       </div>
@@ -316,13 +338,15 @@ async function createClassroom() {
               </NuxtLink>
               <div v-if="item.hasDropdown && item.dropped">
                 <!-- TODO: change this to match the classroom type -->
-                <div
+                <!-- TODO: Change the link to /classroom/:id -->
+                <NuxtLink
                   v-for="subitem in item.items"
                   :key="subitem"
                   class="group flex cursor-pointer items-center rounded-md p-2 pl-8 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                  to="/classroom/id"
                 >
                   {{ subitem }}
-                </div>
+                </NuxtLink>
               </div>
             </div>
 
