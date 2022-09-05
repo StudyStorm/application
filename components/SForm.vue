@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { createForm } from '~/composables/useForm'
-import { FormError } from '~/types/app'
+import { createForm } from "~/composables/useForm";
+import { FormError } from "~/types/app";
 const props = defineProps<{
   errors: FormError;
 }>();

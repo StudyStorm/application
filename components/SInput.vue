@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs, useForm } from '#imports'
+import { computed, useAttrs, useForm } from "#imports";
 
 defineProps<{
   modelValue?: string;
@@ -12,9 +12,9 @@ const updateValue = (event) => {
 };
 const form = useForm();
 const attrs = useAttrs();
-const error = computed(() => form?.errors?.errors.find(
-        (e) => e.field === attrs?.name)
-      );
+const error = computed(() =>
+  form?.errors?.errors.find((e) => e.field === attrs?.name)
+);
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const error = computed(() => form?.errors?.errors.find(
     />
     <slot />
   </div>
-  <div class="text-sm text-red-500" v-if="error">
+  <div v-if="error" class="text-sm text-red-500">
     {{ error.message }}
   </div>
 </template>
