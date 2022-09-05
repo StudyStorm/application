@@ -45,7 +45,11 @@ async function deleteAccount() {
             <div class="mx-auto text-center">
               <div class="mb-4">
                 <label class="mt-6 cursor-pointer">
-                  <FileInputPrewiever @valid-file="updatePicture" />
+                  <s-file-input-preview
+                    class="mt-6 cursor-pointer"
+                    accept="image/png, image/jpeg, image/jpg, image/gif"
+                    @valid-file="updatePicture"
+                  />
                 </label>
               </div>
             </div>
