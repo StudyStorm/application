@@ -35,12 +35,12 @@ onClickOutside(target, () => (showMobileMenu.value = false));
     class="sticky top-0 border-b border-b-gray-100 px-4 py-2.5 text-storm-dark backdrop-blur lg:px-6"
   >
     <div
-      class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between"
+      class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto"
     >
       <NuxtLink to="/" title="Landing page link" class="flex items-center">
         <nuxt-img
           src="/images/Logo.svg"
-          class="mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
+          class="h-6 mr-3 from-cyan-500 to-blue-500 sm:h-9"
           alt="StudyStorm Logo"
         />
         <span
@@ -65,14 +65,14 @@ onClickOutside(target, () => (showMobileMenu.value = false));
         <button
           data-collapse-toggle="mobile-menu-2"
           type="button"
-          class="ml-1 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:hidden"
+          class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:hidden"
           aria-controls="mobile-menu-2"
           aria-expanded="false"
           @click="toggleMobileMenu"
         >
           <span class="sr-only">{{ $t("landing.navbar.openMenu") }}</span>
           <svg
-            class="h-6 w-6"
+            class="w-6 h-6"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@ onClickOutside(target, () => (showMobileMenu.value = false));
             ></path>
           </svg>
           <svg
-            class="hidden h-6 w-6"
+            class="hidden w-6 h-6"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -99,11 +99,11 @@ onClickOutside(target, () => (showMobileMenu.value = false));
       </div>
       <div
         id="mobile-menu-2"
-        class="w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
+        class="items-center justify-between w-full lg:order-1 lg:flex lg:w-auto"
         :class="{ hidden: !showMobileMenu }"
       >
         <ul
-          class="mt-4 flex flex-col space-y-2 font-medium lg:mt-0 lg:flex-row lg:space-x-8 lg:space-y-0"
+          class="flex flex-col mt-4 space-y-2 font-medium lg:mt-0 lg:flex-row lg:space-x-8 lg:space-y-0"
         >
           <li v-for="(link, index) in links" :key="index">
             <a
@@ -111,17 +111,17 @@ onClickOutside(target, () => (showMobileMenu.value = false));
               aria-current="page"
               :title="link.name"
               rel="noopener noreferrer"
-              class="block rounded-lg py-2 pl-3 pr-4 text-storm-dark hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:hover:bg-transparent hover:lg:text-gray-500 lg:focus:ring-0"
+              class="block py-2 pl-3 pr-4 rounded-lg text-storm-dark hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:hover:bg-transparent hover:lg:text-gray-500 lg:focus:ring-0"
               >{{ link.name }}
             </a>
           </li>
           <li
-            class="block rounded-lg py-2 pl-3 pr-4 text-storm-dark hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:focus:ring-0"
+            class="block py-2 pl-3 pr-4 rounded-lg text-storm-dark hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:focus:ring-0"
           >
             <Menu as="div" class="relative inline-block text-left">
               <div>
                 <MenuButton>
-                  <GlobeAltIcon class="h-6 w-6 text-storm-dark" />
+                  <GlobeAltIcon class="w-6 h-6 text-storm-dark" />
                 </MenuButton>
               </div>
 
@@ -134,7 +134,7 @@ onClickOutside(target, () => (showMobileMenu.value = false));
                 leave-to-class="transform scale-95 opacity-0"
               >
                 <MenuItems
-                  class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  class="absolute z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg -right-10 ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
                   <div class="py-1">
                     <s-lang-switcher
