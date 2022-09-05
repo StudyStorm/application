@@ -14,4 +14,6 @@ export default interface Folder {
   parent: Folder;
 
   decks: Deck[];
+
+  children: Folder[];
 }

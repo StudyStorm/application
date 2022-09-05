@@ -2,13 +2,15 @@
 import { ChevronRightIcon, Bars4Icon } from "@heroicons/vue/24/solid/index.js";
 import { useDecksStore } from "~/store/decks";
 
-import {
-  Square2StackIcon,
-  FolderPlusIcon,
-} from "@heroicons/vue/24/outline/index.js";
+import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
 
 import { useI18n } from "vue-i18n";
-import { useClassroomStore } from "../../store/classroom";
+import { useClassroomStore } from "~/store/classroom";
+import FolderContentBlock from "~/components/folder/FolderContentBlock.vue";
+import FolderContentList from "~/components/folder/FolderContentList.vue";
+import Folder from "~/models/Folder";
+import { RecursivePartial } from "~/types/app";
+import { useAuth } from "#imports";
 
 const route = useRoute();
 const classroomStore = useClassroomStore();
@@ -21,24 +23,20 @@ const { t } = useI18n();
 
 const store = useDecksStore();
 
-const tableHeaders = [
-  t("app.classroom.deckList.name"),
-  t("app.classroom.deckList.author"),
-  t("app.classroom.deckList.nbCards"),
-  t("app.classroom.deckList.votes"),
-];
-
-const folders = [
-  "Pointeurs de pointeurs",
-  "Folder 2",
-  "Folder 3",
-  "Folder 4",
-  "Folder 5",
-  "Folder 6",
-  "Folder 7",
-  "Folder 8",
-  "Folder 9",
-];
+const folder: RecursivePartial<Folder> = {
+  children: [
+    { name: "Folder 1", id: "1" },
+    { name: "Folder 2", id: "2" },
+    { name: "Folder 3", id: "3" },
+    { name: "Folder 4", id: "4" },
+  ],
+  decks: [
+    { name: "Deck 1", id: "1" },
+    { name: "Deck 2", id: "2" },
+    { name: "Deck 3", id: "3" },
+    { name: "Deck 4", id: "4" },
+  ],
+};
 
 const deckName = ref<string>(" ");
 const folderName = ref<string>("");
@@ -188,144 +186,12 @@ const showModalFolder = ref(false);
           </div>
         </div>
 
-        <div
-          class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6 2xl:grid-cols-7"
-        >
-          <div
-            to="#"
-            class="rounded-lg p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
-            @click="showModalFolder = true"
-          >
-            <div class="flex items-center space-x-4">
-              <div class="w-10 shrink-0">
-                <FolderPlusIcon />
-              </div>
-              <div class="min-w-0 flex-1">
-                <p
-                  class="truncate text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  {{ $t("app.classroom.folderButton") }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <FolderCard v-for="folder in folders" :key="folder" :name="folder" />
-        </div>
+        <folder-content-block
+          :folder="folder"
+          @show-modal-folder="showModalFolder = true"
+        />
 
-        <hr class="my-8" />
-
-        <!-- Projects list (mobile) -->
-        <div class="mt-10 sm:hidden">
-          <div class="px-4 sm:px-6">
-            <h2 class="text-sm font-medium text-storm-dark">Projects</h2>
-          </div>
-          <ul
-            role="list"
-            class="mt-3 divide-y divide-gray-100 border-t border-gray-200"
-          >
-            <!-- TODO: add this again with API -->
-            <!-- <li v-for="deck in store.filteredDecks" :key="deck.id">
-            <NuxtLink
-              :to="`/deck/${deck.id}`"
-              class="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"
-            >
-              <span class="flex items-center space-x-3 truncate">
-                <span class="truncate text-sm font-medium leading-6">
-                  {{ deck.name }}
-                </span>
-              </span>
-              <ChevronRightIcon
-                class="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                aria-hidden="true"
-              />
-            </NuxtLink>
-          </li> -->
-          </ul>
-        </div>
-
-        <!-- Projects table (desktop) -->
-        <div class="mt-8 hidden sm:block">
-          <div
-            v-if="displayStyle === 'row'"
-            class="inline-block min-w-full border-b border-gray-200"
-          >
-            <table class="min-w-full">
-              <thead>
-                <tr class="border-t border-gray-200">
-                  <th
-                    v-for="(header, i) in tableHeaders"
-                    :key="i"
-                    class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-                    scope="col"
-                  >
-                    <span class="lg:pl-2">{{ header }}</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100 bg-white">
-                <!-- TODO: add this again with API -->
-                <!-- <tr
-                v-for="(deck, i) in store.filteredDecks"
-                :key="deck.id"
-                :class="{ 'bg-gray-100': i % 2 === 0 }"
-              >
-                <td class="whitespace-nowrap px-6 py-3 text-sm font-medium">
-                  <div class="flex items-center space-x-3 lg:pl-2">
-                    <NuxtLink
-                      :to="`deck/${deck.id}`"
-                      class="truncate hover:text-gray-600"
-                    >
-                      <span>
-                        {{ deck.name }}
-                      </span>
-                    </NuxtLink>
-                  </div>
-                </td>
-                <td
-                  class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                >
-                  <div class="flex items-center space-x-3 lg:pl-2">
-                    <a class="truncate hover:text-gray-600">
-                      <span>
-                        {{ deck.creator.fullname }}
-                      </span>
-                    </a>
-                  </div>
-                </td>
-                <td
-                  class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                >
-                  <div class="flex items-center space-x-3 lg:pl-2">
-                    <a class="truncate hover:text-gray-600">
-                      <span> N cards </span>
-                    </a>
-                  </div>
-                </td>
-                <td
-                  class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                >
-                  <div class="flex items-center space-x-3 lg:pl-2">
-                    <a class="truncate hover:text-gray-600">
-                      <span>
-                        {{ deck.votes }}
-                      </span>
-                    </a>
-                  </div>
-                </td>
-              </tr> -->
-              </tbody>
-            </table>
-          </div>
-          <div v-else>
-            <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:gap-8">
-              <!-- <DeckCard
-              v-for="deck in store.filteredDecks"
-              :key="deck.id"
-              :deck="deck"
-            /> -->
-            </div>
-          </div>
-        </div>
+        <folder-content-list :folder="folder" />
       </div>
     </div>
 
