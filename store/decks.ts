@@ -16,16 +16,15 @@ export const useDecksStore = defineStore("decks", {
     allDecks: {} as Pagination<Deck>,
 
     lastUsedDecksIds: useLocalStorage(LOCAL_STORAGE_KEY, [] as string[]),
+
+    currentDeck: null,
   }),
   getters: {
-    filteredDecks(state) {
-      return state.allDecks.data
-        ? state.allDecks.data.filter((deck) => {
-            return deck.name
-              .toLowerCase()
-              .includes(state.searchFilter.toLowerCase());
-          })
-        : [];
+    decks: (state) => {
+      return state.allDecks.data;
+    },
+    pagination: (state) => {
+      return state.allDecks.meta;
     },
     lastUsedDecks: (state) => {
       return state.allDecks.data
@@ -36,10 +35,10 @@ export const useDecksStore = defineStore("decks", {
     },
   },
   actions: {
-    addUsedDeck(deckId: number | string) {
+    addUsedDeck(deckId: string) {
       // Remove the deck id if it's already in the list to prevent duplicates
       this.lastUsedDecksIds = this.lastUsedDecksIds.filter(
-        (id: number | string) => id !== deckId
+        (id: string) => id !== deckId
       );
 
       // Remove the oldest deck if we have reached the deck number limit
@@ -51,25 +50,34 @@ export const useDecksStore = defineStore("decks", {
       this.lastUsedDecksIds.unshift(deckId);
     },
 
-    async fetchDecks() {
-      const data = await useAuth().request({
-        method: "get",
-        url: "http://localhost:3333/v1/decks",
-      });
-      // const { data, error } = await useFetchAPI<Pagination<Deck>>("/v1/decks", {
-      //   method: "GET",
-      // });
+    async fetchDecks(page = 1) {
+      const { data } = await useFetchAPI<Pagination<Deck>>(
+        `/v1/decks?page=${page}&search=${this.searchFilter}`,
+        {
+          method: "GET",
+        }
+      );
 
       this.allDecks = data;
     },
 
     async fetchBestDecks() {
-      const data = await useAuth().request({
-        method: "get",
-        url: `http://localhost:3333/v1/decks?top=${MAX_BEST_DECKS}`,
-      });
+      const { data } = await useFetchAPI<Pagination<Deck>>(
+        `/v1/decks?top=${MAX_BEST_DECKS}`,
+        {
+          method: "GET",
+        }
+      );
 
       this.bestRatedDecks = data.data;
+    },
+
+    async fetchDeck(deckId: string) {
+      const { data } = await useFetchAPI<Deck>(`/v1/decks/${deckId}`, {
+        method: "GET",
+      });
+
+      this.currentDeck = data;
     },
   },
 });

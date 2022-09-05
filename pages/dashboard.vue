@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { ChevronRightIcon, Bars4Icon } from "@heroicons/vue/24/solid/index.js";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Bars4Icon,
+} from "@heroicons/vue/24/solid/index.js";
 import { useDecksStore } from "~/store/decks";
 
 import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
@@ -10,7 +14,17 @@ await deckStore.fetchBestDecks();
 
 const displayStyle = ref("row");
 
-const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
+const tableHeaders = ["Deck name", "Author", "Votes"];
+
+const currentPage = ref(deckStore.pagination.current_page);
+
+const changePage = (page: number) => {
+  if (page > 0 && page <= deckStore.pagination.last_page) {
+    currentPage.value = page;
+    console.log(currentPage.value);
+    deckStore.fetchDecks(currentPage.value);
+  }
+};
 </script>
 
 <template>
@@ -67,6 +81,7 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
             type="text"
             class="block w-40 flex-auto rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:w-80 sm:text-sm md:w-96"
             placeholder="Search decks"
+            @input="changePage(currentPage)"
           />
         </div>
 
@@ -98,7 +113,7 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
           role="list"
           class="mt-3 divide-y divide-gray-100 border-t border-gray-200"
         >
-          <li v-for="deck in deckStore.filteredDecks" :key="deck.id">
+          <li v-for="deck in deckStore.decks" :key="deck.id">
             <NuxtLink
               :to="`/deck/${deck.id}`"
               class="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"
@@ -138,7 +153,7 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
             </thead>
             <tbody class="divide-y divide-gray-100 bg-white">
               <tr
-                v-for="(deck, i) in deckStore.filteredDecks"
+                v-for="(deck, i) in deckStore.decks"
                 :key="deck.id"
                 :class="{ 'bg-gray-100': i % 2 === 0 }"
               >
@@ -160,17 +175,9 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
                   <div class="flex items-center space-x-3 lg:pl-2">
                     <span class="truncate hover:text-gray-600">
                       <span>
-                        <!-- {{ deck.creator.last_name }} -->
+                        {{ deck.creator.first_name }}
+                        {{ deck.creator.last_name }}
                       </span>
-                    </span>
-                  </div>
-                </td>
-                <td
-                  class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                >
-                  <div class="flex items-center space-x-3 lg:pl-2">
-                    <span class="truncate hover:text-gray-600">
-                      <span> N cards </span>
                     </span>
                   </div>
                 </td>
@@ -192,11 +199,46 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
         <div v-else>
           <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:gap-8">
             <DeckCard
-              v-for="deck in deckStore.filteredDecks"
+              v-for="deck in deckStore.decks"
               :key="deck.id"
               :deck="deck"
             />
           </div>
+        </div>
+        <div class="flex justify-center">
+          <ul class="inline-flex items-center -space-x-px">
+            <li>
+              <a
+                class="ml-0 block cursor-pointer rounded-l-lg border border-gray-300 bg-white py-2 px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                @click="changePage(currentPage - 1)"
+              >
+                <ChevronLeftIcon class="h-5" />
+              </a>
+            </li>
+            <li
+              v-for="i = deckStore.pagination.first_page in deckStore.pagination
+                .last_page"
+              :key="i"
+              @click="changePage(i)"
+            >
+              <a
+                class="cursor-pointer border border-gray-300 bg-white py-2 px-3 leading-tight text-gray-500 hover:bg-gray-100"
+                aria-current="page"
+                :class="{
+                  'font-bold bg-gray-200': i === currentPage,
+                }"
+                >{{ i }}
+              </a>
+            </li>
+            <li>
+              <a
+                class="block cursor-pointer rounded-r-lg border border-gray-300 bg-white py-2 px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                @click="changePage(currentPage + 1)"
+              >
+                <ChevronRightIcon class="h-5" />
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
