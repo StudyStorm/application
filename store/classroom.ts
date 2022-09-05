@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import Classroom from "~~/models/Classroom";
 
 export const useClassroomStore = defineStore("classroom", {
   state: () => ({

@@ -169,7 +169,7 @@ app:
   error:
     error404: Erreur 404 - Page non trouvée
     standardError: Une erreur est survenue
-    linkToHome: Cliquez-ici pour revenir à l'accueil
+    linkToHome: Cliquez ici pour revenir à l'accueil
   dashboard:
     title: Accueil
     topDecks: Collections populaires

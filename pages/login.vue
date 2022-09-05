@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { XCircleIcon, XMarkIcon } from "@heroicons/vue/24/solid/index.js";
 import useAuth from "~/composables/useAuth";
 import SPasswordInput from "~/components/SPasswordInput.vue";
 import SLangSwitcher from "~/components/SLangSwitcher.vue";

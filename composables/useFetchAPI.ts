@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useFetch, useLazyFetch, useRuntimeConfig } from "#app";
 import { NitroFetchRequest } from "nitropack";
 import { AsyncData, KeyOfRes, PickFrom } from "#app/composables/asyncData";
 import { Ref } from "vue";
 import { FetchResult, UseFetchOptions } from "#app/composables/fetch";
 import { FetchError } from "ohmyfetch";
-import { a } from "vite-node/types-b9c999e6";
 
 export function useFetchAPI<
   ResT = any,

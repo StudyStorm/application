@@ -1,8 +1,10 @@
-<script>
-export default {
-  layout: "error",
-  props: ["error"], // you can set a custom layout for the error page
-};
+<script setup lang="ts">
+defineProps({
+  error: {
+    type: Object,
+    required: true,
+  },
+});
 
 definePageMeta({
   layout: "nosidebar",
@@ -46,8 +48,8 @@ definePageMeta({
               <div class="text-sm">
                 <p class="mt-2 text-center text-sm text-gray-600">
                   <NuxtLink
+                    class="flex w-full justify-center rounded-md border border-transparent bg-storm-blue px-2 py-3 text-base font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 md:py-2 md:text-sm"
                     to="/dashboard"
-                    class="w-full text-2xl font-medium text-indigo-600 hover:text-indigo-500 hover:underline"
                   >
                     {{ $t("app.error.linkToHome") }}
                   </NuxtLink>
@@ -60,7 +62,7 @@ definePageMeta({
     </div>
     <div
       class="background-image relative hidden flex-1 lg:block"
-      :style="{ backgroundImage: `url(/public/images/background_1.jpg)` }"
+      :style="{ backgroundImage: `url(/images/background_1.jpg)` }"
     ></div>
   </div>
 </template>

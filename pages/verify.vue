@@ -7,7 +7,7 @@ definePageMeta({
 });
 const key = useRoute().query.key;
 
-const { error, data } = await useFetchAPI("/v1/verify", {
+const { error } = await useFetchAPI("/v1/verify", {
   method: "POST",
   body: {
     key,

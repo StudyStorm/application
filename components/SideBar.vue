@@ -53,7 +53,7 @@ const datas = ref({
 });
 
 //const err = ref<null | any>(null);
-const showButton = ref(false);
+// const showButton = ref(false);
 const sidebarOpen = ref(false);
 const showModal = ref(false);
 
@@ -67,10 +67,10 @@ function resetField() {
   datas.value.visibility = true;
 }
 
-async function createClassroom() {
-  sidebarOpen.value = false;
-  showModal.value = true;
-}
+// async function createClassroom() {
+//   sidebarOpen.value = false;
+//   showModal.value = true;
+// }
 </script>
 <template>
   <div>
@@ -223,6 +223,7 @@ async function createClassroom() {
         <Menu as="div" class="relative inline-block px-3 text-left">
           <div>
             <MenuButton
+              v-if="$auth.user"
               class="group mt-2 w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100"
             >
               <span class="flex w-full items-center justify-between">
@@ -406,6 +407,7 @@ async function createClassroom() {
           <Menu as="div" class="relative ml-3">
             <div>
               <MenuButton
+                v-if="$auth.user"
                 class="flex max-w-xs rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
               >
                 <span class="sr-only"
