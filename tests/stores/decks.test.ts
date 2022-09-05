@@ -38,7 +38,7 @@ describe("Decks store", () => {
     expect(store.lastUsedDecksIds.length).toEqual(MAX_LAST_USED_DECKS);
   });
 
-  it("Sould remove the oldest deck if the limit is reached 1", () => {
+  it("Should remove the oldest deck if the limit is reached 1", () => {
     const store = useDecksStore();
     for (let i = 1; i <= MAX_LAST_USED_DECKS + 1; i++) {
       store.addUsedDeck(i);

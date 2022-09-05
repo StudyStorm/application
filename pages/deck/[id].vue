@@ -6,6 +6,10 @@ const route = useRoute();
 import { ref, useFetchAPI } from "#imports";
 import { FormError } from "~/types/app";
 
+onMounted(() => {
+  store.addUsedDeck(route.params.id as string);
+});
+
 // TODO: Fetch the deck / Check deck access
 store.addUsedDeck(route.params.id as string);
 
@@ -71,38 +75,43 @@ async function createCard() {
 </script>
 
 <template>
-  <div
-    class="p-4 border-b border-gray-200 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
-  >
-    <div class="flex-1 min-w-0">
-      <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-        Deck #{{ $route.params.id }}
-      </h1>
+  <div>
+    <div
+      class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
+    >
+      <div class="min-w-0 flex-1">
+        <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+          Deck #{{ $route.params.id }}
+        </h1>
+      </div>
+    </div>
+    <div>
+      {{ store.currentDeck }}
     </div>
   </div>
   <Modal v-model="showModal">
     <template #icon
       ><div
-        class="flex items-center justify-center w-12 h-12 mx-auto bg-purple-100 rounded-full shrink-0 sm:mx-0 sm:h-10 sm:w-10"
+        class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100 sm:mx-0 sm:h-10 sm:w-10"
       >
-        <SquaresPlusIcon class="w-6 h-6 text-purple-600" aria-hidden="true" />
+        <SquaresPlusIcon class="h-6 w-6 text-purple-600" aria-hidden="true" />
       </div>
     </template>
     <template #title>
       {{ $t("app.deck.modal.create.title") }}
     </template>
     <template #content>
-      <div class="w-full max-w-sm mt-8 space-y-6 px-7 sm:mx-auto sm:w-full">
+      <div class="mt-8 w-full max-w-sm space-y-6 px-7 sm:mx-auto sm:w-full">
         <div>
           <label
             for="cardType"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+            class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-400"
             >{{ $t("app.deck.modal.labels.cardType") }}</label
           >
           <div
             v-for="cardType in cardTypes"
             :key="cardType"
-            class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700"
+            class="flex items-center rounded border border-gray-200 pl-4 dark:border-gray-700"
           >
             <input
               :id="cardType + 'Input'"
@@ -110,11 +119,11 @@ async function createCard() {
               type="radio"
               :value="cardType.type"
               :name="cardType + 'bordered-radio'"
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+              class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
             />
             <label
               for="cardType + 'Input'"
-              class="w-full py-4 mx-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              class="mx-2 w-full py-4 text-sm font-medium text-gray-900 dark:text-gray-300"
               >{{ cardType.label }}</label
             >
           </div>
@@ -131,7 +140,7 @@ async function createCard() {
               type="text"
               required
               :placeholder="$t('app.deck.modal.labels.question')"
-              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm appearance-none placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
+              class="focus:border-storm-blue focus:ring-storm-blue block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none sm:text-sm"
             />
           </div>
         </div>
@@ -147,7 +156,7 @@ async function createCard() {
               type="text"
               required
               :placeholder="$t('app.deck.modal.labels.answer')"
-              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm appearance-none placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
+              class="focus:border-storm-blue focus:ring-storm-blue block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none sm:text-sm"
             />
           </div>
         </div>
@@ -161,14 +170,14 @@ async function createCard() {
             class="mt-1"
           >
             <div class="flex">
-              <div class="flex items-center mr-4">
+              <div class="mr-4 flex items-center">
                 <input
                   :id="'checkbox' + index"
                   v-model="
                     cardInformation.content.answers[index - 1].isTheAnswer
                   "
                   type="checkbox"
-                  class="w-4 h-4 mr-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                  class="mr-6 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                 />
                 <s-input
                   :id="'answers' + index"
@@ -179,7 +188,7 @@ async function createCard() {
                   :placeholder="
                     $t('app.deck.modal.labels.answer') + ' ' + index
                   "
-                  class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm appearance-none placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
+                  class="focus:border-storm-blue focus:ring-storm-blue block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none sm:text-sm"
                 />
               </div>
             </div>
@@ -190,14 +199,14 @@ async function createCard() {
     <template #footer>
       <button
         type="button"
-        class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-purple-600 border border-transparent rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-purple-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="createCard"
       >
         {{ $t("app.deck.modal.buttons.create") }}
       </button>
       <button
         type="button"
-        class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         @click="showModal = false"
       >
         {{ $t("app.deck.modal.buttons.cancel") }}

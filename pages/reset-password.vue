@@ -1,28 +1,32 @@
 <script setup lang="ts">
-import { ArrowLeftIcon } from "@heroicons/vue/24/outline/index.js";
-const datas = ref({
-  password: "",
-  confirmPassword: "",
-});
+import { FormError } from "~/types/app";
+import { useFetchAPI } from "#imports";
 
-let passwordNotMatching = computed(() => {
-  return datas.value.password !== datas.value.confirmPassword;
-});
+const router = useRouter();
 
-let passwordIsTooShort = computed(() => {
-  return datas.value.password.length < 8;
-});
+const newPassword = ref<string>(null);
 
-async function sendNewPassword() {
-  // const { data: answer, error } = await useFetchAPI('/resetPassword', {
-  //     method: 'POST',
-  //     body: (datas.value),
-  //     initialCache: false
-  // });
-  // err.value = !answer.value;
-  //     if (answer.value) {
-  //         router.push('/dashboard');
-  //     }
+const bgImg = `/images/background_${Math.round(Math.random())}.jpg`;
+
+const errors = ref<FormError | null>(null);
+
+const key = useRoute().query.key;
+
+async function resetPassword() {
+  const { error } = await useFetchAPI<never, FormError>("/v1/reset-password", {
+    method: "POST",
+    body: {
+      key,
+      password: newPassword.value,
+    },
+  });
+
+  if (error) {
+    errors.value = error.data;
+    console.log("error", error.data);
+  } else {
+    router.push("/login");
+  }
 }
 
 definePageMeta({
@@ -32,123 +36,67 @@ definePageMeta({
 </script>
 
 <template>
-  <section>
-    <div
-      class="mx-auto flex flex-col items-center justify-center px-6 py-2 md:h-screen lg:py-0"
-    >
-      <div class="w-full p-6 sm:max-w-md sm:p-8 md:mt-0">
-        <NuxtLink
-          to="/login"
-          class="flex justify-start text-storm-dark hover:underline"
-        >
-          <ArrowLeftIcon class="mr-2 h-6 w-6" />{{
-            $t("app.reset.returnLogin")
-          }}
-        </NuxtLink>
-        <div class="mt-6 mb-1 text-center text-2xl text-black md:my-24">
-          {{ $t("app.reset.title") }}
+  <div
+    class="flex h-screen flex-col justify-center"
+    :style="{
+      backgroundImage: `url(${bgImg})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+    }"
+  >
+    <div class="mx-auto w-full max-w-md">
+      <div
+        class="flex h-screen flex-col items-center justify-center bg-white shadow-[0_0_50px_0_rgba(0,0,0,0.75)] sm:h-fit sm:rounded-lg sm:py-10 sm:px-4"
+      >
+        <div class="mb-4 flex flex-col items-center justify-center space-x-2">
+          <nuxt-img
+            src="/images/Logo.svg"
+            class="inline-block h-8 text-storm-dark lg:h-10"
+            alt="StudyStorm Logo"
+          />
+          <h2
+            class="text-center text-2xl font-bold tracking-tight text-storm-dark"
+          >
+            {{ $t("app.reset.title") }}
+          </h2>
         </div>
-        <!-- <div v-if="passwordNotMatching == true"
-                    class="relative px-4 py-3 mt-6 text-red-700 bg-red-100 border border-red-400 rounded" role="alert">
-                    <span class="block sm:inline">Erreur backend</span>
-                </div> -->
-        <form
-          class="mt-6 space-y-4 md:space-y-5"
-          @submit.prevent="sendNewPassword"
+
+        <s-form
+          class="w-full max-w-sm space-y-2 px-7"
+          :errors="errors"
+          @submit.prevent="resetPassword"
         >
           <div>
-            <div class="mb-2 block text-sm text-gray-900">
-              {{ $t("app.reset.email") }}
-            </div>
-            <input
-              type="email"
-              disabled
-              value="marinelepen@gmail.com"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-gray-900 sm:text-sm"
-            />
-          </div>
-          <div>
-            <label for="password" class="mb-2 block text-sm text-gray-900">{{
-              $t("app.reset.password")
-            }}</label>
-            <div class="relative">
-              <SPasswordInput
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+            >
+              {{ $t("app.reset.password") }}
+            </label>
+            <div class="mt-1">
+              <s-password-input
                 id="password"
-                v-model="datas.password"
+                v-model="newPassword"
                 name="password"
-                placeholder="••••••••"
+                type="password"
+                autocomplete="current-password"
+                required
+                :placeholder="$t('app.register.placeholder.password')"
+                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
               />
             </div>
           </div>
-
-          <div>
-            <label for="confirmPw" class="mb-2 block text-sm text-gray-900">{{
-              $t("app.reset.confirmPassword")
-            }}</label>
-            <div class="relative">
-              <SPasswordInput
-                id="confirmPw"
-                v-model="datas.confirmPassword"
-                name="confirmPw"
-                placeholder="••••••••"
-              />
-            </div>
+          <div class="pt-4">
+            <button
+              type="submit"
+              class="flex w-full justify-center rounded-md border border-transparent bg-storm-blue py-3 text-base font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 md:py-2 md:text-sm"
+            >
+              {{ $t("app.reset.button") }}
+            </button>
           </div>
-          <div
-            v-if="passwordNotMatching"
-            class="relative mt-6 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700"
-            role="alert"
-          >
-            <span class="block sm:inline">{{
-              $t("app.reset.pwNotTheSame")
-            }}</span>
-          </div>
-          <div
-            v-else
-            class="relative mt-6 rounded border border-green-400 bg-green-200 px-4 py-3 text-green-500"
-            role="alert"
-          >
-            <span class="block sm:inline">{{
-              $t("app.reset.pwAreTheSame")
-            }}</span>
-          </div>
-          <div
-            v-if="passwordIsTooShort"
-            class="relative mt-6 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700"
-            role="alert"
-          >
-            <span class="block sm:inline">{{
-              $t("app.reset.pwTooShort")
-            }}</span>
-          </div>
-          <div
-            v-else
-            class="relative mt-6 rounded border border-green-400 bg-green-200 px-4 py-3 text-green-500"
-            role="alert"
-          >
-            <span class="block sm:inline">{{
-              $t("app.reset.pwLongEnough")
-            }}</span>
-          </div>
-
-          <button
-            v-if="passwordIsTooShort || passwordNotMatching"
-            type="submit"
-            disabled
-            class="w-full rounded-lg bg-gray-400 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
-          >
-            {{ $t("app.reset.button") }}
-          </button>
-
-          <button
-            v-else
-            type="submit"
-            class="w-full rounded-lg bg-storm-blue px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4"
-          >
-            {{ $t("app.reset.button") }}
-          </button>
-        </form>
+        </s-form>
       </div>
     </div>
-  </section>
+  </div>
 </template>

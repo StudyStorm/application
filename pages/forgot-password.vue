@@ -20,12 +20,11 @@ async function sendEmail() {
     body: JSON.stringify({
       email: email.value,
     }),
-    initialCache: false,
   });
 
-  if (error.value) {
+  if (error) {
     status.value.err = true;
-    console.log(error.value);
+    console.log(error);
   } else {
     status.value.success = true;
   }
