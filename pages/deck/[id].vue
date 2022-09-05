@@ -15,45 +15,37 @@ store.addUsedDeck(route.params.id as string);
 
 const showModal = ref(true);
 
-const cardTypes = [
-  { type: "flashCard", label: "Carte de révision" },
-  { type: "optionsCard", label: "Carte à options" },
-];
-
 const cardInformation = ref({
   content: {
     question: "",
-    answer: "",
     answers: [
-      { label: "", isTheAnswer: false },
-      { label: "", isTheAnswer: false },
-      { label: "", isTheAnswer: false },
-      { label: "", isTheAnswer: false },
+      { label: null, isTheAnswer: false },
+      { label: null, isTheAnswer: false },
+      { label: null, isTheAnswer: false },
+      { label: null, isTheAnswer: false },
     ],
     type: "string",
   },
-  type: "",
 });
 
 async function createCard() {
   const payload = {
     deckId: route.params.id,
-    //cardType: cardInformation.value.type,
     content: {
       question: cardInformation.value.content.question,
+      answers: [],
       type: cardInformation.value.content.type,
     },
   };
 
-  switch (cardInformation.value.type) {
-    case cardTypes[0].type:
-      payload.content["answer"] = cardInformation.value.content.answer;
-      break;
-    case cardTypes[1].type:
-      payload.content["answers"] = cardInformation.value.content.answers;
-      break;
-    default:
-      return;
+  for (const answer of cardInformation.value.content.answers) {
+    if (answer.label !== null) {
+      payload.content.answers.push(answer);
+    }
+  }
+
+  if (payload.content.answers.length === 1) {
+    payload.content.answers[0].isTheAnswer = true;
   }
 
   const errors = ref<FormError | null>(null);
@@ -103,32 +95,6 @@ async function createCard() {
     <template #content>
       <div class="mt-8 w-full max-w-sm space-y-6 px-7 sm:mx-auto sm:w-full">
         <div>
-          <label
-            for="cardType"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-400"
-            >{{ $t("app.deck.modal.labels.cardType") }}</label
-          >
-          <div
-            v-for="cardType in cardTypes"
-            :key="cardType"
-            class="flex items-center rounded border border-gray-200 pl-4 dark:border-gray-700"
-          >
-            <input
-              :id="cardType + 'Input'"
-              v-model="cardInformation.type"
-              type="radio"
-              :value="cardType.type"
-              :name="cardType + 'bordered-radio'"
-              class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-            />
-            <label
-              for="cardType + 'Input'"
-              class="mx-2 w-full py-4 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >{{ cardType.label }}</label
-            >
-          </div>
-        </div>
-        <div v-if="cardInformation.type">
           <label for="question" class="block text-sm font-medium text-gray-700">
             {{ $t("app.deck.modal.labels.question") }}
           </label>
@@ -144,23 +110,7 @@ async function createCard() {
             />
           </div>
         </div>
-        <div v-if="cardInformation.type === 'flashCard'">
-          <label for="answer" class="block text-sm font-medium text-gray-700">
-            {{ $t("app.deck.modal.labels.answer") }}
-          </label>
-          <div class="mt-1">
-            <s-input
-              id="answer"
-              v-model="cardInformation.content.answer"
-              name="answer"
-              type="text"
-              required
-              :placeholder="$t('app.deck.modal.labels.answer')"
-              class="focus:border-storm-blue focus:ring-storm-blue block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none sm:text-sm"
-            />
-          </div>
-        </div>
-        <div v-if="cardInformation.type === 'optionsCard'">
+        <div>
           <label for="answers" class="block text-sm font-medium text-gray-700">
             {{ $t("app.deck.modal.labels.answers") }}
           </label>
