@@ -179,7 +179,6 @@ definePageMeta({
               {{ $t("app.register.buttons.register") }}
             </button>
           </div>
-          <!-- <RegisterAlert :errors="errors" /> -->
           <div class="text-sm">
             <p class="pt-2 text-center text-sm text-gray-600">
               {{ $t("app.register.text.alreadyHaveAccount") }}
