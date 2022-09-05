@@ -21,6 +21,9 @@ const showModalFolder = ref(false);
 const { data: classroom } = await useFetchAPI<Classroom>(
   `/v1/classrooms/${route.params.classroom}`
 );
+if (!classroom) {
+  throw createError({ statusCode: 404, statusMessage: "Classroom not found" });
+}
 </script>
 
 <template>
@@ -58,10 +61,7 @@ const { data: classroom } = await useFetchAPI<Classroom>(
             </div>
           </div>
         </div>
-        <nuxt-page
-          :classroom="classroom"
-          :page-key="$route.params.folder ?? classroom.root_folder.id"
-        />
+        <nuxt-page :classroom="classroom" />
       </div>
     </div>
 

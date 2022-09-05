@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import Folder from "~/models/Folder";
-import { computed } from "#imports";
-import FolderContentBlock from "~/components/folder/FolderContentBlock.vue";
-import FolderContentList from "~/components/folder/FolderContentList.vue";
+import { computed, resolveComponent } from "#imports";
 const props = defineProps<{
   folder: Folder;
   mode: "list" | "block";
@@ -11,8 +9,8 @@ const props = defineProps<{
 defineEmits(["showModalFolder"]);
 
 const modes = {
-  list: FolderContentList,
-  block: FolderContentBlock,
+  list: resolveComponent("FolderContentList"),
+  block: resolveComponent("FolderContentBlock"),
 };
 
 const modeComponent = computed(() => modes[props.mode]);

@@ -8,7 +8,12 @@ defineProps<{
 
 <template>
   <NuxtLink
-    to="#"
+    :to="{
+      name: 'classroom-classroom-folder',
+      params: {
+        folder: folder.id,
+      },
+    }"
     class="rounded-lg bg-gray-100 p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
   >
     <div class="flex items-center space-x-4">
