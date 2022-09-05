@@ -131,7 +131,7 @@ onClickOutside(target, () => (showMobileMenu.value = false));
                 leave-to-class="transform scale-95 opacity-0"
               >
                 <MenuItems
-                  class="absolute -right-10 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  class="absolute -right-16 z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
                   <div class="py-1">
                     <s-lang-switcher
@@ -142,12 +142,32 @@ onClickOutside(target, () => (showMobileMenu.value = false));
                         <span
                           :class="[
                             active ? 'font-bold' : '',
-                            'block px-4 py-2 text-sm text-storm hover:bg-gray-100 hover:text-gray-900 text-gray-700',
+                            'flex justify-start items-center px-2 py-2 text-sm text-storm hover:bg-gray-100 hover:text-gray-900 text-gray-700',
                           ]"
                           @click="onClick"
                         >
-                          {{ locale.name }}</span
-                        >
+                          <div
+                            v-if="locale.name === 'Français'"
+                            class="h-6 w-6"
+                          >
+                            <NuxtImg
+                              src="/images/fr.svg"
+                              class="h-6 w-6 rounded-full"
+                            />
+                          </div>
+                          <div
+                            v-else
+                            class="h-6 w-6"
+                          >
+                            <NuxtImg
+                              src="/images/gb.svg"
+                              class="h-6 w-6 rounded-full"
+                            />
+                          </div>
+                          <div class="ml-2">
+                            {{ locale.name }}
+                          </div>
+                        </span>
                       </MenuItem>
                     </s-lang-switcher>
                   </div>
