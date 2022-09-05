@@ -31,17 +31,16 @@ async function register() {
     FormError
   >("/v1/register", {
     method: "POST",
-    server: false,
     body: userInformation.value,
   });
 
-  if (error.value) {
-    errors.value = error.value.data;
-    console.log("error", error.value.data);
+  if (error) {
+    errors.value = error.data;
+    console.log("error", error.data);
   } else {
-    resendToken.value = data.value.resend_token;
+    resendToken.value = data.resend_token;
     showVerifyStep.value = true;
-    console.log("log data: " + data.value);
+    console.log("log data: " + data);
     console.log("log data: " + resendToken.value);
   }
 }

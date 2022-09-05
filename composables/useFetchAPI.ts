@@ -1,53 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useFetch, useLazyFetch, useRuntimeConfig } from "#app";
-import { NitroFetchRequest } from "nitropack";
-import { AsyncData, KeyOfRes, PickFrom } from "#app/composables/asyncData";
-import { Ref } from "vue";
-import { FetchResult, UseFetchOptions } from "#app/composables/fetch";
+import { useAuth, useRuntimeConfig } from "#build/imports";
+import { HTTPRequest } from "@nuxtjs-alt/auth";
 import { FetchError } from "ohmyfetch";
 
-export function useFetchAPI<
-  ResT = any,
-  ErrorT = any,
-  ReqT extends NitroFetchRequest = NitroFetchRequest,
-  _ResT = ResT extends void ? FetchResult<ReqT> : ResT,
-  Transform extends (res: _ResT) => any = (res: _ResT) => _ResT,
-  PickKeys extends KeyOfRes<Transform> = KeyOfRes<Transform>
->(
-  request: Ref<ReqT> | ReqT | (() => ReqT),
-  opts?: UseFetchOptions<_ResT, Transform, PickKeys>
-) {
-  const config = useRuntimeConfig();
-  return useFetch(request, {
-    ...opts,
-    baseURL: config.apiURL,
-    initialCache: false,
-    credentials: "include",
-  }) as AsyncData<
-    PickFrom<ReturnType<Transform>, PickKeys>,
-    FetchError<ErrorT> | null
-  >;
-}
+type Response<T, U> = Promise<{
+  data: T | null;
+  error: FetchError<U> | null;
+}>;
 
-export function useLazyFetchAPI<
-  ResT = any,
-  ErrorT = any,
-  ReqT extends NitroFetchRequest = NitroFetchRequest,
-  _ResT = ResT extends void ? FetchResult<ReqT> : ResT,
-  Transform extends (res: _ResT) => any = (res: _ResT) => _ResT,
-  PickKeys extends KeyOfRes<Transform> = KeyOfRes<Transform>
->(
-  request: Ref<ReqT> | ReqT | (() => ReqT),
-  opts?: Omit<UseFetchOptions<_ResT, Transform, PickKeys>, "lazy">
-) {
+export function useFetchAPI<DataT = never, ErrorT = never>(
+  path: string,
+  options: HTTPRequest
+): Response<DataT, ErrorT> {
   const config = useRuntimeConfig();
-  return useLazyFetch(request, {
-    ...opts,
-    baseURL: config.apiURL,
-    initialCache: false,
-    credentials: "include",
-  }) as AsyncData<
-    PickFrom<ReturnType<Transform>, PickKeys>,
-    FetchError<ErrorT> | null
-  >;
+  const auth = useAuth();
+  return auth
+    .request({
+      url: path,
+      baseURL: config.apiURL,
+      ...options,
+    })
+    .then((data) => ({
+      data: data as unknown as DataT,
+      error: null,
+    }))
+    .catch((error) => ({
+      data: null,
+      error,
+    }));
 }
