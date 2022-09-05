@@ -35,8 +35,8 @@ function login() {
     })
     .catch()
     .then((e) => {
-      console.log(e);
-      router.push("/dashboard");
+      console.log("login", e);
+      // router.push("/dashboard");
     });
 }
 
@@ -46,9 +46,8 @@ async function sendToken(token: string) {
     body: {
       key: token,
     },
-    initialCache: false,
   });
-  errors.value = error.value;
+  errors.value = error;
 }
 
 function closeError() {
