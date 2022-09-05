@@ -5,15 +5,13 @@ import { GlobeAltIcon } from "@heroicons/vue/24/outline/index.js";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
-const { t } = useI18n();
-
 const links = [
   {
-    name: t("landing.navbar.links.about"),
+    name: "landing.navbar.links.about",
     url: "#about",
   },
   {
-    name: t("landing.navbar.links.teams"),
+    name: "landing.navbar.links.teams",
     url: "#team",
   },
 ];
@@ -109,10 +107,9 @@ onClickOutside(target, () => (showMobileMenu.value = false));
             <a
               :href="link.url"
               aria-current="page"
-              :title="link.name"
               rel="noopener noreferrer"
               class="block py-2 pl-3 pr-4 rounded-lg text-storm-dark hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:hover:bg-transparent hover:lg:text-gray-500 lg:focus:ring-0"
-              >{{ link.name }}
+              >{{ $t(link.name) }}
             </a>
           </li>
           <li
@@ -148,7 +145,8 @@ onClickOutside(target, () => (showMobileMenu.value = false));
                             'block px-4 py-2 text-sm text-storm hover:bg-gray-100 hover:text-gray-900 text-gray-700',
                           ]"
                           @click="onClick"
-                          >{{ locale.name }}</span
+                          >
+                          {{ locale.name }}</span
                         >
                       </MenuItem>
                     </s-lang-switcher>
