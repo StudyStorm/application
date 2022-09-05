@@ -39,8 +39,8 @@ const renderPreview = (file: File): void => {
     @drop.prevent="dropFile"
     @dragover.prevent
   >
-    <div
-      class="absolute h-full w-full bg-cover bg-center group-focus-within:blur-sm group-hover:blur-sm"
+    <span
+      class="absolute block h-full w-full bg-cover bg-center group-focus-within:blur-sm group-hover:blur-sm"
       :style="{ 'background-image': `url(${filePreview})` }"
     />
     <span
@@ -52,6 +52,7 @@ const renderPreview = (file: File): void => {
       ref="input"
       type="file"
       class="absolute opacity-0"
+      v-bind="$attrs"
       @input="selectPicture"
     />
   </label>
