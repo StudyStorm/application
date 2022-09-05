@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { createForm } from "~/composables/useForm";
 import { FormError } from "~/types/app";
-
-defineProps<{
+const props = defineProps<{
   errors: FormError;
 }>();
+createForm(props);
 </script>
 
 <template>
