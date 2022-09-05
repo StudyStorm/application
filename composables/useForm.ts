@@ -2,7 +2,7 @@ import { InjectionKey } from "vue";
 import { inject, provide, reactive } from "#build/imports";
 import { FormError } from "~/types/app";
 
-export const FormKey: InjectionKey<{ errors: FormError | null }> =
+export const FormKey: InjectionKey<{ errors: FormError | null }|null> =
   Symbol.for("s-form");
 
 export function createForm(props: { errors: FormError }) {
@@ -10,5 +10,5 @@ export function createForm(props: { errors: FormError }) {
 }
 
 export function useForm() {
-  return inject(FormKey);
+  return inject(FormKey, null);
 }
