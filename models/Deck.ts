@@ -1,23 +1,21 @@
-import Model from "./Model";
+import Card from "./Card";
+import Folder from "./Folder";
 import User from "./User";
 
-export default class Deck extends Model {
-  public id: string;
+export default interface Deck {
+  id: string;
 
-  public name: string;
+  name: string;
 
-  // public folder: Folder;
+  folder: Folder;
 
-  public creator: User;
+  creator: User;
 
-  public votes: number;
+  cards: Card[];
 
-  public createdAt: Date;
+  votes: number;
 
-  public updatedAt: Date;
+  createdAt: Date;
 
-  get formattedVotes(): string {
-    const formatter = Intl.NumberFormat("en", { notation: "compact" });
-    return formatter.format(this.votes);
-  }
+  updatedAt: Date;
 }

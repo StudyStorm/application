@@ -1,24 +1,32 @@
+<script setup lang="ts">
+import { useFetchAPI } from "#imports";
+
+definePageMeta({
+  layout: "nosidebar",
+  auth: "guest",
+});
+const key = useRoute().query.key;
+
+const { error } = await useFetchAPI("/v1/verify", {
+  method: "POST",
+  body: {
+    key,
+  },
+});
+</script>
+
 <template>
-  <div class="mx-auto h-screen">
-    <div
-      class="mx-auto flex h-full w-full max-w-xs flex-col items-center justify-center"
-    >
+  <div class="mx-auto mt-10 h-screen md:mt-0">
+    <div class="mx-auto flex h-full w-full max-w-xs flex-col md:justify-center">
       <nuxt-img
         src="/images/Logo.svg"
-        class="h-16 w-full pr-10"
+        class="h-16 w-full"
         alt="StudyStorm Logo"
       />
-      <div class="mt-16 w-full text-4xl font-bold">
-        {{ $t("app.verify.title") }}
+      <div class="mt-10 w-full text-center text-xl">
+        <span v-if="error">Error</span>
+        <span v-else>Success</span>
       </div>
-      <div class="mt-10 w-full text-xl">
-        {{ $t("app.verify.firstParagraph") }}
-      </div>
-      <br />
-      <div class="w-full text-xl">{{ $t("app.verify.secondParagraph") }}</div>
-      <a href="#" class="mt-16 w-full hover:text-storm-blue hover:underline">{{
-        $t("app.verify.noEmail")
-      }}</a>
     </div>
   </div>
 </template>

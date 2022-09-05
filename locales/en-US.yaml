@@ -56,8 +56,13 @@ landing:
 
 ### ------------------------------------------------- APP SECTION ------------------------------------------------- ###
 app:
+  title: StudyStorm
+  navbar:
+    openMenu: Ouvrir menu
+    profile: Voir le profil
+    logout: Se déconnecter
   register:
-    title: Create a StudyStorm account
+    title: Create your account
     labels:
       firstname: Firstname
       lastname: Lastname
@@ -69,10 +74,18 @@ app:
     text:
       alreadyHaveAccount: Already have an account ?
       loginHere: Login here
+    placeholder:
+      firstname: Your first name
+      lastname: Your last name
+      email: Your email address
+      password: Your password
   login:
     title: Sign in to your account
     email: Email address
     password: Password
+    placeholder:
+      email: Your email address
+      password: Your password
     forgotPassword: Forgot your password?
     noAccount: Don't have an account yet ?
     registerHere: Sign up here
@@ -82,7 +95,77 @@ app:
     title: Verify your email
     firstParagraph: Please check your email for a link to verify your email address.
     secondParagraph: Once verified, you’ll be able to continue.
-    noEmail: Didn't receive an email ? Resend one.
+    noEmail: Didn't receive an email ?
+    clickResend: Click here to resend one
+    error: An error occurred while sending the verification email
+    success: The verification email was sent successfully
+  reset:
+    title: Reset your password
+    email: Mail address of the account
+    returnLogin: Return to login page
+    password: New password
+    confirmPassword: Confirm new password
+    showPw: Show
+    hidePw: Hide
+    pwTooShort: Password must be at least 8 characters long.
+    pwLongEnough: Password is long enough.
+    pwNotTheSame: Passwords do not match.
+    pwAreTheSame: Passwords match.
+    button: Reset
+  forgottenPassword:
+    title: Reinitialize your password
+    email: Enter your email address
+    submit: Send reset email
+    placeholder:
+      email: Your email address
+    noEmail: Didn't receive an email ?
+    clickResend: Click here to resend one
+    error: An error occurred while sending the reset email
+    success: The reset email was sent successfully
+  profile:
+    title: Profile
+    labels:
+      firstname: Firstname
+      lastname: Lastname
+      email: Email
+      password: Password
+      confirmPassword: Confirm password
+    buttons:
+      save: Save
+      delete: Delete account
+    modal:
+      title: Delete accounte
+      content: Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
+      buttons:
+        cancel: Cancel
+        confirmDelete: Delete
+  learn:
+    buttons:
+      signal: Signal card
+      checkAnswer: Check
+    modal:
+      title: Signal card
+      message: Suggest a better answer. A message will be sent to the card creator to review your suggestion.
+      buttons:
+        confirmSignal: Signal
+        cancel: Cancel
+    select:
+      defaultText: Choose an answer
+    text:
+      by: by {author}
+  createClassroom:
+    title: Create a new classroom
+    name: Classroom name
+    public: Public classroom
+    cancel: Cancel
+    create: Create
+  sideNav:
+    home: Home
+    class: My classrooms
+  error:
+    error404: Error 404 - Page not found
+    standardError: An error has occurred.
+    linkToHome: Click here to return to the home page
   dashboard:
     title: Home
     topDecks: Top decks
@@ -95,5 +178,34 @@ app:
     nbCards: Number of cards
     nbVotes: Number of votes
     createdBy: Created by {name}
+  classroom:
+    title: My classrooms
+    manageButton: Manage
+    topDecks: Top classroom decks
+    members: Members
+    membersButton: See all members
+    exploreDecks: Explore all classroom decks
+    decksButton: New deck
+    decksPlaceholder: Search for a deck
+    folderButton: New folder
+    decksCard:
+      nbCards: N cards
+      created: Created by {name}
+    deckList:
+      name: Deck name
+      author: Author
+      nbCards: Number of cards
+      votes: Votes
+    deckModal:
+      title: Add a deck
+      name: Deck name
+      cancel: Cancel
+      submit: Create
+    folderModal:
+      title: Add a folder
+      name: Name of the folder
+      cancel: Cancel
+      submit: Create
+    allMembers: This feature will be available soon.
 # HERE THE CONTENT FOR THE APP
 

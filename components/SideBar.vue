@@ -1,5 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+import {
+  XMarkIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Bars3CenterLeftIcon,
+  AcademicCapIcon,
+  HomeIcon,
+} from "@heroicons/vue/24/solid/index.js";
+
 import {
   Dialog,
   DialogPanel,
@@ -11,25 +22,55 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-import {
-  XMarkIcon,
-  ChevronDownIcon,
-  Bars3CenterLeftIcon,
-  AcademicCapIcon,
-  HomeIcon,
-} from "@heroicons/vue/24/solid/index.js";
+const { t } = useI18n();
 
-const navigation = [
-  { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
+const auth = useAuth();
+
+const navigation = ref([
   {
-    name: "My classrooms",
-    href: "/classrooms",
+    name: t("app.sideNav.home"),
+    href: "/dashboard",
+    icon: HomeIcon,
+    current: true,
+    hasDropdown: false,
+  },
+  {
+    name: t("app.sideNav.class"),
+    href: "",
     icon: AcademicCapIcon,
     current: false,
+    options: true,
+    hasDropdown: true,
+    dropped: true,
+    items: ["HEIG", "EPFL", "Random"],
   },
-];
+]);
 
+//Modal for room creation
+const datas = ref({
+  className: "",
+  visibility: true,
+});
+
+//const err = ref<null | any>(null);
+// const showButton = ref(false);
 const sidebarOpen = ref(false);
+const showModal = ref(false);
+
+async function closeModal() {
+  resetField();
+  showModal.value = false;
+}
+
+function resetField() {
+  datas.value.className = "";
+  datas.value.visibility = true;
+}
+
+// async function createClassroom() {
+//   sidebarOpen.value = false;
+//   showModal.value = true;
+// }
 </script>
 <template>
   <div>
@@ -48,7 +89,7 @@ const sidebarOpen = ref(false);
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <div class="fixed inset-0 bg-gray-600 bg-opacity-75" />
+          <div class="fixed inset-0 bg-gray-600/75" />
         </TransitionChild>
 
         <div class="fixed inset-0 z-40 flex">
@@ -91,37 +132,67 @@ const sidebarOpen = ref(false);
                   alt="StudyStorm Logo"
                 />
                 <span
-                  class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold"
-                  >StudyStorm</span
+                  class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold text-storm-dark"
+                  >{{ $t("app.title") }}</span
                 >
               </div>
               <div class="mt-5 h-0 flex-1 overflow-y-auto">
                 <nav class="px-2">
-                  <div class="space-y-1">
+                  <div
+                    v-for="item in navigation"
+                    :key="item.name"
+                    class="cursor-pointer select-none"
+                  >
                     <NuxtLink
-                      v-for="item in navigation"
-                      :key="item.name"
                       :to="item.href"
+                      class="flex items-center justify-between"
                       :class="[
                         item.current
-                          ? 'bg-gray-100 text-gray-900'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
-                        'group flex items-center px-2 py-2 text-base leading-5 font-medium rounded-md',
+                          ? 'bg-gray-200 text-gray-900'
+                          : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
+                        'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
                       ]"
                       :aria-current="item.current ? 'page' : undefined"
+                      @click="item.dropped = !item.dropped"
                     >
-                      <component
-                        :is="item.icon"
-                        :class="[
-                          item.current
-                            ? 'text-gray-500'
-                            : 'text-gray-400 group-hover:text-gray-500',
-                          'mr-3 flex-shrink-0 h-6 w-6',
-                        ]"
+                      <div class="flex items-center">
+                        <component
+                          :is="item.icon"
+                          :class="[
+                            item.current
+                              ? 'text-gray-500'
+                              : 'text-gray-400 group-hover:text-gray-500',
+                            'mr-3 flex-shrink-0 h-6 w-6',
+                          ]"
+                          aria-hidden="true"
+                        />
+                        {{ item.name }}
+                      </div>
+                      <ChevronUpIcon
+                        v-if="item.hasDropdown && item.dropped"
+                        class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
                         aria-hidden="true"
+                        @click="item.dropped = !item.dropped"
                       />
-                      {{ item.name }}
+                      <ChevronDownIcon
+                        v-if="item.hasDropdown && !item.dropped"
+                        class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                        aria-hidden="true"
+                        @click="item.dropped = !item.dropped"
+                      />
                     </NuxtLink>
+                    <div v-if="item.hasDropdown && item.dropped">
+                      <!-- TODO: change this to match the classroom type -->
+                      <!-- TODO: Change the link to /classroom/:id -->
+                      <NuxtLink
+                        v-for="subitem in item.items"
+                        :key="subitem"
+                        class="group flex cursor-pointer items-center rounded-md p-2 pl-8 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                        to="/classroom/id"
+                      >
+                        {{ subitem }}
+                      </NuxtLink>
+                    </div>
                   </div>
                 </nav>
               </div>
@@ -138,12 +209,12 @@ const sidebarOpen = ref(false);
       <div class="flex shrink-0 items-center px-6">
         <nuxt-img
           src="/images/Logo.svg"
-          class="text-gradient-to-r mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
+          class="mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
           alt="StudyStorm Logo"
         />
         <span
-          class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold"
-          >StudyStorm</span
+          class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold text-storm-dark"
+          >{{ $t("app.title") }}</span
         >
       </div>
       <!-- Sidebar component, swap this element with another sidebar if you like -->
@@ -152,6 +223,7 @@ const sidebarOpen = ref(false);
         <Menu as="div" class="relative inline-block px-3 text-left">
           <div>
             <MenuButton
+              v-if="$auth.user"
               class="group mt-2 w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100"
             >
               <span class="flex w-full items-center justify-between">
@@ -160,16 +232,17 @@ const sidebarOpen = ref(false);
                 >
                   <nuxt-img
                     class="h-10 w-10 shrink-0 rounded-full bg-gray-300"
-                    src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
+                    :src="$auth.user.picture_url"
                     alt=""
                   />
                   <span class="flex min-w-0 flex-1 flex-col">
                     <span class="truncate text-sm font-medium text-gray-900"
-                      >Jessy Schwarz</span
-                    >
-                    <span class="truncate text-sm text-gray-500"
-                      >@jessyschwarz</span
-                    >
+                      >{{ $auth.user.first_name }}
+                      {{ $auth.user.last_name }}
+                    </span>
+                    <span class="truncate text-sm text-gray-500">{{
+                      $auth.user.email
+                    }}</span>
                   </span>
                 </span>
                 <ChevronDownIcon
@@ -179,6 +252,7 @@ const sidebarOpen = ref(false);
               </span>
             </MenuButton>
           </div>
+
           <transition
             enter-active-class="transition duration-100 ease-out"
             enter-from-class="transform scale-95 opacity-0"
@@ -188,7 +262,7 @@ const sidebarOpen = ref(false);
             leave-to-class="transform scale-95 opacity-0"
           >
             <MenuItems
-              class="absolute inset-x-0 z-10 mx-3 mt-1 origin-top divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              class="absolute inset-x-0 z-10 mx-3 mt-1 origin-top divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
             >
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
@@ -198,20 +272,21 @@ const sidebarOpen = ref(false);
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 text-sm',
                     ]"
-                    >View profile
+                    >{{ $t("app.navbar.profile") }}
                   </NuxtLink>
                 </MenuItem>
               </div>
               <div class="py-1">
                 <MenuItem v-slot="{ active }">
-                  <a
-                    href="#"
+                  <NuxtLink
+                    to="/"
                     :class="[
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 text-sm',
                     ]"
-                    >Logout</a
-                  >
+                    @click="auth.logout()"
+                    >{{ $t("app.navbar.logout") }}
+                  </NuxtLink>
                 </MenuItem>
               </div>
             </MenuItems>
@@ -219,30 +294,97 @@ const sidebarOpen = ref(false);
         </Menu>
         <nav class="mt-6 px-3">
           <div class="space-y-1">
-            <NuxtLink
+            <div
               v-for="item in navigation"
               :key="item.name"
-              :to="item.href"
-              :class="[
-                item.current
-                  ? 'bg-gray-200 text-gray-900'
-                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
-                'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
-              ]"
-              :aria-current="item.current ? 'page' : undefined"
+              class="cursor-pointer select-none"
             >
-              <component
-                :is="item.icon"
+              <NuxtLink
+                :to="item.href"
+                class="flex items-center justify-between"
                 :class="[
                   item.current
-                    ? 'text-gray-500'
-                    : 'text-gray-400 group-hover:text-gray-500',
-                  'mr-3 flex-shrink-0 h-6 w-6',
+                    ? 'bg-gray-200 text-gray-900'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
+                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
                 ]"
+                :aria-current="item.current ? 'page' : undefined"
+                @click="item.dropped = !item.dropped"
+              >
+                <div class="flex items-center">
+                  <component
+                    :is="item.icon"
+                    :class="[
+                      item.current
+                        ? 'text-gray-500'
+                        : 'text-gray-400 group-hover:text-gray-500',
+                      'mr-3 flex-shrink-0 h-6 w-6',
+                    ]"
+                    aria-hidden="true"
+                  />
+                  {{ item.name }}
+                </div>
+                <ChevronUpIcon
+                  v-if="item.hasDropdown && item.dropped"
+                  class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                  aria-hidden="true"
+                  @click="item.dropped = !item.dropped"
+                />
+                <ChevronDownIcon
+                  v-if="item.hasDropdown && !item.dropped"
+                  class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                  aria-hidden="true"
+                  @click="item.dropped = !item.dropped"
+                />
+              </NuxtLink>
+              <div v-if="item.hasDropdown && item.dropped">
+                <!-- TODO: change this to match the classroom type -->
+                <!-- TODO: Change the link to /classroom/:id -->
+                <NuxtLink
+                  v-for="subitem in item.items"
+                  :key="subitem"
+                  class="group flex cursor-pointer items-center rounded-md p-2 pl-8 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                  to="/classroom/id"
+                >
+                  {{ subitem }}
+                </NuxtLink>
+              </div>
+            </div>
+
+            <!-- <div
+              v-if="item.options"
+              class="p-4"
+              @click="showButton = !showButton"
+            >
+              <ChevronUpIcon
+                v-if="showButton"
+                class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
                 aria-hidden="true"
               />
-              {{ item.name }}
-            </NuxtLink>
+              <ChevronDownIcon
+                v-else
+                class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
+                aria-hidden="true"
+              />
+            </div> -->
+            <!-- <div
+              v-if="showButton"
+              class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
+            >
+              <NuxtLink
+                v-for="(classroom, index) in classrooms"
+                :key="index"
+                href="/classroom"
+                class="rounded-md pl-4 hover:bg-gray-300"
+                >{{ classroom }}
+              </NuxtLink>
+              <button
+                class="mb-2 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-1 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue"
+                @click="createClassroom"
+              >
+                {{ $t("app.createClassroom.title") }}
+              </button>
+            </div> -->
           </div>
         </nav>
       </div>
@@ -255,7 +397,7 @@ const sidebarOpen = ref(false);
         class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500 lg:hidden"
         @click="sidebarOpen = true"
       >
-        <span class="sr-only">Open sidebar</span>
+        <span class="sr-only">{{ $t("app.navbar.openMenu") }}</span>
         <Bars3CenterLeftIcon class="h-6 w-6" aria-hidden="true" />
       </button>
       <div class="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
@@ -265,12 +407,15 @@ const sidebarOpen = ref(false);
           <Menu as="div" class="relative ml-3">
             <div>
               <MenuButton
-                class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                v-if="$auth.user"
+                class="flex max-w-xs rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
               >
-                <span class="sr-only">Open user menu</span>
+                <span class="sr-only"
+                  >Open user menu {{ $t("app.navbar.openMenu") }}</span
+                >
                 <nuxt-img
                   class="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  :src="$auth.user.picture_url"
                   alt=""
                 />
               </MenuButton>
@@ -284,7 +429,7 @@ const sidebarOpen = ref(false);
               leave-to-class="transform scale-95 opacity-0"
             >
               <MenuItems
-                class="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
               >
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
@@ -294,19 +439,20 @@ const sidebarOpen = ref(false);
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm',
                       ]"
-                      >View profile
+                      >{{ $t("app.navbar.profile") }}
                     </NuxtLink>
                   </MenuItem>
                 </div>
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
-                    <a
-                      href="#"
+                    <NuxtLink
+                      to="/"
                       :class="[
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm',
                       ]"
-                      >Logout</a
+                      @click="auth.logout()"
+                      >{{ $t("app.navbar.logout") }}</NuxtLink
                     >
                   </MenuItem>
                 </div>
@@ -317,4 +463,54 @@ const sidebarOpen = ref(false);
       </div>
     </div>
   </div>
+  <Modal v-model="showModal">
+    <template #title> {{ $t("app.createClassroom.title") }} </template>
+    <template #content>
+      <form action="#">
+        <label for="name" class="block text-sm font-medium text-gray-700">
+          {{ $t("app.createClassroom.name") }}
+        </label>
+        <div class="mt-1">
+          <input
+            id="name"
+            v-model="datas.className"
+            name="name"
+            type="text"
+            required
+            autocomplete="off"
+            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+        <div class="mt-1">
+          <input
+            id="isPublic"
+            v-model="datas.visibility"
+            name="isPublic"
+            type="checkbox"
+            value="isPublic"
+            class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600"
+          />
+          <label
+            for="isPublic"
+            class="ml-2 text-sm font-medium text-gray-900"
+            >{{ $t("app.createClassroom.public") }}</label
+          >
+        </div>
+      </form>
+    </template>
+    <template #footer>
+      <button
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+      >
+        {{ $t("app.createClassroom.create") }}
+      </button>
+      <button
+        type="button"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="closeModal"
+      >
+        {{ $t("app.createClassroom.cancel") }}
+      </button>
+    </template>
+  </Modal>
 </template>

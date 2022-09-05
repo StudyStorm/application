@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { onClickOutside } from "@vueuse/core";
-import { useFetchAPI } from "~/composables/useFetchAPI";
 
 const { t } = useI18n();
 
@@ -24,15 +23,6 @@ const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value;
 };
 
-const testApiInteraction = async () => {
-  const { data, error } = await useFetchAPI<{ hello: string }>("/");
-  if (error.value) {
-    console.log(error.value);
-    return;
-  }
-  alert(data.value.hello);
-};
-
 onClickOutside(target, () => (showMobileMenu.value = false));
 </script>
 
@@ -47,7 +37,7 @@ onClickOutside(target, () => (showMobileMenu.value = false));
       <NuxtLink to="/" title="Landing page link" class="flex items-center">
         <nuxt-img
           src="/images/Logo.svg"
-          class="text-gradient-to-r mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
+          class="mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
           alt="StudyStorm Logo"
         />
         <span
@@ -56,13 +46,19 @@ onClickOutside(target, () => (showMobileMenu.value = false));
         >
       </NuxtLink>
       <div class="flex items-center lg:order-2">
-        <button
-          href="#"
-          class="hover:bg-primary-800 mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4 focus:ring-storm-darkblue/50"
-          @click="testApiInteraction"
+        <NuxtLink
+          v-slot="{ navigate: navigateToLogin }"
+          custom
+          to="/login"
+          rel="noopener"
         >
-          {{ $t("landing.navbar.start") }}
-        </button>
+          <button
+            class="mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2"
+            @click="navigateToLogin"
+          >
+            {{ $t("landing.navbar.start") }}
+          </button>
+        </NuxtLink>
         <button
           data-collapse-toggle="mobile-menu-2"
           type="button"
@@ -112,9 +108,9 @@ onClickOutside(target, () => (showMobileMenu.value = false));
               aria-current="page"
               :title="link.name"
               rel="noopener noreferrer"
-              class="bg-primary-700 lg:text-primary-700 block rounded-lg py-2 pr-4 pl-3 text-storm-dark hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:hover:bg-transparent hover:lg:text-gray-500 lg:focus:ring-0"
-              >{{ link.name }}</a
-            >
+              class="block rounded-lg py-2 pr-4 pl-3 text-storm-dark hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:hover:bg-transparent hover:lg:text-gray-500 lg:focus:ring-0"
+              >{{ link.name }}
+            </a>
           </li>
         </ul>
       </div>
