@@ -1,7 +1,9 @@
 import { defineStore } from "pinia";
-import { useLocalStorage } from "@vueuse/core";
+import { Pagination } from "../types/app";
+import Deck from "~~/models/Deck";
 
 const LOCAL_STORAGE_KEY = "lastUsedDecks";
+const MAX_BEST_DECKS = 3;
 export const MAX_LAST_USED_DECKS = 3;
 
 export const useDecksStore = defineStore("decks", {
@@ -10,44 +12,78 @@ export const useDecksStore = defineStore("decks", {
 
     bestRatedDecks: [],
 
-    allDecks: [],
+    allDecks: {} as Pagination<Deck>,
 
-    lastUsedDecksIds: useLocalStorage(LOCAL_STORAGE_KEY, [] as number[]),
+    currentDeck: null,
   }),
   getters: {
-    filteredDecks(state) {
-      return state.allDecks.filter((deck) => {
-        return deck.name
-          .toLowerCase()
-          .includes(state.searchFilter.toLowerCase());
-      });
+    decks: (state) => {
+      return state.allDecks.data;
+    },
+    pagination: (state) => {
+      return state.allDecks.meta;
+    },
+    lastUsedDecksIds: () => {
+      return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
     },
     lastUsedDecks: (state) => {
-      return state.allDecks.filter((deck) =>
-        state.lastUsedDecksIds.includes(deck.id)
+      const deckIds: string[] = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_KEY)
       );
+
+      return state.allDecks.data
+        ? state.allDecks.data.filter((deck) => deckIds.includes(deck.id))
+        : [];
     },
   },
   actions: {
-    addUsedDeck(deckId: number | string) {
+    addUsedDeck(deckId: string | number) {
+      // Retrieve existing from localstorage
+      let used = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
+
       // Remove the deck id if it's already in the list to prevent duplicates
-      this.lastUsedDecksIds = this.lastUsedDecksIds.filter(
-        (id: number | string) => id !== deckId
-      );
+      used = used.filter((id: string | number) => id !== deckId);
 
       // Remove the oldest deck if we have reached the deck number limit
-      if (this.lastUsedDecksIds.length === MAX_LAST_USED_DECKS) {
-        this.lastUsedDecksIds.pop();
+      if (used.length === MAX_LAST_USED_DECKS) {
+        used.pop();
       }
 
       // add at first position
-      this.lastUsedDecksIds.unshift(deckId);
+      used.unshift(deckId);
+
+      // Update local storage
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(used));
     },
 
-    async fetchDecks() {
-      useFetchAPI("/dashboard", {
+    async fetchDecks(page = 1) {
+      const { data } = await useFetchAPI<Pagination<Deck>>(
+        `/v1/decks?page=${page}&search=${this.searchFilter}`,
+        {
+          method: "GET",
+        }
+      );
+
+      this.allDecks = data;
+    },
+
+    async fetchBestDecks() {
+      const { data } = await useFetchAPI<Pagination<Deck>>(
+        `/v1/decks?top=${MAX_BEST_DECKS}`,
+        {
+          method: "GET",
+        }
+      );
+
+      this.bestRatedDecks = data.data;
+    },
+
+    async fetchDeck(deckId: string) {
+      const { data } = await useFetchAPI<Deck>(`/v1/decks/${deckId}`, {
         method: "GET",
       });
+
+      this.currentDeck = data;
     },
   },
 });

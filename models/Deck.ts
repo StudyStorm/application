@@ -13,7 +13,7 @@ export default interface Deck {
 
   cards: Card[];
 
-  votes: number;
+  votes: { number: number };
 
   createdAt: Date;
 
