@@ -60,23 +60,35 @@ landing:
 
 ### ------------------------------------------------- APP SECTION ------------------------------------------------- ###
 app:
+  title: StudyStorm
+  navbar:
+    openMenu: Ouvrir menu
+    profile: Voir le profil
+    logout: Se déconnecter
   register:
-    title: Créez un compte StudyStorm
+    title: Créez votre compte
     labels:
       firstname: Prénom
       lastname: Nom
       email: Email
       password: Mot de passe
-      confirmPassword: Confirmez le mot de passe
     buttons:
       register: S'inscrire
     text:
       alreadyHaveAccount: Vous avez déjà un compte ?
-      loginHere: Connectez vous ici
+      loginHere: Connectez-vous ici
+    placeholder:
+      firstname: Votre prénom
+      lastname: Votre nom
+      email: Votre adresse email
+      password: Votre mot de passe
   login:
     title: Connectez-vous à votre compte
     email: Adresse email
     password: Mot de passe
+    placeholder:
+      email: Votre adresse email
+      password: Votre mot de passe
     forgotPassword: Mot de passe oublié ?
     noAccount: Vous n'avez pas encore de compte ?
     registerHere: Inscrivez-vous ici
@@ -86,7 +98,10 @@ app:
     title: Vérification de l'adresse mail
     firstParagraph: Un lien de vérification a été envoyé sur votre adresse mail.
     secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
-    noEmail: Aucun email reçu ? Cliquez ici pour en recevoir un nouveau.
+    noEmail: Aucun email reçu ?
+    clickResend: Cliquez ici pour en recevoir un nouveau
+    error: Une erreur est survenue pendant l'envoi de l'email de vérification
+    success: L'email de vérification a été envoyé avec succès
   reset:
     title: Réinitialiser le mot de passe
     email: Adresse email liée au compte
@@ -103,7 +118,14 @@ app:
   forgottenPassword:
     title: Réinitialiser votre mot de passe
     email: Entrez l'email lié à votre compte
+    placeholder:
+      email: Votre adresse email
+      password: Votre mot de passe
     submit: Envoyer l'email de réinitialisation
+    noEmail: Aucun email reçu ?
+    clickResend: Cliquez ici pour en recevoir un nouveau
+    error: Une erreur est survenue pendant l'envoi de l'email de réinitialisation
+    success: L'email de réinitialisation a été envoyé avec succès
   profile:
     title: Profile
     labels:
@@ -134,7 +156,7 @@ app:
     select:
       defaultText: Choisissez un réponse
     text:
-      by: par
+      by: par {author}
   createClassroom:
     title: Créer une salle de classe
     name: Nom de la salle de classe
@@ -147,7 +169,7 @@ app:
   error:
     error404: Erreur 404 - Page non trouvée
     standardError: Une erreur est survenue
-    linkToHome: Cliquez-ici pour revenir à l'accueil
+    linkToHome: Cliquez ici pour revenir à l'accueil
   dashboard:
     title: Accueil
     topDecks: Collections populaires
@@ -160,7 +182,7 @@ app:
     nbCards: Nombre de cartes
     nbVotes: Nombre de votes
     createdBy: Créé par {name}
-  myClassroom:
+  classroom:
     title: Mes salles de classe
     manageButton: Gérer
     topDecks: Decks les plus populaires

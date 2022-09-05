@@ -24,4 +24,14 @@ html {
    --storm-grad-right: theme('colors.storm-grad-right');
 }
 
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+   display: none;
+}
+
+img{
+   -webkit-user-drag: none;
+}
+
 @tailwind utilities;

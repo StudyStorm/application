@@ -19,5 +19,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "tailwindcss"],
   rules: {
     "vue/multi-word-component-names": 0,
+    "tailwindcss/no-custom-classname": 0,
+    "tailwindcss/migration-from-tailwind-2": 0,
   },
 };

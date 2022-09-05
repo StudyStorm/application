@@ -47,14 +47,14 @@ onClickOutside(target, () => (showMobileMenu.value = false));
       </NuxtLink>
       <div class="flex items-center lg:order-2">
         <NuxtLink
-          v-slot="{ navigate: navigateToRegister }"
+          v-slot="{ navigate: navigateToLogin }"
           custom
           to="/login"
           rel="noopener"
         >
           <button
-            class="mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4 focus:ring-storm-darkblue/50"
-            @click="navigateToRegister"
+            class="mr-2 rounded-lg bg-storm-blue px-5 py-2.5 text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2"
+            @click="navigateToLogin"
           >
             {{ $t("landing.navbar.start") }}
           </button>
@@ -109,8 +109,8 @@ onClickOutside(target, () => (showMobileMenu.value = false));
               :title="link.name"
               rel="noopener noreferrer"
               class="block rounded-lg py-2 pr-4 pl-3 text-storm-dark hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:hover:bg-transparent hover:lg:text-gray-500 lg:focus:ring-0"
-              >{{ link.name }}</a
-            >
+              >{{ link.name }}
+            </a>
           </li>
         </ul>
       </div>

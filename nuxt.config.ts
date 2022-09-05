@@ -38,14 +38,15 @@ export default defineNuxtConfig({
   },
   i18n: {
     locales: [
-      { code: "fr", iso: "fr-FR", file: "fr-FR.yaml" },
-      { code: "en", iso: "en-US", file: "en-US.yaml" },
+      { code: "fr", iso: "fr-FR", name: "Français", file: "fr-FR.yaml" },
+      { code: "en", iso: "en-US", name: "English", file: "en-US.yaml" },
     ],
     langDir: "locales/",
-    defaultLocale: "fr",
+    defaultLocale: "en",
     vueI18n: {
-      fallbackLocale: "fr",
+      fallbackLocale: "en",
     },
+    strategy: "no_prefix",
   },
   head: {
     title: "StudyStorm",

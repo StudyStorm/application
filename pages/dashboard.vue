@@ -3,57 +3,12 @@ import { ChevronRightIcon, Bars4Icon } from "@heroicons/vue/24/solid/index.js";
 import { useDecksStore } from "~/store/decks";
 
 import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
-import User from "~~/models/User";
-import Deck from "../models/Deck";
-import { useNuxtApp } from "#app";
 
 const displayStyle = ref("row");
 
 const store = useDecksStore();
-const auth = useNuxtApp().$auth;
 
 const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
-
-const tmpUser = computed(() => auth.user as User);
-
-const deck1 = new Deck();
-deck1.id = "af13b1c8-331c-4266-8c7d-4887bed851cd";
-deck1.name = "Deck 1";
-deck1.votes = 1;
-deck1.creator = tmpUser.value;
-
-const deck2 = new Deck();
-deck2.id = "da5c255c-a804-4e5e-ae84-8f2e6e03129d";
-deck2.name = "Deck 2";
-deck2.votes = 100;
-deck2.creator = tmpUser.value;
-
-const deck3 = new Deck();
-deck3.id = "6e79358a-8ca3-4dd7-b99e-3640cb91a420";
-deck3.name = "Deck 3";
-deck3.votes = 100000;
-deck3.creator = tmpUser.value;
-
-const deck4 = new Deck();
-deck4.id = "b89cfb5b-ebff-4b9e-8e81-d47f2403b9eb";
-deck4.name = "Deck 4";
-deck4.votes = -1000000;
-deck4.creator = tmpUser.value;
-
-const deck5 = new Deck();
-deck5.id = "266267b8-5f40-4464-94ef-717b53fef8f4";
-deck5.name = "Deck 5";
-deck5.votes = -545;
-deck5.creator = tmpUser.value;
-
-const deck6 = new Deck();
-deck6.id = "51338620-182c-4989-b004-334e47fe6765";
-deck6.name = "Deck 6";
-deck6.votes = 10000000000;
-deck6.creator = tmpUser.value;
-
-const topDecks: Deck[] = [deck1, deck2, deck3, deck4, deck5, deck6];
-store.allDecks = [...topDecks];
 </script>
 
 <template>
@@ -75,7 +30,11 @@ store.allDecks = [...topDecks];
       </h1>
 
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
-        <DeckCard v-for="deck in topDecks" :key="deck.id" :deck="deck" />
+        <DeckCard
+          v-for="deck in store.bestRatedDecks"
+          :key="deck.id"
+          :deck="deck"
+        />
       </div>
 
       <h1
@@ -197,31 +156,31 @@ store.allDecks = [...topDecks];
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a class="truncate hover:text-gray-600">
+                    <span class="truncate hover:text-gray-600">
                       <span>
                         {{ deck.creator.fullname }}
                       </span>
-                    </a>
+                    </span>
                   </div>
                 </td>
                 <td
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a class="truncate hover:text-gray-600">
+                    <span class="truncate hover:text-gray-600">
                       <span> N cards </span>
-                    </a>
+                    </span>
                   </div>
                 </td>
                 <td
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <a class="truncate hover:text-gray-600">
+                    <span class="truncate hover:text-gray-600">
                       <span>
-                        {{ deck.formattedVotes }}
+                        {{ deck.votes }}
                       </span>
-                    </a>
+                    </span>
                   </div>
                 </td>
               </tr>

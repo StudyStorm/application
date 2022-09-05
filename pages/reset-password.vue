@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ArrowLeftIcon } from "@heroicons/vue/24/outline/index.js";
-const router = useRouter();
 const datas = ref({
   password: "",
   confirmPassword: "",
 });
-// const err = ref<null | any>(null);
 
 let passwordNotMatching = computed(() => {
   return datas.value.password !== datas.value.confirmPassword;
@@ -39,14 +37,14 @@ definePageMeta({
       class="mx-auto flex flex-col items-center justify-center px-6 py-2 md:h-screen lg:py-0"
     >
       <div class="w-full p-6 sm:max-w-md sm:p-8 md:mt-0">
-        <a
-          href="/login"
+        <NuxtLink
+          to="/login"
           class="flex justify-start text-storm-dark hover:underline"
         >
           <ArrowLeftIcon class="mr-2 h-6 w-6" />{{
             $t("app.reset.returnLogin")
           }}
-        </a>
+        </NuxtLink>
         <div class="mt-6 mb-1 text-center text-2xl text-black md:my-24">
           {{ $t("app.reset.title") }}
         </div>
@@ -66,7 +64,7 @@ definePageMeta({
               type="email"
               disabled
               value="marinelepen@gmail.com"
-              class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-gray-900 sm:text-sm"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-gray-900 sm:text-sm"
             />
           </div>
           <div>
@@ -79,7 +77,6 @@ definePageMeta({
                 v-model="datas.password"
                 name="password"
                 placeholder="••••••••"
-              />
               />
             </div>
           </div>
@@ -94,7 +91,6 @@ definePageMeta({
                 v-model="datas.confirmPassword"
                 name="confirmPw"
                 placeholder="••••••••"
-              />
               />
             </div>
           </div>
@@ -139,7 +135,7 @@ definePageMeta({
             v-if="passwordIsTooShort || passwordNotMatching"
             type="submit"
             disabled
-            class="focus:ring-primary-300 w-full rounded-lg bg-gray-400 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+            class="w-full rounded-lg bg-gray-400 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
           >
             {{ $t("app.reset.button") }}
           </button>
@@ -147,7 +143,7 @@ definePageMeta({
           <button
             v-else
             type="submit"
-            class="focus:ring-primary-300 w-full rounded-lg bg-storm-blue px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4"
+            class="w-full rounded-lg bg-storm-blue px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-storm-darkblue focus:outline-none focus:ring-4"
           >
             {{ $t("app.reset.button") }}
           </button>
