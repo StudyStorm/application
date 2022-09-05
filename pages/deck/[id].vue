@@ -19,15 +19,29 @@ const cardInformation = ref({
     question: "",
     answer: "",
     answers: "",
-    type: "",
+    type: "string",
   },
   type: "",
 });
 
 async function createCard() {
-  console.log("Question " + cardInformation.value.content.question);
-  console.log("Answer " + cardInformation.value.content.answer);
-  console.log("Type " + cardInformation.value.type);
+  const payload = {
+    deckId: route.params.id,
+    cardType: cardInformation.value.type,
+    content: {
+      question: cardInformation.value.content.question,
+      type: cardInformation.value.content.type,
+    },
+  };
+
+  switch (payload.cardType) {
+    case cardTypes[0].type:
+      payload.content["answer"] = cardInformation.value.content.answer;
+      break;
+    case cardTypes[1].type:
+      payload.content["answers"] = [{ label: "oui", isTheAnswer: true }];
+      break;
+  }
 }
 </script>
 
