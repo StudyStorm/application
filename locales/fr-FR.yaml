@@ -130,6 +130,7 @@ app:
       confirmPassword: Confirmez le mot de passe
     buttons:
       save: Enregistrer
+      danger: Zone dangereuse
       delete: Supprimer le compte
     modal:
       title: Désactiver votre compte

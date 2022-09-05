@@ -126,6 +126,7 @@ app:
       confirmPassword: Confirm password
     buttons:
       save: Save
+      danger: Danger zone
       delete: Delete account
     modal:
       title: Delete accounte
