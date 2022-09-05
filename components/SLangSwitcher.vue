@@ -2,7 +2,6 @@
 const i18n = useI18n();
 </script>
 <template>
-  <div>
     <slot
       v-for="locale in $i18n.locales"
       :key="locale.code"
@@ -10,5 +9,4 @@ const i18n = useI18n();
       :on-click="() => i18n.setLocale(locale.code)"
       :active="i18n.locale.value === locale.code"
     />
-  </div>
 </template>
