@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useDecksStore } from "~/store/decks";
-import { FormError } from "~/types/app";
 import { SquaresPlusIcon } from "@heroicons/vue/24/outline/index.js";
 const store = useDecksStore();
 const route = useRoute();
