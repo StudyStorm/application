@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { useLocalStorage } from "@vueuse/core";
 import { Pagination } from "../types/app";
 import Deck from "~~/models/Deck";
 
@@ -15,8 +14,6 @@ export const useDecksStore = defineStore("decks", {
 
     allDecks: {} as Pagination<Deck>,
 
-    lastUsedDecksIds: useLocalStorage(LOCAL_STORAGE_KEY, [] as string[]),
-
     currentDeck: null,
   }),
   getters: {
@@ -26,28 +23,37 @@ export const useDecksStore = defineStore("decks", {
     pagination: (state) => {
       return state.allDecks.meta;
     },
+    lastUsedDecksIds: () => {
+      return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
+    },
     lastUsedDecks: (state) => {
+      const deckIds: string[] = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_KEY)
+      );
+
       return state.allDecks.data
-        ? state.allDecks.data.filter((deck) =>
-            state.lastUsedDecksIds.includes(deck.id)
-          )
+        ? state.allDecks.data.filter((deck) => deckIds.includes(deck.id))
         : [];
     },
   },
   actions: {
-    addUsedDeck(deckId: string) {
+    addUsedDeck(deckId: string | number) {
+      // Retrieve existing from localstorage
+      let used = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
+
       // Remove the deck id if it's already in the list to prevent duplicates
-      this.lastUsedDecksIds = this.lastUsedDecksIds.filter(
-        (id: string) => id !== deckId
-      );
+      used = used.filter((id: string | number) => id !== deckId);
 
       // Remove the oldest deck if we have reached the deck number limit
-      if (this.lastUsedDecksIds.length === MAX_LAST_USED_DECKS) {
-        this.lastUsedDecksIds.pop();
+      if (used.length === MAX_LAST_USED_DECKS) {
+        used.pop();
       }
 
       // add at first position
-      this.lastUsedDecksIds.unshift(deckId);
+      used.unshift(deckId);
+
+      // Update local storage
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(used));
     },
 
     async fetchDecks(page = 1) {

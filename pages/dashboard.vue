@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ChevronRightIcon, Bars4Icon } from "@heroicons/vue/24/solid/index.js";
 import { useDecksStore } from "~/store/decks";
-
 import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
 
 const deckStore = useDecksStore();
@@ -17,7 +16,6 @@ const currentPage = ref(deckStore.pagination.current_page);
 const changePage = (page: number) => {
   if (page > 0 && page <= deckStore.pagination.last_page) {
     currentPage.value = page;
-    console.log(currentPage.value);
     deckStore.fetchDecks(currentPage.value);
   }
 };
@@ -56,11 +54,13 @@ const changePage = (page: number) => {
       </h1>
 
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
-        <DeckCard
-          v-for="deck in deckStore.lastUsedDecks"
-          :key="deck.id"
-          :deck="deck"
-        />
+        <ClientOnly>
+          <DeckCard
+            v-for="deck in deckStore.lastUsedDecks"
+            :key="deck.id"
+            :deck="deck"
+          />
+        </ClientOnly>
       </div>
 
       <h1
