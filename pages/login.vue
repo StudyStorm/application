@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
 import SPasswordInput from "~/components/SPasswordInput.vue";
-import SLangSwitcher from "~/components/SLangSwitcher.vue";
 import { FetchError } from "ohmyfetch";
 import SAlert from "~/components/SAlert.vue";
 import { ref, useFetchAPI } from "#imports";
 
-const router = useRouter();
 const auth = useAuth();
 
 const credentials = ref({
@@ -36,7 +34,6 @@ function login() {
     .catch()
     .then((e) => {
       console.log("login", e);
-      // router.push("/dashboard");
     });
 }
 
@@ -128,7 +125,7 @@ definePageMeta({
                 <span v-if="errors.data.resend_token">
                   {{ $t("app.login.resend_token") }}
                   <button
-                    class="text-storm-blue underline"
+                    class="text-left text-storm-blue underline"
                     @click.prevent="sendToken(errors.data.resend_token)"
                   >
                     {{ $t("app.login.resend_token_button") }}
@@ -173,19 +170,6 @@ definePageMeta({
                   </NuxtLink>
                 </p>
               </div>
-            </div>
-            <div class="mt-6 flex items-center justify-center">
-              <s-lang-switcher
-                v-slot="{ locale, active, onClick }"
-                class="mt-6 flex items-center justify-center"
-              >
-                <span
-                  class="mx-1 cursor-pointer"
-                  :class="{ 'font-extrabold': active }"
-                  @click="onClick"
-                  >{{ locale.name }}</span
-                >
-              </s-lang-switcher>
             </div>
           </div>
         </div>

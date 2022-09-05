@@ -91,6 +91,8 @@ app:
     registerHere: Sign up here
     errorLogin: The email or password is incorrect.
     signInButton: Sign in
+    resend_token: Your email is not verified.
+    resend_token_button: Click here to send a new verification email
   verify:
     title: Verify your email
     firstParagraph: Please check your email for a link to verify your email address.
