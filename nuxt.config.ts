@@ -3,6 +3,9 @@ import { execSync } from "node:child_process";
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   modules: [
+    "@nuxtjs-alt/auth",
+    "@nuxtjs-alt/http",
+    "@nuxtjs-alt/proxy",
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "@vueuse/nuxt",
@@ -35,14 +38,15 @@ export default defineNuxtConfig({
   },
   i18n: {
     locales: [
-      { code: "fr", iso: "fr-FR", file: "fr-FR.yaml" },
-      { code: "en", iso: "en-US", file: "en-US.yaml" },
+      { code: "fr", iso: "fr-FR", name: "Français", file: "fr-FR.yaml" },
+      { code: "en", iso: "en-US", name: "English", file: "en-US.yaml" },
     ],
     langDir: "locales/",
-    defaultLocale: "fr",
+    defaultLocale: "en",
     vueI18n: {
-      fallbackLocale: "fr",
+      fallbackLocale: "en",
     },
+    strategy: "no_prefix",
   },
   head: {
     title: "StudyStorm",
@@ -71,5 +75,36 @@ export default defineNuxtConfig({
   svgoOptions: {
     svgo: false,
     defaultImport: "component",
+  },
+  http: {
+    credentials: "include",
+    baseURL: process.env.BASE_URL,
+  },
+  auth: {
+    watchLoggedIn: true,
+    globalMiddleware: true,
+    redirect: {
+      home: "/dashboard",
+      login: "/login",
+      logout: "/",
+      callback: "/login",
+    },
+    strategies: {
+      studyStorm: {
+        name: "studyStorm",
+        scheme: "~/schemes/StudyStormScheme",
+        cookie: {
+          server: true,
+          name: "studystorm-session",
+          options: {
+            secure: true,
+          },
+        },
+        baseURL:
+          process.env.NODE_ENV === "production"
+            ? process.env.PRODUCTION_API_URL
+            : process.env.LOCAL_API_URL,
+      },
+    },
   },
 });

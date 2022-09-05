@@ -1,21 +1,15 @@
-import Model from "./Model";
+export default interface User {
+  id: string;
 
-export default class User extends Model {
-  public id: string;
+  email: string;
 
-  public email: string;
+  password?: string;
 
-  public password: string;
+  first_name: string;
 
-  public firstName: string;
+  last_name: string;
 
-  public lastName: string;
+  isEmailVerified: boolean;
 
-  public profilePicture: string;
-
-  public isEmailVerified: boolean;
-
-  get fullname(): string {
-    return `${this.firstName} ${this.lastName}`;
-  }
+  picture_url: string;
 }

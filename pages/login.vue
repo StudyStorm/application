@@ -1,62 +1,89 @@
 <script setup lang="ts">
-const img = "/images/post-it-for-login.png";
+import useAuth from "~/composables/useAuth";
+import SPasswordInput from "~/components/SPasswordInput.vue";
+import SLangSwitcher from "~/components/SLangSwitcher.vue";
+import { FetchError } from "ohmyfetch";
+import SAlert from "~/components/SAlert.vue";
+import { ref, useFetchAPI } from "#imports";
+
 const router = useRouter();
+const auth = useAuth();
+
 const credentials = ref({
   email: "",
   password: "",
 });
 
-const err = ref<null | any>(null);
+const bgImg = `/images/background_${Math.round(Math.random())}.jpg`;
 
-async function login() {
-  const { data: answer } = await useFetchAPI("/login", {
+const errors = ref<
+  FetchError<{
+    message: string;
+    resend_token?: string;
+  }>
+>(null);
+
+auth.onError((e: FetchError) => {
+  console.log(e);
+  errors.value = e;
+});
+
+function login() {
+  auth
+    .login({
+      body: credentials.value,
+    })
+    .catch()
+    .then((e) => {
+      console.log(e);
+      router.push("/dashboard");
+    });
+}
+
+async function sendToken(token: string) {
+  const { error } = await useFetchAPI("/v1/resend", {
     method: "POST",
-    body: credentials.value,
+    body: {
+      key: token,
+    },
     initialCache: false,
   });
-  err.value = !answer.value;
-  if (answer.value) {
-    router.push("/dashboard");
-  }
+  errors.value = error.value;
+}
+
+function closeError() {
+  errors.value = null;
 }
 
 definePageMeta({
   layout: "nosidebar",
+  auth: "guest",
 });
 </script>
 
 <template>
-  <div class="flex justify-between h-screen">
+  <div class="flex h-screen justify-between">
     <div
-      class="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24"
+      class="z-40 flex flex-1 flex-col justify-center px-4 sm:px-6 lg:flex-none lg:px-20 lg:shadow-[0_0_50px_0_rgba(0,0,0,0.75)] xl:px-24 2xl:px-32"
     >
-      <div class="w-full max-w-sm mx-auto lg:w-96">
+      <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
           <div class="flex items-center justify-center">
             <nuxt-img
               src="/images/Logo.svg"
-              class="h-16 mr-3 text-storm-dark"
+              class="h-24 text-storm-dark 2xl:h-28"
               alt="StudyStorm Logo"
             />
-            <span
-              class="self-center whitespace-nowrap font-[ZwoDrei] text-2xl font-semibold"
-              >StudyStorm</span
-            >
           </div>
-          <h2 class="mt-6 text-2xl font-bold tracking-tight text-storm-dark">
+          <h2
+            class="mt-4 text-center text-xl font-bold tracking-tight text-storm-dark md:text-2xl"
+          >
             {{ $t("app.login.title") }}
           </h2>
         </div>
-        <div
-          v-if="err"
-          class="relative px-4 py-3 mt-6 text-red-700 bg-red-100 border border-red-400 rounded"
-          role="alert"
-        >
-          <span class="block sm:inline">{{ $t("app.login.errorLogin") }}</span>
-        </div>
         <div>
-          <div class="mt-4">
-            <form class="space-y-6" @submit.prevent="login">
+          <div class="mx-4 mt-6 md:mx-2 md:mt-4">
+            <form class="space-y-6 2xl:space-y-8" @submit.prevent="login">
               <div>
                 <label
                   for="email"
@@ -72,7 +99,8 @@ definePageMeta({
                     type="email"
                     autocomplete="email"
                     required
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm appearance-none placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    :placeholder="$t('app.login.placeholder.email')"
+                    class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
                   />
                 </div>
               </div>
@@ -85,58 +113,93 @@ definePageMeta({
                   {{ $t("app.login.password") }}
                 </label>
                 <div class="mt-1">
-                  <input
+                  <s-password-input
                     id="password"
                     v-model="credentials.password"
                     name="password"
                     type="password"
                     autocomplete="current-password"
                     required
-                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm appearance-none placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    :placeholder="$t('app.login.placeholder.password')"
+                    class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
                   />
                 </div>
               </div>
+              <s-alert :on-close="closeError" :open="errors">
+                <span v-if="errors.data.resend_token">
+                  {{ $t("app.login.resend_token") }}
+                  <button
+                    class="text-storm-blue underline"
+                    @click.prevent="sendToken(errors.data.resend_token)"
+                  >
+                    {{ $t("app.login.resend_token_button") }}
+                  </button>
+                </span>
+                <span v-else>
+                  {{ $t("app.login.errorLogin") }}
+                </span>
+              </s-alert>
 
               <div class="flex items-center justify-end">
                 <div class="text-sm">
-                  <a
-                    href="forgottenPassword"
-                    class="font-medium text-storm-dark hover:text-storm-blue"
+                  <NuxtLink
+                    to="/forgot-password"
+                    class="font-medium text-storm-dark hover:text-storm-blue focus:outline-storm-blue"
                   >
                     {{ $t("app.login.forgotPassword") }}
-                  </a>
+                  </NuxtLink>
                 </div>
               </div>
 
               <div>
                 <button
                   type="submit"
-                  class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-storm-darkblue hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  class="flex w-full justify-center rounded-md border border-transparent bg-storm-blue py-3 text-base font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 md:py-2 md:text-sm"
                 >
                   {{ $t("app.login.signInButton") }}
                 </button>
               </div>
             </form>
-            <div class="flex items-center justify-start mt-6">
+            <div class="mt-6 flex items-center justify-center">
               <div class="text-sm">
-                <p class="mt-2 text-sm text-center text-gray-600">
+                <p class="mt-2 text-center text-sm text-gray-600">
                   {{ $t("app.login.noAccount") }}
                   <NuxtLink
                     to="/register"
-                    class="font-medium text-indigo-600 hover:text-indigo-500"
+                    class="font-medium text-storm-darkblue hover:text-storm-blue focus:outline-storm-blue"
                   >
-                    {{ $t("app.login.registerHere") }}
+                    <span class="inline-block">{{
+                      $t("app.login.registerHere")
+                    }}</span>
                   </NuxtLink>
                 </p>
               </div>
+            </div>
+            <div class="mt-6 flex items-center justify-center">
+              <s-lang-switcher
+                v-slot="{ locale, active, onClick }"
+                class="mt-6 flex items-center justify-center"
+              >
+                <span
+                  class="mx-1 cursor-pointer"
+                  :class="{ 'font-extrabold': active }"
+                  @click="onClick"
+                  >{{ locale.name }}</span
+                >
+              </s-lang-switcher>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="relative flex-1 hidden background-image lg:block"
-      :style="{ backgroundImage: `url(${img})` }"
+      class="relative hidden flex-1 lg:block"
+      :style="{
+        backgroundImage: `url(${bgImg})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+      }"
     ></div>
   </div>
 </template>

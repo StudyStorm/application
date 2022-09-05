@@ -23,6 +23,11 @@ const color = computed((): string => {
     .split("")
     .reduce((a, b) => (a + b.charCodeAt(0)) % 360, 0)}, 100%, 80%)`;
 });
+
+const formattedVotes = computed(() => {
+  const formatter = Intl.NumberFormat("en", { notation: "compact" });
+  return formatter.format(props.deck.votes);
+});
 </script>
 
 <template>
@@ -48,7 +53,7 @@ const color = computed((): string => {
           class="h-6 w-6 hover:scale-125 hover:text-emerald-500"
           @click.prevent="upvote"
         />
-        <span>{{ deck.formattedVotes }}</span>
+        <span>{{ formattedVotes }}</span>
         <ChevronDownIcon
           class="h-6 w-6 hover:scale-125 hover:text-red-500"
           @click.prevent="downvote"
@@ -57,7 +62,11 @@ const color = computed((): string => {
     </div>
     <div>
       <p class="font-normal text-storm-dark">
-        {{ $t("app.decks.createdBy", { name: deck.creator.fullname }) }}
+        {{
+          $t("app.decks.createdBy", {
+            name: `${deck.creator.first_name} ${deck.creator.last_name}`,
+          })
+        }}
       </p>
     </div>
   </NuxtLink>
