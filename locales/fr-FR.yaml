@@ -178,6 +178,8 @@ app:
       edit:
         title: Modifier une carte
       labels:
+        select: Sélectionnez un type de carte
+        cardType: Type de carte
         question: Question
         answer: Réponse
         answers: Réponses
