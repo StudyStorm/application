@@ -163,6 +163,25 @@ app:
   error:
     error404: Error 404 - Page not found
     standardError: An error has occurred.
+    linkToHome: Click here to return to the home page.
+  deck:
+    modal:
+      create:
+        title: Create a new card
+        selectType: Select card type
+      edit:
+        title: Change card
+      labels:
+        select: Select a card type
+        cardType: Card type
+        question: Question
+        answer: Answer
+        answers: Answers (check the right ones)
+        error: Error during card creation.
+      buttons:
+        create: Create
+        cancel: Cancel
+        addAnswer: Add answer
     linkToHome: Click here to return to the home page
   dashboard:
     title: Home
