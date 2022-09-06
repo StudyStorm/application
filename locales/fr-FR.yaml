@@ -176,6 +176,10 @@ app:
     nbCards: Nombre de cartes
     nbVotes: Nombre de votes
     createdBy: Créé par {name}
+    manageButton: Gérer
+    cards: "{number} cartes"
+    start: Commencez à apprendre
+    editCard: Editer
   classroom:
     title: Mes salles de classe
     manageButton: Gérer
