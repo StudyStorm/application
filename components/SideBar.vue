@@ -34,6 +34,7 @@ const langIconLocation = "/images/langIcons/";
 const navigation = ref([
   {
     name: t("app.sideNav.home"),
+    translateName: "app.sideNav.home",
     href: "/dashboard",
     icon: HomeIcon,
     current: true,
@@ -41,6 +42,7 @@ const navigation = ref([
   },
   {
     name: t("app.sideNav.class"),
+    translateName: "app.sideNav.class",
     href: "",
     icon: AcademicCapIcon,
     current: false,
@@ -171,7 +173,7 @@ function resetField() {
                           ]"
                           aria-hidden="true"
                         />
-                        {{ item.name }}
+                        {{ $t(item.translateName) }}
                       </div>
                       <ChevronUpIcon
                         v-if="item.hasDropdown && item.dropped"
@@ -376,7 +378,7 @@ function resetField() {
                     ]"
                     aria-hidden="true"
                   />
-                  {{ item.name }}
+                  {{ $t(item.translateName) }}
                 </div>
                 <ChevronUpIcon
                   v-if="item.hasDropdown && item.dropped"

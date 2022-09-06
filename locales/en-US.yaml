@@ -58,9 +58,9 @@ landing:
 app:
   title: StudyStorm
   navbar:
-    openMenu: Ouvrir menu
-    profile: Voir le profil
-    logout: Se déconnecter
+    openMenu: Open menu
+    profile: Show profile
+    logout: Logout
   register:
     title: Create your account
     labels:
