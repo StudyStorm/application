@@ -9,12 +9,16 @@ export const useClassroomStore = defineStore("classroom", () => {
   const currentFolder = ref<Folder>(null);
   const members = ref<Pagination<User>>(null);
   const displayMode = ref<"list" | "block">("block");
+  const showDeckCreationModal = ref(false);
+  const showFolderCreationModal = ref(false);
 
   return {
     classroom,
     currentFolder,
     members,
     displayMode,
+    showDeckCreationModal,
+    showFolderCreationModal,
     async fetchClassroom(classroomId: string) {
       const { data, error } = await useFetchAPI<Classroom>(
         `v1/classrooms/${classroomId}`
