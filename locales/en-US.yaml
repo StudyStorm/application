@@ -128,6 +128,9 @@ app:
       save: Save
       danger: Danger zone
       delete: Delete account
+    errors:
+      email: The email is already taken
+      form: The validation failed. Please check your inputs
     modal:
       title: Delete accounte
       content: Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.

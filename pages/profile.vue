@@ -1,28 +1,110 @@
 <script setup lang="ts">
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline/index.js";
 import { FormError } from "~/types/app";
-import { useProfileStore } from "~/store/profile";
+const config = useRuntimeConfig();
 
 const showModal = ref(false);
 
-const errors = ref<FormError | null>(null);
+const authUser = { ...useNuxtApp().$auth.user };
 
-const profileStore = useProfileStore();
-const userInformation = profileStore.profile;
+const errors = ref({
+  email: false,
+  form: false,
+});
 
-const updatePicture = (picture: File) => {
-  console.log("Save got", picture);
-  profileStore.setPicture(picture);
-};
+function closeError() {
+  errors.value = {
+    email: false,
+    form: false,
+  };
+}
+
+const userInformation = ref({
+  firstName: authUser.first_name,
+  lastName: authUser.last_name,
+  email: authUser.email,
+  picture_url: authUser.picture_url,
+  password: null,
+});
+
+const picture = ref<File>(null);
+
+const waitVerify = ref(false);
+
+function updatePicture(newPicture: File) {
+  picture.value = newPicture;
+}
+
+async function updateEmail() {
+  const { error } = await useFetch("/v1/profile/reset-email", {
+    method: "PATCH",
+    body: { email: userInformation.value.email },
+    credentials: "include",
+    baseURL: config.apiURL,
+    initialCache: false,
+  });
+
+  if (error.value) {
+    errors.value.email = true;
+  } else {
+    waitVerify.value = true;
+  }
+}
 
 async function save() {
-  await profileStore.updateProfile();
+  const { password, ...payload } = userInformation.value;
+
+  const formData = getFormData(payload);
+
+  if (picture.value) {
+    formData.append("profilePicture", picture.value);
+  }
+
+  if (password && password !== "") {
+    formData.append("password", password);
+  }
+
+  if (userInformation.value.email !== authUser.email) {
+    await updateEmail();
+  }
+
+  const { error } = await useFetch("/v1/profile", {
+    method: "PATCH",
+    body: formData,
+    credentials: "include",
+    baseURL: config.apiURL,
+    initialCache: false,
+  });
+
+  if (error.value) {
+    errors.value.form = true;
+  } else {
+    if (!errors.value.email && !errors.value.form) {
+      waitVerify.value
+        ? useNuxtApp().$auth.logout()
+        : useNuxtApp().$auth.fetchUser();
+    }
+  }
 }
 
 async function deleteAccount() {
-  showModal.value = false;
-  await profileStore.deleteProfile();
+  const { error } = await useFetchAPI("/v1/profile", {
+    method: "DELETE",
+  });
+  console.log(error);
+
+  if (error) {
+    console.log(error);
+  } else {
+    useNuxtApp().$auth.logout();
+  }
 }
+
+const getFormData = (object) =>
+  Object.keys(object).reduce((formData, key) => {
+    formData.append(key, object[key]);
+    return formData;
+  }, new FormData());
 </script>
 
 <template>
@@ -38,9 +120,8 @@ async function deleteAccount() {
     </div>
     <div class="sm:mx-auto sm:w-full sm:max-w-md lg:mt-8">
       <div class="flex justify-center px-4 pb-2 sm:rounded-lg sm:px-10">
-        <s-form
+        <form
           class="w-full max-w-sm space-y-2 px-7 pb-4 md:space-y-6"
-          :errors="errors"
           @submit.prevent=""
         >
           <div class="mx-auto h-24 w-24 text-center">
@@ -62,7 +143,7 @@ async function deleteAccount() {
             <div class="mt-1">
               <s-input
                 id="firstName"
-                v-model="userInformation.first_name"
+                v-model="userInformation.firstName"
                 name="firstName"
                 type="text"
                 required
@@ -82,7 +163,7 @@ async function deleteAccount() {
             <div class="mt-1">
               <s-input
                 id="lastName"
-                v-model="userInformation.last_name"
+                v-model="userInformation.lastName"
                 name="lastName"
                 type="text"
                 autocomplete="family-name"
@@ -126,6 +207,16 @@ async function deleteAccount() {
               />
             </div>
           </div>
+          <s-alert :on-close="closeError" :open="errors.email">
+            <span>
+              {{ $t("app.profile.errors.email") }}
+            </span>
+          </s-alert>
+          <s-alert :on-close="closeError" :open="errors.form">
+            <span>
+              {{ $t("app.profile.errors.form") }}
+            </span>
+          </s-alert>
           <div class="pt-2">
             <button
               type="submit"
@@ -155,7 +246,7 @@ async function deleteAccount() {
               </button>
             </div>
           </div>
-        </s-form>
+        </form>
       </div>
     </div>
 
