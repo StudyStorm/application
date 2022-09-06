@@ -145,6 +145,7 @@ function resetField() {
                   to="/dashboard"
                   title="Dashboard"
                   class="flex items-center"
+                  @click="sidebarOpen = false"
                 >
                   <nuxt-img
                     src="/images/Logo.svg"
@@ -162,11 +163,11 @@ function resetField() {
                   <div
                     v-for="item in navigation"
                     :key="item.name"
-                    class="cursor-pointer select-none"
+                    class="relative cursor-pointer select-none"
                   >
                     <NuxtLink
                       :to="item.href"
-                      class="flex items-center justify-between"
+                      class="flex items-center justify-between border border-transparent hover:border-gray-200 hover:bg-gray-50"
                       :class="[
                         path === item.href
                           ? 'bg-gray-200 text-gray-900'
@@ -174,9 +175,9 @@ function resetField() {
                         'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
                       ]"
                       :aria-current="path === item.href ? 'page' : undefined"
-                      @click="item.dropped = !item.dropped"
+                      @click="sidebarOpen = false"
                     >
-                      <div class="flex items-center">
+                      <div class="relative flex items-center">
                         <component
                           :is="item.icon"
                           :class="[
@@ -189,27 +190,40 @@ function resetField() {
                         />
                         {{ $t(item.translateName) }}
                       </div>
-                      <ChevronUpIcon
-                        v-if="item.hasDropdown && item.dropped"
-                        class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
-                        aria-hidden="true"
-                        @click="item.dropped = !item.dropped"
-                      />
-                      <ChevronDownIcon
-                        v-if="item.hasDropdown && !item.dropped"
-                        class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
-                        aria-hidden="true"
-                        @click="item.dropped = !item.dropped"
-                      />
                     </NuxtLink>
-                    <div v-if="item.hasDropdown && item.dropped">
+                    <ChevronUpIcon
+                      v-if="item.hasDropdown && item.dropped"
+                      class="absolute top-1 right-1 float-right h-8 w-8 shrink-1 rounded px-2 text-gray-400"
+                      :class="[
+                        path === '/classroom' ? 'cursor-pointer bg-gray-300 text-storm-blue' : 'cursor-pointer bg-gray-200 text-storm-blue'
+                      ]"
+                      aria-hidden="true"
+                      @click="item.dropped = !item.dropped"
+                    />
+                    <ChevronDownIcon
+                      v-if="item.hasDropdown && !item.dropped"
+                      class="absolute top-1 right-1 float-right h-8 w-8 shrink-0 rounded px-2 text-gray-400"
+                      :class="[
+                        path === '/classroom' ? 'cursor-pointer bg-gray-300 text-storm-blue' : 'cursor-pointer bg-gray-200 text-storm-blue'
+                      ]"
+                      aria-hidden="true"
+                      @click="item.dropped = !item.dropped"
+                    />
+                    <div v-if="item.hasDropdown && item.dropped" class="mt-0.5">
                       <!-- TODO: change this to match the classroom type -->
                       <!-- TODO: Change the link to /classroom/:id -->
                       <NuxtLink
                         v-for="subitem in (item.classrooms as Classroom[])"
                         :key="subitem.id"
-                        class="group flex cursor-pointer items-center rounded-md p-2 pl-4 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                        class="group mt-0.5 flex cursor-pointer items-center rounded-md p-2 pl-4 border border-transparent text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                        :class="[
+                      path === `/classroom/${subitem.id}`
+                        ? 'bg-gray-200 text-gray-900'
+                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50 ',
+                      'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                    ]"
                         :to="`/classroom/${subitem.id}`"
+                        @click="sidebarOpen = false"
                       >
                         <span class="relative mr-2 flex h-3 w-3">
                           <span
@@ -388,8 +402,6 @@ function resetField() {
                 leave-to-class="transform scale-95 opacity-0"
               >
                 <div v-if="item.hasDropdown && item.dropped" class="mt-0.5">
-                  <!-- TODO: change this to match the classroom type -->
-                  <!-- TODO: Change the link to /classroom/:id -->
                   <NuxtLink
                     v-for="subitem in (item.classrooms as Classroom[])"
                     :key="subitem.id"
