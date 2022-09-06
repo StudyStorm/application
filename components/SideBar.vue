@@ -29,6 +29,7 @@ const auth = useAuth();
 const navigation = ref([
   {
     name: t("app.sideNav.home"),
+    translateName: "app.sideNav.home",
     href: "/dashboard",
     icon: HomeIcon,
     current: true,
@@ -36,6 +37,7 @@ const navigation = ref([
   },
   {
     name: t("app.sideNav.class"),
+    translateName: "app.sideNav.class",
     href: "",
     icon: AcademicCapIcon,
     current: false,
@@ -166,7 +168,7 @@ function resetField() {
                           ]"
                           aria-hidden="true"
                         />
-                        {{ item.name }}
+                        {{ $t(item.translateName) }}
                       </div>
                       <ChevronUpIcon
                         v-if="item.hasDropdown && item.dropped"
@@ -195,6 +197,8 @@ function resetField() {
                     </div>
                   </div>
                 </nav>
+                <!-- Bouton langue -->
+                <SButtonLangSwitch class="mt-2 ml-3"></SButtonLangSwitch>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -322,7 +326,7 @@ function resetField() {
                     ]"
                     aria-hidden="true"
                   />
-                  {{ item.name }}
+                  {{ $t(item.translateName) }}
                 </div>
                 <ChevronUpIcon
                   v-if="item.hasDropdown && item.dropped"
@@ -359,6 +363,9 @@ function resetField() {
             </div>
           </div>
         </nav>
+
+        <!-- Bouton pour changer la langue -->
+        <SButtonLangSwitch class="ml-5 mt-2"></SButtonLangSwitch>
       </div>
     </div>
     <div
