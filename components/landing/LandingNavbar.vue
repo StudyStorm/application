@@ -16,9 +16,8 @@ const links = [
   },
 ];
 
-const country = ["fr", "gb"];
-const langInconLocation = "/images/langIcons/";
-const langIconExtension = ".svg";
+const country = ["fr.svg", "gb.svg"];
+const langIconLocation = "/images/langIcons/";
 
 let showMobileMenu = ref(false);
 
@@ -152,11 +151,7 @@ onClickOutside(target, () => (showMobileMenu.value = false));
                         >
                           <div class="h-6 w-6">
                             <NuxtImg
-                              :src="
-                                langInconLocation +
-                                country[tabindex] +
-                                langIconExtension
-                              "
+                              :src="langIconLocation + country[tabindex]"
                               class="h-6 w-6 rounded-full"
                             />
                           </div>
