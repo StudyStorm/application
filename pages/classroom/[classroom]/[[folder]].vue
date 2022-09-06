@@ -1,17 +1,11 @@
 <script setup lang="ts">
 import { Bars4Icon } from "@heroicons/vue/24/solid/index.js";
-
 import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
-
-import Folder from "~/models/Folder";
-import { useFetchAPI } from "#imports";
-import Classroom from "~/models/Classroom";
+import Classroom from "~~/models/Classroom";
 import VBreadcrumb from "~/components/folder/VBreadcrumb.vue";
+import { useClassroomStore } from "~/store/classroom";
 
-const displayStyle = ref<"block" | "list">("block");
-
-const showModalDeck = ref(false);
-const showModalFolder = ref(false);
+const classroomStore = useClassroomStore();
 
 const props = defineProps<{
   classroom: Classroom;
@@ -25,9 +19,7 @@ const folderId = computed(() => {
     : props.classroom.root_folder.id;
 });
 
-const { data: folder } = await useFetchAPI<Folder>(
-  `/v1/folders/${folderId.value}`
-);
+await classroomStore.fetchCurrentFolder(folderId.value as string);
 </script>
 
 <template>
@@ -37,7 +29,7 @@ const { data: folder } = await useFetchAPI<Folder>(
     >
       <div class="flex min-w-0 flex-1 items-center justify-between">
         <VBreadcrumb
-          :path="folder.path"
+          :path="classroomStore.currentFolder.path"
           :root="{ id: classroom.root_folder.id, name: classroom.name }"
         />
 
@@ -47,30 +39,26 @@ const { data: folder } = await useFetchAPI<Folder>(
           >
             <span
               class="p-2 hover:scale-110"
-              :class="{ 'bg-gray-200': displayStyle === 'list' }"
-              @click="displayStyle = 'list'"
+              :class="{ 'bg-gray-200': classroomStore.displayMode === 'list' }"
+              @click="classroomStore.displayMode = 'list'"
             >
               <Bars4Icon class="h-5 w-5"
             /></span>
             <span
               class="p-2 hover:scale-110"
-              :class="{ 'bg-gray-200': displayStyle === 'block' }"
-              @click="displayStyle = 'block'"
+              :class="{ 'bg-gray-200': classroomStore.displayMode === 'block' }"
+              @click="classroomStore.displayMode = 'block'"
               ><Square2StackIcon class="h-5 w-5"
             /></span>
-          </div>
-          <div>
-            <button
-              type="submit"
-              class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              @click="showModalDeck = true"
-            >
-              {{ $t("app.classroom.decksButton") }}
-            </button>
           </div>
         </div>
       </div>
     </div>
-    <folder-content :folder="folder" :mode="displayStyle" />
+    <folder-content
+      :folder="classroomStore.currentFolder"
+      :mode="classroomStore.displayMode"
+      @show-folder-modal="classroomStore.showFolderCreationModal = true"
+      @show-deck-modal="classroomStore.showDeckCreationModal = true"
+    />
   </div>
 </template>

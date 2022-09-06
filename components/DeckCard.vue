@@ -41,7 +41,10 @@ const formattedVotes = computed(() => {
           {{ deck.name }}
         </h5>
         <div>
-          <p class="truncate text-sm font-normal text-storm-dark">
+          <p
+            v-if="deck.creator"
+            class="truncate text-sm font-normal text-storm-dark"
+          >
             {{
               $t("app.decks.createdBy", {
                 name: `${deck.creator?.first_name} ${deck.creator?.last_name}`,

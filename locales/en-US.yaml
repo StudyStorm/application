@@ -209,6 +209,7 @@ app:
     decksButton: New deck
     decksPlaceholder: Search for a deck
     folderButton: New folder
+    content: Content
     decksCard:
       nbCards: N cards
       created: Created by {name}
