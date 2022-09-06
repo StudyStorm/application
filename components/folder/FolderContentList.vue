@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {
   ChevronRightIcon,
-  ClipboardDocumentListIcon,
+  Square2StackIcon,
   FolderIcon,
 } from "@heroicons/vue/24/outline/index.js";
 import Folder from "~/models/Folder";
@@ -14,6 +14,7 @@ const props = defineProps<{
 
 type File = ((Folder & { type: "folder" }) | (Deck & { type: "deck" })) & {
   icon: unknown;
+  url: unknown;
 };
 
 const files = computed(
@@ -22,12 +23,24 @@ const files = computed(
       ...props.folder.children.map((f) => ({
         ...f,
         type: "folder",
+        url: {
+          name: "classroom-classroom-folder",
+          params: {
+            folder: f.id,
+          },
+        },
         icon: FolderIcon,
       })),
       ...props.folder.decks.map((d) => ({
         ...d,
         type: "deck",
-        icon: ClipboardDocumentListIcon,
+        url: {
+          name: "deck-id",
+          params: {
+            id: d.id,
+          },
+        },
+        icon: Square2StackIcon,
       })),
     ].sort((a, b) => a.name.localeCompare(b.name)) as File[]
 );
@@ -43,7 +56,7 @@ const files = computed(
     >
       <li v-for="file in files" :key="file.id">
         <NuxtLink
-          :to="`/deck/${file.id}`"
+          :to="file.url"
           class="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"
         >
           <span class="flex items-center space-x-3 truncate">

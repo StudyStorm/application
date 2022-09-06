@@ -3,13 +3,13 @@ import { useClassroomStore } from "~/store/classroom";
 import { useFetchAPI } from "#imports";
 import { useRoute } from "#app";
 import Classroom from "~/models/Classroom";
+import User from "~/models/User";
+import { Pagination } from "~/types/app";
+import { AcademicCapIcon } from "@heroicons/vue/24/solid/index.js";
 
 const route = useRoute();
 const classroomStore = useClassroomStore();
-
 await classroomStore.fetchClassroom(route.params.classroom as string);
-
-const members = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
 
 const deckName = ref<string>(" ");
 const folderName = ref<string>("");
@@ -24,6 +24,10 @@ const { data: classroom } = await useFetchAPI<Classroom>(
 if (!classroom) {
   throw createError({ statusCode: 404, statusMessage: "Classroom not found" });
 }
+const { data: members } = await useFetchAPI<Pagination<User>>(
+  `/v1/classrooms/${route.params.classroom}/users`,
+  { params: { limit: 5 } }
+);
 </script>
 
 <template>
@@ -31,25 +35,31 @@ if (!classroom) {
     <div>
       <div class="p-4 sm:px-6 lg:px-8">
         <h1
-          class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl"
+          class="mb-4 text-2xl font-bold leading-7 text-storm-dark sm:truncate sm:text-3xl"
         >
+          <AcademicCapIcon class="inline h-6 w-6" />
           {{ classroom.name }}
         </h1>
         <div>
-          <h1
-            class="mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
-          >
+          <h1 class="text-lg font-medium leading-6 text-storm-dark sm:truncate">
             {{ $t("app.classroom.members") }}
           </h1>
           <div class="flex min-w-0 flex-1 items-center justify-between">
             <div class="flex">
-              <NuxtImg
-                v-for="member in members"
-                :key="member.id"
-                class="mx-1 h-10 w-10 rounded-full"
-                src="/images/anonymousProfile.png"
-                alt="Profile pic"
-              />
+              <div class="flex -space-x-4">
+                <nuxt-img
+                  v-for="member in members.data"
+                  :key="member.id"
+                  class="h-12 w-12 shrink-0 rounded-full border-2 border-white dark:border-gray-800"
+                  :src="member.picture_url"
+                />
+                <div
+                  v-if="members.data.length < members.meta.total"
+                  class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white dark:border-gray-800"
+                >
+                  {{ members.meta.total - members.data.length }}
+                </div>
+              </div>
             </div>
             <div>
               <button
@@ -61,7 +71,7 @@ if (!classroom) {
             </div>
           </div>
         </div>
-        <nuxt-page :classroom="classroom" />
+        <nuxt-page :classroom="classroom" :page-key="$route.params.folder" />
       </div>
     </div>
 
