@@ -3,6 +3,8 @@ import SFileInputPreview from "~/components/SFileInputPreview.vue";
 import { FormError } from "~/types/app";
 import { useFetchAPI } from "#imports";
 
+const picture = ref<File>(null);
+
 const userInformation = ref({
   firstName: "",
   lastName: "",
@@ -12,8 +14,8 @@ const userInformation = ref({
 
 const bgImg = `/images/background_${Math.round(Math.random())}.jpg`;
 
-const updatePicture = (picture: File) => {
-  console.log("Register got", picture);
+const updatePicture = (newPicture: File) => {
+  picture.value = newPicture;
 };
 
 const errors = ref<FormError | null>(null);
@@ -23,6 +25,12 @@ const showVerifyStep = ref(false);
 const resendToken = ref<string>(null);
 
 async function register() {
+  const formData = getFormData(userInformation.value);
+
+  if (picture.value) {
+    formData.append("profilePicture", picture.value);
+  }
+
   const { data, error } = await useFetchAPI<
     {
       message: string;
@@ -31,7 +39,7 @@ async function register() {
     FormError
   >("/v1/register", {
     method: "POST",
-    body: userInformation.value,
+    body: formData,
   });
 
   if (error) {
@@ -44,6 +52,12 @@ async function register() {
     console.log("log data: " + resendToken.value);
   }
 }
+
+const getFormData = (object) =>
+  Object.keys(object).reduce((formData, key) => {
+    formData.append(key, object[key]);
+    return formData;
+  }, new FormData());
 
 definePageMeta({
   layout: "nosidebar",

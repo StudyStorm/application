@@ -21,7 +21,11 @@ const classroom = await classroomStore.fetchClassroom(
   route.params.classroom as string
 );
 if (!classroom) {
-  throw createError({ statusCode: 404, statusMessage: "Classroom not found" });
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Classroom not found",
+    fatal: true,
+  });
 }
 const { data: members } = await useFetchAPI<Pagination<User>>(
   `/v1/classrooms/${route.params.classroom}/users`,

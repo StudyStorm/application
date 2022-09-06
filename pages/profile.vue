@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline/index.js";
-import { FormError } from "~/types/app";
 const config = useRuntimeConfig();
 
 const showModal = ref(false);
