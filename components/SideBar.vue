@@ -29,6 +29,7 @@ const auth = useAuth();
 const navigation = ref([
   {
     name: t("app.sideNav.home"),
+    translateName: "app.sideNav.home",
     href: "/dashboard",
     icon: HomeIcon,
     current: true,
@@ -36,6 +37,7 @@ const navigation = ref([
   },
   {
     name: t("app.sideNav.class"),
+    translateName: "app.sideNav.class",
     href: "",
     icon: AcademicCapIcon,
     current: false,
@@ -166,7 +168,7 @@ function resetField() {
                           ]"
                           aria-hidden="true"
                         />
-                        {{ item.name }}
+                        {{ $t(item.translateName) }}
                       </div>
                       <ChevronUpIcon
                         v-if="item.hasDropdown && item.dropped"
@@ -195,6 +197,8 @@ function resetField() {
                     </div>
                   </div>
                 </nav>
+                <!-- Bouton langue -->
+                <SButtonLangSwitch class="mt-2 ml-3"></SButtonLangSwitch>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -322,71 +326,46 @@ function resetField() {
                     ]"
                     aria-hidden="true"
                   />
-                  {{ item.name }}
+                  {{ $t(item.translateName) }}
                 </div>
                 <ChevronUpIcon
                   v-if="item.hasDropdown && item.dropped"
                   class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
                   aria-hidden="true"
-                  @click="item.dropped = !item.dropped"
                 />
                 <ChevronDownIcon
                   v-if="item.hasDropdown && !item.dropped"
                   class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
                   aria-hidden="true"
-                  @click="item.dropped = !item.dropped"
                 />
               </NuxtLink>
-              <div v-if="item.hasDropdown && item.dropped">
-                <!-- TODO: change this to match the classroom type -->
-                <!-- TODO: Change the link to /classroom/:id -->
-                <NuxtLink
-                  v-for="subitem in item.items"
-                  :key="subitem"
-                  class="group flex cursor-pointer items-center rounded-md p-2 pl-8 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
-                  to="/classroom/id"
-                >
-                  {{ subitem }}
-                </NuxtLink>
-              </div>
-            </div>
-
-            <!-- <div
-              v-if="item.options"
-              class="p-4"
-              @click="showButton = !showButton"
-            >
-              <ChevronUpIcon
-                v-if="showButton"
-                class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
-                aria-hidden="true"
-              />
-              <ChevronDownIcon
-                v-else
-                class="h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
-                aria-hidden="true"
-              />
-            </div> -->
-            <!-- <div
-              v-if="showButton"
-              class="flex flex-col justify-center rounded-lg bg-gray-200 px-6 py-2 shadow-2xl"
-            >
-              <NuxtLink
-                v-for="(classroom, index) in classrooms"
-                :key="index"
-                href="/classroom"
-                class="rounded-md pl-4 hover:bg-gray-300"
-                >{{ classroom }}
-              </NuxtLink>
-              <button
-                class="mb-2 mt-4 flex justify-center rounded-md border border-transparent bg-indigo-700 px-1 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue"
-                @click="createClassroom"
+              <transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-from-class="transform scale-95 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in"
+                leave-from-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
               >
-                {{ $t("app.createClassroom.title") }}
-              </button>
-            </div> -->
+                <div v-if="item.hasDropdown && item.dropped">
+                  <!-- TODO: change this to match the classroom type -->
+                  <!-- TODO: Change the link to /classroom/:id -->
+                  <NuxtLink
+                    v-for="subitem in item.items"
+                    :key="subitem"
+                    class="group flex cursor-pointer items-center rounded-md p-2 pl-8 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                    to="/classroom/id"
+                  >
+                    {{ subitem }}
+                  </NuxtLink>
+                </div>
+              </transition>
+            </div>
           </div>
         </nav>
+
+        <!-- Bouton pour changer la langue -->
+        <SButtonLangSwitch class="ml-5 mt-2"></SButtonLangSwitch>
       </div>
     </div>
     <div
@@ -420,14 +399,7 @@ function resetField() {
                 />
               </MenuButton>
             </div>
-            <transition
-              enter-active-class="transition duration-100 ease-out"
-              enter-from-class="transform scale-95 opacity-0"
-              enter-to-class="transform scale-100 opacity-100"
-              leave-active-class="transition duration-75 ease-in"
-              leave-from-class="transform scale-100 opacity-100"
-              leave-to-class="transform scale-95 opacity-0"
-            >
+            <transition name="fade">
               <MenuItems
                 class="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
               >
@@ -452,8 +424,8 @@ function resetField() {
                         'block px-4 py-2 text-sm',
                       ]"
                       @click="auth.logout()"
-                      >{{ $t("app.navbar.logout") }}</NuxtLink
-                    >
+                      >{{ $t("app.navbar.logout") }}
+                    </NuxtLink>
                   </MenuItem>
                 </div>
               </MenuItems>

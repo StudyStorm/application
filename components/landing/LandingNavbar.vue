@@ -2,15 +2,15 @@
 import { useI18n } from "vue-i18n";
 import { onClickOutside } from "@vueuse/core";
 
-const { t } = useI18n();
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
 const links = [
   {
-    name: t("landing.navbar.links.about"),
+    name: "landing.navbar.links.about",
     url: "#about",
   },
   {
-    name: t("landing.navbar.links.teams"),
+    name: "landing.navbar.links.teams",
     url: "#team",
   },
 ];
@@ -106,11 +106,15 @@ onClickOutside(target, () => (showMobileMenu.value = false));
             <a
               :href="link.url"
               aria-current="page"
-              :title="link.name"
               rel="noopener noreferrer"
-              class="block rounded-lg py-2 pr-4 pl-3 text-storm-dark hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:hover:bg-transparent hover:lg:text-gray-500 lg:focus:ring-0"
-              >{{ link.name }}
+              class="block rounded-lg py-2 pl-3 pr-4 text-storm-dark hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:hover:bg-transparent hover:lg:text-gray-500 lg:focus:ring-0"
+              >{{ $t(link.name) }}
             </a>
+          </li>
+          <li
+            class="block rounded-lg py-2 pl-3 pr-4 text-storm-dark hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:focus:ring-0"
+          >
+            <SButtonLangSwitch></SButtonLangSwitch>
           </li>
         </ul>
       </div>

@@ -15,14 +15,18 @@ export const useDecksStore = defineStore("decks", {
 
     allDecks: {} as Pagination<Deck>,
 
+    filteredDecks: {} as Pagination<Deck>,
+
     currentDeck: null,
+
+    currentUserVote: 0,
   }),
   getters: {
     decks: (state) => {
-      return state.allDecks.data;
+      return state.filteredDecks.data;
     },
     pagination: (state) => {
-      return state.allDecks.meta;
+      return state.filteredDecks.meta;
     },
     lastUsedDecksIds: () => {
       return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
@@ -57,6 +61,14 @@ export const useDecksStore = defineStore("decks", {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(used));
     },
 
+    async fetchAllDecks() {
+      const { data } = await useFetchAPI<Pagination<Deck>>(`/v1/decks`, {
+        method: "GET",
+      });
+
+      this.allDecks = data;
+    },
+
     async fetchDecks(page = 1) {
       const { data } = await useFetchAPI<Pagination<Deck>>(
         `/v1/decks?page=${page}&search=${this.searchFilter}`,
@@ -65,12 +77,12 @@ export const useDecksStore = defineStore("decks", {
         }
       );
 
-      this.allDecks = data;
+      this.filteredDecks = data;
     },
 
     async fetchBestDecks() {
       const { data } = await useFetchAPI<Pagination<Deck>>(
-        `/v1/decks?top=${MAX_BEST_DECKS}`,
+        `/v1/decks?top=${MAX_BEST_DECKS}&limit=${MAX_BEST_DECKS}`,
         {
           method: "GET",
         }
@@ -93,6 +105,56 @@ export const useDecksStore = defineStore("decks", {
         body: { ...payload },
       });
       return { data, error };
+    },
+    
+    async fetchDeckUserRating(deckId: string) {
+      const { data } = await useFetchAPI<{
+        user_vote: { vote: number };
+      }>(`/v1/decks/${deckId}/rate`, {
+        method: "GET",
+      });
+
+      this.currentUserVote = data.user_vote ? data.user_vote.vote : 0;
+    },
+
+    async upvoteDeck(deck: Deck) {
+      this.currentUserVote === 0
+        ? await this.vote(deck, 1)
+        : this.resetvoteDeck(deck);
+    },
+
+    async downvoteDeck(deck: Deck) {
+      this.currentUserVote === 0
+        ? await this.vote(deck, -1)
+        : this.resetvoteDeck(deck);
+    },
+
+    async resetvoteDeck(deck: Deck) {
+      await useFetchAPI(`/v1/decks/${deck.id}/rate`, {
+        method: "DELETE",
+      });
+      this.refreshRatings(deck);
+    },
+
+    async refreshRatings(deck: Deck) {
+      const { data } = await useFetchAPI<{
+        vote: number;
+        user_vote: { vote: number };
+      }>(`/v1/decks/${deck.id}/rate`, {
+        method: "GET",
+      });
+      deck.votes = data.vote;
+      this.currentUserVote = data.user_vote ? data.user_vote.vote : 0;
+    },
+
+    async vote(deck: Deck, vote: number) {
+      await useFetchAPI(`/v1/decks/${deck.id}/rate`, {
+        method: "POST",
+        body: {
+          vote: vote,
+        },
+      });
+      await this.refreshRatings(deck);
     },
   },
 });
