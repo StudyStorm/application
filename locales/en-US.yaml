@@ -172,6 +172,10 @@ app:
     nbCards: Number of cards
     nbVotes: Number of votes
     createdBy: Created by {name}
+    manageButton: Manage
+    cards: "{number} cards"
+    start: Start learning
+    editCard: Edit
   classroom:
     title: My classrooms
     manageButton: Manage
