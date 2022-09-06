@@ -126,11 +126,15 @@ app:
       firstname: Prénom
       lastname: Nom
       email: Email
-      password: Mot de passe
+      password: Nouveau mot de passe
       confirmPassword: Confirmez le mot de passe
     buttons:
       save: Enregistrer
+      danger: Zone dangereuse
       delete: Supprimer le compte
+    errors:
+      email: L'email est déjà utilisé
+      form: La validation a échoué. Veuillez vérifier les champs
     modal:
       title: Désactiver votre compte
       content: Êtes-vous sûr de vouloir désactiver votre compte ? Toutes vos données seront définitivement supprimées. Cette action ne peut pas être annulée.
