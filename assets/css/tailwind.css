@@ -35,3 +35,26 @@ img{
 }
 
 @tailwind utilities;
+
+.s-grid{
+   @apply grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6;
+}
+
+::-webkit-scrollbar {
+   @apply w-1.5;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+   display: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+   @apply bg-storm-blue/50  rounded-full;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+   @apply bg-storm-blue/75
+}

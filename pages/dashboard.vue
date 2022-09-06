@@ -40,7 +40,7 @@ const changePage = (page: number) => {
         {{ $t("app.dashboard.topDecks") }}
       </h1>
 
-      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
+      <div class="s-grid">
         <DeckCard
           v-for="deck in deckStore.bestRatedDecks"
           :key="deck.id"
@@ -54,7 +54,7 @@ const changePage = (page: number) => {
         {{ $t("app.dashboard.recentDecks") }}
       </h1>
 
-      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
+      <div class="s-grid">
         <ClientOnly>
           <DeckCard
             v-for="deck in deckStore.lastUsedDecks"
@@ -206,6 +206,7 @@ const changePage = (page: number) => {
           <s-paginator
             :current-page="currentPage"
             :last="deckStore.pagination.last_page"
+            :max-visible="5"
             @change-page="changePage"
           />
         </div>

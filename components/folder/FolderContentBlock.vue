@@ -14,9 +14,7 @@ defineProps<{
 defineEmits(["showModalFolder"]);
 </script>
 <template>
-  <div
-    class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6 2xl:grid-cols-7"
-  >
+  <div class="s-grid mt-8">
     <div
       class="flex cursor-pointer items-center rounded-lg p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
       @click="$emit('showModalFolder')"
@@ -39,9 +37,7 @@ defineEmits(["showModalFolder"]);
     />
   </div>
   <hr class="my-4" />
-  <div
-    class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 xl:grid-cols-6 2xl:grid-cols-7"
-  >
+  <div class="s-grid">
     <div
       class="flex cursor-pointer items-center rounded-lg p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
       @click="$emit('showModalFolder')"
