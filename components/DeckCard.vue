@@ -24,7 +24,7 @@ const formattedVotes = computed(() => {
 
 <template>
   <NuxtLink
-    class="block rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
+    class="relative block rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
     :to="{
       name: 'deck-id',
       params: {
@@ -47,14 +47,14 @@ const formattedVotes = computed(() => {
           >
             {{
               $t("app.decks.createdBy", {
-                name: `${deck.creator.first_name} ${deck.creator.last_name}`,
+                name: `${deck.creator?.first_name} ${deck.creator?.last_name}`,
               })
             }}
           </p>
         </div>
       </div>
       <div
-        class="flex items-center rounded-xl px-2 font-medium"
+        class="ml-2 flex items-center rounded-full px-2 py-1 font-medium ring-2 ring-black/20"
         :class="
           deck.votes < 0
             ? 'text-red-500 bg-red-200'

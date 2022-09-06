@@ -16,7 +16,7 @@ defineProps<{
     }"
     class="rounded-lg bg-gray-100 p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
   >
-    <div class="flex items-center space-x-4">
+    <div class="flex items-center space-x-4 truncate">
       <div class="w-10 shrink-0">
         <FolderIcon />
       </div>

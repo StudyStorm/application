@@ -31,7 +31,7 @@ const close = () => {
         leave-to="opacity-0"
       >
         <div
-          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 backdrop-blur-sm transition-opacity"
         />
       </TransitionChild>
 
@@ -49,12 +49,14 @@ const close = () => {
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+              class="relative overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl"
             >
               <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div>
                   <slot name="icon"></slot>
-                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <div
+                    class="mt-3 flex-1 text-center sm:mt-0 sm:ml-4 sm:text-left"
+                  >
                     <DialogTitle
                       as="h3"
                       class="text-lg font-medium leading-6 text-gray-900"

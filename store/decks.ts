@@ -95,7 +95,6 @@ export const useDecksStore = defineStore("decks", {
       const { data } = await useFetchAPI<Deck>(`/v1/decks/${deckId}`, {
         method: "GET",
       });
-
       this.currentDeck = data;
     },
 
