@@ -145,7 +145,7 @@ function removeAnswer(answer: Answer) {
           </label>
           <button
             v-if="cardInformation.answers.length < MAX_CARD_ANSWERS"
-            class="ml-2 rounded bg-blue-100 py-2 px-4 font-bold hover:border-gray-600 hover:bg-blue-100"
+            class="inline-flex justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
             @click="addAnswer"
           >
             {{ $t("app.deck.modal.buttons.addAnswer") }}
