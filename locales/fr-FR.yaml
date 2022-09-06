@@ -172,7 +172,6 @@ app:
     modal:
       create:
         title: Créer une nouvelle carte
-        selectType: Sélectionnez un type de carte
       edit:
         title: Modifier une carte
       labels:
@@ -184,6 +183,7 @@ app:
         error: Erreur durant la création de la carte.
       buttons:
         create: Créer
+        update: Appliquer
         cancel: Annuler
         addAnswer: Ajouter une réponse
     linkToHome: Cliquez ici pour revenir à l'accueil

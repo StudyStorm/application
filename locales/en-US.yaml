@@ -168,7 +168,6 @@ app:
     modal:
       create:
         title: Create a new card
-        selectType: Select card type
       edit:
         title: Change card
       labels:
@@ -180,6 +179,7 @@ app:
         error: Error during card creation.
       buttons:
         create: Create
+        update: Update
         cancel: Cancel
         addAnswer: Add answer
     linkToHome: Click here to return to the home page
