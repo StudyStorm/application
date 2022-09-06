@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { Pagination } from "../types/app";
 import Deck from "~~/models/Deck";
+import { CardContent } from "~~/models/Card";
 
 const LOCAL_STORAGE_KEY = "lastUsedDecks";
 const MAX_BEST_DECKS = 3;
@@ -84,6 +85,14 @@ export const useDecksStore = defineStore("decks", {
       });
 
       this.currentDeck = data;
+    },
+
+    async createCard(payload: { deckId: string; content: CardContent }) {
+      const { data, error } = await useFetchAPI("v1/decks/cards", {
+        method: "POST",
+        body: { ...payload },
+      });
+      return { data, error };
     },
   },
 });

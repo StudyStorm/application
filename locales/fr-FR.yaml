@@ -177,9 +177,11 @@ app:
         question: Question
         answer: Réponse
         answers: Réponses (cochez les réponses justes)
+        error: Erreur durant la création de la carte.
       buttons:
         create: Créer
         cancel: Annuler
+        addAnswer: Ajouter une réponse
     linkToHome: Cliquez ici pour revenir à l'accueil
   dashboard:
     title: Accueil

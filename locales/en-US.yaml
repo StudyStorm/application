@@ -173,9 +173,11 @@ app:
         question: Question
         answer: Answer
         answers: Answers (check the right ones)
+        error: Error during card creation.
       buttons:
         create: Create
         cancel: Cancel
+        addAnswer: Add answer
     linkToHome: Click here to return to the home page
   dashboard:
     title: Home
