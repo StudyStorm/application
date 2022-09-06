@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PencilIcon } from "@heroicons/vue/24/solid/index.js";
 import Card from "~~/models/Card";
 
 defineProps<{
@@ -12,27 +13,22 @@ const showEdition = ref(false);
 <template>
   <div
     :key="card.id"
-    class="cursor-pointer rounded-lg border border-gray-200 bg-gray-50 text-center shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
+    class="pb-full h-0 w-full cursor-pointer rounded-lg border border-gray-200 bg-gray-50 text-center shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
+    style="padding-bottom: 100%"
     @mouseenter="showEdition = true"
     @mouseleave="showEdition = false"
   >
-    <span
-      class="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-storm-blue text-xs font-semibold text-white"
+    <div
+      class="absolute -top-2 -left-2 z-0 inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-storm-blue p-1 text-xs font-bold text-white dark:border-gray-900"
     >
       {{ number }}
-    </span>
-    <p class="p-6">{{ card.content.question }}</p>
-
-    <div v-if="showEdition">
-      <hr />
-      <div class="py-2">
-        <button
-          type="button"
-          class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
-        >
-          {{ $t("app.decks.editCard") }}
-        </button>
-      </div>
     </div>
+    <div
+      v-if="showEdition"
+      class="absolute -top-2 -right-2 z-10 inline-flex h-8 w-8 items-center justify-center overflow-hidden text-ellipsis rounded-full border-2 border-white bg-storm-purple p-1 text-xs font-bold text-white dark:border-gray-900"
+    >
+      <PencilIcon />
+    </div>
+    <p class="overflow-hidden text-ellipsis p-6">{{ card.content.question }}</p>
   </div>
 </template>

@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { PlusIcon } from "@heroicons/vue/24/solid/index.js";
+import {
+  ChevronUpIcon,
+  ChevronDownIcon,
+} from "@heroicons/vue/24/solid/index.js";
+
 import { useDecksStore } from "~/store/decks";
 
 const store = useDecksStore();
@@ -12,6 +17,14 @@ onMounted(() => {
 
 const createCard = () => {
   console.log("created card");
+};
+
+const upvote = () => {
+  console.log("upvote");
+};
+
+const downvote = () => {
+  console.log("downvote");
 };
 </script>
 
@@ -34,7 +47,20 @@ const createCard = () => {
           }}</span>
         </div>
 
-        <div>
+        <div class="flex items-center space-x-4">
+          <div
+            class="flex flex-col items-center text-sm font-medium text-storm-dark"
+          >
+            <ChevronUpIcon
+              class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-emerald-500"
+              @click.prevent="upvote"
+            />
+            <span>{{ store.currentDeck.votes }}</span>
+            <ChevronDownIcon
+              class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-red-500"
+              @click.prevent="downvote"
+            />
+          </div>
           <button
             type="submit"
             class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -52,7 +78,7 @@ const createCard = () => {
       </h1>
       <div class="flex items-center justify-center">
         <div
-          class="grid grid-cols-2 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5"
+          class="grid grid-cols-2 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5"
         >
           <div
             class="block cursor-pointer rounded-lg border border-gray-200 bg-gray-50 p-4 text-center shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
@@ -64,7 +90,6 @@ const createCard = () => {
             :key="i"
             :card="card"
             :number="i + 1"
-            class="aspect-w-1 aspect-h-1 block cursor-pointer rounded-lg border border-gray-200 bg-gray-50 text-center shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
           >
           </QuestionCard>
         </div>
