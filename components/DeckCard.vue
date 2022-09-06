@@ -38,7 +38,6 @@ const formattedVotes = computed(() => {
         id: deck.id,
       },
     }"
-    }
     class="block max-w-sm rounded-lg border border-gray-200 p-4 shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
     :style="color"
   >
