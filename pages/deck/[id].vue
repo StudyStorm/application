@@ -60,6 +60,7 @@ async function createCard() {
   if (error) {
     hasError.value = true;
   } else {
+    await store.fetchDeck(route.params.id as string);
     showModal.value = false;
   }
 }
