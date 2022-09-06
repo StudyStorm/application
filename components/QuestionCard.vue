@@ -30,5 +30,6 @@ const showEdition = ref(false);
       <PencilIcon />
     </div>
     <p class="overflow-hidden text-ellipsis p-6">{{ card.content.question }}</p>
+    {{ card.id }}
   </div>
 </template>

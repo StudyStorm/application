@@ -233,7 +233,9 @@ app:
       cancel: Annuler
       submit: Créer
     allMembers: Cette fonctionnalité sera bientôt disponible.
-  # HERE THE CONTENT FOR THE APP
-
-
-
+  inbox:
+    title: Boîte de récéption
+    markAsRead: Marquer comme lu
+    markAsUnread: Marquer comme non lu
+    delete: Supprimer
+    reportedBy: Reporté par {name}

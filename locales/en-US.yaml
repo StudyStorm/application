@@ -229,5 +229,9 @@ app:
       cancel: Cancel
       submit: Create
     allMembers: This feature will be available soon.
-# HERE THE CONTENT FOR THE APP
-
+  inbox:
+    title: Inbox
+    markAsRead: Mark as read
+    markAsUnread: Mark as unread
+    delete: Delete
+    reportedBy: Reported by {name}
