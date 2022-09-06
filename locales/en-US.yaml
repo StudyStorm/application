@@ -122,7 +122,7 @@ app:
       firstname: Firstname
       lastname: Lastname
       email: Email
-      password: Password
+      password: New Password
       confirmPassword: Confirm password
     buttons:
       save: Save

@@ -12,6 +12,7 @@ const userInformation = profileStore.profile;
 
 const updatePicture = (picture: File) => {
   console.log("Save got", picture);
+  profileStore.setPicture(picture);
 };
 
 async function save() {

@@ -1,17 +1,28 @@
 import { defineStore } from "pinia";
-import { FormError } from "~/types/app";
 
 export const useProfileStore = defineStore("profile", {
   state: () => ({
     profile: { ...useNuxtApp().$auth.user },
+    picture: null,
   }),
   actions: {
+    setPicture(newPicture: File) {
+      this.picture = newPicture;
+    },
     async updateProfile() {
       const config = useRuntimeConfig();
-      const { id, created_at, ...payload } = this.profile;
+
+      const { id, created_at, picture_url, ...payload } = this.profile;
+
+      const formData = getFormData(payload);
+
+      if (this.picture) {
+        formData.append("profilePicture", this.picture);
+      }
+
       const { error } = await useFetch("/v1/profile", {
         method: "PATCH",
-        body: payload,
+        body: formData,
         credentials: "include",
         baseURL: config.apiURL,
         initialCache: false,
@@ -39,3 +50,9 @@ export const useProfileStore = defineStore("profile", {
     },
   },
 });
+
+const getFormData = (object) =>
+  Object.keys(object).reduce((formData, key) => {
+    formData.append(key, object[key]);
+    return formData;
+  }, new FormData());
