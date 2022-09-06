@@ -5,6 +5,7 @@ import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
 
 const deckStore = useDecksStore();
 await deckStore.fetchDecks();
+await deckStore.fetchAllDecks();
 await deckStore.fetchBestDecks();
 
 const displayStyle = ref("row");
