@@ -16,6 +16,10 @@ const links = [
   },
 ];
 
+const country = ["fr", "gb"];
+const langInconLocation = "/images/langIcons/";
+const langIconExtension = ".svg";
+
 let showMobileMenu = ref(false);
 
 const target = ref(null);
@@ -135,7 +139,7 @@ onClickOutside(target, () => (showMobileMenu.value = false));
                 >
                   <div class="py-1">
                     <s-lang-switcher
-                      v-slot="{ locale, active, onClick }"
+                      v-slot="{ locale, active, tabindex, onClick }"
                       class=""
                     >
                       <MenuItem>
@@ -146,21 +150,13 @@ onClickOutside(target, () => (showMobileMenu.value = false));
                           ]"
                           @click="onClick"
                         >
-                          <div
-                            v-if="locale.name === 'Français'"
-                            class="h-6 w-6"
-                          >
+                          <div class="h-6 w-6">
                             <NuxtImg
-                              src="/images/fr.svg"
-                              class="h-6 w-6 rounded-full"
-                            />
-                          </div>
-                          <div
-                            v-else
-                            class="h-6 w-6"
-                          >
-                            <NuxtImg
-                              src="/images/gb.svg"
+                              :src="
+                                langInconLocation +
+                                country[tabindex] +
+                                langIconExtension
+                              "
                               class="h-6 w-6 rounded-full"
                             />
                           </div>
