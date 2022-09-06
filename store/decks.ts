@@ -14,16 +14,18 @@ export const useDecksStore = defineStore("decks", {
 
     allDecks: {} as Pagination<Deck>,
 
+    filteredDecks: {} as Pagination<Deck>,
+
     currentDeck: null,
 
     currentUserVote: 0,
   }),
   getters: {
     decks: (state) => {
-      return state.allDecks.data;
+      return state.filteredDecks.data;
     },
     pagination: (state) => {
-      return state.allDecks.meta;
+      return state.filteredDecks.meta;
     },
     lastUsedDecksIds: () => {
       return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
@@ -58,6 +60,14 @@ export const useDecksStore = defineStore("decks", {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(used));
     },
 
+    async fetchAllDecks() {
+      const { data } = await useFetchAPI<Pagination<Deck>>(`/v1/decks`, {
+        method: "GET",
+      });
+
+      this.allDecks = data;
+    },
+
     async fetchDecks(page = 1) {
       const { data } = await useFetchAPI<Pagination<Deck>>(
         `/v1/decks?page=${page}&search=${this.searchFilter}`,
@@ -66,12 +76,12 @@ export const useDecksStore = defineStore("decks", {
         }
       );
 
-      this.allDecks = data;
+      this.filteredDecks = data;
     },
 
     async fetchBestDecks() {
       const { data } = await useFetchAPI<Pagination<Deck>>(
-        `/v1/decks?top=${MAX_BEST_DECKS}`,
+        `/v1/decks?top=${MAX_BEST_DECKS}&limit=${MAX_BEST_DECKS}`,
         {
           method: "GET",
         }
