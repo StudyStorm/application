@@ -26,7 +26,7 @@ const color = computed((): string => {
 
 const formattedVotes = computed(() => {
   const formatter = Intl.NumberFormat("en", { notation: "compact" });
-  return formatter.format(props.deck.votes.number);
+  return formatter.format(props.deck.votes);
 });
 </script>
 

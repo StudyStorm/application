@@ -10,22 +10,11 @@ import { useDecksStore } from "~/store/decks";
 const store = useDecksStore();
 const route = useRoute();
 await store.fetchDeck(route.params.id as string);
+await store.fetchDeckUserRating(route.params.id as string);
 
-onMounted(() => {
+onMounted(async () => {
   store.addUsedDeck(route.params.id as string);
 });
-
-const createCard = () => {
-  console.log("created card");
-};
-
-const upvote = () => {
-  console.log("upvote");
-};
-
-const downvote = () => {
-  console.log("downvote");
-};
 </script>
 
 <template>
@@ -48,18 +37,20 @@ const downvote = () => {
         </div>
 
         <div class="flex items-center space-x-4">
-          <div
-            class="flex flex-col items-center text-sm font-medium text-storm-dark"
-          >
-            <ChevronUpIcon
-              class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-emerald-500"
-              @click.prevent="upvote"
-            />
-            <span>{{ store.currentDeck.votes }}</span>
-            <ChevronDownIcon
-              class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-red-500"
-              @click.prevent="downvote"
-            />
+          <div class="flex flex-col items-center text-sm font-medium">
+            <div @click="store.upvoteDeck(store.currentDeck)">
+              <ChevronUpIcon
+                class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-emerald-500"
+                :class="{ 'text-emerald-500': store.currentUserVote === 1 }"
+              />
+            </div>
+            <span class="text-storm-dark">{{ store.currentDeck.votes }}</span>
+            <div @click="store.downvoteDeck(store.currentDeck)">
+              <ChevronDownIcon
+                class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-red-500"
+                :class="{ 'text-red-500': store.currentUserVote === -1 }"
+              />
+            </div>
           </div>
           <button
             type="submit"
@@ -81,9 +72,9 @@ const downvote = () => {
           class="grid grid-cols-2 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5"
         >
           <div
-            class="block cursor-pointer rounded-lg border border-gray-200 bg-gray-50 p-4 text-center shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
+            class="block cursor-pointer rounded-lg border border-gray-200 bg-gray-100 p-4 text-center shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
           >
-            <PlusIcon class="text-storm-dark sm:p-10" />
+            <PlusIcon class="mx-auto h-full w-12 text-storm-dark" />
           </div>
           <QuestionCard
             v-for="(card, i) in store.currentDeck.cards"
