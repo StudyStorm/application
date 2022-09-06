@@ -2,21 +2,13 @@
 import Deck from "../models/Deck";
 
 import {
-  ChevronUpIcon,
-  ChevronDownIcon,
+  HandThumbUpIcon,
+  HandThumbDownIcon,
 } from "@heroicons/vue/24/solid/index.js";
 
 const props = defineProps<{
   deck: Deck;
 }>();
-
-const upvote = () => {
-  console.log("upvote");
-};
-
-const downvote = () => {
-  console.log("downvote");
-};
 
 const color = computed((): string => {
   return `background-color: hsl(${props.deck.id
@@ -32,37 +24,49 @@ const formattedVotes = computed(() => {
 
 <template>
   <NuxtLink
+    class="block max-w-sm rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
     :to="{
       name: 'deck-id',
       params: {
         id: deck.id,
       },
     }"
-    }
-    class="block max-w-sm rounded-lg border border-gray-200 p-4 shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
     :style="color"
   >
     <div class="flex items-center justify-between">
-      <h5
-        class="mb-2 truncate text-2xl font-bold tracking-tight text-storm-dark"
-      >
-        {{ deck.name }}
-      </h5>
+      <div>
+        <h5
+          class="mb-2 truncate text-2xl font-bold tracking-tight text-storm-dark"
+        >
+          {{ deck.name }}
+        </h5>
+        <div>
+          <p class="truncate text-sm font-normal text-storm-dark">
+            {{
+              $t("app.decks.createdBy", {
+                name: `${deck.creator.first_name} ${deck.creator.last_name}`,
+              })
+            }}
+          </p>
+        </div>
+      </div>
       <div
-        class="flex flex-col items-center text-sm font-medium text-storm-dark"
+        class="flex items-center rounded-xl px-2 font-medium"
+        :class="
+          deck.votes < 0
+            ? 'text-red-500 bg-red-200'
+            : 'text-green-500 bg-emerald-200'
+        "
       >
-        <ChevronUpIcon
-          class="h-6 w-6 hover:scale-125 hover:text-emerald-500"
-          @click.prevent="upvote"
-        />
         <span>{{ formattedVotes }}</span>
-        <ChevronDownIcon
-          class="h-6 w-6 hover:scale-125 hover:text-red-500"
-          @click.prevent="downvote"
+        <HandThumbUpIcon
+          v-if="deck.votes >= 0"
+          class="ml-1 w-4 text-emerald-500"
         />
+        <HandThumbDownIcon v-else class="ml-1 w-4 text-red-500" />
       </div>
     </div>
-    <div v-if="deck.creator">
+    <div>
       <p class="truncate text-sm font-normal text-storm-dark">
         {{
           $t("app.decks.createdBy", {
