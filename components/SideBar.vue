@@ -28,8 +28,10 @@ const { t } = useI18n();
 
 const auth = useAuth();
 
-const country = ["fr.svg", "gb.svg"];
-const langIconLocation = "/images/langIcons/";
+const country = ref({
+  fr: "/images/langIcons/fr.svg",
+  en: "/images/langIcons/gb.svg",
+});
 
 const navigation = ref([
   {
@@ -203,7 +205,7 @@ function resetField() {
                   </div>
                 </nav>
                 <!-- Bouton langue -->
-                <Menu as="div" class="ml-4 mt-2 text-left">
+                <Menu as="div" class="mt-2 ml-3 text-left">
                   <div>
                     <MenuButton>
                       <GlobeAltIcon class="h-6 w-6 text-storm-dark" />
@@ -223,7 +225,7 @@ function resetField() {
                     >
                       <div class="py-1">
                         <s-lang-switcher
-                          v-slot="{ locale, active, tabindex, onClick }"
+                          v-slot="{ locale, active, onClick }"
                           class=""
                         >
                           <MenuItem>
@@ -236,7 +238,7 @@ function resetField() {
                             >
                               <div class="h-6 w-6">
                                 <NuxtImg
-                                  :src="langIconLocation + country[tabindex]"
+                                  :src="country[locale.code]"
                                   class="h-6 w-6 rounded-full"
                                 />
                               </div>
@@ -445,7 +447,7 @@ function resetField() {
         </nav>
 
         <!-- Bouton pour changer la langue -->
-        <Menu as="div" class="ml-5 mt-2 text-left">
+        <Menu as="div" class="mt-2 ml-4 text-left">
           <div>
             <MenuButton>
               <GlobeAltIcon class="h-6 w-6 text-storm-dark" />
@@ -464,10 +466,7 @@ function resetField() {
               class="absolute z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               <div class="py-1">
-                <s-lang-switcher
-                  v-slot="{ locale, active, tabindex, onClick }"
-                  class=""
-                >
+                <s-lang-switcher v-slot="{ locale, active, onClick }" class="">
                   <MenuItem>
                     <span
                       :class="[
@@ -478,7 +477,7 @@ function resetField() {
                     >
                       <div class="h-6 w-6">
                         <NuxtImg
-                          :src="langIconLocation + country[tabindex]"
+                          :src="country[locale.code]"
                           class="h-6 w-6 rounded-full"
                         />
                       </div>
