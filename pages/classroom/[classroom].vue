@@ -2,7 +2,6 @@
 import { useClassroomStore } from "~/store/classroom";
 import { useFetchAPI } from "#imports";
 import { useRoute } from "#app";
-import Classroom from "~/models/Classroom";
 import User from "~/models/User";
 import { Pagination } from "~/types/app";
 import { AcademicCapIcon } from "@heroicons/vue/24/solid/index.js";
@@ -18,8 +17,8 @@ const viewAllMembers = ref(false);
 const showModalDeck = ref(false);
 const showModalFolder = ref(false);
 
-const { data: classroom } = await useFetchAPI<Classroom>(
-  `/v1/classrooms/${route.params.classroom}`
+const classroom = await classroomStore.fetchClassroom(
+  route.params.classroom as string
 );
 if (!classroom) {
   throw createError({ statusCode: 404, statusMessage: "Classroom not found" });
@@ -71,7 +70,10 @@ const { data: members } = await useFetchAPI<Pagination<User>>(
             </div>
           </div>
         </div>
-        <nuxt-page :classroom="classroom" :page-key="$route.params.folder" />
+        <nuxt-page
+          :classroom="classroom"
+          :page-key="`folder-content-${route.params.folder}`"
+        />
       </div>
     </div>
 

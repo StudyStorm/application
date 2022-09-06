@@ -12,6 +12,8 @@ const props = defineProps<{
   folder: Folder;
 }>();
 
+defineEmits(["showModalFolder"]);
+
 type File = ((Folder & { type: "folder" }) | (Deck & { type: "deck" })) & {
   icon: unknown;
   url: unknown;

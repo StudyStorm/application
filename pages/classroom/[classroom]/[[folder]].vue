@@ -71,10 +71,6 @@ const { data: folder } = await useFetchAPI<Folder>(
         </div>
       </div>
     </div>
-    <folder-content
-      :folder="folder"
-      :mode="displayStyle"
-      @show-modal-folder="showModalFolder = true"
-    />
+    <folder-content :folder="folder" :mode="displayStyle" />
   </div>
 </template>
