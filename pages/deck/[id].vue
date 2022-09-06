@@ -77,11 +77,11 @@ function addAnswer() {
       <div class="flex min-w-0 flex-1 items-center justify-between">
         <div>
           <h1
-            class="text-storm-dark flex-row text-lg font-medium leading-6 sm:truncate"
+            class="flex-row text-lg font-medium leading-6 text-storm-dark sm:truncate"
           >
             {{ store.currentDeck.name }}
           </h1>
-          <span class="text-storm-dark text-sm sm:truncate">{{
+          <span class="text-sm text-storm-dark sm:truncate">{{
             $t("app.decks.createdBy", {
               name: `${store.currentDeck.creator.first_name} ${store.currentDeck.creator.last_name}`,
             })
@@ -106,7 +106,7 @@ function addAnswer() {
           </div>
           <button
             type="submit"
-            class="bg-storm-darkblue hover:bg-storm-blue rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             {{ $t("app.decks.manageButton") }}
           </button>
@@ -115,7 +115,7 @@ function addAnswer() {
     </div>
     <div class="mb-10 p-4 sm:px-6 lg:px-8">
       <h1
-        class="text-storm-dark mb-4 text-lg font-medium leading-6 sm:truncate"
+        class="mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
       >
         {{ $t("app.decks.cards", { number: store.currentDeck.cards.length }) }}
       </h1>
@@ -127,7 +127,7 @@ function addAnswer() {
             class="block cursor-pointer rounded-lg border border-gray-200 bg-gray-100 p-4 text-center shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
             @click="showModal = true"
           >
-            <PlusIcon class="text-storm-dark mx-auto h-full w-12" />
+            <PlusIcon class="mx-auto h-full w-12 text-storm-dark" />
           </div>
           <QuestionCard
             v-for="(card, i) in store.currentDeck.cards"
@@ -142,7 +142,7 @@ function addAnswer() {
         >
           <button
             type="button"
-            class="focus:storm-darkblue bg-storm-darkblue rounded-md px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
+            class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
           >
             {{ $t("app.decks.start") }}
           </button>
@@ -175,7 +175,7 @@ function addAnswer() {
               type="text"
               required
               :placeholder="$t('app.deck.modal.labels.question')"
-              class="focus:border-storm-blue focus:ring-storm-blue block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none sm:text-sm"
+              class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
             />
           </div>
         </div>
@@ -235,7 +235,7 @@ function addAnswer() {
                   :placeholder="`${$t('app.deck.modal.labels.answer')} ${
                     i + 1
                   }`"
-                  class="focus:border-storm-blue focus:ring-storm-blue block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none sm:text-sm"
+                  class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
                 />
               </div>
             </div>
@@ -246,7 +246,7 @@ function addAnswer() {
     <template #footer>
       <button
         type="button"
-        class="bg-storm-darkblue hover:bg-storm-blue inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="createCard"
       >
         {{ $t("app.deck.modal.buttons.create") }}

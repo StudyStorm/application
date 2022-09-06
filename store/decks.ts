@@ -106,7 +106,7 @@ export const useDecksStore = defineStore("decks", {
       });
       return { data, error };
     },
-    
+
     async fetchDeckUserRating(deckId: string) {
       const { data } = await useFetchAPI<{
         user_vote: { vote: number };
