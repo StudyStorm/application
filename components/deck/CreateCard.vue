@@ -29,6 +29,7 @@ type Card = {
 const cardInformation = ref<Card>(null);
 
 function init() {
+  hasError.value = false;
   cardInformation.value = {
     question: null,
     answers: [],
