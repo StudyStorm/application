@@ -75,7 +75,7 @@ const showModal = ref(false);
       </h1>
       <div class="flex items-center justify-center">
         <div
-          class="grid grid-cols-2 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5"
+          class="grid flex-1 grid-cols-2 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5"
         >
           <CreateCard v-slot="{ open }">
             <v-card class="bg-gray-100" @click="open">
