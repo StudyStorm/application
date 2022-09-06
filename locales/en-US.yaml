@@ -122,11 +122,15 @@ app:
       firstname: Firstname
       lastname: Lastname
       email: Email
-      password: Password
+      password: New Password
       confirmPassword: Confirm password
     buttons:
       save: Save
+      danger: Danger zone
       delete: Delete account
+    errors:
+      email: The email is already taken
+      form: The validation failed. Please check your inputs
     modal:
       title: Delete accounte
       content: Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
@@ -172,6 +176,10 @@ app:
     nbCards: Number of cards
     nbVotes: Number of votes
     createdBy: Created by {name}
+    manageButton: Manage
+    cards: "{number} cards"
+    start: Start learning
+    editCard: Edit
   classroom:
     title: My classrooms
     manageButton: Manage

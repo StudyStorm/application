@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline/index.js";
 
-const filePreview = ref<string | ArrayBuffer>(
-  "/icons/default_profile_picture.svg"
-);
+const props = defineProps({
+  url: {
+    type: String,
+    default: "/icons/default_profile_picture.svg",
+  },
+});
+
+const filePreview = ref<string | ArrayBuffer>(props.url);
 const input = ref<HTMLInputElement>(null);
 const emit = defineEmits(["validFile"]);
 
