@@ -194,6 +194,7 @@ app:
     decksButton: Nouveau deck
     decksPlaceholder: Rechercher un deck
     folderButton: Nouveau dossier
+    content: Contenu
     decksCard:
       nbCards: N cartes
       created: Créé par

@@ -2,16 +2,56 @@
 import { useClassroomStore } from "~/store/classroom";
 import { useRoute } from "#app";
 import { AcademicCapIcon } from "@heroicons/vue/24/solid/index.js";
+import { FormError } from "~~/types/app";
+import { Ref } from "vue";
 
 const route = useRoute();
 const classroomStore = useClassroomStore();
 
-const deckName = ref<string>(" ");
+const deckName = ref<string>("");
 const folderName = ref<string>("");
 
 const viewAllMembers = ref(false);
-const showModalDeck = ref(false);
-const showModalFolder = ref(false);
+
+const errors = ref<FormError | null>(null);
+
+const createFolder = async () => {
+  const { error } = await classroomStore.createFolder({
+    parentFolderId: classroomStore.currentFolder.id,
+    name: folderName.value,
+  });
+
+  if (error) {
+    errors.value = error.data;
+  }
+  await classroomStore.fetchCurrentFolder(route.params.folder as string);
+  classroomStore.showFolderCreationModal = false;
+  folderName.value = "";
+};
+
+const createDeck = async () => {
+  const { error } = await classroomStore.createDeck({
+    parentFolderId: classroomStore.currentFolder.id,
+    name: deckName.value,
+  });
+
+  if (error) {
+    errors.value = error.data;
+  }
+  await classroomStore.fetchCurrentFolder(route.params.folder as string);
+  classroomStore.showDeckCreationModal = false;
+  deckName.value = "";
+};
+
+const closeFolderModal = () => {
+  classroomStore.showFolderCreationModal = false;
+  folderName.value = "";
+};
+
+const closeDeckModal = () => {
+  classroomStore.showDeckCreationModal = false;
+  deckName.value = "";
+};
 
 await classroomStore.fetchClassroom(route.params.classroom as string);
 await classroomStore.fetchClassroomUsers(route.params.classroom as string);
@@ -72,47 +112,14 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
       </div>
     </div>
 
-    <Modal v-model="classroomStore.showDeckCreationModal">
-      <template #title> {{ $t("app.classroom.deckModal.title") }} </template>
-      <template #content>
-        <form action="#">
-          <label for="name" class="block text-sm font-medium text-gray-700">
-            {{ $t("app.classroom.deckModal.name") }}
-          </label>
-          <div class="mt-1">
-            <input
-              id="name"
-              v-model="deckName"
-              name="name"
-              type="text"
-              required
-              autocomplete="off"
-              class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
-        </form>
-      </template>
-      <template #footer>
-        <button
-          type="submit"
-          class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        >
-          {{ $t("app.classroom.deckModal.submit") }}
-        </button>
-        <button
-          type="reset"
-          class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-          @click="classroomStore.showDeckCreationModal = false"
-        >
-          {{ $t("app.classroom.deckModal.cancel") }}
-        </button>
-      </template>
-    </Modal>
-
     <Modal v-model="classroomStore.showFolderCreationModal">
       <template #title> {{ $t("app.classroom.folderModal.title") }} </template>
       <template #content>
-        <form action="#">
+        <s-form
+          class="w-full max-w-sm space-y-2 px-7"
+          :errors="errors"
+          @submit.prevent="createFolder"
+        >
           <label for="name" class="block text-sm font-medium text-gray-700">
             {{ $t("app.classroom.folderModal.name") }}
           </label>
@@ -124,25 +131,67 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
               type="text"
               required
               autocomplete="off"
-              class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-storm-dark shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
           </div>
-        </form>
+        </s-form>
       </template>
       <template #footer>
         <button
           type="submit"
           class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-          @click="classroomStore.createFolder"
+          @click="createFolder"
         >
           {{ $t("app.classroom.folderModal.submit") }}
         </button>
         <button
           type="reset"
           class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-          @click="classroomStore.showFolderCreationModal = false"
+          @click="closeFolderModal"
         >
           {{ $t("app.classroom.folderModal.cancel") }}
+        </button>
+      </template>
+    </Modal>
+
+    <Modal v-model="classroomStore.showDeckCreationModal">
+      <template #title> {{ $t("app.classroom.deckModal.title") }} </template>
+      <template #content>
+        <s-form
+          class="w-full max-w-sm space-y-2 px-7"
+          :errors="errors"
+          @submit.prevent="createDeck"
+        >
+          <label for="name" class="block text-sm font-medium text-gray-700">
+            {{ $t("app.classroom.deckModal.name") }}
+          </label>
+          <div>
+            <input
+              id="name"
+              v-model="deckName"
+              name="name"
+              type="text"
+              required
+              autocomplete="off"
+              class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-storm-dark shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            />
+          </div>
+        </s-form>
+      </template>
+      <template #footer>
+        <button
+          type="submit"
+          class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+          @click="createDeck"
+        >
+          {{ $t("app.classroom.deckModal.submit") }}
+        </button>
+        <button
+          type="reset"
+          class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+          @click="closeDeckModal"
+        >
+          {{ $t("app.classroom.deckModal.cancel") }}
         </button>
       </template>
     </Modal>

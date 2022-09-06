@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import Classroom from "~/models/Classroom";
 import Folder from "~/models/Folder";
 import User from "~~/models/User";
-import { Pagination } from "~~/types/app";
+import { FormError, Pagination } from "~~/types/app";
 
 export const useClassroomStore = defineStore("classroom", () => {
   const classroom = ref<Classroom>(null);
@@ -35,21 +35,30 @@ export const useClassroomStore = defineStore("classroom", () => {
       }
     },
 
-    async createDeck() {
-      // Create a new deck
-    },
-
-    async createFolder(parentFolderId: string, name: string) {
-      const { data } = await useFetchAPI<Folder>(
-        `v1/folders/${parentFolderId}`,
+    async createDeck(deck: { parentFolderId: string; name: string }) {
+      const { data, error } = await useFetchAPI<Folder, FormError>(
+        `v1/folders/${deck.parentFolderId}/decks`,
         {
           method: "POST",
           body: {
-            name,
+            name: deck.name,
           },
         }
       );
-      return data;
+      return { data, error };
+    },
+
+    async createFolder(folder: { parentFolderId: string; name: string }) {
+      const { data, error } = await useFetchAPI<Folder, FormError>(
+        `v1/folders/${folder.parentFolderId}`,
+        {
+          method: "POST",
+          body: {
+            name: folder.name,
+          },
+        }
+      );
+      return { data, error };
     },
     async fetchPinnedClassrooms() {
       console.log("pinned classrooms");
