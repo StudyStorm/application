@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Menu, MenuItem, MenuButton } from "@headlessui/vue";
+import { Menu, MenuItems, MenuItem, MenuButton } from "@headlessui/vue";
 import { GlobeAltIcon } from "@heroicons/vue/24/outline/index.js";
 
 const country = ref({
