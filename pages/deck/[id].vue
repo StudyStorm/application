@@ -4,20 +4,16 @@ import { SquaresPlusIcon } from "@heroicons/vue/24/outline/index.js";
 const store = useDecksStore();
 const route = useRoute();
 import { ref, useFetchAPI } from "#imports";
-import { FormError } from "~/types/app";
 
 onMounted(() => {
   store.addUsedDeck(route.params.id as string);
 });
 
-// TODO: Fetch the deck / Check deck access
-store.addUsedDeck(route.params.id as string);
-
 const showModal = ref(true);
 
 const cardInformation = ref({
   content: {
-    question: "",
+    question: null,
     answers: [
       { label: null, isTheAnswer: false },
       { label: null, isTheAnswer: false },
@@ -48,9 +44,7 @@ async function createCard() {
     payload.content.answers[0].isTheAnswer = true;
   }
 
-  const errors = ref<FormError | null>(null);
-
-  const { data, error } = await useFetchAPI("v1/decks/cards", {
+  const { error } = await useFetchAPI("v1/decks/cards", {
     method: "POST",
     body: {
       ...payload,
@@ -58,7 +52,6 @@ async function createCard() {
   });
 
   if (error) {
-    errors.value = error.data;
     console.log(error.data);
   } else {
     showModal.value = false;
