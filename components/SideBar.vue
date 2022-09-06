@@ -193,9 +193,11 @@ function resetField() {
                     </NuxtLink>
                     <ChevronUpIcon
                       v-if="item.hasDropdown && item.dropped"
-                      class="absolute top-1 right-1 float-right h-8 w-8 shrink-1 rounded px-2 text-gray-400"
+                      class="shrink-1 absolute top-1 right-1 float-right h-8 w-8 rounded px-2 text-gray-400"
                       :class="[
-                        path === '/classroom' ? 'cursor-pointer bg-gray-300 text-storm-blue' : 'cursor-pointer bg-gray-200 text-storm-blue'
+                        path === '/classroom'
+                          ? 'cursor-pointer bg-gray-300 text-storm-blue'
+                          : 'cursor-pointer bg-gray-200 text-storm-blue',
                       ]"
                       aria-hidden="true"
                       @click="item.dropped = !item.dropped"
@@ -204,7 +206,9 @@ function resetField() {
                       v-if="item.hasDropdown && !item.dropped"
                       class="absolute top-1 right-1 float-right h-8 w-8 shrink-0 rounded px-2 text-gray-400"
                       :class="[
-                        path === '/classroom' ? 'cursor-pointer bg-gray-300 text-storm-blue' : 'cursor-pointer bg-gray-200 text-storm-blue'
+                        path === '/classroom'
+                          ? 'cursor-pointer bg-gray-300 text-storm-blue'
+                          : 'cursor-pointer bg-gray-200 text-storm-blue',
                       ]"
                       aria-hidden="true"
                       @click="item.dropped = !item.dropped"
@@ -215,13 +219,13 @@ function resetField() {
                       <NuxtLink
                         v-for="subitem in (item.classrooms as Classroom[])"
                         :key="subitem.id"
-                        class="group mt-0.5 flex cursor-pointer items-center rounded-md p-2 pl-4 border border-transparent text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                        class="group mt-0.5 flex cursor-pointer items-center rounded-md border border-transparent p-2 pl-4 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
                         :class="[
-                      path === `/classroom/${subitem.id}`
-                        ? 'bg-gray-200 text-gray-900'
-                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50 ',
-                      'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
-                    ]"
+                          path === `/classroom/${subitem.id}`
+                            ? 'bg-gray-200 text-gray-900'
+                            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50 ',
+                          'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                        ]"
                         :to="`/classroom/${subitem.id}`"
                         @click="sidebarOpen = false"
                       >
