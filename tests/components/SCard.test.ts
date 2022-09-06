@@ -1,5 +1,5 @@
 import { render } from "@testing-library/vue";
-import SCard from "~/components/SCard.vue";
+import SCard from "~/components/s/SCard.vue";
 
 test("SCard should say Hello World", () => {
   const { getByText } = render(SCard, {

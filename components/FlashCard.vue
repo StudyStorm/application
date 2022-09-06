@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { PropType } from "vue";
-import Card from "~~/models/Card";
+import Card from "~/models/Card";
 
-const props = defineProps({
-  card: {
-    type: Object as PropType<Card>,
-    required: true,
-  },
-});
+const props = defineProps<{
+  card: Card;
+}>();
 
 const isFlipped = ref(false);
 
@@ -30,18 +26,17 @@ defineExpose({
 
 <template>
   <FlippableCard v-model="isFlipped" :is-flippable="true">
-    <template #cardFront>
+    <div class="flex h-full items-center justify-center">
       <span class="p-6 text-center text-xl font-bold text-storm-dark">
         {{ question }}
       </span>
-    </template>
-    <template #cardBack>
-      <span
-        v-if="isFlipped"
-        class="p-6 text-center text-xl font-bold text-storm-dark"
-      >
-        {{ answer }}
-      </span>
+    </div>
+    <template #back>
+      <div class="flex h-full items-center justify-center">
+        <span class="p-6text-center text-xl font-bold text-storm-dark">
+          {{ answer }}
+        </span>
+      </div>
     </template>
   </FlippableCard>
 </template>

@@ -2,9 +2,10 @@
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  FlagIcon,
 } from "@heroicons/vue/24/outline/index.js";
 import { useLearnStore } from "~~/store/learn";
+import ReportCardModal from "~/components/ReportCardModal.vue";
+import { SwipeDirection } from "@vueuse/core";
 
 const learnStore = useLearnStore();
 
@@ -22,21 +23,28 @@ const progress = computed(() => {
 
 const activeCard = ref(null);
 
-const showModal = ref(false);
-const signalMessage = ref("");
+const { isSwiping, lengthX, lengthY } = useSwipe(activeCard, {
+  onSwipeEnd(_e: TouchEvent, direction: SwipeDirection) {
+    switch (direction) {
+      case "LEFT":
+        learnStore.previousCard();
+        break;
+      case "RIGHT":
+        learnStore.nextCard();
+        break;
+    }
+  },
+});
 
-const closeModal = () => {
-  showModal.value = false;
-  signalMessage.value = "";
-};
-
-const reportCard = async () => {
-  await learnStore.reportCard({
-    card: learnStore.currentCard,
-    message: signalMessage.value,
-  });
-  closeModal();
-};
+const transform = computed(() => {
+  if (!isSwiping.value) return undefined;
+  const x = -lengthX.value;
+  const y = -lengthY.value;
+  const xMulti = x * 0.03;
+  const yMulti = y / 80;
+  const rotate = xMulti * yMulti;
+  return `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
+});
 
 const previousCard = () => {
   learnStore.previousCard();
@@ -69,8 +77,8 @@ const nextCard = () => {
         </h1>
       </div>
     </div>
-    <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="bg-white px-4 py-8 sm:rounded-lg sm:px-10">
+    <div class="mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+      <div class="rounded-lg bg-white p-4">
         <div class="mb-1 flex justify-between">
           <span
             class="text-base font-medium text-blue-700 dark:text-white"
@@ -90,6 +98,8 @@ const nextCard = () => {
           :is="cardTypes[learnStore.currentCard.content.type]"
           ref="activeCard"
           :card="learnStore.currentCard"
+          :class="{ 'transition-transform': !isSwiping }"
+          :style="{ transform }"
         />
 
         <div class="mt-8 flex flex-col items-center justify-center">
@@ -120,62 +130,20 @@ const nextCard = () => {
         </div>
       </div>
     </div>
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="mx-auto w-full max-w-md">
       <div class="space-y-6 bg-white px-4 py-8 sm:rounded-lg sm:px-10">
         <div>
-          <button
-            type="button"
-            class="flex w-full justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-            @click="showModal = true"
-          >
-            {{ $t("app.learn.buttons.signal") }}
-          </button>
+          <ReportCardModal v-slot="{ open }">
+            <button
+              type="button"
+              class="flex w-full justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              @click="open"
+            >
+              {{ $t("app.learn.buttons.signal") }}
+            </button>
+          </ReportCardModal>
         </div>
       </div>
-      <Modal v-model="showModal">
-        <template #icon
-          ><div
-            class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
-          >
-            <FlagIcon class="h-6 w-6 text-red-600" aria-hidden="true" />
-          </div>
-        </template>
-        <template #title>
-          {{ $t("app.learn.modal.title") }}
-        </template>
-        <template #content>
-          <div class="mb-6">
-            <label
-              for="message"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-              >{{ $t("app.learn.modal.message") }}</label
-            >
-            <input
-              id="message"
-              v-model="signalMessage"
-              type="text"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              required
-            />
-          </div>
-        </template>
-        <template #footer>
-          <button
-            type="button"
-            class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-            @click="reportCard"
-          >
-            {{ $t("app.learn.modal.buttons.confirmSignal") }}
-          </button>
-          <button
-            type="button"
-            class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-            @click="closeModal"
-          >
-            {{ $t("app.learn.modal.buttons.cancel") }}
-          </button>
-        </template>
-      </Modal>
     </div>
   </div>
 </template>

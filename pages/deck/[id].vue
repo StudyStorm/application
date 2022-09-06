@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import { ref } from "#imports";
 import { useDecksStore } from "~/store/decks";
-import {
-  PlusIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/vue/24/outline/index.js";
+import { PlusIcon } from "@heroicons/vue/24/outline/index.js";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
 } from "@heroicons/vue/24/solid/index.js";
-import CreateCard from "~/components/deck/CreateCard.vue";
+import SCardSquared from "~/components/s/SCardSquared.vue";
 const store = useDecksStore();
 const route = useRoute();
 await store.fetchDeck(route.params.id as string);
@@ -19,8 +14,6 @@ await store.fetchDeckUserRating(route.params.id as string);
 onMounted(async () => {
   store.addUsedDeck(route.params.id as string);
 });
-
-const showModal = ref(false);
 </script>
 
 <template>
@@ -77,11 +70,11 @@ const showModal = ref(false);
         <div
           class="grid flex-1 grid-cols-2 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5"
         >
-          <CreateCard v-slot="{ open }">
-            <v-card class="bg-gray-100" @click="open">
+          <create-card-modal v-slot="{ open }">
+            <s-card-squared class="bg-gray-100" @click="open">
               <PlusIcon class="mx-auto h-full w-12 text-storm-dark" />
-            </v-card>
-          </CreateCard>
+            </s-card-squared>
+          </create-card-modal>
           <QuestionCard
             v-for="(card, i) in store.currentDeck.cards"
             :key="i"
