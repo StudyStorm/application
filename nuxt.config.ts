@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@studystorm/nuxt-pwa",
     "@nuxt/image-edge",
-    "nuxt-svgo",
   ],
   pwa: {
     meta: {
@@ -71,10 +70,6 @@ export default defineNuxtConfig({
           ? process.env.PRODUCTION_API_URL
           : process.env.LOCAL_API_URL,
     },
-  },
-  svgoOptions: {
-    svgo: false,
-    defaultImport: "component",
   },
   http: {
     credentials: "include",

@@ -32,7 +32,13 @@ const formattedVotes = computed(() => {
 
 <template>
   <NuxtLink
-    :to="`/deck/${deck.id}`"
+    :to="{
+      name: 'deck-id',
+      params: {
+        id: deck.id,
+      },
+    }"
+    }
     class="block max-w-sm rounded-lg border border-gray-200 p-4 shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
     :style="color"
   >
@@ -56,7 +62,7 @@ const formattedVotes = computed(() => {
         />
       </div>
     </div>
-    <div>
+    <div v-if="deck.creator">
       <p class="truncate text-sm font-normal text-storm-dark">
         {{
           $t("app.decks.createdBy", {

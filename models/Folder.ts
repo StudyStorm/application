@@ -7,6 +7,8 @@ export default interface Folder {
 
   name: string;
 
+  classroom_id: string;
+
   classroom: Classroom;
 
   creator: User;
@@ -14,4 +16,11 @@ export default interface Folder {
   parent: Folder;
 
   decks: Deck[];
+
+  children: Folder[];
+
+  path: {
+    id: string;
+    name: string;
+  }[];
 }
