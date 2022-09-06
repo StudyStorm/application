@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { onClickOutside } from "@vueuse/core";
-import { GlobeAltIcon } from "@heroicons/vue/24/outline/index.js";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
@@ -15,9 +14,6 @@ const links = [
     url: "#team",
   },
 ];
-
-const country = ["fr.svg", "gb.svg"];
-const langIconLocation = "/images/langIcons/";
 
 let showMobileMenu = ref(false);
 
@@ -120,17 +116,6 @@ onClickOutside(target, () => (showMobileMenu.value = false));
           >
             <SButtonLangSwitch></SButtonLangSwitch>
           </li>
-          <!-- <s-lang-switcher
-                v-slot="{ locale, active, onClick }"
-                class="flex items-center justify-centermt-6"
-              >
-                <span
-                  class="pl-2 mx-1 cursor-pointer"
-                  :class="{ 'font-extrabold': active }"
-                  @click="onClick"
-                  >{{ locale.name }}</span
-                >
-              </s-lang-switcher> -->
         </ul>
       </div>
     </div>
