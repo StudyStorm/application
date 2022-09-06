@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref } from "#imports";
 import { useDecksStore } from "~/store/decks";
-import { PlusIcon, SquaresPlusIcon, XMarkIcon } from "@heroicons/vue/24/outline/index.js";
+import {
+  PlusIcon,
+  SquaresPlusIcon,
+  XMarkIcon,
+} from "@heroicons/vue/24/outline/index.js";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
@@ -15,7 +19,7 @@ onMounted(async () => {
   store.addUsedDeck(route.params.id as string);
 });
 
-const showModal = ref(true);
+const showModal = ref(false);
 
 const hasError = ref(false);
 
@@ -73,11 +77,11 @@ function addAnswer() {
       <div class="flex min-w-0 flex-1 items-center justify-between">
         <div>
           <h1
-            class="flex-row text-lg font-medium leading-6 text-storm-dark sm:truncate"
+            class="text-storm-dark flex-row text-lg font-medium leading-6 sm:truncate"
           >
             {{ store.currentDeck.name }}
           </h1>
-          <span class="text-sm text-storm-dark sm:truncate">{{
+          <span class="text-storm-dark text-sm sm:truncate">{{
             $t("app.decks.createdBy", {
               name: `${store.currentDeck.creator.first_name} ${store.currentDeck.creator.last_name}`,
             })
@@ -102,7 +106,7 @@ function addAnswer() {
           </div>
           <button
             type="submit"
-            class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            class="bg-storm-darkblue hover:bg-storm-blue rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             {{ $t("app.decks.manageButton") }}
           </button>
@@ -111,7 +115,7 @@ function addAnswer() {
     </div>
     <div class="mb-10 p-4 sm:px-6 lg:px-8">
       <h1
-        class="mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
+        class="text-storm-dark mb-4 text-lg font-medium leading-6 sm:truncate"
       >
         {{ $t("app.decks.cards", { number: store.currentDeck.cards.length }) }}
       </h1>
@@ -121,8 +125,9 @@ function addAnswer() {
         >
           <div
             class="block cursor-pointer rounded-lg border border-gray-200 bg-gray-100 p-4 text-center shadow-md backdrop-blur transition hover:scale-105 hover:bg-gray-100"
+            @click="showModal = true"
           >
-            <PlusIcon class="mx-auto h-full w-12 text-storm-dark" />
+            <PlusIcon class="text-storm-dark mx-auto h-full w-12" />
           </div>
           <QuestionCard
             v-for="(card, i) in store.currentDeck.cards"
@@ -137,7 +142,7 @@ function addAnswer() {
         >
           <button
             type="button"
-            class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
+            class="focus:storm-darkblue bg-storm-darkblue rounded-md px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
           >
             {{ $t("app.decks.start") }}
           </button>
