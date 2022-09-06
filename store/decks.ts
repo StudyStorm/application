@@ -69,7 +69,7 @@ export const useDecksStore = defineStore("decks", {
 
     async fetchBestDecks() {
       const { data } = await useFetchAPI<Pagination<Deck>>(
-        `/v1/decks?top=${MAX_BEST_DECKS}`,
+        `/v1/decks?top=${MAX_BEST_DECKS}&limit=${MAX_BEST_DECKS}`,
         {
           method: "GET",
         }
