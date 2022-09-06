@@ -1,14 +1,24 @@
 <script setup lang="ts">
 import { ChevronRightIcon, Bars4Icon } from "@heroicons/vue/24/solid/index.js";
 import { useDecksStore } from "~/store/decks";
-
 import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
+
+const deckStore = useDecksStore();
+await deckStore.fetchDecks();
+await deckStore.fetchBestDecks();
 
 const displayStyle = ref("row");
 
-const store = useDecksStore();
+const tableHeaders = ["Deck name", "Author", "Votes"];
 
-const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
+const currentPage = ref(deckStore.pagination.current_page);
+
+const changePage = (page: number) => {
+  if (page > 0 && page <= deckStore.pagination.last_page) {
+    currentPage.value = page;
+    deckStore.fetchDecks(currentPage.value);
+  }
+};
 </script>
 
 <template>
@@ -31,7 +41,7 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
 
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
         <DeckCard
-          v-for="deck in store.bestRatedDecks"
+          v-for="deck in deckStore.bestRatedDecks"
           :key="deck.id"
           :deck="deck"
         />
@@ -44,11 +54,13 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
       </h1>
 
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
-        <DeckCard
-          v-for="deck in store.lastUsedDecks"
-          :key="deck.id"
-          :deck="deck"
-        />
+        <ClientOnly>
+          <DeckCard
+            v-for="deck in deckStore.lastUsedDecks"
+            :key="deck.id"
+            :deck="deck"
+          />
+        </ClientOnly>
       </div>
 
       <h1
@@ -60,11 +72,12 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
       <div class="flex items-center justify-between">
         <div>
           <input
-            v-model="store.searchFilter"
+            v-model="deckStore.searchFilter"
             name="searchDeck"
             type="text"
             class="block w-40 flex-auto rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:w-80 sm:text-sm md:w-96"
             placeholder="Search decks"
+            @input="changePage(currentPage)"
           />
         </div>
 
@@ -96,7 +109,7 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
           role="list"
           class="mt-3 divide-y divide-gray-100 border-t border-gray-200"
         >
-          <li v-for="deck in store.filteredDecks" :key="deck.id">
+          <li v-for="deck in deckStore.decks" :key="deck.id">
             <NuxtLink
               :to="`/deck/${deck.id}`"
               class="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"
@@ -136,7 +149,7 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
             </thead>
             <tbody class="divide-y divide-gray-100 bg-white">
               <tr
-                v-for="(deck, i) in store.filteredDecks"
+                v-for="(deck, i) in deckStore.decks"
                 :key="deck.id"
                 :class="{ 'bg-gray-100': i % 2 === 0 }"
               >
@@ -158,7 +171,8 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
                   <div class="flex items-center space-x-3 lg:pl-2">
                     <span class="truncate hover:text-gray-600">
                       <span>
-                        {{ deck.creator.fullname }}
+                        {{ deck.creator.first_name }}
+                        {{ deck.creator.last_name }}
                       </span>
                     </span>
                   </div>
@@ -168,17 +182,8 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
                     <span class="truncate hover:text-gray-600">
-                      <span> N cards </span>
-                    </span>
-                  </div>
-                </td>
-                <td
-                  class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
-                >
-                  <div class="flex items-center space-x-3 lg:pl-2">
-                    <span class="truncate hover:text-gray-600">
                       <span>
-                        {{ deck.votes }}
+                        {{ deck.votes.number }}
                       </span>
                     </span>
                   </div>
@@ -190,11 +195,18 @@ const tableHeaders = ["Deck name", "Author", "# of cards", "Votes"];
         <div v-else>
           <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:gap-8">
             <DeckCard
-              v-for="deck in store.filteredDecks"
+              v-for="deck in deckStore.decks"
               :key="deck.id"
               :deck="deck"
             />
           </div>
+        </div>
+        <div class="mt-4 flex justify-center">
+          <s-paginator
+            :current-page="currentPage"
+            :last="deckStore.pagination.last_page"
+            @change-page="changePage"
+          />
         </div>
       </div>
     </div>

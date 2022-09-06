@@ -91,6 +91,8 @@ app:
     registerHere: Sign up here
     errorLogin: The email or password is incorrect.
     signInButton: Sign in
+    resend_token: Your email is not verified.
+    resend_token_button: Click here to send a new verification email
   verify:
     title: Verify your email
     firstParagraph: Please check your email for a link to verify your email address.
@@ -101,17 +103,9 @@ app:
     success: The verification email was sent successfully
   reset:
     title: Reset your password
-    email: Mail address of the account
-    returnLogin: Return to login page
     password: New password
-    confirmPassword: Confirm new password
-    showPw: Show
-    hidePw: Hide
-    pwTooShort: Password must be at least 8 characters long.
-    pwLongEnough: Password is long enough.
-    pwNotTheSame: Passwords do not match.
-    pwAreTheSame: Passwords match.
-    button: Reset
+    button: Reset your password
+    returnLogin: Return to login page
   forgottenPassword:
     title: Reinitialize your password
     email: Enter your email address

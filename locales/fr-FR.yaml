@@ -94,27 +94,21 @@ app:
     registerHere: Inscrivez-vous ici
     errorLogin: L'email ou le mot de passe est incorrect.
     signInButton: Se connecter
+    resend_token: Votre adresse email n'est pas vérifiée.
+    resend_token_button: Cliquez ici pour recevoir un nouvel email de vérification
   verify:
     title: Vérification de l'adresse mail
     firstParagraph: Un lien de vérification a été envoyé sur votre adresse mail.
-    secondParagraph: Une fois cette vérification effectuée, vous pourrez utilisez votre compte.
+    secondParagraph: Une fois cette vérification effectuée, vous pourrez utiliser votre compte.
     noEmail: Aucun email reçu ?
     clickResend: Cliquez ici pour en recevoir un nouveau
     error: Une erreur est survenue pendant l'envoi de l'email de vérification
     success: L'email de vérification a été envoyé avec succès
   reset:
     title: Réinitialiser le mot de passe
-    email: Adresse email liée au compte
-    returnLogin: Retour à la page de connexion
     password: Nouveau mot de passe
-    confirmPassword: Confirmer le mot de passe
-    showPw: Afficher
-    hidePw: Cacher
-    pwTooShort: Le mot de passe doit contenir au moins 8 caractères.
-    pwLongEnough: Le mot de passe est assez long.
-    pwNotTheSame: Les mots de passe ne correspondent pas.
-    pwAreTheSame: Les mots de passe sont identiques.
     button: Réinitialiser le mot de passe
+    returnLogin: Retour à la page de connexion
   forgottenPassword:
     title: Réinitialiser votre mot de passe
     email: Entrez l'email lié à votre compte

@@ -4,6 +4,8 @@ import {
   XMarkIcon,
   CheckCircleIcon,
 } from "@heroicons/vue/24/solid/index.js";
+import { ArrowLeftIcon } from "@heroicons/vue/24/outline/index.js";
+
 const props = defineProps<{
   resendToken?: string;
 }>();
@@ -19,12 +21,11 @@ async function sendToken() {
     body: {
       key: props.resendToken,
     },
-    initialCache: false,
   });
 
-  if (error.value) {
+  if (error) {
     status.value.err = true;
-    console.log(error.value);
+    console.log(error);
   } else {
     status.value.success = true;
   }
@@ -45,7 +46,6 @@ async function sendToken() {
       />
       <div class="mt-4 w-full text-center text-3xl font-bold tracking-normal">
         {{ $t("app.verify.title") }}
-        {{ resendToken }}
       </div>
       <div class="mt-10 w-full text-base text-storm-dark">
         {{ $t("app.verify.firstParagraph") }}
@@ -115,6 +115,16 @@ async function sendToken() {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <NuxtLink
+          to="/login"
+          class="mt-10 flex justify-start text-sm text-storm-dark hover:text-storm-blue hover:underline focus:outline-storm-blue"
+        >
+          <ArrowLeftIcon class="mr-2 h-6 w-6 text-storm-dark" />{{
+            $t("app.reset.returnLogin")
+          }}
+        </NuxtLink>
       </div>
     </div>
   </div>
