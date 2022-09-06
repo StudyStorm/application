@@ -30,6 +30,7 @@ const formattedVotes = computed(() => {
       params: {
         id: deck.id,
       },
+    }"
     :style="color"
   >
     <div class="flex items-center justify-between">
