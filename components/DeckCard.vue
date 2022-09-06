@@ -24,7 +24,7 @@ const formattedVotes = computed(() => {
 
 <template>
   <NuxtLink
-    class="block max-w-sm rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
+    class="block rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
     :to="{
       name: 'deck-id',
       params: {
@@ -34,14 +34,17 @@ const formattedVotes = computed(() => {
     :style="color"
   >
     <div class="flex items-center justify-between">
-      <div>
+      <div class="truncate">
         <h5
           class="mb-2 truncate text-2xl font-bold tracking-tight text-storm-dark"
         >
           {{ deck.name }}
         </h5>
         <div>
-          <p class="truncate text-sm font-normal text-storm-dark">
+          <p
+            v-if="deck.creator"
+            class="truncate text-sm font-normal text-storm-dark"
+          >
             {{
               $t("app.decks.createdBy", {
                 name: `${deck.creator.first_name} ${deck.creator.last_name}`,
@@ -65,15 +68,6 @@ const formattedVotes = computed(() => {
         />
         <HandThumbDownIcon v-else class="ml-1 w-4 text-red-500" />
       </div>
-    </div>
-    <div>
-      <p class="truncate text-sm font-normal text-storm-dark">
-        {{
-          $t("app.decks.createdBy", {
-            name: `${deck.creator.first_name} ${deck.creator.last_name}`,
-          })
-        }}
-      </p>
     </div>
   </NuxtLink>
 </template>
