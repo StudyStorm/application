@@ -193,7 +193,7 @@ const changePage = (page: number) => {
           </table>
         </div>
         <div v-else>
-          <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:gap-8">
+          <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
             <DeckCard
               v-for="deck in deckStore.decks"
               :key="deck.id"
