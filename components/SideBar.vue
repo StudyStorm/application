@@ -11,8 +11,6 @@ import {
   HomeIcon,
 } from "@heroicons/vue/24/solid/index.js";
 
-import { GlobeAltIcon } from "@heroicons/vue/24/outline/index.js";
-
 import {
   Dialog,
   DialogPanel,
@@ -27,11 +25,6 @@ import {
 const { t } = useI18n();
 
 const auth = useAuth();
-
-const country = ref({
-  fr: "/images/langIcons/fr.svg",
-  en: "/images/langIcons/gb.svg",
-});
 
 const navigation = ref([
   {
