@@ -66,14 +66,5 @@ const formattedVotes = computed(() => {
         <HandThumbDownIcon v-else class="ml-1 w-4 text-red-500" />
       </div>
     </div>
-    <div>
-      <p class="truncate text-sm font-normal text-storm-dark">
-        {{
-          $t("app.decks.createdBy", {
-            name: `${deck.creator.first_name} ${deck.creator.last_name}`,
-          })
-        }}
-      </p>
-    </div>
   </NuxtLink>
 </template>

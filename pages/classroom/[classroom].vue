@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { useClassroomStore } from "~/store/classroom";
-import { useFetchAPI } from "#imports";
 import { useRoute } from "#app";
-import User from "~/models/User";
-import { Pagination } from "~/types/app";
 import { AcademicCapIcon } from "@heroicons/vue/24/solid/index.js";
 
 const route = useRoute();
 const classroomStore = useClassroomStore();
-await classroomStore.fetchClassroom(route.params.classroom as string);
 
 const deckName = ref<string>(" ");
 const folderName = ref<string>("");
@@ -17,20 +13,8 @@ const viewAllMembers = ref(false);
 const showModalDeck = ref(false);
 const showModalFolder = ref(false);
 
-const classroom = await classroomStore.fetchClassroom(
-  route.params.classroom as string
-);
-if (!classroom) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: "Classroom not found",
-    fatal: true,
-  });
-}
-const { data: members } = await useFetchAPI<Pagination<User>>(
-  `/v1/classrooms/${route.params.classroom}/users`,
-  { params: { limit: 5 } }
-);
+await classroomStore.fetchClassroom(route.params.classroom as string);
+await classroomStore.fetchClassroomUsers(route.params.classroom as string);
 </script>
 
 <template>
@@ -41,7 +25,7 @@ const { data: members } = await useFetchAPI<Pagination<User>>(
           class="mb-4 text-2xl font-bold leading-7 text-storm-dark sm:truncate sm:text-3xl"
         >
           <AcademicCapIcon class="inline h-6 w-6" />
-          {{ classroom.name }}
+          {{ classroomStore.classroom.name }}
         </h1>
         <div>
           <h1 class="text-lg font-medium leading-6 text-storm-dark sm:truncate">
@@ -51,16 +35,22 @@ const { data: members } = await useFetchAPI<Pagination<User>>(
             <div class="flex">
               <div class="flex -space-x-4">
                 <nuxt-img
-                  v-for="member in members.data"
+                  v-for="member in classroomStore.members.data"
                   :key="member.id"
                   class="h-12 w-12 shrink-0 rounded-full border-2 border-white dark:border-gray-800"
                   :src="member.picture_url"
                 />
                 <div
-                  v-if="members.data.length < members.meta.total"
+                  v-if="
+                    classroomStore.members.data.length <
+                    classroomStore.members.meta.total
+                  "
                   class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white dark:border-gray-800"
                 >
-                  {{ members.meta.total - members.data.length }}
+                  {{
+                    classroomStore.members.meta.total -
+                    classroomStore.members.data.length
+                  }}
                 </div>
               </div>
             </div>
@@ -68,6 +58,7 @@ const { data: members } = await useFetchAPI<Pagination<User>>(
               <button
                 type="submit"
                 class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                @click="viewAllMembers = true"
               >
                 {{ $t("app.classroom.membersButton") }}
               </button>
@@ -75,7 +66,7 @@ const { data: members } = await useFetchAPI<Pagination<User>>(
           </div>
         </div>
         <nuxt-page
-          :classroom="classroom"
+          :classroom="classroomStore.classroom"
           :page-key="`folder-content-${route.params.folder}`"
         />
       </div>

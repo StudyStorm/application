@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { Bars4Icon } from "@heroicons/vue/24/solid/index.js";
-
 import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
-
 import Folder from "~/models/Folder";
 import { useFetchAPI } from "#imports";
-import Classroom from "~/models/Classroom";
+import Classroom from "~~/models/Classroom";
 import VBreadcrumb from "~/components/folder/VBreadcrumb.vue";
+import { useClassroomStore } from "~/store/classroom";
 
-const displayStyle = ref<"block" | "list">("block");
+const classroomStore = useClassroomStore();
 
 const showModalDeck = ref(false);
 const showModalFolder = ref(false);
@@ -47,15 +46,15 @@ const { data: folder } = await useFetchAPI<Folder>(
           >
             <span
               class="p-2 hover:scale-110"
-              :class="{ 'bg-gray-200': displayStyle === 'list' }"
-              @click="displayStyle = 'list'"
+              :class="{ 'bg-gray-200': classroomStore.displayMode === 'list' }"
+              @click="classroomStore.displayMode = 'list'"
             >
               <Bars4Icon class="h-5 w-5"
             /></span>
             <span
               class="p-2 hover:scale-110"
-              :class="{ 'bg-gray-200': displayStyle === 'block' }"
-              @click="displayStyle = 'block'"
+              :class="{ 'bg-gray-200': classroomStore.displayMode === 'block' }"
+              @click="classroomStore.displayMode = 'block'"
               ><Square2StackIcon class="h-5 w-5"
             /></span>
           </div>
@@ -71,6 +70,6 @@ const { data: folder } = await useFetchAPI<Folder>(
         </div>
       </div>
     </div>
-    <folder-content :folder="folder" :mode="displayStyle" />
+    <folder-content :folder="folder" :mode="classroomStore.displayMode" />
   </div>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Folder from "~/models/Folder";
-const props = defineProps<{
+defineProps<{
   folder: Folder;
   mode: "list" | "block";
 }>();
