@@ -164,6 +164,7 @@ app:
   sideNav:
     home: Accueil
     class: Salles de classe
+    lang: Langages
   error:
     error404: Erreur 404 - Page non trouvée
     standardError: Une erreur est survenue

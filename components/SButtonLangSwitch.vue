@@ -9,10 +9,11 @@ const country = ref({
 </script>
 
 <template>
-  <Menu as="div" class="text-left">
+  <Menu as="div" class="cursor-pointer select-none text-left">
     <div>
-      <MenuButton>
-        <GlobeAltIcon class="h-6 w-6 text-storm-dark" />
+      <MenuButton class="flex items-center">
+        <GlobeAltIcon class="h-6 w-6" />
+        <slot />
       </MenuButton>
     </div>
 
@@ -25,7 +26,7 @@ const country = ref({
       leave-to-class="transform scale-95 opacity-0"
     >
       <MenuItems
-        class="absolute z-10 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        class="absolute z-10 mt-3 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
       >
         <div class="py-1">
           <s-lang-switcher v-slot="{ locale, active, onClick }" class="">
@@ -40,7 +41,7 @@ const country = ref({
                 <div class="h-6 w-6">
                   <NuxtImg
                     :src="country[locale.code]"
-                    class="h-6 w-6 rounded-full"
+                    class="h-6 w-6 rounded-full object-cover"
                   />
                 </div>
                 <div class="ml-2">
