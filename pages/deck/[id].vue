@@ -135,7 +135,7 @@ onMounted(async () => {
         >
           <NuxtLink
             type="button"
-            class="focus:storm-darkblue bg-storm-darkblue rounded-md p-4 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
+            class="focus:storm-darkblue rounded-md bg-storm-darkblue p-4 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
             :to="{
               name: 'learn-id',
               params: {
