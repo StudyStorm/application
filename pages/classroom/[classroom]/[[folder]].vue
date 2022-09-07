@@ -56,6 +56,7 @@ await classroomStore.fetchCurrentFolder(folderId.value);
     <folder-content
       :folder="classroomStore.currentFolder"
       :mode="classroomStore.displayMode"
+      :show-edition="classroomStore.classroom.permissions.write"
       @show-folder-modal="classroomStore.showFolderCreationModal = true"
       @show-deck-modal="classroomStore.showDeckCreationModal = true"
     />

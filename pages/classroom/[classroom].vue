@@ -104,7 +104,10 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
             {{ $t("app.classroom.unsubscribe") }}
           </button>
         </div>
-        <confirm-modal @confirm="deleteClassroom">
+        <confirm-modal
+          v-if="classroomStore.classroom.permissions.is_owner"
+          @confirm="deleteClassroom"
+        >
           <template #title>
             {{ $t("app.classrooms.modal.delete.title") }}
           </template>
