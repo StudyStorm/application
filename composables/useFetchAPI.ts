@@ -1,6 +1,7 @@
 import { HTTPRequest } from "@nuxtjs-alt/auth";
 import { FetchError } from "ohmyfetch";
 import { Ref, unref, UnwrapRef } from "vue";
+import { useFetch } from "#app";
 import useAuth from "~/composables/useAuth";
 
 type Response<T, U> = Promise<{

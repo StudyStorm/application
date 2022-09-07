@@ -156,5 +156,16 @@ export const useDecksStore = defineStore("decks", {
       });
       await this.refreshRatings(deck);
     },
+
+    async updateDeckName(deckId: string, deckName: string) {
+      await useFetchAPI(`/v1/decks/${deckId}`, {
+        method: "PATCH",
+        body: {
+          name: deckName,
+        },
+        useFetch: true,
+      });
+      this.fetchDeck(deckId);
+    },
   },
 });

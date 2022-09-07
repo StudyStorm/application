@@ -35,90 +35,25 @@ export const useLearnStore = defineStore("learn", {
         this.currentCardIndex++;
       }
     },
-    async fetchDeck(deckId: number) {
-      console.log(deckId);
-      // TODO: fetch the real deck from API
-
-      // TMP CODE
-      const creator = {
-        first_name: "John",
-        last_name: "Doe",
-      };
-
-      const deck = {
-        id: "01013eab-bbcc-4037-ae99-a08efb2a921b",
-        name: "Random deck",
-        creator: creator,
-        cards: [
-          {
-            id: "a8a7c042-d537-45c4-b3da-ac1c20c0bae7",
-            content: {
-              question: "What is the capital of switzerland?",
-              answers: [{ label: "Bern", isTheAnswer: true }],
-              type: "flashCard",
-            },
-          },
-          {
-            id: "b8a7c042-d537-45c4-b3da-ac1c20c0bae7",
-            content: {
-              question: "Where am I ?",
-              answers: [
-                { label: "I am here", isTheAnswer: true },
-                { label: "I am not here", isTheAnswer: false },
-                { label: "I am maybe here", isTheAnswer: false },
-                { label: "Working", isTheAnswer: true },
-              ],
-              type: "options",
-            },
-          },
-          {
-            id: "c8a7c042-d537-45c4-b3da-ac1c20c0bae7",
-            content: {
-              question:
-                "Quelle(s) déclaration(s) C correspond(ent) à l'énoncé suivant ? t est un tableau de 10 pointeurs pointant chacun sur un int constant",
-              answers: [
-                { label: "const int* t[10]", isTheAnswer: true },
-                { label: "int* const t[10]", isTheAnswer: false },
-                { label: "const int* t[10]", isTheAnswer: false },
-                { label: "int** const t[10]", isTheAnswer: false },
-              ],
-              type: "options",
-            },
-          },
-          {
-            id: "d8a7c042-d537-45c4-b3da-ac1c20c0bae7",
-            content: {
-              question: "What is the capital of Germany?",
-              answers: [{ label: "Berlin", isTheAnswer: true }],
-              type: "flashCard",
-            },
-          },
-          {
-            id: "e8a7c042-d537-45c4-b3da-ac1c20c0bae7",
-            content: {
-              question: "What is the capital of France?",
-              answers: [{ label: "Paris", isTheAnswer: true }],
-              type: "flashCard",
-            },
-          },
-          {
-            id: "f8a7c042-d537-45c4-b3da-ac1c20c0bae7",
-            content: {
-              question: "What is the capital of the United Stated of America?",
-              answers: [{ label: "Washington DC", isTheAnswer: true }],
-              type: "flashCard",
-            },
-          },
-        ],
-      };
-      // END OF TMP CODE
+    async fetchDeck(deckId: string) {
+      const { data: deck } = await useFetchAPI(`/v1/decks/${deckId}`, {
+        method: "GET",
+      });
 
       this.deck = deck;
     },
 
-    async reportCard(report: { card: Card; message: string }) {
-      console.log("report card", report.card, report.message);
-      // TODO: call API: /v1/decks/cards/report/{cardId}
+    async reportCard(cardId: string, message: string) {
+      const { error } = await useFetchAPI(`/v1/decks/cards/${cardId}/report`, {
+        method: "POST",
+        body: {
+          message: message,
+        },
+      });
+
+      if (error) {
+        console.log("already reported");
+      }
     },
   },
 });

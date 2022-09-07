@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Pagination } from "~/types/app";
-import { Classroom } from "~/types/classroom";
 
 import {
   XMarkIcon,
@@ -23,6 +22,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
+import Classroom from "~/models/Classroom";
 
 const { t } = useI18n();
 
@@ -57,8 +57,7 @@ const navigation = ref([
     options: true,
     hasDropdown: true,
     dropped: true,
-    // items: ["HEIG", "EPFL", "Random"],
-    classrooms: classrooms.data,
+    classrooms: classrooms?.data ?? [],
   },
 ]);
 
@@ -217,7 +216,7 @@ function resetField() {
                       <!-- TODO: change this to match the classroom type -->
                       <!-- TODO: Change the link to /classroom/:id -->
                       <NuxtLink
-                        v-for="subitem in (item.classrooms as Classroom[])"
+                        v-for="subitem in item.classrooms"
                         :key="subitem.id"
                         class="group mt-0.5 flex cursor-pointer items-center rounded-md border border-transparent p-2 pl-4 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
                         :class="[
@@ -417,7 +416,7 @@ function resetField() {
               >
                 <div v-if="item.hasDropdown && item.dropped" class="mt-0.5">
                   <NuxtLink
-                    v-for="subitem in (item.classrooms as Classroom[])"
+                    v-for="subitem in item.classrooms"
                     :key="subitem.id"
                     class="group mt-0.5 flex cursor-pointer items-center rounded-md border border-transparent p-2 pl-3 text-sm font-medium text-storm-darkblue hover:border-gray-200 hover:bg-gray-50"
                     :class="[
@@ -498,6 +497,16 @@ function resetField() {
                         'block px-4 py-2 text-sm',
                       ]"
                       >{{ $t("app.navbar.profile") }}
+                    </NuxtLink>
+                  </MenuItem>
+                  <MenuItem v-slot="{ active }">
+                    <NuxtLink
+                      to="/inbox"
+                      :class="[
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                        'block px-4 py-2 text-sm',
+                      ]"
+                      >{{ $t("app.inbox.title") }}
                     </NuxtLink>
                   </MenuItem>
                 </div>

@@ -112,7 +112,12 @@ const changePage = (page: number) => {
         >
           <li v-for="deck in deckStore.decks" :key="deck.id">
             <NuxtLink
-              :to="`/deck/${deck.id}`"
+              :to="{
+                name: 'deck-id',
+                params: {
+                  id: deck.id,
+                },
+              }"
               class="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"
             >
               <span class="flex items-center space-x-3 truncate">
@@ -157,7 +162,12 @@ const changePage = (page: number) => {
                 <td class="whitespace-nowrap px-6 py-3 text-sm font-medium">
                   <div class="flex items-center space-x-3 lg:pl-2">
                     <NuxtLink
-                      :to="`deck/${deck.id}`"
+                      :to="{
+                        name: 'deck-id',
+                        params: {
+                          id: deck.id,
+                        },
+                      }"
                       class="truncate hover:text-gray-600"
                     >
                       <span>
