@@ -7,6 +7,8 @@ import { useDecksStore } from "~/store/decks";
 const props = defineProps<{
   card: Card;
   number: number;
+  canDelete: boolean;
+  canEdit: boolean;
 }>();
 const decksStore = useDecksStore();
 
@@ -19,7 +21,7 @@ async function deleteCard() {
 <template>
   <s-card-squared :key="card.id">
     <div class="invisible absolute -top-2 -right-2 group-hover:visible">
-      <create-card-modal v-slot="{ open }" :card="card">
+      <create-card-modal v-if="canEdit" v-slot="{ open }" :card="card">
         <div
           class="mx-1 inline-flex h-8 w-8 items-center justify-center overflow-hidden text-ellipsis rounded-full border-2 border-white bg-storm-blue p-1 text-xs font-bold text-white hover:scale-110"
           @click="open"
@@ -27,7 +29,7 @@ async function deleteCard() {
           <PencilIcon />
         </div>
       </create-card-modal>
-      <confirm-modal @confirm="deleteCard">
+      <confirm-modal v-if="canDelete" @confirm="deleteCard">
         <template #title>
           {{ $t("app.cards.modal.delete.title") }}
         </template>

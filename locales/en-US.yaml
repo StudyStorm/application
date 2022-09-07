@@ -201,7 +201,9 @@ app:
     recentDecks: Recent decks
     browseDecks: Browse decks
     noRecentDecks: No recent decks
+    search: Search decks
     table:
+      title: Decks
       deckName: Deck name
       author: Author
       votes: Votes

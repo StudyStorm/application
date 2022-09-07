@@ -6,6 +6,7 @@ const { t } = useI18n();
 
 const props = defineProps<{
   member: User;
+  canEdit: boolean;
 }>();
 
 const editMode = ref(false);
@@ -39,14 +40,15 @@ const prettyRole = ref({
       </div>
     </div>
     <div
-      v-if="!editMode"
+      v-if="!canEdit || !editMode"
       class="mr-2 cursor-pointer rounded bg-purple-300 px-2.5 py-0.5 text-sm font-medium text-storm-purple"
+      :class="{ 'cursor-default': !canEdit }"
       @click="editMode = true"
     >
       {{ prettyRole[member.access_right] }}
     </div>
     <select
-      v-else
+      v-else-if="canEdit"
       v-model="newAccessRight"
       class="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-storm-dark focus:border-storm-blue focus:ring-storm-blue"
       @change="changeRole"
