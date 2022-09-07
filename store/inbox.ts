@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
-import { Pagination } from "../types/app";
+import { Pagination } from "~/types/app";
 import Report from "../models/Report";
+import { useFetchAPI } from "#imports";
 
 export const useInboxStore = defineStore("inbox", () => {
   const inboxReports = ref<Pagination<Report>>(null);
@@ -26,22 +27,20 @@ export const useInboxStore = defineStore("inbox", () => {
       inboxReports.value = data;
     },
     async markAsRead(read: boolean, reportId: string) {
-      await useFetch(`/v1/inbox/${reportId}`, {
+      await useFetchAPI(`/v1/inbox/${reportId}`, {
         method: "PATCH",
         body: {
           isRead: read,
         },
-        credentials: "include",
-        baseURL: useRuntimeConfig().apiURL,
-        initialCache: false,
+        useFetch: true,
       });
-      this.fetchInboxReports();
+      await this.fetchInboxReports();
     },
     async deleteReport(reportId: string) {
       await useFetchAPI(`/v1/inbox/${reportId}`, {
         method: "DELETE",
       });
-      this.fetchInboxReports();
+      await this.fetchInboxReports();
     },
   };
 });

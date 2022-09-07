@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
-import { Pagination } from "../types/app";
+import { Pagination } from "~/types/app";
 import Deck from "~~/models/Deck";
 import { CardContent } from "~~/models/Card";
+import { useFetchAPI } from "~/composables/useFetchAPI";
 
 const LOCAL_STORAGE_KEY = "lastUsedDecks";
 const MAX_BEST_DECKS = 3;
