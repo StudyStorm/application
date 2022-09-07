@@ -63,7 +63,18 @@ const deleteClassroom = async () => {
   router.push({ name: "dashboard" });
 };
 
-await classroomStore.fetchClassroom(route.params.classroom as string);
+const { error } = await classroomStore.fetchClassroom(
+  route.params.classroom as string
+);
+
+if (error) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Classroom not found",
+    fatal: true,
+  });
+}
+
 await classroomStore.fetchClassroomUsers(route.params.classroom as string);
 
 onMounted(async () => {

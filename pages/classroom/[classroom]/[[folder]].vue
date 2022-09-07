@@ -18,7 +18,14 @@ const folderId = computed<string>(() => {
     : props.classroom.root_folder.id;
 });
 
-await classroomStore.fetchCurrentFolder(folderId.value);
+const { error } = await classroomStore.fetchCurrentFolder(folderId.value);
+if (error) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Classroom not found",
+    fatal: true,
+  });
+}
 </script>
 
 <template>

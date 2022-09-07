@@ -100,19 +100,13 @@ export const useClassroomStore = defineStore("classroom", () => {
       filteredClassrooms.value = data;
     },
     async fetchClassroom(classroomId: string) {
-      const { data, error } = await useFetchAPI<Classroom>(
+      const response = await useFetchAPI<Classroom>(
         `v1/classrooms/${classroomId}`
       );
-
-      if (error) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: "Classroom not found",
-          fatal: true,
-        });
-      } else {
-        classroom.value = data;
+      if (response.data) {
+        classroom.value = response.data;
       }
+      return response;
     },
 
     async createClassroom(classroom: { name: string; visibility: string }) {
@@ -162,11 +156,10 @@ export const useClassroomStore = defineStore("classroom", () => {
     },
 
     async fetchCurrentFolder(folderId: string) {
-      const { data: folder } = await useFetchAPI<Folder>(
-        `/v1/folders/${folderId}`
-      );
+      const response = await useFetchAPI<Folder>(`/v1/folders/${folderId}`);
 
-      currentFolder.value = folder;
+      currentFolder.value = response.data;
+      return response;
     },
     async refreshCurrentFolder() {
       if (!currentFolder.value) return;
