@@ -2,6 +2,8 @@
 import { ClassroomAccessRight } from "~~/models/Classroom";
 import User from "~~/models/User";
 
+const { t } = useI18n();
+
 const props = defineProps<{
   member: User;
 }>();
@@ -17,10 +19,11 @@ const changeRole = () => {
 };
 
 const prettyRole = ref({
-  read: "Read",
-  read_write: "Read + Write",
-  read_write_delete: "Read + Write + Delete",
-  owner: "Owner",
+  read: t("app.roles.read"),
+  read_write: t("app.roles.write"),
+  read_write_delete: t("app.roles.delete"),
+  owner: t("app.roles.owner"),
+  subscriber: t("app.roles.subscriber"),
 });
 </script>
 
@@ -48,10 +51,13 @@ const prettyRole = ref({
       class="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-storm-dark focus:border-storm-blue focus:ring-storm-blue"
       @change="changeRole"
     >
-      <option selected value="read">Read</option>
-      <option value="read_write">Read + Write</option>
-      <option value="read_write_delete">Read + Write + Delete</option>
-      <option value="owner">Owner</option>
+      <option selected value="read">{{ $t("app.roles.read") }}</option>
+      <option value="read_write">{{ $t("app.roles.write") }}</option>
+      <option value="read_write_delete">
+        {{ $t("app.roles.delete") }}
+      </option>
+      <option value="owner">{{ $t("app.roles.owner") }}</option>
+      <option value="subscriber">{{ $t("app.roles.subscriber") }}</option>
     </select>
   </div>
 </template>
