@@ -206,5 +206,21 @@ export const useClassroomStore = defineStore("classroom", () => {
         },
       });
     },
+
+    async changeMemberRole(
+      classroomId: string,
+      email: string,
+      accessRight: string
+    ) {
+      await useFetchAPI("v1/classrooms/users", {
+        method: "PATCH",
+        body: {
+          classroomId: classroomId,
+          email: email,
+          accessRight: accessRight,
+        },
+        useFetch: true,
+      });
+    },
   };
 });

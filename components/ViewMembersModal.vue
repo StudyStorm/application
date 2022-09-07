@@ -35,6 +35,11 @@ const changePage = (page: number) => {
   }
 };
 
+const changeMemberRole = async (memberId: string, accessRight: string) => {
+  await store.changeMemberRole(store.classroom.id, memberId, accessRight);
+  store.fetchClassroomUsers(store.classroom.id, 5, currentPage.value);
+};
+
 defineExpose({
   closeModal,
   openModal,
@@ -64,7 +69,6 @@ defineExpose({
             />
           </div>
           <select
-            id="countries"
             v-model="selectedRole"
             class="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           >
@@ -76,26 +80,12 @@ defineExpose({
         </div>
 
         <hr class="my-4" />
-        <div
+        <member-row
           v-for="member in store.members.data"
           :key="member.id"
-          class="flex items-center justify-between border-b py-2 text-storm-dark"
-        >
-          <div class="flex items-center">
-            <nuxt-img
-              class="h-10 w-10 rounded-full"
-              :src="member.picture_url"
-            ></nuxt-img>
-            <div class="ml-4 font-medium">
-              {{ member.first_name }} {{ member.last_name }}
-            </div>
-          </div>
-          <div
-            class="mr-2 rounded bg-purple-300 px-2.5 py-0.5 text-sm font-medium text-storm-purple"
-          >
-            {{ member.access_right }}
-          </div>
-        </div>
+          :member="member"
+          @change-role="changeMemberRole"
+        />
         <div class="mt-4 flex justify-center">
           <s-paginator
             :current-page="currentPage"
