@@ -41,6 +41,7 @@ export const useLearnStore = defineStore("learn", {
       });
 
       this.deck = deck;
+      this.currentCardIndex = 0;
     },
 
     async reportCard(cardId: string, message: string) {
