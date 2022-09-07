@@ -21,7 +21,7 @@ const answerStyle = computed(() => (isTheAnswer: boolean) => {
   }
 
   if (isTheAnswer) {
-    return "peer-checked:border-green-600 bg-green-200 hover:bg-green-200 border-red-600 animate-pulse";
+    return "peer-checked:border-green-600 bg-green-200 hover:bg-green-200 border-red-600 animate-pulse scale-105 bold";
   } else {
     return "peer-checked:border-red-600";
   }

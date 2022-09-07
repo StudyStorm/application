@@ -5,7 +5,7 @@ import {
 } from "@heroicons/vue/24/outline/index.js";
 import { useLearnStore } from "~~/store/learn";
 import ReportCardModal from "~/components/ReportCardModal.vue";
-import { SwipeDirection } from "@vueuse/core";
+import { onKeyStroke, SwipeDirection } from "@vueuse/core";
 
 const learnStore = useLearnStore();
 
@@ -27,13 +27,31 @@ const { isSwiping, lengthX, lengthY } = useSwipe(activeCard, {
   onSwipeEnd(_e: TouchEvent, direction: SwipeDirection) {
     switch (direction) {
       case "LEFT":
-        learnStore.previousCard();
+        previousCard();
         break;
       case "RIGHT":
-        learnStore.nextCard();
+        nextCard();
         break;
     }
   },
+});
+
+onKeyStroke("ArrowLeft", (e) => {
+  e.preventDefault();
+  if (e.repeat) return;
+  previousCard();
+});
+
+onKeyStroke("ArrowRight", (e) => {
+  e.preventDefault();
+  if (e.repeat) return;
+  nextCard();
+});
+
+onKeyStroke(" ", (e) => {
+  e.preventDefault();
+  if (e.repeat) return;
+  activeCard.value.toggle?.();
 });
 
 const transform = computed(() => {
@@ -46,21 +64,25 @@ const transform = computed(() => {
   return `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
 });
 
+const swipeTransition = ref<string>("");
+
 const previousCard = () => {
   learnStore.previousCard();
   activeCard.value.reset();
+  swipeTransition.value = "swipe-right";
 };
 
 const nextCard = () => {
   learnStore.nextCard();
   activeCard.value.reset();
+  swipeTransition.value = "swipe-left";
 };
 
 // TODO: flip card when going to the next if needed
 </script>
 
 <template>
-  <div>
+  <div class="overflow-x-hidden">
     <div
       class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
     >
@@ -93,14 +115,18 @@ const nextCard = () => {
             :style="`width: ${progress}%; transition: 0.5s ease-in-out`"
           ></div>
         </div>
-
-        <component
-          :is="cardTypes[learnStore.currentCard.content.type]"
-          ref="activeCard"
-          :card="learnStore.currentCard"
-          :class="{ 'transition-transform': !isSwiping }"
-          :style="{ transform }"
-        />
+        <div class="relative">
+          <Transition :name="swipeTransition">
+            <component
+              :is="cardTypes[learnStore.currentCard.content.type]"
+              ref="activeCard"
+              :key="learnStore.currentCard.id"
+              :card="learnStore.currentCard"
+              :class="{ 'transition-transform': !isSwiping }"
+              :style="{ transform }"
+            />
+          </Transition>
+        </div>
 
         <div class="mt-8 flex flex-col items-center justify-center">
           <div class="inline-flex">
@@ -147,3 +173,31 @@ const nextCard = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.swipe-right-enter-active,
+.swipe-left-enter-active {
+  transition: all 0.5s;
+  z-index: 1;
+}
+.swipe-right-leave-active,
+.swipe-left-leave-active {
+  transition: all 0.5s;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+}
+.swipe-right-enter-from,
+.swipe-left-enter-from {
+  transform: scale(0.5);
+  opacity: 0;
+}
+.swipe-right-leave-to {
+  transform: translate(-100vh, -100px) rotate(-30deg) scale(0.5);
+  opacity: 0;
+}
+.swipe-left-leave-to {
+  transform: translate(100vh, -100px) rotate(-30deg) scale(0.5);
+  opacity: 0;
+}
+</style>

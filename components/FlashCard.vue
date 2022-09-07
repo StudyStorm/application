@@ -15,12 +15,13 @@ const answer = computed(() => {
   return props.card.content.answers[0].label;
 });
 
-const reset = () => {
-  isFlipped.value = false;
-};
-
 defineExpose({
-  reset,
+  reset: () => {
+    isFlipped.value = false;
+  },
+  toggle: () => {
+    isFlipped.value = !isFlipped.value;
+  },
 });
 </script>
 
