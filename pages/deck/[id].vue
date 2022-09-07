@@ -29,6 +29,7 @@ const deleteDeck = async () => {
 
 onMounted(async () => {
   store.addUsedDeck(route.params.id as string);
+  await store.fetchLastVisited();
 });
 </script>
 

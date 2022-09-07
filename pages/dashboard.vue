@@ -38,6 +38,10 @@ function color(id: string) {
     .reduce((a, b) => (a + b.charCodeAt(0)) % 360, 0)}, 100%, 80%)`;
 }
 
+onMounted(() => {
+  deckStore.fetchLastVisited();
+});
+
 whenever(alt_k, () => {
   useFocus(target, { initialValue: true });
 });
@@ -78,7 +82,7 @@ whenever(alt_k, () => {
       <div class="s-grid">
         <ClientOnly>
           <DeckCard
-            v-for="deck in deckStore.lastUsedDecks"
+            v-for="deck in deckStore.lastVisitedDecks"
             :key="deck.id"
             :deck="deck"
           />

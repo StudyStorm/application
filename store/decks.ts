@@ -21,6 +21,8 @@ export const useDecksStore = defineStore("decks", {
     currentDeck: null,
 
     currentUserVote: 0,
+
+    lastVisitedDecks: [],
   }),
   getters: {
     decks: (state) => {
@@ -91,6 +93,22 @@ export const useDecksStore = defineStore("decks", {
       );
 
       this.bestRatedDecks = data.data;
+    },
+
+    async fetchLastVisited() {
+      const decksIds: string[] = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_KEY)
+      );
+
+      if (!decksIds) return [];
+
+      this.lastVisitedDecks = (
+        await Promise.all(
+          decksIds.map(
+            async (id) => (await useFetchAPI<Deck>(`v1/decks/${id}`)).data
+          )
+        )
+      ).filter((c) => c !== null);
     },
 
     async fetchDeck(deckId: string) {

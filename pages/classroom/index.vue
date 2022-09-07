@@ -40,6 +40,10 @@ function color(id: string) {
     .reduce((a, b) => (a + b.charCodeAt(0)) % 360, 0)}, 100%, 80%)`;
 }
 
+onMounted(() => {
+  classroomStore.fetchLastVisited();
+});
+
 whenever(alt_k, () => {
   useFocus(target, { initialValue: true });
 });
