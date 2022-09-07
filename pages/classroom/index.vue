@@ -80,26 +80,37 @@ whenever(alt_k, () => {
       </h1>
 
       <div class="flex items-center justify-between">
-        <div>
-          <div class="relative mt-1 flex items-center">
-            <input
-              ref="target"
-              v-model="classroomStore.searchFilter"
-              name="searchClassroom"
-              type="text"
-              class="block w-full rounded-md border-gray-300 pr-12 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
-              :placeholder="$t('app.classrooms.search')"
-              @input="changePage(currentPage)"
-            />
-            <div
-              class="absolute inset-y-0 right-0 hidden py-1.5 pr-1.5 sm:flex"
-            >
-              <kbd
-                class="inline-flex items-center rounded border border-gray-200 px-2 font-sans text-sm font-medium text-gray-400"
-                >Alt+K</kbd
+        <div class="flex">
+          <div>
+            <div class="relative mt-1 flex items-center">
+              <input
+                ref="target"
+                v-model="classroomStore.searchFilter"
+                name="searchClassroom"
+                type="text"
+                class="block w-full rounded-md border-gray-300 pr-12 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
+                :placeholder="$t('app.classrooms.search')"
+                @input="changePage(currentPage)"
+              />
+              <div
+                class="absolute inset-y-0 right-0 hidden py-1.5 pr-1.5 sm:flex"
               >
+                <kbd
+                  class="inline-flex items-center rounded border border-gray-200 px-2 font-sans text-sm font-medium text-gray-400"
+                  >Alt+K</kbd
+                >
+              </div>
             </div>
           </div>
+          <classroom-modal v-slot="{ open }">
+            <button
+              type="submit"
+              class="mt-1 ml-2 inline-flex items-center justify-center rounded-md border border-transparent bg-storm-darkblue py-1 px-2 text-xs font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+              @click="open"
+            >
+              {{ $t("app.classrooms.addClassroom") }}
+            </button>
+          </classroom-modal>
         </div>
 
         <div
