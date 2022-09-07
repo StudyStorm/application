@@ -44,12 +44,9 @@ async function register() {
 
   if (error) {
     errors.value = error.data;
-    console.log("error", error.data);
   } else {
     resendToken.value = data.resend_token;
     showVerifyStep.value = true;
-    console.log("log data: " + data);
-    console.log("log data: " + resendToken.value);
   }
 }
 
