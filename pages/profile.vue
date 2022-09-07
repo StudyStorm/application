@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline/index.js";
-const config = useRuntimeConfig();
 
 const showModal = ref(false);
 
@@ -35,15 +34,13 @@ function updatePicture(newPicture: File) {
 }
 
 async function updateEmail() {
-  const { error } = await useFetch("/v1/profile/reset-email", {
+  const { error } = await useFetchAPI("/v1/profile/reset-email", {
     method: "PATCH",
     body: { email: userInformation.value.email },
-    credentials: "include",
-    baseURL: config.apiURL,
-    initialCache: false,
+    useFetch: true,
   });
 
-  if (error.value) {
+  if (error) {
     errors.value.email = true;
   } else {
     waitVerify.value = true;
@@ -67,15 +64,13 @@ async function save() {
     await updateEmail();
   }
 
-  const { error } = await useFetch("/v1/profile", {
+  const { error } = await useFetchAPI("/v1/profile", {
     method: "PATCH",
     body: formData,
-    credentials: "include",
-    baseURL: config.apiURL,
-    initialCache: false,
+    useFetch: true,
   });
 
-  if (error.value) {
+  if (error) {
     errors.value.form = true;
   } else {
     if (!errors.value.email && !errors.value.form) {
