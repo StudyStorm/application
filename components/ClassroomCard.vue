@@ -40,7 +40,9 @@ const color = computed((): string => {
         <span
           class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
           :class="[
-            classroom.visibility === 'public' ? 'bg-green-500 ' : 'bg-red-500 ',
+            classroom.visibility === 'public'
+              ? 'bg-green-500 '
+              : 'bg-storm-red ',
           ]"
           >{{
             classroom.visibility === "public"
