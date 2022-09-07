@@ -53,7 +53,10 @@ defineExpose({
     </template>
     <template #content>
       <div class="mb-6">
-        <div class="flex items-end space-x-2">
+        <div
+          v-if="store.classroom.permissions.is_owner"
+          class="flex items-end space-x-2"
+        >
           <div class="flex-1">
             <label
               for="message"
@@ -87,6 +90,7 @@ defineExpose({
           v-for="member in store.members.data"
           :key="member.id"
           :member="member"
+          :can-edit="store.classroom.permissions.is_owner"
           @change-role="changeMemberRole"
         />
         <div class="mt-4 flex justify-center">

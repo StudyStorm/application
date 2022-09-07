@@ -60,6 +60,7 @@ const files = computed(
         {{ $t("app.classroom.folderButton") }}
       </button>
       <button
+        v-if="showEdition"
         type="button"
         class="flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         @click="emit('showDeckModal')"
