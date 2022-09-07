@@ -259,6 +259,15 @@ app:
     browseClassrooms: Explorer les salles de classe
     recentClassrooms: Classes récentes
     search: Rechercher une classe
+    addClassroom: Ajouter une classe
+    modal:
+      title: Créer une nouvelle classe
+      name: Nom de la classe
+      visibility: Visibilité
+      public: Publique
+      private: Privée
+      cancel: Annuler
+      confirm: Confirmer
     table:
       title: Classes
       name: Nom
