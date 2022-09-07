@@ -219,7 +219,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
       <template #title> {{ $t("app.classroom.deckModal.title") }} </template>
       <template #content>
         <s-form
-          class="w-full max-w-sm space-y-2 px-7"
+          class="w-full space-y-2 sm:max-w-sm"
           :errors="errors"
           @submit.prevent="createDeck"
         >
