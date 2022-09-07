@@ -24,7 +24,6 @@ async function sendEmail() {
 
   if (error) {
     status.value.err = true;
-    console.log(error);
   } else {
     status.value.success = true;
   }

@@ -85,11 +85,8 @@ async function deleteAccount() {
   const { error } = await useFetchAPI("/v1/profile", {
     method: "DELETE",
   });
-  console.log(error);
 
-  if (error) {
-    console.log(error);
-  } else {
+  if (!error) {
     useNuxtApp().$auth.logout();
   }
 }
