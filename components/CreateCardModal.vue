@@ -7,6 +7,7 @@ import {
 } from "@heroicons/vue/24/outline/index.js";
 import { PropType } from "vue";
 import Card, { CardContent } from "~/models/Card";
+import { klona } from "klona";
 const store = useDecksStore();
 const route = useRoute();
 
@@ -29,14 +30,9 @@ const props = defineProps({
 });
 const card = ref<CardContent>(null);
 
-function load() {
-  if (!props.card) return null;
-  return structuredClone(props.card.content);
-}
-
 function init() {
   hasError.value = false;
-  card.value = this.load() ?? {
+  card.value = klona(props.card?.content) ?? {
     question: null,
     answers: [{ label: null, isTheAnswer: false }],
     type: "options",
@@ -44,40 +40,37 @@ function init() {
   showModal.value = true;
 }
 
-async function createCard() {
+const isEditing = computed(() => props.card !== null);
+
+async function save() {
   if (!card.value) {
     hasError.value = true;
     return;
   }
-  const payload = {
-    deckId: route.params.id as string,
-    content: {
-      question: card.value.question,
-      answers: [],
-      type: card.value.type,
-    },
-  };
 
-  payload.content.answers = card.value.answers.filter(
-    (answer) => answer.label !== null
-  );
+  const content = card.value;
 
-  if (!payload.content.answers.length) {
+  //filter empty cards
+  content.answers = content.answers.filter((answer) => answer.label !== null);
+  if (!content.answers.length) {
     hasError.value = true;
     return;
+  } else if (content.answers.length === 1) {
+    content.answers[0].isTheAnswer = true;
   }
 
-  if (payload.content.answers.length === 1) {
-    payload.content.answers[0].isTheAnswer = true;
-    payload.content.type = "flashCard";
-  }
-
-  const { error } = await store.createCard(payload);
+  content.type = "card";
+  const { error } = await (isEditing.value
+    ? store.updateCard(props.card.id, card.value)
+    : store.createCard({
+        deckId: route.params.id as string,
+        content: card.value,
+      }));
 
   if (error) {
     hasError.value = true;
   } else {
-    await store.fetchDeck(route.params.id as string);
+    await store.refreshDeck();
     showModal.value = false;
   }
 }
@@ -105,7 +98,12 @@ function removeAnswer(answer: Answer) {
       </div>
     </template>
     <template #title>
-      {{ $t("app.deck.modal.create.title") }}
+      <template v-if="isEditing">
+        {{ $t("app.deck.modal.edit.title") }}
+      </template>
+      <template v-else>
+        {{ $t("app.deck.modal.create.title") }}
+      </template>
     </template>
     <template #content>
       <div class="mt-8 w-full space-y-4 px-7 sm:px-0 xl:mx-auto">
@@ -183,9 +181,14 @@ function removeAnswer(answer: Answer) {
       <button
         type="button"
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="createCard"
+        @click="save"
       >
-        {{ $t("app.deck.modal.buttons.create") }}
+        <template v-if="isEditing">
+          {{ $t("app.deck.modal.buttons.edit") }}
+        </template>
+        <template v-else>
+          {{ $t("app.deck.modal.buttons.create") }}
+        </template>
       </button>
       <button
         type="button"

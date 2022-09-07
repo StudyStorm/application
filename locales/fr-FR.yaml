@@ -190,6 +190,11 @@ app:
         edit: Modifier
         addAnswer: Ajouter une réponse
     linkToHome: Cliquez ici pour revenir à l'accueil
+  cards:
+    modal:
+      delete:
+        title: Supprimer une carte
+        content: Êtes-vous sûr de vouloir supprimer cette carte ?
   dashboard:
     title: Accueil
     topDecks: Decks populaires

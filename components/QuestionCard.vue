@@ -1,25 +1,49 @@
 <script setup lang="ts">
-import { PencilIcon } from "@heroicons/vue/24/solid/index.js";
+import { PencilIcon, TrashIcon } from "@heroicons/vue/24/solid/index.js";
 import Card from "~~/models/Card";
+import ConfirmModal from "~/components/ConfirmModal.vue";
+import { useDecksStore } from "~/store/decks";
 
-defineProps<{
+const props = defineProps<{
   card: Card;
   number: number;
 }>();
+const decksStore = useDecksStore();
 
-const emit = defineEmits(["edit"]);
+async function deleteCard() {
+  await decksStore.deleteCard(props.card.id);
+  await decksStore.refreshDeck();
+}
 </script>
 
 <template>
   <s-card-squared :key="card.id">
-    <create-card-modal v-slot="{ open }" :card="card">
-      <div
-        class="invisible absolute -top-2 -right-2 inline-flex h-8 w-8 items-center justify-center overflow-hidden text-ellipsis rounded-full border-2 border-white bg-storm-blue p-1 text-xs font-bold text-white hover:scale-110 group-hover:visible"
-        @click="open"
-      >
-        <PencilIcon />
-      </div>
-    </create-card-modal>
+    <div class="invisible absolute -top-2 -right-2 group-hover:visible">
+      <create-card-modal v-slot="{ open }" :card="card">
+        <div
+          class="mx-1 inline-flex h-8 w-8 items-center justify-center overflow-hidden text-ellipsis rounded-full border-2 border-white bg-storm-blue p-1 text-xs font-bold text-white hover:scale-110"
+          @click="open"
+        >
+          <PencilIcon />
+        </div>
+      </create-card-modal>
+      <confirm-modal @confirm="deleteCard">
+        <template #title>
+          {{ $t("app.cards.modal.delete.title") }}
+        </template>
+        <template #content>
+          {{ $t("app.cards.modal.delete.content") }}
+        </template>
+        <template #default="{ open }">
+          <div
+            class="inline-flex h-8 w-8 items-center justify-center overflow-hidden text-ellipsis rounded-full border-2 border-white bg-red-800 p-1 text-xs font-bold text-white hover:scale-110"
+            @click="open"
+          >
+            <TrashIcon />
+          </div>
+        </template>
+      </confirm-modal>
+    </div>
     <p
       class="flex min-h-0 flex-1 items-center overflow-hidden hover:overflow-y-auto"
     >
