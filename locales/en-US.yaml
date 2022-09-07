@@ -132,7 +132,7 @@ app:
       email: The email is already taken
       form: The validation failed. Please check your inputs
     modal:
-      title: Delete accounte
+      title: Delete account
       content: Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
       buttons:
         cancel: Cancel
@@ -231,7 +231,14 @@ app:
       name: Name of the folder
       cancel: Cancel
       submit: Create
-    allMembers: This feature will be available soon.
+    unsubscribe: Unsubscribe
+    subscribe: Subscribe
+    modal:
+      title: Members
+      addMembers: Add a member
+      enterEmail: Enter the email of the member
+      close: Close
+      confirm: Add
   inbox:
     title: Inbox
     markAsRead: Mark as read

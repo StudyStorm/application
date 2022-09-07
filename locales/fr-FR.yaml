@@ -235,7 +235,14 @@ app:
       name: Nom du dossier
       cancel: Annuler
       submit: Créer
-    allMembers: Cette fonctionnalité sera bientôt disponible.
+    unsubscribe: Se désabonner
+    subscribe: Rejoindre
+    modal:
+      title: Membres
+      addMembers: Ajouter un membre
+      enterEmail: Entrer l'email d'un membre
+      close: Fermer
+      confirm: Ajouter
   inbox:
     title: Boîte de réception
     markAsRead: Marquer comme lu

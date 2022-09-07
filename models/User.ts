@@ -1,3 +1,4 @@
+import { ClassroomAccessRight } from "./Classroom";
 export default interface User {
   id: string;
 
@@ -12,4 +13,6 @@ export default interface User {
   isEmailVerified: boolean;
 
   picture_url: string;
+
+  access_right?: ClassroomAccessRight;
 }

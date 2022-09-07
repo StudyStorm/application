@@ -5,6 +5,7 @@ import { AcademicCapIcon } from "@heroicons/vue/24/solid/index.js";
 import { FormError } from "~~/types/app";
 
 const route = useRoute();
+const router = useRouter();
 const classroomStore = useClassroomStore();
 
 const deckName = ref<string>("");
@@ -56,6 +57,11 @@ onMounted(async () => {
   classroomStore.addVisitedClassroom(route.params.classroom as string);
 });
 
+const quitClassroom = () => {
+  classroomStore.unsubscribe(classroomStore.classroom.id);
+  router.push({ name: "dashboard" });
+};
+
 await classroomStore.fetchClassroom(route.params.classroom as string);
 await classroomStore.fetchClassroomUsers(route.params.classroom as string);
 </script>
@@ -63,13 +69,38 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
 <template>
   <div>
     <div>
+      <div
+        class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
+      >
+        <div class="flex min-w-0 flex-1 items-center justify-between">
+          <div>
+            <h1
+              class="flex-row items-center text-2xl font-bold leading-6 text-storm-dark sm:truncate"
+            >
+              <AcademicCapIcon class="inline h-8 w-8" />
+              {{ classroomStore.classroom.name }}
+            </h1>
+          </div>
+          <button
+            v-if="
+              classroomStore.classroom.visibility === 'public' &&
+              !classroomStore.classroom.permissions.is_member
+            "
+            class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            @click="classroomStore.subscribe(classroomStore.classroom.id)"
+          >
+            {{ $t("app.classroom.subscribe") }}
+          </button>
+          <button
+            v-else-if="classroomStore.classroom.permissions.is_member"
+            class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            @click="quitClassroom"
+          >
+            {{ $t("app.classroom.unsubscribe") }}
+          </button>
+        </div>
+      </div>
       <div class="p-4 sm:px-6 lg:px-8">
-        <h1
-          class="mb-4 text-2xl font-bold leading-7 text-storm-dark sm:truncate sm:text-3xl"
-        >
-          <AcademicCapIcon class="inline h-6 w-6" />
-          {{ classroomStore.classroom.name }}
-        </h1>
         <div>
           <h1 class="text-lg font-medium leading-6 text-storm-dark sm:truncate">
             {{ $t("app.classroom.members") }}
@@ -98,13 +129,15 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
               </div>
             </div>
             <div>
-              <button
-                type="submit"
-                class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                @click="viewAllMembers = true"
-              >
-                {{ $t("app.classroom.membersButton") }}
-              </button>
+              <view-members-modal v-slot="{ open }">
+                <button
+                  type="submit"
+                  class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  @click="open"
+                >
+                  {{ $t("app.classroom.membersButton") }}
+                </button>
+              </view-members-modal>
             </div>
           </div>
         </div>
@@ -141,7 +174,6 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
       </template>
       <template #footer>
         <button
-          type="submit"
           class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
           @click="createFolder"
         >
