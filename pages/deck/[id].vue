@@ -77,7 +77,7 @@ const showModal = ref(false);
         >
           <CreateCard v-slot="{ open }">
             <v-card class="bg-gray-100" @click="open">
-              <PlusIcon class="mx-auto h-full w-12 text-storm-dark" />
+              <PlusIcon class="text-storm-dark mx-auto h-full w-12" />
             </v-card>
           </CreateCard>
           <QuestionCard
