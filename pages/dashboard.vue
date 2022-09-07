@@ -6,7 +6,6 @@ import { useMagicKeys, whenever, useFocus } from "@vueuse/core";
 
 const deckStore = useDecksStore();
 await deckStore.fetchDecks();
-await deckStore.fetchAllDecks();
 await deckStore.fetchBestDecks();
 
 const { alt_k } = useMagicKeys({

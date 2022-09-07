@@ -8,7 +8,6 @@ const { t } = useI18n();
 
 const classroomStore = useClassroomStore();
 
-await classroomStore.fetchAllClassrooms();
 await classroomStore.fetchClassrooms();
 
 const { alt_k } = useMagicKeys({

@@ -14,8 +14,6 @@ export const useDecksStore = defineStore("decks", {
 
     bestRatedDecks: [],
 
-    allDecks: {} as Pagination<Deck>,
-
     filteredDecks: {} as Pagination<Deck>,
 
     currentDeck: null,
@@ -33,16 +31,6 @@ export const useDecksStore = defineStore("decks", {
     },
     lastUsedDecksIds: () => {
       return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
-    },
-    lastUsedDecks: (state) => {
-      const deckIds: string[] = JSON.parse(
-        localStorage.getItem(LOCAL_STORAGE_KEY)
-      );
-
-      if (!deckIds) return [];
-      return state.allDecks.data
-        ? state.allDecks.data.filter((deck) => deckIds.includes(deck.id))
-        : [];
     },
   },
   actions: {
@@ -63,14 +51,6 @@ export const useDecksStore = defineStore("decks", {
 
       // Update local storage
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(used));
-    },
-
-    async fetchAllDecks() {
-      const { data } = await useFetchAPI<Pagination<Deck>>(`/v1/decks`, {
-        method: "GET",
-      });
-
-      this.allDecks = data;
     },
 
     async fetchDecks(page = 1) {

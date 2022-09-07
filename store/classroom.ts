@@ -16,7 +16,6 @@ export const useClassroomStore = defineStore("classroom", () => {
   const showFolderCreationModal = ref(false);
 
   const searchFilter = ref("");
-  const allClassrooms = ref<Pagination<Classroom>>(null);
   const filteredClassrooms = ref<Pagination<Classroom>>(null);
   const pinnedClassrooms = ref<Pagination<Classroom>>(null);
   const LOCAL_STORAGE_KEY = "lastVisitedClassrooms";
@@ -43,7 +42,6 @@ export const useClassroomStore = defineStore("classroom", () => {
     showDeckCreationModal,
     showFolderCreationModal,
     searchFilter,
-    allClassrooms,
     pinnedClassrooms,
     filteredClassrooms,
     LOCAL_STORAGE_KEY,
@@ -89,17 +87,6 @@ export const useClassroomStore = defineStore("classroom", () => {
           )
         )
       ).filter((c) => c !== null);
-    },
-
-    async fetchAllClassrooms() {
-      const { data } = await useFetchAPI<Pagination<Classroom>>(
-        `/v1/classrooms`,
-        {
-          method: "GET",
-        }
-      );
-
-      allClassrooms.value = data;
     },
 
     async fetchClassrooms(page = 1) {
