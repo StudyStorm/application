@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { CheckBadgeIcon } from "@heroicons/vue/24/outline/index.js";
 import { useInboxStore } from "~~/store/inbox";
 
 const store = useInboxStore();
@@ -21,44 +20,27 @@ const changePage = (page: number) => {
       class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
     >
       <div class="min-w-0">
-        <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
+        <h1
+          class="flex items-center text-lg font-medium leading-6 text-gray-900 sm:truncate"
+        >
           {{ $t("app.inbox.title") }}
+          <div
+            v-if="store.unReadReports"
+            class="inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white"
+          >
+            {{ store.unReadReports }}
+          </div>
         </h1>
       </div>
     </div>
     <div class="space-y-6 sm:mx-auto sm:w-full sm:max-w-md lg:mt-8">
-      {{ store.inboxReports.meta }}
-      <div
+      <InboxCard
         v-for="report in store.inboxReports.data"
         :key="report.id"
-        class="block rounded-lg border border-gray-200 p-4 shadow-md"
-        :class="report.is_read ? 'text-gray-400' : 'text-storm-dark'"
-      >
-        <div class="flex items-center justify-between">
-          <div class="truncate">
-            <h5 class="mb-2 text-ellipsis font-bold tracking-tight">
-              {{ report.message }}
-            </h5>
-            <div>
-              <p v-if="report.author" class="truncate text-sm font-normal">
-                {{
-                  $t("app.decks.createdBy", {
-                    name: `${report.author.first_name} ${report.author.last_name}`,
-                  })
-                }}
-              </p>
-            </div>
-          </div>
-          <div>
-            <button
-              class="bg-white transition hover:scale-105 hover:bg-gray-100"
-              @click="store.markAsRead(!report.is_read, report.id)"
-            >
-              <CheckBadgeIcon class="h-8 bg-white" />
-            </button>
-          </div>
-        </div>
-      </div>
+        :report="report"
+        @toggle-read="store.markAsRead"
+        @delete="store.deleteReport"
+      ></InboxCard>
       <div class="mt-4 flex justify-center">
         <s-paginator
           :current-page="currentPage"

@@ -12,5 +12,5 @@ export default interface Report {
 
   author: User;
 
-  createdAt: Date;
+  created_at: Date;
 }

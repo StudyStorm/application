@@ -9,13 +9,18 @@ export const useInboxStore = defineStore("inbox", () => {
     return inboxReports.value.meta;
   });
 
+  const unReadReports = computed((): number => {
+    return inboxReports.value.data.filter((report) => !report.is_read).length;
+  });
+
   return {
     inboxReports,
     pagination,
+    unReadReports,
     async fetchInboxReports(page = 1) {
       const { data } = await useFetchAPI<Pagination<Report>>("/v1/inbox", {
         method: "GET",
-        params: { page: page },
+        params: { page: page, limit: 5 },
       });
 
       inboxReports.value = data;
@@ -29,6 +34,12 @@ export const useInboxStore = defineStore("inbox", () => {
         credentials: "include",
         baseURL: useRuntimeConfig().apiURL,
         initialCache: false,
+      });
+      this.fetchInboxReports();
+    },
+    async deleteReport(reportId: string) {
+      await useFetchAPI(`/v1/inbox/${reportId}`, {
+        method: "DELETE",
       });
       this.fetchInboxReports();
     },
