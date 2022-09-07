@@ -104,7 +104,10 @@ onMounted(async () => {
         <div
           class="grid flex-1 grid-cols-2 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5"
         >
-          <create-card-modal v-slot="{ open }">
+          <create-card-modal
+            v-if="store.currentDeck.folder.classroom.permissions.write"
+            v-slot="{ open }"
+          >
             <s-card-squared class="bg-gray-100" @click="open">
               <PlusIcon class="mx-auto h-full w-12 text-storm-dark" />
             </s-card-squared>
@@ -115,6 +118,8 @@ onMounted(async () => {
             :key="i"
             :card="card"
             :number="i + 1"
+            :can-delete="store.currentDeck.folder.classroom.permissions.delete"
+            :can-edit="store.currentDeck.folder.classroom.permissions.write"
           />
         </div>
         <div
