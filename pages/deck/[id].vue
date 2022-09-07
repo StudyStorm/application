@@ -6,6 +6,7 @@ import {
   ChevronDownIcon,
 } from "@heroicons/vue/24/solid/index.js";
 import SCardSquared from "~/components/s/SCardSquared.vue";
+import Classroom from "~~/models/Classroom";
 
 const store = useDecksStore();
 const route = useRoute();
@@ -13,6 +14,13 @@ const router = useRouter();
 
 await store.fetchDeck(route.params.id as string);
 await store.fetchDeckUserRating(route.params.id as string);
+
+const { data: permissionClassroom } = await useFetchAPI<Classroom>(
+  `/v1/classrooms/${store.currentDeck.folder.classroom_id}`,
+  {
+    method: "GET",
+  }
+);
 
 const deleteDeck = async () => {
   await store.deleteDeck(store.currentDeck.id);
@@ -43,7 +51,6 @@ onMounted(async () => {
               })
             }}</span>
           </div>
-
           <div class="flex items-center space-x-4">
             <div class="flex flex-col items-center text-sm font-medium">
               <div @click="store.upvoteDeck(store.currentDeck)">
@@ -62,7 +69,7 @@ onMounted(async () => {
             </div>
             <update-deck-modal v-slot="{ open }">
               <button
-                v-if="store.currentDeck.folder.classroom.permissions.write"
+                v-if="permissionClassroom.permissions.write"
                 type="submit"
                 class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click="open"
@@ -71,7 +78,7 @@ onMounted(async () => {
               </button>
             </update-deck-modal>
             <confirm-modal
-              v-if="store.currentDeck.folder.classroom.permissions.delete"
+              v-if="permissionClassroom.permissions.delete"
               @confirm="deleteDeck"
             >
               <template #title>
@@ -105,7 +112,7 @@ onMounted(async () => {
           class="grid flex-1 grid-cols-2 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5"
         >
           <create-card-modal
-            v-if="store.currentDeck.folder.classroom.permissions.write"
+            v-if="permissionClassroom.permissions.write"
             v-slot="{ open }"
           >
             <s-card-squared class="bg-gray-100" @click="open">
@@ -118,8 +125,8 @@ onMounted(async () => {
             :key="i"
             :card="card"
             :number="i + 1"
-            :can-delete="store.currentDeck.folder.classroom.permissions.delete"
-            :can-edit="store.currentDeck.folder.classroom.permissions.write"
+            :can-delete="permissionClassroom.permissions.delete"
+            :can-edit="permissionClassroom.permissions.write"
           />
         </div>
         <div
