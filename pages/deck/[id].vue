@@ -18,45 +18,47 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div
-      class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
-    >
-      <div class="flex min-w-0 flex-1 items-center justify-between">
-        <div>
-          <h1
-            class="flex-row text-lg font-medium leading-6 text-storm-dark sm:truncate"
-          >
-            {{ store.currentDeck.name }}
-          </h1>
-          <span class="text-sm text-storm-dark sm:truncate">{{
-            $t("app.decks.createdBy", {
-              name: `${store.currentDeck.creator.first_name} ${store.currentDeck.creator.last_name}`,
-            })
-          }}</span>
-        </div>
-
-        <div class="flex items-center space-x-4">
-          <div class="flex flex-col items-center text-sm font-medium">
-            <div @click="store.upvoteDeck(store.currentDeck)">
-              <ChevronUpIcon
-                class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-emerald-500"
-                :class="{ 'text-emerald-500': store.currentUserVote === 1 }"
-              />
-            </div>
-            <span class="text-storm-dark">{{ store.currentDeck.votes }}</span>
-            <div @click="store.downvoteDeck(store.currentDeck)">
-              <ChevronDownIcon
-                class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-red-500"
-                :class="{ 'text-red-500': store.currentUserVote === -1 }"
-              />
-            </div>
+    <div>
+      <div
+        class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
+      >
+        <div class="flex min-w-0 flex-1 items-center justify-between">
+          <div>
+            <h1
+              class="flex-row text-lg font-medium leading-6 text-storm-dark sm:truncate"
+            >
+              {{ store.currentDeck.name }}
+            </h1>
+            <span class="text-sm text-storm-dark sm:truncate">{{
+              $t("app.decks.createdBy", {
+                name: `${store.currentDeck.creator.first_name} ${store.currentDeck.creator.last_name}`,
+              })
+            }}</span>
           </div>
-          <button
-            type="submit"
-            class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            {{ $t("app.decks.manageButton") }}
-          </button>
+
+          <div class="flex items-center space-x-4">
+            <div class="flex flex-col items-center text-sm font-medium">
+              <div @click="store.upvoteDeck(store.currentDeck)">
+                <ChevronUpIcon
+                  class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-emerald-500"
+                  :class="{ 'text-emerald-500': store.currentUserVote === 1 }"
+                />
+              </div>
+              <span class="text-storm-dark">{{ store.currentDeck.votes }}</span>
+              <div @click="store.downvoteDeck(store.currentDeck)">
+                <ChevronDownIcon
+                  class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-red-500"
+                  :class="{ 'text-red-500': store.currentUserVote === -1 }"
+                />
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              {{ $t("app.decks.manageButton") }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
