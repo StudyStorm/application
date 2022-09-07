@@ -37,6 +37,10 @@ export const useClassroomStore = defineStore("classroom", () => {
     return filteredClassrooms.value.meta;
   });
 
+  const paginationMembers = computed(() => {
+    return members.value.meta;
+  });
+
   const classrooms = computed(() => {
     return filteredClassrooms.value.data;
   });
@@ -56,6 +60,7 @@ export const useClassroomStore = defineStore("classroom", () => {
     MAX_LAST_VISITED_CLASSROOMS,
     lastVisitedClassrooms,
     pagination,
+    paginationMembers,
     classrooms,
 
     addVisitedClassroom(classroomId: string | number) {
@@ -151,10 +156,10 @@ export const useClassroomStore = defineStore("classroom", () => {
       if (!currentFolder.value) return;
       await this.fetchCurrentFolder(currentFolder.value.id);
     },
-    async fetchClassroomUsers(classroomId: string, limit = 5) {
+    async fetchClassroomUsers(classroomId: string, limit = 5, page = 1) {
       const { data } = await useFetchAPI<Pagination<User>>(
         `/v1/classrooms/${classroomId}/users`,
-        { params: { limit: limit } }
+        { params: { limit: limit, page: page } }
       );
 
       members.value = data;
@@ -197,7 +202,7 @@ export const useClassroomStore = defineStore("classroom", () => {
         body: {
           classroomId: classroomId,
           email: email,
-          accessRight: "read",
+          accessRight: accessRight,
         },
       });
     },
