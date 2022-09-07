@@ -20,9 +20,9 @@ const displayStyle = ref("row");
 const target = ref();
 
 const tableHeaders = [
-  t("app.classrooms.table.name"),
-  t("app.classrooms.table.permissions"),
-  t("app.classrooms.table.nbMembers"),
+  "app.classrooms.table.name",
+  "app.classrooms.table.permissions",
+  "app.classrooms.table.nbMembers",
 ];
 
 const currentPage = ref(classroomStore.filteredClassrooms.meta.current_page);
@@ -190,7 +190,7 @@ whenever(alt_k, () => {
                   class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                   scope="col"
                 >
-                  <span class="lg:pl-2">{{ header }}</span>
+                  <span class="lg:pl-2">{{ t(header) }}</span>
                 </th>
               </tr>
             </thead>
