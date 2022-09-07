@@ -6,6 +6,7 @@ import {
   ChevronDownIcon,
 } from "@heroicons/vue/24/solid/index.js";
 import SCardSquared from "~/components/s/SCardSquared.vue";
+
 const store = useDecksStore();
 const route = useRoute();
 await store.fetchDeck(route.params.id as string);
@@ -77,23 +78,29 @@ onMounted(async () => {
               <PlusIcon class="mx-auto h-full w-12 text-storm-dark" />
             </s-card-squared>
           </create-card-modal>
+
           <QuestionCard
             v-for="(card, i) in store.currentDeck.cards"
             :key="i"
             :card="card"
             :number="i + 1"
-          >
-          </QuestionCard>
+          />
         </div>
         <div
           class="fixed bottom-0 flex w-full items-center justify-center border-t py-2 backdrop-blur"
         >
-          <button
+          <NuxtLink
             type="button"
             class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
+            :to="{
+              name: 'learn-id',
+              params: {
+                id: store.currentDeck.id,
+              },
+            }"
           >
             {{ $t("app.decks.start") }}
-          </button>
+          </NuxtLink>
         </div>
       </div>
     </div>

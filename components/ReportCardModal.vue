@@ -16,10 +16,7 @@ const openModal = () => {
 };
 
 const reportCard = async () => {
-  await learnStore.reportCard({
-    card: learnStore.currentCard,
-    message: signalMessage.value,
-  });
+  await learnStore.reportCard(learnStore.currentCard.id, signalMessage.value);
   closeModal();
 };
 
@@ -29,7 +26,7 @@ defineExpose({
 });
 </script>
 <template>
-  <slot :open="showModal" />
+  <slot :open="openModal" />
   <Modal v-model="showModal">
     <template #icon
       ><div

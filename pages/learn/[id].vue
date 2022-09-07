@@ -8,14 +8,15 @@ import ReportCardModal from "~/components/ReportCardModal.vue";
 import { onKeyStroke, SwipeDirection } from "@vueuse/core";
 
 const learnStore = useLearnStore();
+const route = useRoute();
 
-// TODO: fetch the real deck id
-await learnStore.fetchDeck(1);
+await learnStore.fetchDeck(route.params.id as string);
 
-const cardTypes = {
-  flashCard: resolveComponent("FlashCard"),
-  options: resolveComponent("OptionsCard"),
-};
+const cardType = computed(() => {
+  return learnStore.currentCard.content.answers.length > 1
+    ? resolveComponent("OptionsCard")
+    : resolveComponent("FlashCard");
+});
 
 const progress = computed(() => {
   return (learnStore.currentStep / learnStore.numberOfCards) * 100;
@@ -49,6 +50,8 @@ onKeyStroke("ArrowRight", (e) => {
 });
 
 onKeyStroke(" ", (e) => {
+  // TODO: find something better
+  if ((e.target as HTMLElement).localName !== "body") return;
   e.preventDefault();
   if (e.repeat) return;
   activeCard.value.toggle?.();
@@ -77,8 +80,6 @@ const nextCard = () => {
   activeCard.value.reset();
   swipeTransition.value = "swipe-left";
 };
-
-// TODO: flip card when going to the next if needed
 </script>
 
 <template>
@@ -118,7 +119,7 @@ const nextCard = () => {
         <div class="relative">
           <Transition :name="swipeTransition">
             <component
-              :is="cardTypes[learnStore.currentCard.content.type]"
+              :is="cardType"
               ref="activeCard"
               :key="learnStore.currentCard.id"
               :card="learnStore.currentCard"

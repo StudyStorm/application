@@ -27,7 +27,7 @@ const changePage = (page: number) => {
         </h1>
       </div>
     </div>
-    <div class="space-y-6 sm:mx-auto sm:w-full sm:max-w-md lg:mt-8">
+    <div class="mt-8 space-y-6 sm:mx-auto sm:w-full sm:max-w-md lg:mt-8">
       <InboxCard
         v-for="report in store.inboxReports.data"
         :key="report.id"
