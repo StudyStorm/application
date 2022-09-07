@@ -62,6 +62,7 @@ onMounted(async () => {
             </div>
             <update-deck-modal v-slot="{ open }">
               <button
+                v-if="store.currentDeck.folder.classroom.permissions.write"
                 type="submit"
                 class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click="open"
@@ -69,7 +70,10 @@ onMounted(async () => {
                 {{ $t("app.decks.manageButton") }}
               </button>
             </update-deck-modal>
-            <confirm-modal @confirm="deleteDeck">
+            <confirm-modal
+              v-if="store.currentDeck.folder.classroom.permissions.delete"
+              @confirm="deleteDeck"
+            >
               <template #title>
                 {{ $t("app.deck.modal.delete.title") }}
               </template>
@@ -79,7 +83,7 @@ onMounted(async () => {
               <template #default="{ open }">
                 <button
                   type="button"
-                  class="bg-storm-red rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                  class="rounded-md border border-transparent bg-storm-red px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                   @click="open"
                 >
                   {{ $t("app.deck.modal.buttons.delete") }}
@@ -113,9 +117,7 @@ onMounted(async () => {
             :number="i + 1"
           />
         </div>
-        <div
-          v-if="store.currentDeck.cards.length"
-        >
+        <div v-if="store.currentDeck.cards.length">
           <NuxtLink
             type="button"
             class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
