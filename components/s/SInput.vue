@@ -28,13 +28,13 @@ const error = computed(() =>
     />
     <slot />
   </div>
-  <div v-if="error" class="text-sm text-red-500">
+  <div v-if="error" class="text-sm text-storm-red">
     {{ error.message }}
   </div>
 </template>
 
 <style scoped>
 .error {
-  @apply text-red-500 border-red-500 ring-1 ring-red-500;
+  @apply text-storm-red border-storm-red ring-1 ring-storm-red;
 }
 </style>

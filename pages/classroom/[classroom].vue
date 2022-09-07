@@ -62,6 +62,11 @@ const quitClassroom = () => {
   router.push({ name: "dashboard" });
 };
 
+const deleteClassroom = async () => {
+  await classroomStore.deleteClassroom(classroomStore.classroom.id);
+  router.push({ name: "dashboard" });
+};
+
 await classroomStore.fetchClassroom(route.params.classroom as string);
 await classroomStore.fetchClassroomUsers(route.params.classroom as string);
 </script>
@@ -99,6 +104,23 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
             {{ $t("app.classroom.unsubscribe") }}
           </button>
         </div>
+        <confirm-modal @confirm="deleteClassroom">
+          <template #title>
+            {{ $t("app.classrooms.modal.delete.title") }}
+          </template>
+          <template #content>
+            {{ $t("app.classrooms.modal.delete.content") }}
+          </template>
+          <template #default="{ open }">
+            <button
+              type="button"
+              class="float-left mt-3 inline-flex w-full justify-center rounded-md border border-storm-red bg-storm-red px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              @click="open"
+            >
+              {{ $t("app.classrooms.buttons.delete") }}
+            </button>
+          </template>
+        </confirm-modal>
       </div>
       <div class="p-4 sm:px-6 lg:px-8">
         <div>

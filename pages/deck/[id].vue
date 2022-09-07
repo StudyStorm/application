@@ -9,8 +9,15 @@ import SCardSquared from "~/components/s/SCardSquared.vue";
 
 const store = useDecksStore();
 const route = useRoute();
+const router = useRouter();
+
 await store.fetchDeck(route.params.id as string);
 await store.fetchDeckUserRating(route.params.id as string);
+
+const deleteDeck = async () => {
+  await store.deleteDeck(store.currentDeck.id);
+  router.push({ name: "dashboard" });
+};
 
 onMounted(async () => {
   store.addUsedDeck(route.params.id as string);
@@ -48,8 +55,8 @@ onMounted(async () => {
               <span class="text-storm-dark">{{ store.currentDeck.votes }}</span>
               <div @click="store.downvoteDeck(store.currentDeck)">
                 <ChevronDownIcon
-                  class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-red-500"
-                  :class="{ 'text-red-500': store.currentUserVote === -1 }"
+                  class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-storm-red"
+                  :class="{ 'text-storm-red': store.currentUserVote === -1 }"
                 />
               </div>
             </div>
@@ -62,6 +69,23 @@ onMounted(async () => {
                 {{ $t("app.decks.manageButton") }}
               </button>
             </update-deck-modal>
+            <confirm-modal @confirm="deleteDeck">
+              <template #title>
+                {{ $t("app.deck.modal.delete.title") }}
+              </template>
+              <template #content>
+                {{ $t("app.deck.modal.delete.content") }}
+              </template>
+              <template #default="{ open }">
+                <button
+                  type="button"
+                  class="float-left mt-3 inline-flex w-full justify-center rounded-md border border-storm-red bg-storm-red px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  @click="open"
+                >
+                  {{ $t("app.deck.modal.buttons.delete") }}
+                </button>
+              </template>
+            </confirm-modal>
           </div>
         </div>
       </div>
