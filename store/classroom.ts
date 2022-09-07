@@ -184,9 +184,21 @@ export const useClassroomStore = defineStore("classroom", () => {
       });
       this.fetchClassroom(classroomId);
     },
+
     async unsubscribe(classroomId: string) {
       await useFetchAPI(`/v1/classrooms/${classroomId}/leave`, {
         method: "POST",
+      });
+    },
+
+    async addMember(classroomId: string, email: string, accessRight: string) {
+      await useFetchAPI("v1/classrooms/users", {
+        method: "POST",
+        body: {
+          classroomId: classroomId,
+          email: email,
+          accessRight: "read",
+        },
       });
     },
   };

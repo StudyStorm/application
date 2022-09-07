@@ -129,13 +129,15 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
               </div>
             </div>
             <div>
-              <button
-                type="submit"
-                class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                @click="viewAllMembers = true"
-              >
-                {{ $t("app.classroom.membersButton") }}
-              </button>
+              <view-members-modal v-slot="{ open }">
+                <button
+                  type="submit"
+                  class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  @click="open"
+                >
+                  {{ $t("app.classroom.membersButton") }}
+                </button>
+              </view-members-modal>
             </div>
           </div>
         </div>
