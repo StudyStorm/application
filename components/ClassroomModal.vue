@@ -24,15 +24,16 @@ defineExpose({
   openModal,
 });
 
-async function create(classroom: { name: string; visibility: string }) {
+const create = async (classroom: { name: string; visibility: string }) => {
   const { error } = await classroomStore.createClassroom(classroom);
 
   if (error) {
     hasError.value = true;
   } else {
+    await classroomStore.fetchClassrooms();
     showModal.value = false;
   }
-}
+};
 </script>
 <template>
   <slot :open="openModal" />
