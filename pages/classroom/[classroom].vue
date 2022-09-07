@@ -24,7 +24,7 @@ const createFolder = async () => {
   if (error) {
     errors.value = error.data;
   }
-  await classroomStore.fetchCurrentFolder(route.params.folder as string);
+  await classroomStore.refreshCurrentFolder();
   classroomStore.showFolderCreationModal = false;
   folderName.value = "";
 };
@@ -38,7 +38,7 @@ const createDeck = async () => {
   if (error) {
     errors.value = error.data;
   }
-  await classroomStore.fetchCurrentFolder(route.params.folder as string);
+  await classroomStore.refreshCurrentFolder();
   classroomStore.showDeckCreationModal = false;
   deckName.value = "";
 };
