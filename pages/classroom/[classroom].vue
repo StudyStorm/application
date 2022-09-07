@@ -53,10 +53,6 @@ const closeDeckModal = () => {
   deckName.value = "";
 };
 
-onMounted(async () => {
-  classroomStore.addVisitedClassroom(route.params.classroom as string);
-});
-
 const quitClassroom = () => {
   classroomStore.unsubscribe(classroomStore.classroom.id);
   router.push({ name: "dashboard" });
@@ -69,6 +65,10 @@ const deleteClassroom = async () => {
 
 await classroomStore.fetchClassroom(route.params.classroom as string);
 await classroomStore.fetchClassroomUsers(route.params.classroom as string);
+
+onMounted(async () => {
+  classroomStore.addVisitedClassroom(route.params.classroom as string);
+});
 </script>
 
 <template>

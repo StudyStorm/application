@@ -2,11 +2,18 @@
 import { ChevronRightIcon, Bars4Icon } from "@heroicons/vue/24/solid/index.js";
 import { useDecksStore } from "~/store/decks";
 import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
+import { useMagicKeys, whenever, useFocus } from "@vueuse/core";
 
 const deckStore = useDecksStore();
 await deckStore.fetchDecks();
 await deckStore.fetchAllDecks();
 await deckStore.fetchBestDecks();
+
+const { alt_k } = useMagicKeys({
+  passive: false,
+});
+
+const target = ref();
 
 const displayStyle = ref("row");
 
@@ -24,6 +31,16 @@ const changePage = (page: number) => {
     deckStore.fetchDecks(currentPage.value);
   }
 };
+
+function color(id: string) {
+  return `background-color: hsl(${id
+    .split("")
+    .reduce((a, b) => (a + b.charCodeAt(0)) % 360, 0)}, 100%, 80%)`;
+}
+
+whenever(alt_k, () => {
+  useFocus(target, { initialValue: true });
+});
 </script>
 
 <template>
@@ -73,21 +90,26 @@ const changePage = (page: number) => {
       >
         {{ $t("app.dashboard.browseDecks") }}
       </h1>
-
-      <div class="flex items-center justify-between">
-        <div>
+      <div class="flex w-full items-center justify-between">
+        <div class="relative mt-1 flex items-center lg:w-1/3">
           <input
+            ref="target"
             v-model="deckStore.searchFilter"
-            name="searchDeck"
+            name="searchClassroom"
             type="text"
-            class="block w-40 flex-auto rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:w-80 sm:text-sm md:w-96"
-            placeholder="Search decks"
+            class="block w-full rounded-md border-gray-300 pr-12 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
+            :placeholder="$t('app.dashboard.search')"
             @input="changePage(currentPage)"
           />
+          <div class="absolute inset-y-0 right-0 hidden py-1.5 pr-1.5 sm:flex">
+            <kbd
+              class="inline-flex items-center rounded border border-gray-200 px-2 font-sans text-sm font-medium text-gray-400"
+              >Alt+K</kbd
+            >
+          </div>
         </div>
-
         <div
-          class="flex cursor-pointer divide-x-2 rounded-sm border text-storm-dark"
+          class="hidden cursor-pointer divide-x-2 rounded-sm border text-storm-dark sm:flex"
         >
           <span
             class="p-2 hover:scale-110"
@@ -108,7 +130,9 @@ const changePage = (page: number) => {
       <!-- Projects list (mobile) -->
       <div class="mt-10 sm:hidden">
         <div class="px-4 sm:px-6">
-          <h2 class="text-sm font-medium text-storm-dark">Projects</h2>
+          <h2 class="text-sm font-medium text-storm-dark">
+            {{ $t("app.dashboard.table.title") }}
+          </h2>
         </div>
         <ul
           role="list"
@@ -125,6 +149,16 @@ const changePage = (page: number) => {
               class="group flex items-center justify-between p-4 hover:bg-gray-50 sm:px-6"
             >
               <span class="flex items-center space-x-3 truncate">
+                <span class="relative mx-1 inline-flex h-2 w-2">
+                  <span
+                    class="h-2 w-2 rounded-full shadow-sm ring-1 ring-gray-300"
+                    :style="color(deck.id)"
+                  ></span>
+                  <span
+                    class="absolute inline-flex h-full w-full rounded-full opacity-100 group-hover:animate-ping"
+                    :style="color(deck.id)"
+                  ></span>
+                </span>
                 <span class="truncate text-sm font-medium leading-6">
                   {{ deck.name }}
                 </span>
@@ -174,9 +208,17 @@ const changePage = (page: number) => {
                       }"
                       class="truncate hover:text-gray-600"
                     >
-                      <span>
-                        {{ deck.name }}
+                      <span class="relative mx-1 inline-flex h-2 w-2">
+                        <span
+                          class="h-2 w-2 rounded-full shadow-sm ring-1 ring-gray-300"
+                          :style="color(deck.id)"
+                        ></span>
+                        <span
+                          class="absolute inline-flex h-full w-full rounded-full opacity-100 group-hover:animate-ping"
+                          :style="color(deck.id)"
+                        ></span>
                       </span>
+                      {{ deck.name }}
                     </NuxtLink>
                   </div>
                 </td>
@@ -216,14 +258,14 @@ const changePage = (page: number) => {
             />
           </div>
         </div>
-        <div class="mt-4 flex justify-center">
-          <s-paginator
-            :current-page="currentPage"
-            :last="deckStore.pagination.last_page"
-            :max-visible="5"
-            @change-page="changePage"
-          />
-        </div>
+      </div>
+      <div class="mt-4 flex justify-center">
+        <s-paginator
+          :current-page="currentPage"
+          :last="deckStore.pagination.last_page"
+          :max-visible="5"
+          @change-page="changePage"
+        />
       </div>
     </div>
   </div>
