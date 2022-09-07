@@ -21,15 +21,9 @@ const changePage = (page: number) => {
     >
       <div class="min-w-0">
         <h1
-          class="flex items-center text-lg font-medium leading-6 text-gray-900 sm:truncate"
+          class="flex items-center text-lg font-medium leading-6 text-storm-dark sm:truncate"
         >
           {{ $t("app.inbox.title") }}
-          <div
-            v-if="store.unReadReports"
-            class="inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white"
-          >
-            {{ store.unReadReports }}
-          </div>
         </h1>
       </div>
     </div>

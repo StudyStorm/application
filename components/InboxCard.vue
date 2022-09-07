@@ -35,34 +35,32 @@ const formattedDate = computed(() => {
     >
       <TrashIcon class="h-4" />
     </div>
-    <transition name="fade">
-      <div class="flex items-center justify-between">
-        <div class="truncate">
-          <h5 class="mb-2 text-ellipsis font-bold tracking-tight">
-            {{ report.message }}
-          </h5>
-          <div class="flex items-center justify-between">
-            <p v-if="report.author" class="flex-1 truncate text-sm font-normal">
-              {{
-                $t("app.decks.createdBy", {
-                  name: `${report.author.first_name} ${report.author.last_name}`,
-                })
-              }}
-            </p>
-          </div>
-          <i class="w-full text-xs">
-            {{ formattedDate }}
-          </i>
+    <div class="flex items-center justify-between">
+      <div class="truncate">
+        <h5 class="mb-2 text-ellipsis font-bold tracking-tight">
+          {{ report.message }}
+        </h5>
+        <div class="flex items-center justify-between">
+          <p v-if="report.author" class="flex-1 truncate text-sm font-normal">
+            {{
+              $t("app.decks.createdBy", {
+                name: `${report.author.first_name} ${report.author.last_name}`,
+              })
+            }}
+          </p>
         </div>
-        <div>
-          <button
-            class="bg-white transition hover:scale-105 hover:bg-gray-100"
-            @click="setRead"
-          >
-            <CheckBadgeIcon class="h-8 bg-white" />
-          </button>
-        </div>
+        <i class="w-full text-xs">
+          {{ formattedDate }}
+        </i>
       </div>
-    </transition>
+      <div>
+        <button
+          class="bg-white transition hover:scale-105 hover:bg-gray-100"
+          @click="setRead"
+        >
+          <CheckBadgeIcon class="h-8 bg-white" />
+        </button>
+      </div>
+    </div>
   </div>
 </template>
