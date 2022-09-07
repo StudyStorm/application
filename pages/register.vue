@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SFileInputPreview from "~/components/SFileInputPreview.vue";
+import SFileInputPreview from "~/components/s/SFileInputPreview.vue";
 import { FormError } from "~/types/app";
 import { useFetchAPI } from "#imports";
 

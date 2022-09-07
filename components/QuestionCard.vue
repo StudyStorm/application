@@ -6,12 +6,15 @@ defineProps<{
   card: Card;
   number: number;
 }>();
+
+const emit = defineEmits(["edit"]);
 </script>
 
 <template>
-  <v-card :key="card.id">
+  <s-card-squared :key="card.id">
     <div
-      class="invisible absolute -top-2 -right-2 inline-flex h-8 w-8 items-center justify-center overflow-hidden text-ellipsis rounded-full border-2 border-white bg-storm-purple p-1 text-xs font-bold text-white group-hover:visible dark:border-gray-900"
+      class="invisible absolute -top-2 -right-2 inline-flex h-8 w-8 items-center justify-center overflow-hidden text-ellipsis rounded-full border-2 border-white bg-storm-blue p-1 text-xs font-bold text-white hover:scale-110 group-hover:visible"
+      @click="emit('edit')"
     >
       <PencilIcon />
     </div>
@@ -23,5 +26,5 @@ defineProps<{
     <div class="text-xs">
       {{ number }}
     </div>
-  </v-card>
+  </s-card-squared>
 </template>

@@ -171,11 +171,12 @@ app:
     linkToHome: Cliquez-ici pour revenir à l'accueil
   deck:
     modal:
+      name: Nom du deck
       create:
         title: Créer une nouvelle carte
         selectType: Sélectionnez un type de carte
       edit:
-        title: Modifier une carte
+        title: Modifier un deck
       labels:
         select: Sélectionnez un type de carte
         cardType: Type de carte
@@ -186,16 +187,17 @@ app:
       buttons:
         create: Créer
         cancel: Annuler
+        edit: Modifier
         addAnswer: Ajouter une réponse
     linkToHome: Cliquez ici pour revenir à l'accueil
   dashboard:
     title: Accueil
-    topDecks: Collections populaires
-    recentDecks: Collections récentes
-    browseDecks: Explorer les collections
-    noRecentDecks: Aucune collection récente
+    topDecks: Decks populaires
+    recentDecks: Decks récentes
+    browseDecks: Explorer les Decks
+    noRecentDecks: Aucun deck récent
   decks:
-    name: Nom de la collection
+    name: Nom du deck
     author: Auteur
     nbCards: Nombre de cartes
     nbVotes: Nombre de votes
@@ -235,7 +237,7 @@ app:
       submit: Créer
     allMembers: Cette fonctionnalité sera bientôt disponible.
   inbox:
-    title: Boîte de récéption
+    title: Boîte de réception
     markAsRead: Marquer comme lu
     markAsUnread: Marquer comme non lu
     delete: Supprimer

@@ -167,11 +167,12 @@ app:
     linkToHome: Click here to return to the home page.
   deck:
     modal:
+      name: Deck name
       create:
         title: Create a new card
         selectType: Select card type
       edit:
-        title: Change card
+        title: Edit deck
       labels:
         select: Select a card type
         cardType: Card type
@@ -182,6 +183,7 @@ app:
       buttons:
         create: Create
         cancel: Cancel
+        edit: Edit
         addAnswer: Add answer
     linkToHome: Click here to return to the home page
   dashboard:

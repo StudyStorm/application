@@ -94,7 +94,7 @@ function removeAnswer(answer: Answer) {
 
 <template>
   <slot :open="init" />
-  <Modal v-model="showModal">
+  <Modal v-model="showModal" :autoclose="false">
     <template #icon
       ><div
         class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100 sm:mx-0 sm:h-10 sm:w-10"

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
-import SPasswordInput from "~/components/SPasswordInput.vue";
+import SPasswordInput from "~/components/s/SPasswordInput.vue";
 import { FetchError } from "ohmyfetch";
-import SAlert from "~/components/SAlert.vue";
+import SAlert from "~/components/s/SAlert.vue";
 import { ref, useFetchAPI } from "#imports";
 
 const auth = useAuth();

@@ -3,6 +3,7 @@ import Classroom from "~/models/Classroom";
 import Folder from "~/models/Folder";
 import User from "~~/models/User";
 import { FormError, Pagination } from "~~/types/app";
+import { useFetchAPI } from "~/composables/useFetchAPI";
 
 export const useClassroomStore = defineStore("classroom", () => {
   const classroom = ref<Classroom>(null);
@@ -150,6 +151,10 @@ export const useClassroomStore = defineStore("classroom", () => {
 
       currentFolder.value = folder;
     },
+    async refreshCurrentFolder() {
+      if (!currentFolder.value) return;
+      await this.fetchCurrentFolder(currentFolder.value.id);
+    },
     async fetchClassroomUsers(classroomId: string, limit = 5) {
       const { data } = await useFetchAPI<Pagination<User>>(
         `/v1/classrooms/${classroomId}/users`,
@@ -157,6 +162,24 @@ export const useClassroomStore = defineStore("classroom", () => {
       );
 
       members.value = data;
+    },
+    async moveDeckInFolder(folder: Folder, deckId: string) {
+      await useFetchAPI(`/v1/decks/${deckId}`, {
+        method: "PATCH",
+        useFetch: true,
+        body: {
+          folderId: folder.id,
+        },
+      });
+    },
+    async moveFolderInFolder(folder: Folder, folderId: string) {
+      await useFetchAPI(`/v1/folders/${folderId}`, {
+        method: "PATCH",
+        useFetch: true,
+        body: {
+          parentId: folder.id,
+        },
+      });
     },
   };
 });

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-const props = defineProps({
-  isFlippable: Boolean,
-  modelValue: Boolean,
-});
+const props = defineProps<{
+  isFlippable: boolean;
+  modelValue?: boolean;
+}>();
 
 const emit = defineEmits(["update:modelValue"]);
 
 const isFlipped = ref(false);
 
 function flip() {
-  emit("update:modelValue", !props.modelValue);
+  emit("update:modelValue", props.modelValue);
 }
 
 async function resetCard() {
@@ -24,35 +24,36 @@ defineExpose({
 </script>
 
 <template>
-  <div class="h-96 w-full" style="perspective: 600px">
+  <div style="perspective: 600px; aspect-ratio: 1/1">
     <div
-      class="card h-full w-full cursor-pointer shadow"
-      :class="[{ flipCard: isFlippable && modelValue }]"
+      class="card h-full w-full shadow"
+      :class="{ isFlippable, flipCard: isFlippable && modelValue }"
       @click="flip"
     >
-      <div
-        class="cardFace flex h-full w-full select-none items-center bg-gray-50 text-center"
-      >
-        <slot name="cardFront"></slot>
+      <div class="cardFace h-full w-full select-none bg-gray-50">
+        <slot />
       </div>
-      <div
-        class="cardFace flipCardBack flex h-full w-full select-none items-center bg-gray-50"
-      >
-        <slot name="cardBack"></slot>
+      <div class="cardFace flipCardBack h-full w-full select-none bg-gray-50">
+        <slot name="back" />
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.isFlippable {
+  cursor: pointer;
+}
+
 .card {
-  transition: transform 800ms;
+  transition: transform 600ms;
   transform-style: preserve-3d;
 }
 
 .cardFace {
   position: absolute;
   backface-visibility: hidden;
+  @apply min-h-0 overflow-hidden hover:overflow-y-auto;
 }
 
 .flipCard {

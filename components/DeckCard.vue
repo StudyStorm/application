@@ -5,10 +5,21 @@ import {
   HandThumbUpIcon,
   HandThumbDownIcon,
 } from "@heroicons/vue/24/solid/index.js";
+import { useDrag } from "#imports";
 
 const props = defineProps<{
   deck: Deck;
+  useDrag?: boolean;
 }>();
+
+const el = ref<HTMLDivElement>();
+
+if (props.useDrag) {
+  useDrag(el, () => ({
+    type: "deck",
+    id: props.deck.id,
+  }));
+}
 
 const color = computed((): string => {
   return `background-color: hsl(${props.deck.id
@@ -24,6 +35,7 @@ const formattedVotes = computed(() => {
 
 <template>
   <NuxtLink
+    ref="el"
     class="relative block rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
     :to="{
       name: 'deck-id',

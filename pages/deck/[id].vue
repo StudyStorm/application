@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from "#imports";
 import { useDecksStore } from "~/store/decks";
 import { PlusIcon } from "@heroicons/vue/24/outline/index.js";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
 } from "@heroicons/vue/24/solid/index.js";
-import CreateCard from "~/components/deck/CreateCard.vue";
+import SCardSquared from "~/components/s/SCardSquared.vue";
+
 const store = useDecksStore();
 const route = useRoute();
 await store.fetchDeck(route.params.id as string);
@@ -53,12 +53,15 @@ onMounted(async () => {
                 />
               </div>
             </div>
-            <button
-              type="submit"
-              class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
-              {{ $t("app.decks.manageButton") }}
-            </button>
+            <update-deck-modal v-slot="{ open }">
+              <button
+                type="submit"
+                class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                @click="open"
+              >
+                {{ $t("app.decks.manageButton") }}
+              </button>
+            </update-deck-modal>
           </div>
         </div>
       </div>
@@ -73,28 +76,34 @@ onMounted(async () => {
         <div
           class="grid flex-1 grid-cols-2 gap-4 p-5 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5"
         >
-          <CreateCard v-slot="{ open }">
-            <v-card class="bg-gray-100" @click="open">
+          <create-card-modal v-slot="{ open }">
+            <s-card-squared class="bg-gray-100" @click="open">
               <PlusIcon class="mx-auto h-full w-12 text-storm-dark" />
-            </v-card>
-          </CreateCard>
+            </s-card-squared>
+          </create-card-modal>
+
           <QuestionCard
             v-for="(card, i) in store.currentDeck.cards"
             :key="i"
             :card="card"
             :number="i + 1"
-          >
-          </QuestionCard>
+          />
         </div>
         <div
           class="fixed bottom-0 flex w-full items-center justify-center border-t py-2 backdrop-blur"
         >
-          <button
+          <NuxtLink
             type="button"
             class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
+            :to="{
+              name: 'learn-id',
+              params: {
+                id: store.currentDeck.id,
+              },
+            }"
           >
             {{ $t("app.decks.start") }}
-          </button>
+          </NuxtLink>
         </div>
       </div>
     </div>

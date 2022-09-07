@@ -1,13 +1,45 @@
 <script setup lang="ts">
 import { FolderIcon } from "@heroicons/vue/24/outline/index.js";
 import Folder from "~/models/Folder";
-defineProps<{
+import { useDrag } from "#imports";
+import useDrop from "~/composables/useDrop";
+import { useClassroomStore } from "~/store/classroom";
+const props = defineProps<{
   folder: Folder;
+  useDrop?: boolean;
+  useDrag?: boolean;
 }>();
+
+const el = ref<HTMLDivElement>();
+const store = useClassroomStore();
+const emits = defineEmits<{
+  (event: "moveFile"): void;
+}>();
+
+if (props.useDrop) {
+  useDrop<{
+    type: "folder" | "deck";
+    id: string;
+  }>(el, async (data) => {
+    if (data.type === "deck") {
+      await store.moveDeckInFolder(props.folder, data.id);
+    } else if (data.type === "folder") {
+      await store.moveFolderInFolder(props.folder, data.id);
+    }
+    emits("moveFile");
+  });
+}
+if (props.useDrag) {
+  useDrag(el, () => ({
+    type: "folder",
+    id: props.folder.id,
+  }));
+}
 </script>
 
 <template>
   <NuxtLink
+    ref="el"
     :to="{
       name: 'classroom-classroom-folder',
       params: {

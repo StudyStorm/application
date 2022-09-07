@@ -2,7 +2,6 @@
 import { Bars4Icon } from "@heroicons/vue/24/solid/index.js";
 import { Square2StackIcon } from "@heroicons/vue/24/outline/index.js";
 import Classroom from "~~/models/Classroom";
-import VBreadcrumb from "~/components/folder/VBreadcrumb.vue";
 import { useClassroomStore } from "~/store/classroom";
 
 const classroomStore = useClassroomStore();
@@ -28,7 +27,7 @@ await classroomStore.fetchCurrentFolder(folderId.value as string);
       class="mt-6 block items-center justify-start text-2xl font-medium leading-6 text-storm-dark sm:flex sm:truncate"
     >
       <div class="flex min-w-0 flex-1 items-center justify-between">
-        <VBreadcrumb
+        <SBreadcrumb
           :path="classroomStore.currentFolder.path"
           :root="{ id: classroom.root_folder.id, name: classroom.name }"
         />

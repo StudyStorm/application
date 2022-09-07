@@ -7,14 +7,16 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-defineProps({
+const props = defineProps({
   modelValue: Boolean,
+  autoclose: { type: Boolean, default: true },
 });
 
 const emit = defineEmits(["update:modelValue"]);
 
-const close = () => {
-  emit("update:modelValue", false);
+const close = (value) => {
+  if (!props.autoclose) return;
+  emit("update:modelValue", value);
 };
 </script>
 

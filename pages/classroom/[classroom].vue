@@ -3,7 +3,6 @@ import { useClassroomStore } from "~/store/classroom";
 import { useRoute } from "#app";
 import { AcademicCapIcon } from "@heroicons/vue/24/solid/index.js";
 import { FormError } from "~~/types/app";
-import { Ref } from "vue";
 
 const route = useRoute();
 const classroomStore = useClassroomStore();

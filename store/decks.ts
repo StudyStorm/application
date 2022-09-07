@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
-import { Pagination } from "../types/app";
+import { Pagination } from "~/types/app";
 import Deck from "~~/models/Deck";
 import { CardContent } from "~~/models/Card";
+import { useFetchAPI } from "~/composables/useFetchAPI";
 
 const LOCAL_STORAGE_KEY = "lastUsedDecks";
 const MAX_BEST_DECKS = 3;
@@ -155,6 +156,17 @@ export const useDecksStore = defineStore("decks", {
         },
       });
       await this.refreshRatings(deck);
+    },
+
+    async updateDeckName(deckId: string, deckName: string) {
+      await useFetchAPI(`/v1/decks/${deckId}`, {
+        method: "PATCH",
+        body: {
+          name: deckName,
+        },
+        useFetch: true,
+      });
+      this.fetchDeck(deckId);
     },
   },
 });
