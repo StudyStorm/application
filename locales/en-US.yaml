@@ -197,6 +197,10 @@ app:
     recentDecks: Recent decks
     browseDecks: Browse decks
     noRecentDecks: No recent decks
+    table:
+      deckName: Deck name
+      author: Author
+      votes: Votes
   decks:
     name: Deck name
     author: Author

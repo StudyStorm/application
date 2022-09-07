@@ -10,7 +10,11 @@ await deckStore.fetchBestDecks();
 
 const displayStyle = ref("row");
 
-const tableHeaders = ["Deck name", "Author", "Votes"];
+const tableHeaders = [
+  "app.dashboard.table.deckName",
+  "app.dashboard.table.author",
+  "app.dashboard.table.votes",
+];
 
 const currentPage = ref(deckStore.pagination.current_page);
 
@@ -149,7 +153,7 @@ const changePage = (page: number) => {
                   class="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                   scope="col"
                 >
-                  <span class="lg:pl-2">{{ header }}</span>
+                  <span class="lg:pl-2">{{ $t(header) }}</span>
                 </th>
               </tr>
             </thead>

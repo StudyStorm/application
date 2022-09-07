@@ -201,6 +201,10 @@ app:
     recentDecks: Decks récentes
     browseDecks: Explorer les Decks
     noRecentDecks: Aucun deck récent
+    table:
+      deckName: Nom du deck
+      author: Auteur
+      votes: Votes
   decks:
     name: Nom du deck
     author: Auteur
