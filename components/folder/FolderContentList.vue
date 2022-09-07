@@ -12,7 +12,7 @@ const props = defineProps<{
   folder: Folder;
 }>();
 
-defineEmits(["showModalFolder"]);
+const emit = defineEmits(["showFolderModal", "showDeckModal"]);
 
 type File = ((Folder & { type: "folder" }) | (Deck & { type: "deck" })) & {
   icon: unknown;
@@ -48,10 +48,29 @@ const files = computed(
 );
 </script>
 <template>
-  <div class="mt-10">
-    <div class="px-4 sm:px-6">
-      <h2 class="text-sm font-medium text-storm-dark">Projects</h2>
+  <div class="mt-4">
+    <div class="mb-4 flex space-x-4">
+      <button
+        type="button"
+        class="flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        @click="emit('showFolderModal')"
+      >
+        {{ $t("app.classroom.folderButton") }}
+      </button>
+      <button
+        type="button"
+        class="flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        @click="emit('showDeckModal')"
+      >
+        {{ $t("app.classroom.decksButton") }}
+      </button>
     </div>
+    <div class="px-4 sm:px-6">
+      <h2 class="text-sm font-medium text-storm-dark">
+        {{ $t("app.classroom.content") }}
+      </h2>
+    </div>
+
     <ul
       role="list"
       class="mt-3 divide-y divide-gray-100 border-t border-gray-200"

@@ -160,6 +160,7 @@ app:
   sideNav:
     home: Home
     class: My classrooms
+    lang: Languages
   error:
     error404: Error 404 - Page not found
     standardError: An error has occurred.
@@ -209,6 +210,7 @@ app:
     decksButton: New deck
     decksPlaceholder: Search for a deck
     folderButton: New folder
+    content: Content
     decksCard:
       nbCards: N cards
       created: Created by {name}

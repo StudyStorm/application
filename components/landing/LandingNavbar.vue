@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 import { onClickOutside } from "@vueuse/core";
-
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
 const links = [
   {
@@ -114,7 +111,9 @@ onClickOutside(target, () => (showMobileMenu.value = false));
           <li
             class="block rounded-lg py-2 pl-3 pr-4 text-storm-dark hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-200 lg:bg-transparent lg:p-0 lg:focus:ring-0"
           >
-            <SButtonLangSwitch></SButtonLangSwitch>
+            <SButtonLangSwitch
+              class="text-storm-dark hover:text-gray-500"
+            ></SButtonLangSwitch>
           </li>
         </ul>
       </div>
