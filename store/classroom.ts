@@ -4,8 +4,10 @@ import Folder from "~/models/Folder";
 import User from "~~/models/User";
 import { FormError, Pagination } from "~~/types/app";
 import { useFetchAPI } from "~/composables/useFetchAPI";
+import { useEventBus } from "@vueuse/core";
 
 export const useClassroomStore = defineStore("classroom", () => {
+  const bus = useEventBus("studystorm");
   const classroom = ref<Classroom>(null);
   const currentFolder = ref<Folder>(null);
   const members = ref<Pagination<User>>(null);
@@ -121,7 +123,9 @@ export const useClassroomStore = defineStore("classroom", () => {
           body: classroom,
         }
       );
-      pinnedClassrooms.value = await this.fetchPinnedClassrooms();
+      if (data) {
+        bus.emit("classroom:created");
+      }
       return { data, error };
     },
 
@@ -135,6 +139,9 @@ export const useClassroomStore = defineStore("classroom", () => {
           },
         }
       );
+      if (data) {
+        bus.emit("deck:created");
+      }
       return { data, error };
     },
 
@@ -148,16 +155,10 @@ export const useClassroomStore = defineStore("classroom", () => {
           },
         }
       );
+      if (data) {
+        bus.emit("folder:created");
+      }
       return { data, error };
-    },
-    async fetchPinnedClassrooms(page = 1) {
-      const { data: classrooms } = await useFetchAPI<Pagination<Classroom>>(
-        `/v1/classrooms/joined?${page}`,
-        {
-          method: "GET",
-        }
-      );
-      pinnedClassrooms.value = classrooms;
     },
 
     async fetchCurrentFolder(folderId: string) {
@@ -180,13 +181,17 @@ export const useClassroomStore = defineStore("classroom", () => {
       members.value = data;
     },
     async moveDeckInFolder(folder: Folder, deckId: string) {
-      await useFetchAPI(`/v1/decks/${deckId}`, {
+      const response = await useFetchAPI(`/v1/decks/${deckId}`, {
         method: "PATCH",
         useFetch: true,
         body: {
           folderId: folder.id,
         },
       });
+      if (response.data) {
+        bus.emit("deck:moved");
+      }
+      return response;
     },
     async moveFolderInFolder(folder: Folder, folderId: string) {
       await useFetchAPI(`/v1/folders/${folderId}`, {
@@ -239,9 +244,12 @@ export const useClassroomStore = defineStore("classroom", () => {
     },
 
     async deleteClassroom(classroomId: string) {
-      await useFetchAPI(`/v1/classrooms/${classroomId}`, {
+      const response = await useFetchAPI(`/v1/classrooms/${classroomId}`, {
         method: "DELETE",
       });
+      if (!response.error) {
+        bus.emit("classroom:deleted");
+      }
     },
   };
 });

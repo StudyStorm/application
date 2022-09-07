@@ -93,7 +93,7 @@ function removeAnswer(answer: Answer) {
   <Modal v-if="card" v-model="showModal" :autoclose="false">
     <template #icon
       ><div
-        class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100 sm:mx-0 sm:h-10 sm:w-10"
+        class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100 sm:mx-0 sm:mb-2 sm:h-10 sm:w-10"
       >
         <SquaresPlusIcon class="h-6 w-6 text-purple-600" aria-hidden="true" />
       </div>
@@ -107,7 +107,7 @@ function removeAnswer(answer: Answer) {
       </template>
     </template>
     <template #content>
-      <div class="mt-8 w-full space-y-4 px-7 sm:px-0 xl:mx-auto">
+      <div class="mt-4 w-full space-y-4 px-7 sm:px-0 xl:mx-auto">
         <div>
           <label for="question" class="block text-sm font-medium text-gray-700">
             {{ $t("app.deck.modal.labels.question") }}
@@ -137,10 +137,10 @@ function removeAnswer(answer: Answer) {
             ></XMarkIcon>
           </span>
         </div>
-        <div class="flex flex-wrap items-center justify-center">
+        <div class="flex flex-wrap-reverse items-center justify-center">
           <label
             for="answers"
-            class="m-auto block text-sm font-medium text-gray-700"
+            class="mx-auto mt-2 block text-sm font-medium text-gray-700 sm:mt-0"
           >
             {{ $t("app.deck.modal.labels.answers") }}
           </label>

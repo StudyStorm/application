@@ -22,6 +22,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import Classroom from "~/models/Classroom";
+import { useSidebarStore } from "~/store/sidebar";
 
 const { t } = useI18n();
 
@@ -31,12 +32,9 @@ const route = useRoute();
 
 const path = computed(() => route.path);
 
-const { data: classrooms } = await useFetchAPI<Pagination<Classroom>>(
-  "/v1/classrooms/joined",
-  {
-    method: "GET",
-  }
-);
+const sidebarStore = useSidebarStore();
+
+await sidebarStore.fetchPinnedClassrooms();
 
 const navigation = ref([
   {
@@ -56,7 +54,7 @@ const navigation = ref([
     options: true,
     hasDropdown: true,
     dropped: true,
-    classrooms: classrooms?.data ?? [],
+    classrooms: computed(() => sidebarStore.pinnedClassrooms),
   },
 ]);
 
