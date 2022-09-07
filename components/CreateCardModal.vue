@@ -54,6 +54,7 @@ async function save() {
   content.answers = content.answers.filter((answer) => answer.label !== null);
   if (!content.answers.length) {
     hasError.value = true;
+    addAnswer();
     return;
   } else if (content.answers.length === 1) {
     content.answers[0].isTheAnswer = true;
@@ -115,7 +116,7 @@ function removeAnswer(answer: Answer) {
             v-model="card.question"
             required
             :placeholder="$t('app.deck.modal.labels.question')"
-            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
+            class="focus:border-storm-blue focus:ring-storm-blue block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none sm:text-sm"
           />
         </div>
         <div
@@ -145,7 +146,7 @@ function removeAnswer(answer: Answer) {
           </label>
           <button
             v-if="card.answers.length < MAX_CARD_ANSWERS"
-            class="inline-flex justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+            class="bg-storm-darkblue hover:bg-storm-blue focus:ring-storm-blue inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
             @click="addAnswer"
           >
             {{ $t("app.deck.modal.buttons.addAnswer") }}
@@ -158,14 +159,14 @@ function removeAnswer(answer: Answer) {
                 :id="'checkbox' + i"
                 v-model="answer.isTheAnswer"
                 type="checkbox"
-                class="mr-3 h-6 w-6 rounded border-gray-300 bg-gray-100 text-storm-blue focus:ring-2 focus:ring-storm-blue"
+                class="text-storm-blue focus:ring-storm-blue mr-3 h-6 w-6 rounded border-gray-300 bg-gray-100 focus:ring-2"
               />
               <s-textarea
                 :key="i"
                 v-model="answer.label"
                 type="text"
                 :placeholder="`${$t('app.deck.modal.labels.answer')} ${i + 1}`"
-                class="w-full flex-1 rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
+                class="focus:border-storm-blue focus:ring-storm-blue w-full flex-1 rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:outline-none sm:text-sm"
               />
               <TrashIcon
                 class="ml-3 h-5 w-5 cursor-pointer text-gray-400 hover:text-gray-600"
@@ -180,7 +181,7 @@ function removeAnswer(answer: Answer) {
     <template #footer>
       <button
         type="button"
-        class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        class="bg-storm-darkblue hover:bg-storm-blue focus:ring-storm-blue inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="save"
       >
         <template v-if="isEditing">
