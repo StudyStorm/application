@@ -269,6 +269,9 @@ app:
     markAsUnread: Marquer comme non lu
     delete: Supprimer
     reportedBy: Reporté par {name}
+    empty:
+        title: Aucun message
+        content: Vous n'avez aucun message dans votre boîte de réception
   classrooms:
     title: Salles de classe
     browseClassrooms: Explorer les salles de classe

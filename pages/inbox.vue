@@ -34,7 +34,19 @@ const changePage = (page: number) => {
         :report="report"
         @toggle-read="store.markAsRead"
         @delete="store.deleteReport"
-      ></InboxCard>
+      />
+      <div v-if="store.inboxReports.data.length === 0">
+        <div class="overflow-hidden bg-white text-center shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
+              {{ $t("app.inbox.empty.title") }}
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+              {{ $t("app.inbox.empty.content") }}
+            </p>
+          </div>
+        </div>
+      </div>
       <div class="mt-4 flex justify-center">
         <s-paginator
           :current-page="currentPage"

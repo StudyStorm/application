@@ -265,6 +265,9 @@ app:
     markAsUnread: Mark as unread
     delete: Delete
     reportedBy: Reported by {name}
+    empty:
+      title: No notifications
+      content: You don't have any notifications yet.
   classrooms:
     title: Classrooms
     browseClassrooms: Browse classrooms
