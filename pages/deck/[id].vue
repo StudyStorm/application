@@ -131,11 +131,11 @@ onMounted(async () => {
         </div>
         <div
           v-if="store.currentDeck.cards.length"
-          class="fixed bottom-0 flex w-full items-center justify-center border-t py-2 backdrop-blur"
+          class="fixed bottom-0 flex w-full items-center justify-center border-t py-6 backdrop-blur"
         >
           <NuxtLink
             type="button"
-            class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
+            class="focus:storm-darkblue bg-storm-darkblue rounded-md p-4 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
             :to="{
               name: 'learn-id',
               params: {
