@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { FlagIcon } from "@heroicons/vue/24/outline/index.js";
 import { useLearnStore } from "~/store/learn";
+import STextarea from "~/components/s/STextarea.vue";
 
 const showModal = ref(false);
 const signalMessage = ref("");
@@ -45,7 +46,7 @@ defineExpose({
           class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
           >{{ $t("app.learn.modal.message") }}</label
         >
-        <input
+        <s-textarea
           id="message"
           v-model="signalMessage"
           type="text"

@@ -27,7 +27,7 @@ const cardType = computed(() => {
 });
 
 const progress = computed(() => {
-  return (learnStore.currentStep / learnStore.numberOfCards) * 100;
+  return ((learnStore.currentStep - 1) / (learnStore.numberOfCards - 1)) * 100;
 });
 
 const activeCard = ref(null);
