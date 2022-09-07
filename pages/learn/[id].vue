@@ -7,11 +7,18 @@ import {
 import { useLearnStore } from "~~/store/learn";
 import ReportCardModal from "~/components/ReportCardModal.vue";
 import { onKeyStroke, SwipeDirection } from "@vueuse/core";
+import { useRouter } from "vue-router";
 
 const learnStore = useLearnStore();
 const route = useRoute();
 
 await learnStore.fetchDeck(route.params.id as string);
+
+const router = useRouter();
+
+if (!learnStore.deck.cards.length) {
+  router.push(`/deck/${route.params.id}`);
+}
 
 const cardType = computed(() => {
   return learnStore.currentCard.content.answers.length > 1
