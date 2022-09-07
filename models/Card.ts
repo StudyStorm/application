@@ -1,8 +1,13 @@
 import Deck from "./Deck";
 
+export interface Answer {
+  label: string;
+  isTheAnswer: boolean;
+}
+
 export interface CardContent {
   question: string;
-  answers: Array<{ label: string; isTheAnswer: boolean }>;
+  answers: Array<Answer>;
   type: string;
 }
 

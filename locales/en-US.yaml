@@ -170,7 +170,7 @@ app:
       create:
         title: Create a new card
       edit:
-        title: Change card
+        title: Edit card
       labels:
         select: Select a card type
         cardType: Card type

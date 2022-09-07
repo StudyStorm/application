@@ -106,6 +106,18 @@ export const useDecksStore = defineStore("decks", {
       return { data, error };
     },
 
+    async updateCard(cardId: string, content: CardContent) {
+      console.log(content);
+      const { data, error } = await useFetch(`v1/decks/cards/${cardId}`, {
+        method: "PATCH",
+        body: { ...content },
+        credentials: "include",
+        baseURL: useRuntimeConfig().apiURL,
+        initialCache: false,
+      });
+      return { data, error };
+    },
+
     async fetchDeckUserRating(deckId: string) {
       const { data } = await useFetchAPI<{
         user_vote: { vote: number };
