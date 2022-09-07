@@ -190,6 +190,9 @@ app:
         edit: Modifier
         addAnswer: Ajouter une réponse
         delete: Supprimer
+      delete:
+        title: Supprimer
+        content: Êtes-vous sûr de vouloir supprimer ce deck ?
     linkToHome: Cliquez ici pour revenir à l'accueil
   cards:
     modal:
@@ -269,6 +272,9 @@ app:
       private: Privée
       cancel: Annuler
       confirm: Confirmer
+      delete:
+        title: Supprimer
+        content: Êtes-vous sûr de vouloir supprimer cette salle de classe ?
     table:
       title: Classes
       name: Nom
@@ -281,4 +287,6 @@ app:
       notMember: Non-membre
       write: Écriture
       read: Lecture
+    buttons:
+      delete: Delete
   # HERE THE CONTENT FOR THE APP
