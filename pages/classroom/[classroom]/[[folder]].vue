@@ -12,17 +12,17 @@ const props = defineProps<{
 
 const route = useRoute();
 
-const folderId = computed(() => {
+const folderId = computed<string>(() => {
   return route.params.folder
-    ? route.params.folder
+    ? (route.params.folder as string)
     : props.classroom.root_folder.id;
 });
 
-await classroomStore.fetchCurrentFolder(folderId.value as string);
+await classroomStore.fetchCurrentFolder(folderId.value);
 </script>
 
 <template>
-  <div>
+  <div v-if="classroomStore.currentFolder">
     <div
       class="mt-6 block items-center justify-start text-2xl font-medium leading-6 text-storm-dark sm:flex sm:truncate"
     >
