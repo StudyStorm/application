@@ -7,12 +7,13 @@ import Folder from "~/models/Folder";
 import FolderCard from "~/components/FolderCard.vue";
 import DeckCard from "~/components/DeckCard.vue";
 import { useClassroomStore } from "~/store/classroom";
+import { Permission } from "~/types/app";
 
 const classroomStore = useClassroomStore();
 
 defineProps<{
   folder: Folder;
-  showEdition: boolean;
+  permission: Partial<Permission>;
 }>();
 
 function refresh() {
@@ -24,7 +25,7 @@ const emit = defineEmits(["showFolderModal", "showDeckModal"]);
 <template>
   <div class="s-grid mt-8">
     <div
-      v-if="showEdition"
+      v-if="permission.write"
       class="flex cursor-pointer items-center rounded-lg p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
       @click="emit('showFolderModal')"
     >
@@ -43,15 +44,16 @@ const emit = defineEmits(["showFolderModal", "showDeckModal"]);
       v-for="subFolder in folder.children"
       :key="subFolder.id"
       :folder="subFolder"
+      :permission="permission"
       :use-drop="true"
       :use-drag="true"
-      @move-file="refresh"
+      @update="refresh"
     />
   </div>
   <hr class="my-4" />
   <div class="s-grid">
     <div
-      v-if="showEdition"
+      v-if="permission?.write"
       class="flex cursor-pointer items-center rounded-lg p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
       @click="emit('showDeckModal')"
     >

@@ -199,6 +199,11 @@ app:
       delete:
         title: Supprimer une carte
         content: Êtes-vous sûr de vouloir supprimer cette carte ?
+  folders:
+    modal:
+      delete:
+        title: Supprimer un dossier
+        content: Êtes-vous sûr de vouloir supprimer ce dossier ?
   dashboard:
     title: Accueil
     topDecks: Decks populaires

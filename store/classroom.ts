@@ -196,6 +196,12 @@ export const useClassroomStore = defineStore("classroom", () => {
       });
     },
 
+    async deleteFolder(folder: Folder) {
+      await useFetchAPI(`/v1/folders/${folder.id}`, {
+        method: "DELETE",
+      });
+    },
+
     async subscribe(classroomId: string) {
       await useFetchAPI(`/v1/classrooms/${classroomId}/join`, {
         method: "POST",
