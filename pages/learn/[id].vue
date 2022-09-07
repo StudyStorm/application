@@ -178,7 +178,7 @@ const nextCard = () => {
           <ReportCardModal v-slot="{ open }">
             <button
               type="button"
-              class="flex w-full justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              class="flex w-full justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:border-transparent focus:outline-none focus:ring-2 focus:ring-storm-red focus:ring-offset-2"
               @click="open"
             >
               {{ $t("app.learn.buttons.signal") }}

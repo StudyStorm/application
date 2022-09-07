@@ -48,8 +48,8 @@ onMounted(async () => {
               <span class="text-storm-dark">{{ store.currentDeck.votes }}</span>
               <div @click="store.downvoteDeck(store.currentDeck)">
                 <ChevronDownIcon
-                  class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-red-500"
-                  :class="{ 'text-red-500': store.currentUserVote === -1 }"
+                  class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-storm-red"
+                  :class="{ 'text-storm-red': store.currentUserVote === -1 }"
                 />
               </div>
             </div>
