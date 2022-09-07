@@ -15,6 +15,13 @@ const changeRole = () => {
   emit("changeRole", props.member.email, newAccessRight.value);
   editMode.value = false;
 };
+
+const prettyRole = ref({
+  read: "Read",
+  read_write: "Read + Write",
+  read_write_delete: "Read + Write + Delete",
+  owner: "Owner",
+});
 </script>
 
 <template>
@@ -33,7 +40,7 @@ const changeRole = () => {
       class="mr-2 cursor-pointer rounded bg-purple-300 px-2.5 py-0.5 text-sm font-medium text-storm-purple"
       @click="editMode = true"
     >
-      {{ member.access_right }}
+      {{ prettyRole[member.access_right] }}
     </div>
     <select
       v-else
