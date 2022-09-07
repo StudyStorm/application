@@ -242,3 +242,21 @@ app:
     markAsUnread: Marquer comme non lu
     delete: Supprimer
     reportedBy: Reporté par {name}
+  classrooms:
+    title: Salles de classe
+    browseClassrooms: Explorer les salles de classe
+    recentClassrooms: Classes récentes
+    search: Rechercher une classe
+    table:
+      title: Classes
+      name: Nom
+      nbMembers: Membres
+      permissions: Permissions
+      public: Publique
+      private: Privée
+      member: Membre
+      isMember: Membre
+      notMember: Non-membre
+      write: Écriture
+      read: Lecture
+  # HERE THE CONTENT FOR THE APP

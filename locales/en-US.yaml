@@ -238,3 +238,21 @@ app:
     markAsUnread: Mark as unread
     delete: Delete
     reportedBy: Reported by {name}
+  classrooms:
+    title: Classrooms
+    browseClassrooms: Browse classrooms
+    recentClassrooms: Recent classrooms
+    search: Search classroom
+    table:
+      title: Classroom
+      name: Name
+      nbMembers: Members
+      permissions: Permissions
+      public: Public
+      private: Private
+      member: Member
+      isMember: Member
+      notMember: Not-member
+      write: Write
+      read: Read
+# HERE THE CONTENT FOR THE APP

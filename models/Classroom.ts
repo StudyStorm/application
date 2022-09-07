@@ -14,8 +14,11 @@ export default interface Classroom {
 
   users: User[];
 
-  permission: {
+  permissions: {
+    is_member: boolean;
     write: boolean;
     delete: boolean;
   };
+
+  nb_members: number;
 }
