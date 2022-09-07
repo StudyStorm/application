@@ -72,10 +72,13 @@ defineExpose({
             v-model="selectedRole"
             class="block rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           >
-            <option selected value="read">Read</option>
-            <option value="read_write">Read + Write</option>
-            <option value="read_write_delete">Read + Write + Delete</option>
-            <option value="owner">Owner</option>
+            <option selected value="read">{{ $t("app.roles.read") }}</option>
+            <option value="read_write">{{ $t("app.roles.write") }}</option>
+            <option value="read_write_delete">
+              {{ $t("app.roles.delete") }}
+            </option>
+            <option value="owner">{{ $t("app.roles.owner") }}</option>
+            <option value="subscriber">{{ $t("app.roles.subscriber") }}</option>
           </select>
         </div>
 
@@ -100,7 +103,7 @@ defineExpose({
       <button
         v-if="addUserEmail !== ''"
         type="submit"
-        class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="addMember"
       >
         {{ $t("app.classroom.modal.confirm") }}

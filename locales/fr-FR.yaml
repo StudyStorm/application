@@ -293,4 +293,10 @@ app:
       read: Lecture
     buttons:
       delete: Delete
+  roles:
+    read: Lecture
+    write: Lecture + Ecriture
+    delete: Lecture + Ecriture + Suppression
+    owner: Propriétaire
+    subscriber: Abonné
   # HERE THE CONTENT FOR THE APP

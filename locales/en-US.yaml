@@ -289,4 +289,10 @@ app:
       read: Read
     buttons:
       delete: Delete
+  roles:
+    read: Read
+    write: Read + Write
+    delete: Read + Write + Delete
+    owner: Owner
+    subscriber: Subscriber
 # HERE THE CONTENT FOR THE APP
