@@ -19,19 +19,7 @@ export const useClassroomStore = defineStore("classroom", () => {
   const pinnedClassrooms = ref<Pagination<Classroom>>(null);
   const LOCAL_STORAGE_KEY = "lastVisitedClassrooms";
   const MAX_LAST_VISITED_CLASSROOMS = 3;
-
-  const lastVisitedClassrooms = computed(() => {
-    const classroomIds: string[] = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEY)
-    );
-
-    if (!classroomIds) return [];
-    return allClassrooms.value.data
-      ? allClassrooms.value.data.filter((classroom) =>
-          classroomIds.includes(classroom.id)
-        )
-      : [];
-  });
+  const lastVisitedClassrooms = ref<Classroom[]>([]);
 
   const pagination = computed(() => {
     return filteredClassrooms.value.meta;
@@ -82,6 +70,25 @@ export const useClassroomStore = defineStore("classroom", () => {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(visited));
     },
 
+    async fetchLastVisited() {
+      const classroomIds: string[] = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_KEY)
+      );
+
+      if (!classroomIds) return [];
+
+      lastVisitedClassrooms.value = (
+        await Promise.all(
+          classroomIds.map(
+            async (id) =>
+              (
+                await useFetchAPI<Classroom>(`v1/classrooms/${id}`)
+              ).data
+          )
+        )
+      ).filter((c) => c !== null);
+    },
+
     async fetchAllClassrooms() {
       const { data } = await useFetchAPI<Pagination<Classroom>>(
         `/v1/classrooms`,
@@ -103,7 +110,6 @@ export const useClassroomStore = defineStore("classroom", () => {
 
       filteredClassrooms.value = data;
     },
-
     async fetchClassroom(classroomId: string) {
       const { data, error } = await useFetchAPI<Classroom>(
         `v1/classrooms/${classroomId}`

@@ -68,6 +68,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
 
 onMounted(async () => {
   classroomStore.addVisitedClassroom(route.params.classroom as string);
+  await classroomStore.fetchLastVisited();
 });
 </script>
 
