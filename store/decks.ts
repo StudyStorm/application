@@ -100,12 +100,30 @@ export const useDecksStore = defineStore("decks", {
       this.currentDeck = data;
     },
 
-    async createCard(payload: { deckId: string; content: CardContent }) {
-      const { data, error } = await useFetchAPI("v1/decks/cards", {
-        method: "POST",
-        body: { ...payload },
+    async refreshDeck() {
+      if (!this.currentDeck) return;
+      return this.fetchDeck(this.currentDeck.id);
+    },
+
+    async updateCard(cardId: string, payload: CardContent) {
+      return useFetchAPI(`v1/decks/cards/${cardId}`, {
+        method: "PATCH",
+        useFetch: true,
+        body: payload,
       });
-      return { data, error };
+    },
+
+    async deleteCard(cardId: string) {
+      return useFetchAPI(`v1/decks/cards/${cardId}`, {
+        method: "DELETE",
+      });
+    },
+
+    async createCard(payload: { deckId: string; content: CardContent }) {
+      return useFetchAPI("v1/decks/cards", {
+        method: "POST",
+        body: payload,
+      });
     },
 
     async fetchDeckUserRating(deckId: string) {

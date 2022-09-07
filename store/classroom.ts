@@ -16,6 +16,7 @@ export const useClassroomStore = defineStore("classroom", () => {
   const searchFilter = ref("");
   const allClassrooms = ref<Pagination<Classroom>>(null);
   const filteredClassrooms = ref<Pagination<Classroom>>(null);
+  const pinnedClassrooms = ref<Pagination<Classroom>>(null);
   const currentClassroom = ref(null);
   const LOCAL_STORAGE_KEY = "lastUsedClassrooms";
   const MAX_LAST_VISITED_CLASSROOMS = 3;
@@ -54,6 +55,7 @@ export const useClassroomStore = defineStore("classroom", () => {
     showFolderCreationModal,
     searchFilter,
     allClassrooms,
+    pinnedClassrooms,
     filteredClassrooms,
     currentClassroom,
     LOCAL_STORAGE_KEY,
@@ -120,6 +122,17 @@ export const useClassroomStore = defineStore("classroom", () => {
       }
     },
 
+    async createClassroom(classroom: { name: string; visibility: string }) {
+      const { data, error } = await useFetchAPI<Classroom, FormError>(
+        `v1/classrooms/`,
+        {
+          method: "POST",
+          body: classroom,
+        }
+      );
+      return { data, error };
+    },
+
     async createDeck(deck: { parentFolderId: string; name: string }) {
       const { data, error } = await useFetchAPI<Folder, FormError>(
         `v1/folders/${deck.parentFolderId}/decks`,
@@ -144,6 +157,16 @@ export const useClassroomStore = defineStore("classroom", () => {
         }
       );
       return { data, error };
+    },
+    async fetchPinnedClassrooms() {
+      const { data: classrooms } = await useFetchAPI<Pagination<Classroom>>(
+        "/v1/classrooms/joined",
+        {
+          method: "GET",
+        }
+      );
+
+      pinnedClassrooms.value = classrooms;
     },
     async fetchCurrentFolder(folderId: string) {
       const { data: folder } = await useFetchAPI<Folder>(

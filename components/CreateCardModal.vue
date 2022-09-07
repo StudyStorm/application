@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref } from "#imports";
 import { useDecksStore } from "~/store/decks";
 import {
   SquaresPlusIcon,
   XMarkIcon,
   TrashIcon,
 } from "@heroicons/vue/24/outline/index.js";
+import { PropType } from "vue";
+import Card, { CardContent } from "~/models/Card";
+import { klona } from "klona";
 const store = useDecksStore();
 const route = useRoute();
 
@@ -20,81 +22,74 @@ type Answer = {
   isTheAnswer: boolean;
 };
 
-type Card = {
-  question: string;
-  answers: Answer[];
-  type: string;
-};
-
-const cardInformation = ref<Card>(null);
+const props = defineProps({
+  card: {
+    type: Object as PropType<Card>,
+    default: null,
+  },
+});
+const card = ref<CardContent>(null);
 
 function init() {
   hasError.value = false;
-  cardInformation.value = {
+  card.value = klona(props.card?.content) ?? {
     question: null,
-    answers: [],
+    answers: [{ label: null, isTheAnswer: false }],
     type: "options",
   };
-  addAnswer();
   showModal.value = true;
 }
 
-async function createCard() {
-  if (!cardInformation.value) {
-    hasError.value = true;
-    return;
-  }
-  const payload = {
-    deckId: route.params.id as string,
-    content: {
-      question: cardInformation.value.question,
-      answers: [],
-      type: cardInformation.value.type,
-    },
-  };
+const isEditing = computed(() => props.card !== null);
 
-  payload.content.answers = cardInformation.value.answers.filter(
-    (answer) => answer.label !== null
-  );
-
-  if (!payload.content.answers.length) {
+async function save() {
+  if (!card.value) {
     hasError.value = true;
     return;
   }
 
-  if (payload.content.answers.length === 1) {
-    payload.content.answers[0].isTheAnswer = true;
-    payload.content.type = "flashCard";
+  const content = card.value;
+
+  //filter empty cards
+  content.answers = content.answers.filter((answer) => answer.label !== null);
+  if (!content.answers.length) {
+    hasError.value = true;
+    return;
+  } else if (content.answers.length === 1) {
+    content.answers[0].isTheAnswer = true;
   }
 
-  const { error } = await store.createCard(payload);
+  content.type = "card";
+  const { error } = await (isEditing.value
+    ? store.updateCard(props.card.id, card.value)
+    : store.createCard({
+        deckId: route.params.id as string,
+        content: card.value,
+      }));
 
   if (error) {
     hasError.value = true;
   } else {
-    await store.fetchDeck(route.params.id as string);
+    await store.refreshDeck();
     showModal.value = false;
   }
 }
 
 function addAnswer() {
-  cardInformation.value?.answers.push({ label: null, isTheAnswer: false });
+  card.value?.answers.push({ label: null, isTheAnswer: false });
 }
 
 function removeAnswer(answer: Answer) {
-  if (cardInformation.value?.answers.length <= 1) {
+  if (card.value?.answers.length <= 1) {
     return;
   }
-  cardInformation.value?.answers.splice(
-    cardInformation.value.answers.indexOf(answer),
-    1
-  );
+  card.value?.answers.splice(card.value.answers.indexOf(answer), 1);
 }
 </script>
 
 <template>
   <slot :open="init" />
-  <Modal v-model="showModal" :autoclose="false">
+  <Modal v-if="card" v-model="showModal" :autoclose="false">
     <template #icon
       ><div
         class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100 sm:mx-0 sm:h-10 sm:w-10"
@@ -103,7 +98,12 @@ function removeAnswer(answer: Answer) {
       </div>
     </template>
     <template #title>
-      {{ $t("app.deck.modal.create.title") }}
+      <template v-if="isEditing">
+        {{ $t("app.deck.modal.edit.title") }}
+      </template>
+      <template v-else>
+        {{ $t("app.deck.modal.create.title") }}
+      </template>
     </template>
     <template #content>
       <div class="mt-8 w-full space-y-4 px-7 sm:px-0 xl:mx-auto">
@@ -112,7 +112,7 @@ function removeAnswer(answer: Answer) {
             {{ $t("app.deck.modal.labels.question") }}
           </label>
           <s-textarea
-            v-model="cardInformation.question"
+            v-model="card.question"
             required
             :placeholder="$t('app.deck.modal.labels.question')"
             class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
@@ -144,7 +144,7 @@ function removeAnswer(answer: Answer) {
             {{ $t("app.deck.modal.labels.answers") }}
           </label>
           <button
-            v-if="cardInformation.answers.length < MAX_CARD_ANSWERS"
+            v-if="card.answers.length < MAX_CARD_ANSWERS"
             class="inline-flex justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
             @click="addAnswer"
           >
@@ -152,7 +152,7 @@ function removeAnswer(answer: Answer) {
           </button>
         </div>
         <div class="space-y-5">
-          <div v-for="(answer, i) in cardInformation.answers" :key="i">
+          <div v-for="(answer, i) in card.answers" :key="i">
             <div class="flex items-center justify-between">
               <input
                 :id="'checkbox' + i"
@@ -181,9 +181,14 @@ function removeAnswer(answer: Answer) {
       <button
         type="button"
         class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-        @click="createCard"
+        @click="save"
       >
-        {{ $t("app.deck.modal.buttons.create") }}
+        <template v-if="isEditing">
+          {{ $t("app.deck.modal.buttons.edit") }}
+        </template>
+        <template v-else>
+          {{ $t("app.deck.modal.buttons.create") }}
+        </template>
       </button>
       <button
         type="button"

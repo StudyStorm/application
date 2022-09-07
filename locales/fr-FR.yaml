@@ -191,6 +191,11 @@ app:
         addAnswer: Ajouter une réponse
         delete: Supprimer
     linkToHome: Cliquez ici pour revenir à l'accueil
+  cards:
+    modal:
+      delete:
+        title: Supprimer une carte
+        content: Êtes-vous sûr de vouloir supprimer cette carte ?
   dashboard:
     title: Accueil
     topDecks: Decks populaires
@@ -255,6 +260,15 @@ app:
     browseClassrooms: Explorer les salles de classe
     recentClassrooms: Classes récentes
     search: Rechercher une classe
+    addClassroom: Ajouter une classe
+    modal:
+      title: Créer une nouvelle classe
+      name: Nom de la classe
+      visibility: Visibilité
+      public: Publique
+      private: Privée
+      cancel: Annuler
+      confirm: Confirmer
     table:
       title: Classes
       name: Nom

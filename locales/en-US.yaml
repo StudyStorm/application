@@ -187,6 +187,11 @@ app:
         addAnswer: Add answer
         delete: Delete
     linkToHome: Click here to return to the home page
+  cards:
+    modal:
+      delete:
+        title: Delete card
+        content: Are you sure you want to delete this card? This action cannot be undone.
   dashboard:
     title: Home
     topDecks: Top decks
@@ -251,6 +256,15 @@ app:
     browseClassrooms: Browse classrooms
     recentClassrooms: Recent classrooms
     search: Search classroom
+    addClassroom: Add classroom
+    modal:
+      title: Create a classroom
+      name: Name
+      visibility: Visibility
+      public: Public
+      private: Private
+      cancel: Cancel
+      confirm: Confirm
     table:
       title: Classroom
       name: Name
