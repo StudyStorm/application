@@ -2,6 +2,7 @@
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
+  XMarkIcon,
 } from "@heroicons/vue/24/outline/index.js";
 import { useLearnStore } from "~~/store/learn";
 import ReportCardModal from "~/components/ReportCardModal.vue";
@@ -38,12 +39,16 @@ const { isSwiping, lengthX, lengthY } = useSwipe(activeCard, {
 });
 
 onKeyStroke("ArrowLeft", (e) => {
+  // TODO: find something better
+  if ((e.target as HTMLElement).localName !== "body") return;
   e.preventDefault();
   if (e.repeat) return;
   previousCard();
 });
 
 onKeyStroke("ArrowRight", (e) => {
+  // TODO: find something better
+  if ((e.target as HTMLElement).localName !== "body") return;
   e.preventDefault();
   if (e.repeat) return;
   nextCard();
@@ -87,7 +92,7 @@ const nextCard = () => {
     <div
       class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
     >
-      <div class="min-w-0">
+      <div class="flex w-full min-w-0 items-center justify-between">
         <h1 class="text-lg font-medium leading-6 text-gray-900 sm:truncate">
           {{ learnStore.deck.name }}
           <span class="text-sm leading-6 text-gray-900 sm:truncate">
@@ -98,6 +103,16 @@ const nextCard = () => {
             }}
           </span>
         </h1>
+        <NuxtLink
+          :to="{
+            name: 'deck-id',
+            params: {
+              id: learnStore.deck.id,
+            },
+          }"
+        >
+          <XMarkIcon class="h-8" />
+        </NuxtLink>
       </div>
     </div>
     <div class="mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">

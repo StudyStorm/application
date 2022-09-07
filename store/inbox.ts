@@ -26,14 +26,12 @@ export const useInboxStore = defineStore("inbox", () => {
       inboxReports.value = data;
     },
     async markAsRead(read: boolean, reportId: string) {
-      await useFetch(`/v1/inbox/${reportId}`, {
+      await useFetchAPI(`/v1/inbox/${reportId}`, {
         method: "PATCH",
         body: {
           isRead: read,
         },
-        credentials: "include",
-        baseURL: useRuntimeConfig().apiURL,
-        initialCache: false,
+        useFetch: true,
       });
       this.fetchInboxReports();
     },
