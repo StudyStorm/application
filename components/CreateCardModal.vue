@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from "#imports";
 import { useDecksStore } from "~/store/decks";
 import {
   SquaresPlusIcon,
   XMarkIcon,
   TrashIcon,
 } from "@heroicons/vue/24/outline/index.js";
+import { PropType } from "vue";
+import Card, { CardContent } from "~/models/Card";
 const store = useDecksStore();
 const route = useRoute();
 
@@ -20,40 +21,44 @@ type Answer = {
   isTheAnswer: boolean;
 };
 
-type Card = {
-  question: string;
-  answers: Answer[];
-  type: string;
-};
+const props = defineProps({
+  card: {
+    type: Object as PropType<Card>,
+    default: null,
+  },
+});
+const card = ref<CardContent>(null);
 
-const cardInformation = ref<Card>(null);
+function load() {
+  if (!props.card) return null;
+  return structuredClone(props.card.content);
+}
 
 function init() {
   hasError.value = false;
-  cardInformation.value = {
+  card.value = this.load() ?? {
     question: null,
-    answers: [],
+    answers: [{ label: null, isTheAnswer: false }],
     type: "options",
   };
-  addAnswer();
   showModal.value = true;
 }
 
 async function createCard() {
-  if (!cardInformation.value) {
+  if (!card.value) {
     hasError.value = true;
     return;
   }
   const payload = {
     deckId: route.params.id as string,
     content: {
-      question: cardInformation.value.question,
+      question: card.value.question,
       answers: [],
-      type: cardInformation.value.type,
+      type: card.value.type,
     },
   };
 
-  payload.content.answers = cardInformation.value.answers.filter(
+  payload.content.answers = card.value.answers.filter(
     (answer) => answer.label !== null
   );
 
@@ -78,23 +83,20 @@ async function createCard() {
 }
 
 function addAnswer() {
-  cardInformation.value?.answers.push({ label: null, isTheAnswer: false });
+  card.value?.answers.push({ label: null, isTheAnswer: false });
 }
 
 function removeAnswer(answer: Answer) {
-  if (cardInformation.value?.answers.length <= 1) {
+  if (card.value?.answers.length <= 1) {
     return;
   }
-  cardInformation.value?.answers.splice(
-    cardInformation.value.answers.indexOf(answer),
-    1
-  );
+  card.value?.answers.splice(card.value.answers.indexOf(answer), 1);
 }
 </script>
 
 <template>
   <slot :open="init" />
-  <Modal v-model="showModal" :autoclose="false">
+  <Modal v-if="card" v-model="showModal" :autoclose="false">
     <template #icon
       ><div
         class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100 sm:mx-0 sm:h-10 sm:w-10"
@@ -112,7 +114,7 @@ function removeAnswer(answer: Answer) {
             {{ $t("app.deck.modal.labels.question") }}
           </label>
           <s-textarea
-            v-model="cardInformation.question"
+            v-model="card.question"
             required
             :placeholder="$t('app.deck.modal.labels.question')"
             class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder:text-gray-400 focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
@@ -144,7 +146,7 @@ function removeAnswer(answer: Answer) {
             {{ $t("app.deck.modal.labels.answers") }}
           </label>
           <button
-            v-if="cardInformation.answers.length < MAX_CARD_ANSWERS"
+            v-if="card.answers.length < MAX_CARD_ANSWERS"
             class="inline-flex justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
             @click="addAnswer"
           >
@@ -152,7 +154,7 @@ function removeAnswer(answer: Answer) {
           </button>
         </div>
         <div class="space-y-5">
-          <div v-for="(answer, i) in cardInformation.answers" :key="i">
+          <div v-for="(answer, i) in card.answers" :key="i">
             <div class="flex items-center justify-between">
               <input
                 :id="'checkbox' + i"
