@@ -33,11 +33,11 @@ onMounted(async () => {
         <div class="flex min-w-0 flex-1 items-center justify-between">
           <div>
             <h1
-              class="text-storm-dark flex-row text-lg font-medium leading-6 sm:truncate"
+              class="flex-row text-lg font-medium leading-6 text-storm-dark sm:truncate"
             >
               {{ store.currentDeck.name }}
             </h1>
-            <span class="text-storm-dark text-sm sm:truncate">{{
+            <span class="text-sm text-storm-dark sm:truncate">{{
               $t("app.decks.createdBy", {
                 name: `${store.currentDeck.creator.first_name} ${store.currentDeck.creator.last_name}`,
               })
@@ -55,7 +55,7 @@ onMounted(async () => {
               <span class="text-storm-dark">{{ store.currentDeck.votes }}</span>
               <div @click="store.downvoteDeck(store.currentDeck)">
                 <ChevronDownIcon
-                  class="hover:text-storm-red h-6 w-6 cursor-pointer hover:scale-125"
+                  class="h-6 w-6 cursor-pointer hover:scale-125 hover:text-storm-red"
                   :class="{ 'text-storm-red': store.currentUserVote === -1 }"
                 />
               </div>
@@ -64,7 +64,7 @@ onMounted(async () => {
               <button
                 v-if="store.currentDeck.folder.classroom.permissions.write"
                 type="submit"
-                class="bg-storm-darkblue hover:bg-storm-blue rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click="open"
               >
                 {{ $t("app.decks.manageButton") }}
@@ -96,7 +96,7 @@ onMounted(async () => {
     </div>
     <div class="mb-10 p-4 sm:px-6 lg:px-8">
       <h1
-        class="text-storm-dark mb-4 text-lg font-medium leading-6 sm:truncate"
+        class="mb-4 text-lg font-medium leading-6 text-storm-dark sm:truncate"
       >
         {{ $t("app.decks.cards", { number: store.currentDeck.cards.length }) }}
       </h1>
@@ -106,7 +106,7 @@ onMounted(async () => {
         >
           <create-card-modal v-slot="{ open }">
             <s-card-squared class="bg-gray-100" @click="open">
-              <PlusIcon class="text-storm-dark mx-auto h-full w-12" />
+              <PlusIcon class="mx-auto h-full w-12 text-storm-dark" />
             </s-card-squared>
           </create-card-modal>
 
@@ -123,7 +123,7 @@ onMounted(async () => {
         >
           <NuxtLink
             type="button"
-            class="focus:storm-darkblue bg-storm-darkblue rounded-md px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
+            class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
             :to="{
               name: 'learn-id',
               params: {
