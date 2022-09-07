@@ -114,7 +114,7 @@ onMounted(async () => {
           />
         </div>
         <div
-          class="fixed bottom-0 flex w-full items-center justify-center border-t py-2 backdrop-blur"
+          v-if="store.currentDeck.cards.length"
         >
           <NuxtLink
             type="button"
