@@ -86,44 +86,46 @@ onMounted(async () => {
               {{ classroomStore.classroom.name }}
             </h1>
           </div>
-          <button
-            v-if="
-              classroomStore.classroom.visibility === 'public' &&
-              !classroomStore.classroom.permissions.is_member
-            "
-            class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            @click="classroomStore.subscribe(classroomStore.classroom.id)"
-          >
-            {{ $t("app.classroom.subscribe") }}
-          </button>
-          <button
-            v-else-if="classroomStore.classroom.permissions.is_member"
-            class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            @click="quitClassroom"
-          >
-            {{ $t("app.classroom.unsubscribe") }}
-          </button>
-        </div>
-        <confirm-modal
-          v-if="classroomStore.classroom.permissions.is_owner"
-          @confirm="deleteClassroom"
-        >
-          <template #title>
-            {{ $t("app.classrooms.modal.delete.title") }}
-          </template>
-          <template #content>
-            {{ $t("app.classrooms.modal.delete.content") }}
-          </template>
-          <template #default="{ open }">
+          <div class="flex items-center space-x-4">
             <button
-              type="button"
-              class="float-left mt-3 inline-flex w-full justify-center rounded-md border border-storm-red bg-storm-red px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-              @click="open"
+              v-if="
+                classroomStore.classroom.visibility === 'public' &&
+                !classroomStore.classroom.permissions.is_member
+              "
+              class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              @click="classroomStore.subscribe(classroomStore.classroom.id)"
             >
-              {{ $t("app.classrooms.buttons.delete") }}
+              {{ $t("app.classroom.subscribe") }}
             </button>
-          </template>
-        </confirm-modal>
+            <button
+              v-else-if="classroomStore.classroom.permissions.is_member"
+              class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              @click="quitClassroom"
+            >
+              {{ $t("app.classroom.unsubscribe") }}
+            </button>
+            <confirm-modal
+              v-if="classroomStore.classroom.permissions.is_owner"
+              @confirm="deleteClassroom"
+            >
+              <template #title>
+                {{ $t("app.classrooms.modal.delete.title") }}
+              </template>
+              <template #content>
+                {{ $t("app.classrooms.modal.delete.content") }}
+              </template>
+              <template #default="{ open }">
+                <button
+                  type="button"
+                  class="rounded-md border border-transparent bg-storm-red px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-storm-red focus:ring-offset-2"
+                  @click="open"
+                >
+                  {{ $t("app.classrooms.buttons.delete") }}
+                </button>
+              </template>
+            </confirm-modal>
+          </div>
+        </div>
       </div>
       <div class="p-4 sm:px-6 lg:px-8">
         <div>
