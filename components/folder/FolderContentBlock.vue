@@ -15,7 +15,6 @@ defineProps<{
 }>();
 
 function refresh() {
-  console.log("refresh");
   classroomStore.refreshCurrentFolder();
 }
 

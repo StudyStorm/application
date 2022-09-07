@@ -38,6 +38,10 @@ export const useClassroomStore = defineStore("classroom", () => {
     return filteredClassrooms.value.meta;
   });
 
+  const paginationMembers = computed(() => {
+    return members.value.meta;
+  });
+
   const classrooms = computed(() => {
     return filteredClassrooms.value.data;
   });
@@ -58,6 +62,7 @@ export const useClassroomStore = defineStore("classroom", () => {
     MAX_LAST_VISITED_CLASSROOMS,
     lastVisitedClassrooms,
     pagination,
+    paginationMembers,
     classrooms,
 
     addVisitedClassroom(classroomId: string | number) {
@@ -174,10 +179,10 @@ export const useClassroomStore = defineStore("classroom", () => {
       if (!currentFolder.value) return;
       await this.fetchCurrentFolder(currentFolder.value.id);
     },
-    async fetchClassroomUsers(classroomId: string, limit = 5) {
+    async fetchClassroomUsers(classroomId: string, limit = 5, page = 1) {
       const { data } = await useFetchAPI<Pagination<User>>(
         `/v1/classrooms/${classroomId}/users`,
-        { params: { limit: limit } }
+        { params: { limit: limit, page: page } }
       );
 
       members.value = data;
@@ -198,6 +203,46 @@ export const useClassroomStore = defineStore("classroom", () => {
         body: {
           parentId: folder.id,
         },
+      });
+    },
+
+    async subscribe(classroomId: string) {
+      await useFetchAPI(`/v1/classrooms/${classroomId}/join`, {
+        method: "POST",
+      });
+      this.fetchClassroom(classroomId);
+    },
+
+    async unsubscribe(classroomId: string) {
+      await useFetchAPI(`/v1/classrooms/${classroomId}/leave`, {
+        method: "POST",
+      });
+    },
+
+    async addMember(classroomId: string, email: string, accessRight: string) {
+      await useFetchAPI("v1/classrooms/users", {
+        method: "POST",
+        body: {
+          classroomId: classroomId,
+          email: email,
+          accessRight: accessRight,
+        },
+      });
+    },
+
+    async changeMemberRole(
+      classroomId: string,
+      email: string,
+      accessRight: string
+    ) {
+      await useFetchAPI("v1/classrooms/users", {
+        method: "PATCH",
+        body: {
+          classroomId: classroomId,
+          email: email,
+          accessRight: accessRight,
+        },
+        useFetch: true,
       });
     },
   };
