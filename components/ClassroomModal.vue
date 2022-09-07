@@ -12,7 +12,7 @@ const selectedVisibilty = ref("public");
 
 const closeModal = () => {
   showModal.value = false;
-  addUserEmail.value = "";
+  name.value = "";
 };
 
 const openModal = () => {
@@ -102,7 +102,7 @@ async function create(classroom: { name: string; visibility: string }) {
       <button
         v-if="name !== ''"
         type="submit"
-        class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="create({ name: name, visibility: selectedVisibilty })"
       >
         {{ $t("app.classrooms.modal.confirm") }}
