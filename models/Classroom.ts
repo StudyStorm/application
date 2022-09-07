@@ -6,9 +6,16 @@ export default interface Classroom {
 
   name: string;
 
+  visibility: "public" | "private";
+
   root_folder: Folder;
 
   folders: Folder[];
 
   users: User[];
+
+  permission: {
+    write: boolean;
+    delete: boolean;
+  };
 }

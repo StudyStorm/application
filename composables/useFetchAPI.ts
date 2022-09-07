@@ -24,6 +24,7 @@ export function useFetchAPI<DataT = never, ErrorT = never>(
       {
         url: path,
         baseURL: config.apiURL,
+        cache: "no-cache",
       },
       options
     )

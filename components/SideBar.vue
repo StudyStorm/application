@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { Pagination } from "~/types/app";
+import { Classroom } from "~/types/classroom";
 
 import {
   XMarkIcon,
@@ -26,6 +28,17 @@ const { t } = useI18n();
 
 const auth = useAuth();
 
+const route = useRoute();
+
+const path = computed(() => route.path);
+
+const { data: classrooms } = await useFetchAPI<Pagination<Classroom>>(
+  "/v1/classrooms/joined",
+  {
+    method: "GET",
+  }
+);
+
 const navigation = ref([
   {
     name: t("app.sideNav.home"),
@@ -38,13 +51,14 @@ const navigation = ref([
   {
     name: t("app.sideNav.class"),
     translateName: "app.sideNav.class",
-    href: "",
+    href: "/classroom",
     icon: AcademicCapIcon,
     current: false,
     options: true,
     hasDropdown: true,
     dropped: true,
-    items: ["HEIG", "EPFL", "Random"],
+    // items: ["HEIG", "EPFL", "Random"],
+    classrooms: classrooms.data,
   },
 ]);
 
@@ -54,10 +68,14 @@ const datas = ref({
   visibility: true,
 });
 
-//const err = ref<null | any>(null);
-// const showButton = ref(false);
 const sidebarOpen = ref(false);
 const showModal = ref(false);
+
+function color(id: string) {
+  return `background-color: hsl(${id
+    .split("")
+    .reduce((a, b) => (a + b.charCodeAt(0)) % 360, 0)}, 100%, 80%)`;
+}
 
 async function closeModal() {
   resetField();
@@ -68,11 +86,6 @@ function resetField() {
   datas.value.className = "";
   datas.value.visibility = true;
 }
-
-// async function createClassroom() {
-//   sidebarOpen.value = false;
-//   showModal.value = true;
-// }
 </script>
 <template>
   <div>
@@ -128,40 +141,47 @@ function resetField() {
                 </div>
               </TransitionChild>
               <div class="flex shrink-0 items-center px-4">
-                <nuxt-img
-                  src="/images/Logo.svg"
-                  class="mr-3 h-6 sm:h-9"
-                  alt="StudyStorm Logo"
-                />
-                <span
-                  class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold text-storm-dark"
-                  >{{ $t("app.title") }}</span
+                <NuxtLink
+                  to="/dashboard"
+                  title="Dashboard"
+                  class="flex items-center"
+                  @click="sidebarOpen = false"
                 >
+                  <nuxt-img
+                    src="/images/Logo.svg"
+                    class="mr-3 h-6 sm:h-9"
+                    alt="StudyStorm Logo"
+                  />
+                  <span
+                    class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold text-storm-dark"
+                    >{{ $t("app.title") }}</span
+                  >
+                </NuxtLink>
               </div>
               <div class="mt-5 h-0 flex-1 overflow-y-auto">
-                <nav class="px-2">
+                <nav class="px-2" aria-label="nav">
                   <div
                     v-for="item in navigation"
                     :key="item.name"
-                    class="cursor-pointer select-none"
+                    class="relative cursor-pointer select-none"
                   >
                     <NuxtLink
                       :to="item.href"
-                      class="flex items-center justify-between"
+                      class="flex items-center justify-between border border-transparent hover:border-gray-200 hover:bg-gray-50"
                       :class="[
-                        item.current
+                        path === item.href
                           ? 'bg-gray-200 text-gray-900'
                           : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
                         'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
                       ]"
-                      :aria-current="item.current ? 'page' : undefined"
-                      @click="item.dropped = !item.dropped"
+                      :aria-current="path === item.href ? 'page' : undefined"
+                      @click="sidebarOpen = false"
                     >
-                      <div class="flex items-center">
+                      <div class="relative flex items-center">
                         <component
                           :is="item.icon"
                           :class="[
-                            item.current
+                            path === item.href
                               ? 'text-gray-500'
                               : 'text-gray-400 group-hover:text-gray-500',
                             'mr-3 flex-shrink-0 h-6 w-6',
@@ -170,35 +190,70 @@ function resetField() {
                         />
                         {{ $t(item.translateName) }}
                       </div>
-                      <ChevronUpIcon
-                        v-if="item.hasDropdown && item.dropped"
-                        class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
-                        aria-hidden="true"
-                        @click="item.dropped = !item.dropped"
-                      />
-                      <ChevronDownIcon
-                        v-if="item.hasDropdown && !item.dropped"
-                        class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
-                        aria-hidden="true"
-                        @click="item.dropped = !item.dropped"
-                      />
                     </NuxtLink>
-                    <div v-if="item.hasDropdown && item.dropped">
+                    <ChevronUpIcon
+                      v-if="item.hasDropdown && item.dropped"
+                      class="shrink-1 absolute top-1 right-1 float-right h-8 w-8 rounded px-2 text-gray-400"
+                      :class="[
+                        path === '/classroom'
+                          ? 'cursor-pointer bg-gray-300 text-storm-blue'
+                          : 'cursor-pointer bg-gray-200 text-storm-blue',
+                      ]"
+                      aria-hidden="true"
+                      @click="item.dropped = !item.dropped"
+                    />
+                    <ChevronDownIcon
+                      v-if="item.hasDropdown && !item.dropped"
+                      class="absolute top-1 right-1 float-right h-8 w-8 shrink-0 rounded px-2 text-gray-400"
+                      :class="[
+                        path === '/classroom'
+                          ? 'cursor-pointer bg-gray-300 text-storm-blue'
+                          : 'cursor-pointer bg-gray-200 text-storm-blue',
+                      ]"
+                      aria-hidden="true"
+                      @click="item.dropped = !item.dropped"
+                    />
+                    <div v-if="item.hasDropdown && item.dropped" class="mt-0.5">
                       <!-- TODO: change this to match the classroom type -->
                       <!-- TODO: Change the link to /classroom/:id -->
                       <NuxtLink
-                        v-for="subitem in item.items"
-                        :key="subitem"
-                        class="group flex cursor-pointer items-center rounded-md p-2 pl-8 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
-                        to="/classroom/id"
+                        v-for="subitem in (item.classrooms as Classroom[])"
+                        :key="subitem.id"
+                        class="group mt-0.5 flex cursor-pointer items-center rounded-md border border-transparent p-2 pl-4 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
+                        :class="[
+                          path === `/classroom/${subitem.id}`
+                            ? 'bg-gray-200 text-gray-900'
+                            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50 ',
+                          'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                        ]"
+                        :to="`/classroom/${subitem.id}`"
+                        @click="sidebarOpen = false"
                       >
-                        {{ subitem }}
+                        <span class="relative mr-2 flex h-3 w-3">
+                          <span
+                            class="h-3 w-3 rounded-full shadow-sm ring-1 ring-gray-300"
+                            :style="color(subitem.id)"
+                          ></span>
+                          <span
+                            class="absolute inline-flex h-full w-full rounded-full opacity-100 group-hover:animate-ping"
+                            :style="color(subitem.id)"
+                          ></span>
+                        </span>
+                        {{ subitem.name }}
                       </NuxtLink>
                     </div>
                   </div>
                 </nav>
                 <!-- Bouton langue -->
-                <SButtonLangSwitch class="mt-2 ml-3"></SButtonLangSwitch>
+                <SButtonLangSwitch
+                  class="ml-4 mt-4 text-gray-500 hover:text-gray-700"
+                >
+                  <span
+                    class="ml-3 rounded-md text-sm font-medium text-gray-700"
+                  >
+                    {{ $t("app.sideNav.lang") }}
+                  </span>
+                </SButtonLangSwitch>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -208,18 +263,20 @@ function resetField() {
     </TransitionRoot>
     <!-- Static sidebar for desktop -->
     <div
-      class="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-200 lg:bg-gray-100 lg:pt-5 lg:pb-4"
+      class="hidden backdrop-blur lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-200 lg:bg-gray-100 lg:pt-5 lg:pb-4"
     >
       <div class="flex shrink-0 items-center px-6">
-        <nuxt-img
-          src="/images/Logo.svg"
-          class="mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
-          alt="StudyStorm Logo"
-        />
-        <span
-          class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold text-storm-dark"
-          >{{ $t("app.title") }}</span
-        >
+        <NuxtLink to="/dashboard" title="Dashboard" class="flex items-center">
+          <nuxt-img
+            src="/images/Logo.svg"
+            class="mr-3 h-6 from-cyan-500 to-blue-500 sm:h-9"
+            alt="StudyStorm Logo"
+          />
+          <span
+            class="self-center whitespace-nowrap font-[ZwoDrei] text-xl font-semibold text-storm-dark"
+            >{{ $t("app.title") }}</span
+          >
+        </NuxtLink>
       </div>
       <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="mt-6 flex h-0 flex-1 flex-col overflow-y-auto">
@@ -228,7 +285,7 @@ function resetField() {
           <div>
             <MenuButton
               v-if="$auth.user"
-              class="group mt-2 w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+              class="group mt-2 w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 focus:ring-offset-gray-100"
             >
               <span class="flex w-full items-center justify-between">
                 <span
@@ -306,30 +363,29 @@ function resetField() {
             </MenuItems>
           </transition>
         </Menu>
-        <nav class="mt-6 px-3">
+        <nav class="mt-6 px-3" aria-label="nav">
           <div class="space-y-1">
             <div
               v-for="item in navigation"
               :key="item.name"
-              class="cursor-pointer select-none"
+              class="relative cursor-pointer select-none"
             >
               <NuxtLink
                 :to="item.href"
-                class="flex items-center justify-between"
+                class="flex items-center justify-between border border-transparent hover:border-gray-200 hover:bg-gray-50"
                 :class="[
-                  item.current
+                  path === item.href
                     ? 'bg-gray-200 text-gray-900'
                     : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
                   'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
                 ]"
-                :aria-current="item.current ? 'page' : undefined"
-                @click="item.dropped = !item.dropped"
+                :aria-current="path === item.href ? 'page' : undefined"
               >
                 <div class="flex items-center">
                   <component
                     :is="item.icon"
                     :class="[
-                      item.current
+                      path === item.href
                         ? 'text-gray-500'
                         : 'text-gray-400 group-hover:text-gray-500',
                       'mr-3 flex-shrink-0 h-6 w-6',
@@ -338,17 +394,19 @@ function resetField() {
                   />
                   {{ $t(item.translateName) }}
                 </div>
-                <ChevronUpIcon
-                  v-if="item.hasDropdown && item.dropped"
-                  class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
-                  aria-hidden="true"
-                />
-                <ChevronDownIcon
-                  v-if="item.hasDropdown && !item.dropped"
-                  class="float-right h-5 w-5 shrink-0 text-gray-400 hover:cursor-pointer hover:text-blue-600"
-                  aria-hidden="true"
-                />
               </NuxtLink>
+              <ChevronUpIcon
+                v-if="item.hasDropdown && item.dropped"
+                class="absolute top-1 right-1 float-right h-8 w-8 shrink-0 rounded px-2 text-gray-400 hover:cursor-pointer hover:bg-gray-300 hover:text-storm-blue"
+                aria-hidden="true"
+                @click="item.dropped = !item.dropped"
+              />
+              <ChevronDownIcon
+                v-if="item.hasDropdown && !item.dropped"
+                class="absolute top-1 right-1 float-right h-8 w-8 shrink-0 rounded px-2 text-gray-400 hover:cursor-pointer hover:bg-gray-300 hover:text-storm-blue"
+                aria-hidden="true"
+                @click="item.dropped = !item.dropped"
+              />
               <transition
                 enter-active-class="transition duration-100 ease-out"
                 enter-from-class="transform scale-95 opacity-0"
@@ -357,16 +415,30 @@ function resetField() {
                 leave-from-class="transform scale-100 opacity-100"
                 leave-to-class="transform scale-95 opacity-0"
               >
-                <div v-if="item.hasDropdown && item.dropped">
-                  <!-- TODO: change this to match the classroom type -->
-                  <!-- TODO: Change the link to /classroom/:id -->
+                <div v-if="item.hasDropdown && item.dropped" class="mt-0.5">
                   <NuxtLink
-                    v-for="subitem in item.items"
-                    :key="subitem"
-                    class="group flex cursor-pointer items-center rounded-md p-2 pl-8 text-sm font-medium text-storm-darkblue hover:bg-gray-50"
-                    to="/classroom/id"
+                    v-for="subitem in (item.classrooms as Classroom[])"
+                    :key="subitem.id"
+                    class="group mt-0.5 flex cursor-pointer items-center rounded-md border border-transparent p-2 pl-3 text-sm font-medium text-storm-darkblue hover:border-gray-200 hover:bg-gray-50"
+                    :class="[
+                      path === `/classroom/${subitem.id}`
+                        ? 'bg-gray-200 text-gray-900'
+                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50 ',
+                      'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                    ]"
+                    :to="`/classroom/${subitem.id}`"
                   >
-                    {{ subitem }}
+                    <span class="relative mr-2 flex h-2.5 w-2.5">
+                      <span
+                        class="h-2.5 w-2.5 rounded-full shadow-sm ring-1 ring-gray-300"
+                        :style="color(subitem.id)"
+                      ></span>
+                      <span
+                        class="absolute inline-flex h-full w-full rounded-full opacity-100 group-hover:animate-ping"
+                        :style="color(subitem.id)"
+                      ></span>
+                    </span>
+                    {{ subitem.name }}
                   </NuxtLink>
                 </div>
               </transition>
@@ -375,7 +447,11 @@ function resetField() {
         </nav>
 
         <!-- Bouton pour changer la langue -->
-        <SButtonLangSwitch class="ml-5 mt-2"></SButtonLangSwitch>
+        <SButtonLangSwitch class="ml-5 mt-4 text-gray-500 hover:text-gray-700">
+          <span class="ml-3 rounded-md text-sm font-medium text-gray-700">
+            {{ $t("app.sideNav.lang") }}
+          </span>
+        </SButtonLangSwitch>
       </div>
     </div>
     <div
@@ -383,7 +459,7 @@ function resetField() {
     >
       <button
         type="button"
-        class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500 lg:hidden"
+        class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-storm-blue lg:hidden"
         @click="sidebarOpen = true"
       >
         <span class="sr-only">{{ $t("app.navbar.openMenu") }}</span>
@@ -397,7 +473,7 @@ function resetField() {
             <div>
               <MenuButton
                 v-if="$auth.user"
-                class="flex max-w-xs rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                class="flex max-w-xs rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2"
               >
                 <span class="sr-only"
                   >Open user menu {{ $t("app.navbar.openMenu") }}</span
@@ -460,7 +536,7 @@ function resetField() {
             type="text"
             required
             autocomplete="off"
-            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-storm-blue focus:outline-none focus:ring-storm-blue sm:text-sm"
           />
         </div>
         <div class="mt-1">
@@ -488,7 +564,7 @@ function resetField() {
       </button>
       <button
         type="button"
-        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         @click="closeModal"
       >
         {{ $t("app.createClassroom.cancel") }}
