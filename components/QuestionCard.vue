@@ -23,7 +23,5 @@ defineProps<{
     <div class="text-xs">
       {{ number }}
     </div>
-    <p class="overflow-hidden text-ellipsis p-6">{{ card.content.question }}</p>
-  </div>
   </v-card>
 </template>

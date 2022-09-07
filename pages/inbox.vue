@@ -39,6 +39,7 @@ const changePage = (page: number) => {
         <s-paginator
           :current-page="currentPage"
           :last="store.pagination.last_page"
+          :max-visible="5"
           @change-page="changePage"
         />
       </div>

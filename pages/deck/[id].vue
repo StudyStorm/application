@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { ref } from "#imports";
 import { useDecksStore } from "~/store/decks";
-import {
-  PlusIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/vue/24/outline/index.js";
+import { PlusIcon } from "@heroicons/vue/24/outline/index.js";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
@@ -19,8 +15,6 @@ await store.fetchDeckUserRating(route.params.id as string);
 onMounted(async () => {
   store.addUsedDeck(route.params.id as string);
 });
-
-const showModal = ref(false);
 </script>
 
 <template>
@@ -99,13 +93,8 @@ const showModal = ref(false);
             type="button"
             class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
           >
-            <button
-              type="button"
-              class="focus:storm-darkblue rounded-md bg-storm-darkblue px-4 py-2 text-sm font-medium text-white hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
-            >
-              {{ $t("app.decks.start") }}
-            </button>
-          </div>
+            {{ $t("app.decks.start") }}
+          </button>
         </div>
       </div>
     </div>
