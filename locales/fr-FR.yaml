@@ -236,6 +236,8 @@ app:
       cancel: Annuler
       submit: Créer
     allMembers: Cette fonctionnalité sera bientôt disponible.
+    unsubscribe: Se désabonner
+    subscribe: Rejoindre
   inbox:
     title: Boîte de réception
     markAsRead: Marquer comme lu

@@ -232,6 +232,8 @@ app:
       cancel: Cancel
       submit: Create
     allMembers: This feature will be available soon.
+    unsubscribe: Unsubscribe
+    subscribe: Subscribe
   inbox:
     title: Inbox
     markAsRead: Mark as read

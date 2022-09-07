@@ -140,10 +140,6 @@ export const useClassroomStore = defineStore("classroom", () => {
       );
       return { data, error };
     },
-    async fetchPinnedClassrooms() {
-      console.log("pinned classrooms");
-      // TODO: call /v1/classrooms/joined
-    },
     async fetchCurrentFolder(folderId: string) {
       const { data: folder } = await useFetchAPI<Folder>(
         `/v1/folders/${folderId}`
@@ -179,6 +175,18 @@ export const useClassroomStore = defineStore("classroom", () => {
         body: {
           parentId: folder.id,
         },
+      });
+    },
+
+    async subscribe(classroomId: string) {
+      await useFetchAPI(`/v1/classrooms/${classroomId}/join`, {
+        method: "POST",
+      });
+      this.fetchClassroom(classroomId);
+    },
+    async unsubscribe(classroomId: string) {
+      await useFetchAPI(`/v1/classrooms/${classroomId}/leave`, {
+        method: "POST",
       });
     },
   };
