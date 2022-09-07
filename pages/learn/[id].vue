@@ -32,7 +32,7 @@ const progress = computed(() => {
 
 const activeCard = ref(null);
 
-const { isSwiping, lengthX, lengthY } = useSwipe(activeCard, {
+const { isSwiping } = useSwipe(activeCard, {
   onSwipeEnd(_e: TouchEvent, direction: SwipeDirection) {
     switch (direction) {
       case "LEFT":
