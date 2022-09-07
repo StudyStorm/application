@@ -17,7 +17,7 @@ export const useClassroomStore = defineStore("classroom", () => {
   const allClassrooms = ref<Pagination<Classroom>>(null);
   const filteredClassrooms = ref<Pagination<Classroom>>(null);
   const pinnedClassrooms = ref<Pagination<Classroom>>(null);
-  const LOCAL_STORAGE_KEY = "lastUsedClassrooms";
+  const LOCAL_STORAGE_KEY = "lastVisitedClassrooms";
   const MAX_LAST_VISITED_CLASSROOMS = 3;
 
   const lastVisitedClassrooms = computed(() => {
