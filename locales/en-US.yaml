@@ -185,6 +185,7 @@ app:
         cancel: Cancel
         edit: Edit
         addAnswer: Add answer
+        delete: Delete
     linkToHome: Click here to return to the home page
   dashboard:
     title: Home

@@ -3,6 +3,7 @@ import { ref } from "#imports";
 import { useDecksStore } from "~/store/decks";
 import { SquaresPlusIcon } from "@heroicons/vue/24/outline/index.js";
 const store = useDecksStore();
+const router = useRouter();
 
 const showModal = ref(false);
 
@@ -15,6 +16,12 @@ const init = () => {
 const updateDeck = async () => {
   await store.updateDeckName(store.currentDeck.id, editingDeckName.value);
   showModal.value = false;
+};
+
+const deleteDeck = async () => {
+  await store.deleteDeck(store.currentDeck.id);
+  showModal.value = false;
+  router.push({ name: "dashboard" });
 };
 </script>
 
@@ -61,6 +68,13 @@ const updateDeck = async () => {
         @click="showModal = false"
       >
         {{ $t("app.deck.modal.buttons.cancel") }}
+      </button>
+      <button
+        type="button"
+        class="float-left mt-3 inline-flex w-full justify-center rounded-md border border-storm-red bg-storm-red px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        @click="deleteDeck"
+      >
+        {{ $t("app.deck.modal.buttons.delete") }}
       </button>
     </template>
   </Modal>

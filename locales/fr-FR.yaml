@@ -189,6 +189,7 @@ app:
         cancel: Annuler
         edit: Modifier
         addAnswer: Ajouter une réponse
+        delete: Supprimer
     linkToHome: Cliquez ici pour revenir à l'accueil
   dashboard:
     title: Accueil

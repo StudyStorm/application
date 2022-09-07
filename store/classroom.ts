@@ -222,5 +222,11 @@ export const useClassroomStore = defineStore("classroom", () => {
         useFetch: true,
       });
     },
+
+    async deleteClassroom(classroomId: string) {
+      await useFetchAPI(`/v1/classrooms/${classroomId}`, {
+        method: "DELETE",
+      });
+    },
   };
 });

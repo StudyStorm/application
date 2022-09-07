@@ -168,5 +168,11 @@ export const useDecksStore = defineStore("decks", {
       });
       this.fetchDeck(deckId);
     },
+
+    async deleteDeck(deckId: string) {
+      await useFetchAPI(`/v1/decks/${deckId}`, {
+        method: "DELETE",
+      });
+    },
   },
 });
