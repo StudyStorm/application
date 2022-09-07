@@ -36,6 +36,7 @@ export const useDecksStore = defineStore("decks", {
         localStorage.getItem(LOCAL_STORAGE_KEY)
       );
 
+      if (!deckIds) return [];
       return state.allDecks.data
         ? state.allDecks.data.filter((deck) => deckIds.includes(deck.id))
         : [];

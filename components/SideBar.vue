@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Pagination } from "~/types/app";
-import { Classroom } from "~/types/classroom";
+import Classroom from "~/models/Classroom";
 
 import {
   XMarkIcon,
