@@ -6,10 +6,18 @@ import {
 import Folder from "~/models/Folder";
 import FolderCard from "~/components/FolderCard.vue";
 import DeckCard from "~/components/DeckCard.vue";
+import { useClassroomStore } from "~/store/classroom";
+
+const classroomStore = useClassroomStore();
 
 defineProps<{
   folder: Folder;
 }>();
+
+function refresh() {
+  console.log("refresh");
+  classroomStore.refreshCurrentFolder();
+}
 
 const emit = defineEmits(["showFolderModal", "showDeckModal"]);
 </script>
@@ -34,6 +42,9 @@ const emit = defineEmits(["showFolderModal", "showDeckModal"]);
       v-for="subFolder in folder.children"
       :key="subFolder.id"
       :folder="subFolder"
+      :use-drop="true"
+      :use-drag="true"
+      @move-file="refresh"
     />
   </div>
   <hr class="my-4" />
@@ -53,6 +64,11 @@ const emit = defineEmits(["showFolderModal", "showDeckModal"]);
         </div>
       </div>
     </div>
-    <deck-card v-for="deck in folder.decks" :key="deck.id" :deck="deck" />
+    <deck-card
+      v-for="deck in folder.decks"
+      :key="deck.id"
+      :deck="deck"
+      :use-drag="true"
+    />
   </div>
 </template>

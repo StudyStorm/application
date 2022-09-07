@@ -1,7 +1,7 @@
-import { useAuth, useRuntimeConfig } from "#build/imports";
 import { HTTPRequest } from "@nuxtjs-alt/auth";
 import { FetchError } from "ohmyfetch";
-import { Ref, UnwrapRef } from "vue";
+import { Ref, unref, UnwrapRef } from "vue";
+import useAuth from "~/composables/useAuth";
 
 type Response<T, U> = Promise<{
   data: T | null;
@@ -13,11 +13,28 @@ type ResponseRef<T, U> = Promise<{
   error: Ref<UnwrapRef<FetchError<U> | null>>;
 }>;
 
+type FetchAPIOpts = HTTPRequest & {
+  useFetch?: boolean;
+};
+
 export function useFetchAPI<DataT = never, ErrorT = never>(
   path: string,
-  options?: HTTPRequest
+  options?: FetchAPIOpts
 ): Response<DataT, ErrorT> {
   const config = useRuntimeConfig();
+  if (options?.useFetch) {
+    return useFetch(path, {
+      ...options,
+      baseURL: config.apiURL,
+      initialCache: false,
+      credentials: "include",
+    }).then((res) => {
+      return {
+        data: unref(res.data),
+        error: unref(res.error),
+      };
+    }) as Response<DataT, ErrorT>;
+  }
   const auth = useAuth();
   return auth
     .request(
