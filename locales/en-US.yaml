@@ -243,6 +243,15 @@ app:
     browseClassrooms: Browse classrooms
     recentClassrooms: Recent classrooms
     search: Search classroom
+    addClassroom: Add classroom
+    modal:
+      title: Create a classroom
+      name: Name
+      visibility: Visibility
+      public: Public
+      private: Private
+      cancel: Cancel
+      confirm: Confirm
     table:
       title: Classroom
       name: Name
