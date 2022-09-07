@@ -62,16 +62,6 @@ onKeyStroke(" ", (e) => {
   activeCard.value.toggle?.();
 });
 
-const transform = computed(() => {
-  if (!isSwiping.value) return undefined;
-  const x = -lengthX.value;
-  const y = -lengthY.value;
-  const xMulti = x * 0.03;
-  const yMulti = y / 80;
-  const rotate = xMulti * yMulti;
-  return `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
-});
-
 const swipeTransition = ref<string>("");
 
 const previousCard = () => {
@@ -139,7 +129,6 @@ const nextCard = () => {
               :key="learnStore.currentCard.id"
               :card="learnStore.currentCard"
               :class="{ 'transition-transform': !isSwiping }"
-              :style="{ transform }"
             />
           </Transition>
         </div>

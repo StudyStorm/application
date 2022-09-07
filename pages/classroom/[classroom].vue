@@ -199,7 +199,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
       </template>
       <template #footer>
         <button
-          class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+          class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
           @click="createFolder"
         >
           {{ $t("app.classroom.folderModal.submit") }}
@@ -241,7 +241,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
       <template #footer>
         <button
           type="submit"
-          class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+          class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
           @click="createDeck"
         >
           {{ $t("app.classroom.deckModal.submit") }}

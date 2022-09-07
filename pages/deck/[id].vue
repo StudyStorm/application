@@ -79,7 +79,7 @@ onMounted(async () => {
               <template #default="{ open }">
                 <button
                   type="button"
-                  class="float-left mt-3 inline-flex w-full justify-center rounded-md border border-storm-red bg-storm-red px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  class="bg-storm-red rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                   @click="open"
                 >
                   {{ $t("app.deck.modal.buttons.delete") }}
@@ -114,7 +114,7 @@ onMounted(async () => {
           />
         </div>
         <div
-          class="fixed bottom-0 flex w-full items-center justify-center border-t py-2 backdrop-blur"
+          v-if="store.currentDeck.cards.length"
         >
           <NuxtLink
             type="button"
