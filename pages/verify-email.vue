@@ -8,10 +8,10 @@ definePageMeta({
 });
 const key = useRoute().query.key;
 
-// TODO: Make the fetch on server only
 const { error } = await useFetchAPI<never, { message: string }>(
   "/v1/reset-email",
   {
+    useFetch: true,
     method: "POST",
     body: {
       key,
