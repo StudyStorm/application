@@ -41,19 +41,16 @@ export const useLearnStore = defineStore("learn", {
       });
 
       this.deck = deck;
+      this.currentCardIndex = 0;
     },
 
     async reportCard(cardId: string, message: string) {
-      const { error } = await useFetchAPI(`/v1/decks/cards/${cardId}/report`, {
+      await useFetchAPI(`/v1/decks/cards/${cardId}/report`, {
         method: "POST",
         body: {
           message: message,
         },
       });
-
-      if (error) {
-        console.log("already reported");
-      }
     },
   },
 });

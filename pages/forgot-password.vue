@@ -24,7 +24,6 @@ async function sendEmail() {
 
   if (error) {
     status.value.err = true;
-    console.log(error);
   } else {
     status.value.success = true;
   }
@@ -104,7 +103,7 @@ definePageMeta({
                     <div class="-m-1 md:-m-1.5">
                       <button
                         type="button"
-                        class="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-1 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
+                        class="inline-flex rounded-md bg-red-50 p-1.5 text-storm-red hover:bg-red-100 focus:outline-none focus:ring-1 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
                         @click="status.err = false"
                       >
                         <XMarkIcon class="h-5 w-5" aria-hidden="true" />

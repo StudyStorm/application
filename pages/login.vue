@@ -22,7 +22,6 @@ const errors = ref<
 >(null);
 
 auth.onError((e: FetchError) => {
-  console.log(e);
   errors.value = e;
 });
 
@@ -32,9 +31,7 @@ function login() {
       body: credentials.value,
     })
     .catch()
-    .then((e) => {
-      console.log("login", e);
-    });
+    .then();
 }
 
 async function sendToken(token: string) {

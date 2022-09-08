@@ -189,13 +189,33 @@ app:
         cancel: Annuler
         edit: Modifier
         addAnswer: Ajouter une réponse
+        delete: Supprimer
+      delete:
+        title: Supprimer
+        content: Êtes-vous sûr de vouloir supprimer ce deck ?
     linkToHome: Cliquez ici pour revenir à l'accueil
+  cards:
+    modal:
+      delete:
+        title: Supprimer une carte
+        content: Êtes-vous sûr de vouloir supprimer cette carte ?
+  folders:
+    modal:
+      delete:
+        title: Supprimer un dossier
+        content: Êtes-vous sûr de vouloir supprimer ce dossier ?
   dashboard:
     title: Accueil
     topDecks: Decks populaires
     recentDecks: Decks récentes
     browseDecks: Explorer les Decks
     noRecentDecks: Aucun deck récent
+    search: Rechercher des decks
+    table:
+      title: Decks
+      deckName: Nom du deck
+      author: Auteur
+      votes: Votes
   decks:
     name: Nom du deck
     author: Auteur
@@ -235,18 +255,40 @@ app:
       name: Nom du dossier
       cancel: Annuler
       submit: Créer
-    allMembers: Cette fonctionnalité sera bientôt disponible.
+    unsubscribe: Se désabonner
+    subscribe: Rejoindre
+    modal:
+      title: Membres
+      addMembers: Ajouter un membre
+      enterEmail: Entrer l'email d'un membre
+      close: Fermer
+      confirm: Ajouter
   inbox:
     title: Boîte de réception
     markAsRead: Marquer comme lu
     markAsUnread: Marquer comme non lu
     delete: Supprimer
     reportedBy: Reporté par {name}
+    empty:
+        title: Aucun message
+        content: Vous n'avez aucun message dans votre boîte de réception
   classrooms:
     title: Salles de classe
     browseClassrooms: Explorer les salles de classe
     recentClassrooms: Classes récentes
     search: Rechercher une classe
+    addClassroom: Ajouter une classe
+    modal:
+      title: Créer une nouvelle classe
+      name: Nom de la classe
+      visibility: Visibilité
+      public: Publique
+      private: Privée
+      cancel: Annuler
+      confirm: Confirmer
+      delete:
+        title: Supprimer
+        content: Êtes-vous sûr de vouloir supprimer cette salle de classe ?
     table:
       title: Classes
       name: Nom
@@ -259,4 +301,12 @@ app:
       notMember: Non-membre
       write: Écriture
       read: Lecture
+    buttons:
+      delete: Delete
+  roles:
+    read: Lecture
+    write: Lecture + Ecriture
+    delete: Lecture + Ecriture + Suppression
+    owner: Propriétaire
+    subscriber: Abonné
   # HERE THE CONTENT FOR THE APP

@@ -30,7 +30,7 @@ const formattedDate = computed(() => {
     :class="report.is_read ? 'text-gray-400' : 'text-storm-dark'"
   >
     <div
-      class="invisible absolute -top-2 -left-2 inline-flex h-8 w-8 cursor-pointer items-center justify-center overflow-hidden text-ellipsis rounded-full border-2 border-white bg-red-500 p-1 text-xs font-bold text-white group-hover:visible"
+      class="invisible absolute -top-2 -left-2 inline-flex h-8 w-8 cursor-pointer items-center justify-center overflow-hidden text-ellipsis rounded-full border-2 border-white bg-storm-red p-1 text-xs font-bold text-white group-hover:visible"
       @click="deleteReport"
     >
       <TrashIcon class="h-4" />

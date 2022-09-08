@@ -11,6 +11,7 @@ const key = useRoute().query.key;
 // TODO: Make the fetch on server only
 const { error } = await useFetchAPI<never, { message: string }>("/v1/verify", {
   method: "POST",
+  useFetch: true,
   body: {
     key,
   },
@@ -29,7 +30,7 @@ const { error } = await useFetchAPI<never, { message: string }>("/v1/verify", {
       />
       <div v-if="error" class="mt-4 w-full text-center text-lg">
         <p>
-          <span class="font-medium text-red-500">Error</span> :
+          <span class="font-medium text-storm-red">Error</span> :
           {{ error.data.message }}
         </p>
       </div>

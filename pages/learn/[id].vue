@@ -7,11 +7,18 @@ import {
 import { useLearnStore } from "~~/store/learn";
 import ReportCardModal from "~/components/ReportCardModal.vue";
 import { onKeyStroke, SwipeDirection } from "@vueuse/core";
+import { useRouter } from "vue-router";
 
 const learnStore = useLearnStore();
 const route = useRoute();
 
 await learnStore.fetchDeck(route.params.id as string);
+
+const router = useRouter();
+
+if (!learnStore.deck.cards.length) {
+  router.push(`/deck/${route.params.id}`);
+}
 
 const cardType = computed(() => {
   return learnStore.currentCard.content.answers.length > 1
@@ -20,12 +27,12 @@ const cardType = computed(() => {
 });
 
 const progress = computed(() => {
-  return (learnStore.currentStep / learnStore.numberOfCards) * 100;
+  return ((learnStore.currentStep - 1) / (learnStore.numberOfCards - 1)) * 100;
 });
 
 const activeCard = ref(null);
 
-const { isSwiping, lengthX, lengthY } = useSwipe(activeCard, {
+const { isSwiping } = useSwipe(activeCard, {
   onSwipeEnd(_e: TouchEvent, direction: SwipeDirection) {
     switch (direction) {
       case "LEFT":
@@ -60,16 +67,6 @@ onKeyStroke(" ", (e) => {
   e.preventDefault();
   if (e.repeat) return;
   activeCard.value.toggle?.();
-});
-
-const transform = computed(() => {
-  if (!isSwiping.value) return undefined;
-  const x = -lengthX.value;
-  const y = -lengthY.value;
-  const xMulti = x * 0.03;
-  const yMulti = y / 80;
-  const rotate = xMulti * yMulti;
-  return `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
 });
 
 const swipeTransition = ref<string>("");
@@ -139,7 +136,6 @@ const nextCard = () => {
               :key="learnStore.currentCard.id"
               :card="learnStore.currentCard"
               :class="{ 'transition-transform': !isSwiping }"
-              :style="{ transform }"
             />
           </Transition>
         </div>
@@ -178,7 +174,7 @@ const nextCard = () => {
           <ReportCardModal v-slot="{ open }">
             <button
               type="button"
-              class="flex w-full justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:border-transparent focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              class="flex w-full justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:border-transparent focus:outline-none focus:ring-2 focus:ring-storm-red focus:ring-offset-2"
               @click="open"
             >
               {{ $t("app.learn.buttons.signal") }}

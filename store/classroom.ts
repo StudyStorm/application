@@ -4,8 +4,10 @@ import Folder from "~/models/Folder";
 import User from "~~/models/User";
 import { FormError, Pagination } from "~~/types/app";
 import { useFetchAPI } from "~/composables/useFetchAPI";
+import { useEventBus } from "@vueuse/core";
 
 export const useClassroomStore = defineStore("classroom", () => {
+  const bus = useEventBus("studystorm");
   const classroom = ref<Classroom>(null);
   const currentFolder = ref<Folder>(null);
   const members = ref<Pagination<User>>(null);
@@ -14,27 +16,18 @@ export const useClassroomStore = defineStore("classroom", () => {
   const showFolderCreationModal = ref(false);
 
   const searchFilter = ref("");
-  const allClassrooms = ref<Pagination<Classroom>>(null);
   const filteredClassrooms = ref<Pagination<Classroom>>(null);
-  const currentClassroom = ref(null);
-  const LOCAL_STORAGE_KEY = "lastUsedClassrooms";
+  const pinnedClassrooms = ref<Pagination<Classroom>>(null);
+  const LOCAL_STORAGE_KEY = "lastVisitedClassrooms";
   const MAX_LAST_VISITED_CLASSROOMS = 3;
-
-  const lastVisitedClassrooms = computed(() => {
-    const classroomIds: string[] = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEY)
-    );
-
-    if (!classroomIds) return [];
-    return allClassrooms.value.data
-      ? allClassrooms.value.data.filter((classroom) =>
-          classroomIds.includes(classroom.id)
-        )
-      : [];
-  });
+  const lastVisitedClassrooms = ref<Classroom[]>([]);
 
   const pagination = computed(() => {
     return filteredClassrooms.value.meta;
+  });
+
+  const paginationMembers = computed(() => {
+    return members.value.meta;
   });
 
   const classrooms = computed(() => {
@@ -49,13 +42,13 @@ export const useClassroomStore = defineStore("classroom", () => {
     showDeckCreationModal,
     showFolderCreationModal,
     searchFilter,
-    allClassrooms,
+    pinnedClassrooms,
     filteredClassrooms,
-    currentClassroom,
     LOCAL_STORAGE_KEY,
     MAX_LAST_VISITED_CLASSROOMS,
     lastVisitedClassrooms,
     pagination,
+    paginationMembers,
     classrooms,
 
     addVisitedClassroom(classroomId: string | number) {
@@ -77,15 +70,23 @@ export const useClassroomStore = defineStore("classroom", () => {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(visited));
     },
 
-    async fetchAllClassrooms() {
-      const { data } = await useFetchAPI<Pagination<Classroom>>(
-        `/v1/classrooms`,
-        {
-          method: "GET",
-        }
+    async fetchLastVisited() {
+      const classroomIds: string[] = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_KEY)
       );
 
-      allClassrooms.value = data;
+      if (!classroomIds) return [];
+
+      lastVisitedClassrooms.value = (
+        await Promise.all(
+          classroomIds.map(
+            async (id) =>
+              (
+                await useFetchAPI<Classroom>(`v1/classrooms/${id}`)
+              ).data
+          )
+        )
+      ).filter((c) => c !== null);
     },
 
     async fetchClassrooms(page = 1) {
@@ -98,21 +99,28 @@ export const useClassroomStore = defineStore("classroom", () => {
 
       filteredClassrooms.value = data;
     },
-
     async fetchClassroom(classroomId: string) {
-      const { data, error } = await useFetchAPI<Classroom>(
+      const response = await useFetchAPI<Classroom>(
         `v1/classrooms/${classroomId}`
       );
-
-      if (error) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: "Classroom not found",
-          fatal: true,
-        });
-      } else {
-        classroom.value = data;
+      if (response.data) {
+        classroom.value = response.data;
       }
+      return response;
+    },
+
+    async createClassroom(classroom: { name: string; visibility: string }) {
+      const { data, error } = await useFetchAPI<Classroom, FormError>(
+        `v1/classrooms/`,
+        {
+          method: "POST",
+          body: classroom,
+        }
+      );
+      if (data) {
+        bus.emit("classroom:created");
+      }
+      return { data, error };
     },
 
     async createDeck(deck: { parentFolderId: string; name: string }) {
@@ -125,6 +133,9 @@ export const useClassroomStore = defineStore("classroom", () => {
           },
         }
       );
+      if (data) {
+        bus.emit("deck:created");
+      }
       return { data, error };
     },
 
@@ -138,39 +149,42 @@ export const useClassroomStore = defineStore("classroom", () => {
           },
         }
       );
+      if (data) {
+        bus.emit("folder:created");
+      }
       return { data, error };
     },
-    async fetchPinnedClassrooms() {
-      console.log("pinned classrooms");
-      // TODO: call /v1/classrooms/joined
-    },
-    async fetchCurrentFolder(folderId: string) {
-      const { data: folder } = await useFetchAPI<Folder>(
-        `/v1/folders/${folderId}`
-      );
 
-      currentFolder.value = folder;
+    async fetchCurrentFolder(folderId: string) {
+      const response = await useFetchAPI<Folder>(`/v1/folders/${folderId}`);
+
+      currentFolder.value = response.data;
+      return response;
     },
     async refreshCurrentFolder() {
       if (!currentFolder.value) return;
       await this.fetchCurrentFolder(currentFolder.value.id);
     },
-    async fetchClassroomUsers(classroomId: string, limit = 5) {
+    async fetchClassroomUsers(classroomId: string, limit = 4, page = 1) {
       const { data } = await useFetchAPI<Pagination<User>>(
         `/v1/classrooms/${classroomId}/users`,
-        { params: { limit: limit } }
+        { params: { limit: limit, page: page } }
       );
 
       members.value = data;
     },
     async moveDeckInFolder(folder: Folder, deckId: string) {
-      await useFetchAPI(`/v1/decks/${deckId}`, {
+      const response = await useFetchAPI(`/v1/decks/${deckId}`, {
         method: "PATCH",
         useFetch: true,
         body: {
           folderId: folder.id,
         },
       });
+      if (response.data) {
+        bus.emit("deck:moved");
+      }
+      return response;
     },
     async moveFolderInFolder(folder: Folder, folderId: string) {
       await useFetchAPI(`/v1/folders/${folderId}`, {
@@ -180,6 +194,62 @@ export const useClassroomStore = defineStore("classroom", () => {
           parentId: folder.id,
         },
       });
+    },
+
+    async deleteFolder(folder: Folder) {
+      await useFetchAPI(`/v1/folders/${folder.id}`, {
+        method: "DELETE",
+      });
+    },
+
+    async subscribe(classroomId: string) {
+      await useFetchAPI(`/v1/classrooms/${classroomId}/join`, {
+        method: "POST",
+      });
+      this.fetchClassroom(classroomId);
+      this.fetchClassroomUsers(classroomId);
+    },
+
+    async unsubscribe(classroomId: string) {
+      await useFetchAPI(`/v1/classrooms/${classroomId}/leave`, {
+        method: "POST",
+      });
+    },
+
+    async addMember(classroomId: string, email: string, accessRight: string) {
+      await useFetchAPI("v1/classrooms/users", {
+        method: "POST",
+        body: {
+          classroomId: classroomId,
+          email: email,
+          accessRight: accessRight,
+        },
+      });
+    },
+
+    async changeMemberRole(
+      classroomId: string,
+      email: string,
+      accessRight: string
+    ) {
+      await useFetchAPI("v1/classrooms/users", {
+        method: "PATCH",
+        body: {
+          classroomId: classroomId,
+          email: email,
+          accessRight: accessRight,
+        },
+        useFetch: true,
+      });
+    },
+
+    async deleteClassroom(classroomId: string) {
+      const response = await useFetchAPI(`/v1/classrooms/${classroomId}`, {
+        method: "DELETE",
+      });
+      if (!response.error) {
+        bus.emit("classroom:deleted");
+      }
     },
   };
 });

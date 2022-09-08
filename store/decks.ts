@@ -14,13 +14,13 @@ export const useDecksStore = defineStore("decks", {
 
     bestRatedDecks: [],
 
-    allDecks: {} as Pagination<Deck>,
-
     filteredDecks: {} as Pagination<Deck>,
 
     currentDeck: null,
 
     currentUserVote: 0,
+
+    lastVisitedDecks: [],
   }),
   getters: {
     decks: (state) => {
@@ -31,16 +31,6 @@ export const useDecksStore = defineStore("decks", {
     },
     lastUsedDecksIds: () => {
       return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
-    },
-    lastUsedDecks: (state) => {
-      const deckIds: string[] = JSON.parse(
-        localStorage.getItem(LOCAL_STORAGE_KEY)
-      );
-
-      if (!deckIds) return [];
-      return state.allDecks.data
-        ? state.allDecks.data.filter((deck) => deckIds.includes(deck.id))
-        : [];
     },
   },
   actions: {
@@ -61,14 +51,6 @@ export const useDecksStore = defineStore("decks", {
 
       // Update local storage
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(used));
-    },
-
-    async fetchAllDecks() {
-      const { data } = await useFetchAPI<Pagination<Deck>>(`/v1/decks`, {
-        method: "GET",
-      });
-
-      this.allDecks = data;
     },
 
     async fetchDecks(page = 1) {
@@ -93,6 +75,22 @@ export const useDecksStore = defineStore("decks", {
       this.bestRatedDecks = data.data;
     },
 
+    async fetchLastVisited() {
+      const decksIds: string[] = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_KEY)
+      );
+
+      if (!decksIds) return [];
+
+      this.lastVisitedDecks = (
+        await Promise.all(
+          decksIds.map(
+            async (id) => (await useFetchAPI<Deck>(`v1/decks/${id}`)).data
+          )
+        )
+      ).filter((c) => c !== null);
+    },
+
     async fetchDeck(deckId: string) {
       const { data } = await useFetchAPI<Deck>(`/v1/decks/${deckId}`, {
         method: "GET",
@@ -100,12 +98,30 @@ export const useDecksStore = defineStore("decks", {
       this.currentDeck = data;
     },
 
-    async createCard(payload: { deckId: string; content: CardContent }) {
-      const { data, error } = await useFetchAPI("v1/decks/cards", {
-        method: "POST",
-        body: { ...payload },
+    async refreshDeck() {
+      if (!this.currentDeck) return;
+      return this.fetchDeck(this.currentDeck.id);
+    },
+
+    async updateCard(cardId: string, payload: CardContent) {
+      return useFetchAPI(`v1/decks/cards/${cardId}`, {
+        method: "PATCH",
+        useFetch: true,
+        body: payload,
       });
-      return { data, error };
+    },
+
+    async deleteCard(cardId: string) {
+      return useFetchAPI(`v1/decks/cards/${cardId}`, {
+        method: "DELETE",
+      });
+    },
+
+    async createCard(payload: { deckId: string; content: CardContent }) {
+      return useFetchAPI("v1/decks/cards", {
+        method: "POST",
+        body: payload,
+      });
     },
 
     async fetchDeckUserRating(deckId: string) {
@@ -167,6 +183,12 @@ export const useDecksStore = defineStore("decks", {
         useFetch: true,
       });
       this.fetchDeck(deckId);
+    },
+
+    async deleteDeck(deckId: string) {
+      await useFetchAPI(`/v1/decks/${deckId}`, {
+        method: "DELETE",
+      });
     },
   },
 });

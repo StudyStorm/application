@@ -69,7 +69,7 @@ const formattedVotes = computed(() => {
         class="ml-2 flex items-center rounded-full px-2 py-1 font-medium ring-2 ring-black/20"
         :class="
           deck.votes < 0
-            ? 'text-red-500 bg-red-200'
+            ? 'text-storm-red bg-red-200'
             : 'text-green-500 bg-emerald-200'
         "
       >
@@ -78,7 +78,7 @@ const formattedVotes = computed(() => {
           v-if="deck.votes >= 0"
           class="ml-1 w-4 text-emerald-500"
         />
-        <HandThumbDownIcon v-else class="ml-1 w-4 text-red-500" />
+        <HandThumbDownIcon v-else class="ml-1 w-4 text-storm-red" />
       </div>
     </div>
   </NuxtLink>

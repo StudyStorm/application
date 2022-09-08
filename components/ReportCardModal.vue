@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { FlagIcon } from "@heroicons/vue/24/outline/index.js";
 import { useLearnStore } from "~/store/learn";
+import STextarea from "~/components/s/STextarea.vue";
 
 const showModal = ref(false);
 const signalMessage = ref("");
@@ -45,7 +46,7 @@ defineExpose({
           class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
           >{{ $t("app.learn.modal.message") }}</label
         >
-        <input
+        <s-textarea
           id="message"
           v-model="signalMessage"
           type="text"
@@ -57,7 +58,7 @@ defineExpose({
     <template #footer>
       <button
         type="button"
-        class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-storm-red focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="reportCard"
       >
         {{ $t("app.learn.modal.buttons.confirmSignal") }}

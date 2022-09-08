@@ -5,6 +5,7 @@ import { AcademicCapIcon } from "@heroicons/vue/24/solid/index.js";
 import { FormError } from "~~/types/app";
 
 const route = useRoute();
+const router = useRouter();
 const classroomStore = useClassroomStore();
 
 const deckName = ref<string>("");
@@ -23,7 +24,7 @@ const createFolder = async () => {
   if (error) {
     errors.value = error.data;
   }
-  await classroomStore.fetchCurrentFolder(route.params.folder as string);
+  await classroomStore.refreshCurrentFolder();
   classroomStore.showFolderCreationModal = false;
   folderName.value = "";
 };
@@ -37,7 +38,7 @@ const createDeck = async () => {
   if (error) {
     errors.value = error.data;
   }
-  await classroomStore.fetchCurrentFolder(route.params.folder as string);
+  await classroomStore.refreshCurrentFolder();
   classroomStore.showDeckCreationModal = false;
   deckName.value = "";
 };
@@ -52,24 +53,93 @@ const closeDeckModal = () => {
   deckName.value = "";
 };
 
+const quitClassroom = () => {
+  classroomStore.unsubscribe(classroomStore.classroom.id);
+  router.push({ name: "dashboard" });
+};
+
+const deleteClassroom = async () => {
+  await classroomStore.deleteClassroom(classroomStore.classroom.id);
+  router.push({ name: "dashboard" });
+};
+
+const { error } = await classroomStore.fetchClassroom(
+  route.params.classroom as string
+);
+
+if (error) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Classroom not found",
+    fatal: true,
+  });
+}
+
+await classroomStore.fetchClassroomUsers(route.params.classroom as string);
+
 onMounted(async () => {
   classroomStore.addVisitedClassroom(route.params.classroom as string);
+  await classroomStore.fetchLastVisited();
 });
-
-await classroomStore.fetchClassroom(route.params.classroom as string);
-await classroomStore.fetchClassroomUsers(route.params.classroom as string);
 </script>
 
 <template>
   <div>
     <div>
+      <div
+        class="border-b border-gray-200 p-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
+      >
+        <div class="flex min-w-0 flex-1 items-center justify-between">
+          <div>
+            <h1
+              class="flex-row items-center text-2xl font-bold leading-6 text-storm-dark sm:truncate"
+            >
+              <AcademicCapIcon class="inline h-8 w-8" />
+              {{ classroomStore.classroom.name }}
+            </h1>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button
+              v-if="
+                classroomStore.classroom.visibility === 'public' &&
+                !classroomStore.classroom.permissions.is_member
+              "
+              class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              @click="classroomStore.subscribe(classroomStore.classroom.id)"
+            >
+              {{ $t("app.classroom.subscribe") }}
+            </button>
+            <button
+              v-else-if="classroomStore.classroom.permissions.is_member"
+              class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              @click="quitClassroom"
+            >
+              {{ $t("app.classroom.unsubscribe") }}
+            </button>
+            <confirm-modal
+              v-if="classroomStore.classroom.permissions.is_owner"
+              @confirm="deleteClassroom"
+            >
+              <template #title>
+                {{ $t("app.classrooms.modal.delete.title") }}
+              </template>
+              <template #content>
+                {{ $t("app.classrooms.modal.delete.content") }}
+              </template>
+              <template #default="{ open }">
+                <button
+                  type="button"
+                  class="rounded-md border border-transparent bg-storm-red px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-storm-red focus:ring-offset-2"
+                  @click="open"
+                >
+                  {{ $t("app.classrooms.buttons.delete") }}
+                </button>
+              </template>
+            </confirm-modal>
+          </div>
+        </div>
+      </div>
       <div class="p-4 sm:px-6 lg:px-8">
-        <h1
-          class="mb-4 text-2xl font-bold leading-7 text-storm-dark sm:truncate sm:text-3xl"
-        >
-          <AcademicCapIcon class="inline h-6 w-6" />
-          {{ classroomStore.classroom.name }}
-        </h1>
         <div>
           <h1 class="text-lg font-medium leading-6 text-storm-dark sm:truncate">
             {{ $t("app.classroom.members") }}
@@ -90,7 +160,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
                   "
                   class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white dark:border-gray-800"
                 >
-                  {{
+                  +{{
                     classroomStore.members.meta.total -
                     classroomStore.members.data.length
                   }}
@@ -98,13 +168,15 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
               </div>
             </div>
             <div>
-              <button
-                type="submit"
-                class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                @click="viewAllMembers = true"
-              >
-                {{ $t("app.classroom.membersButton") }}
-              </button>
+              <view-members-modal v-slot="{ open }">
+                <button
+                  type="submit"
+                  class="rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  @click="open"
+                >
+                  {{ $t("app.classroom.membersButton") }}
+                </button>
+              </view-members-modal>
             </div>
           </div>
         </div>
@@ -119,7 +191,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
       <template #title> {{ $t("app.classroom.folderModal.title") }} </template>
       <template #content>
         <s-form
-          class="w-full max-w-sm space-y-2 px-7"
+          class="w-full space-y-2 sm:max-w-sm"
           :errors="errors"
           @submit.prevent="createFolder"
         >
@@ -134,6 +206,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
               type="text"
               required
               autocomplete="off"
+              placeholder="Folder name"
               class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-storm-dark shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
           </div>
@@ -141,8 +214,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
       </template>
       <template #footer>
         <button
-          type="submit"
-          class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+          class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
           @click="createFolder"
         >
           {{ $t("app.classroom.folderModal.submit") }}
@@ -161,7 +233,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
       <template #title> {{ $t("app.classroom.deckModal.title") }} </template>
       <template #content>
         <s-form
-          class="w-full max-w-sm space-y-2 px-7"
+          class="w-full space-y-2 sm:max-w-sm"
           :errors="errors"
           @submit.prevent="createDeck"
         >
@@ -184,7 +256,7 @@ await classroomStore.fetchClassroomUsers(route.params.classroom as string);
       <template #footer>
         <button
           type="submit"
-          class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+          class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-blue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-darkblue focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
           @click="createDeck"
         >
           {{ $t("app.classroom.deckModal.submit") }}

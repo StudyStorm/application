@@ -49,6 +49,7 @@
     "@pinia/nuxt": "^0.4.1",
     "@tailwindcss/forms": "^0.5.2",
     "@vueuse/nuxt": "^9.1.0",
+    "klona": "^2.0.5",
     "vue-i18n": "^9.2.2"
   },
   "engines": {

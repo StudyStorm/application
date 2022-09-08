@@ -34,7 +34,7 @@ defineExpose({
     </div>
     <template #back>
       <div class="flex h-full items-center justify-center">
-        <span class="p-6text-center text-xl font-bold text-storm-dark">
+        <span class="p-6 text-center text-xl font-bold text-storm-dark">
           {{ answer }}
         </span>
       </div>
