@@ -207,6 +207,7 @@ export const useClassroomStore = defineStore("classroom", () => {
         method: "POST",
       });
       this.fetchClassroom(classroomId);
+      this.fetchClassroomUsers(classroomId);
     },
 
     async unsubscribe(classroomId: string) {

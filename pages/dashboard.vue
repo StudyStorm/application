@@ -229,7 +229,10 @@ whenever(alt_k, () => {
                   class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900"
                 >
                   <div class="flex items-center space-x-3 lg:pl-2">
-                    <span class="truncate hover:text-gray-600">
+                    <span
+                      v-if="deck.creator"
+                      class="truncate hover:text-gray-600"
+                    >
                       <span>
                         {{ deck.creator.first_name }}
                         {{ deck.creator.last_name }}
