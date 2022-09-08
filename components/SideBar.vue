@@ -210,8 +210,6 @@ function resetField() {
                       @click="item.dropped = !item.dropped"
                     />
                     <div v-if="item.hasDropdown && item.dropped" class="mt-0.5">
-                      <!-- TODO: change this to match the classroom type -->
-                      <!-- TODO: Change the link to /classroom/:id -->
                       <NuxtLink
                         v-for="subitem in item.classrooms"
                         :key="subitem.id"

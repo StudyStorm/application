@@ -87,14 +87,14 @@ const files = computed(
           <span class="flex items-center space-x-3 truncate">
             <component
               :is="file.icon"
-              class="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+              class="ml-4 h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500"
             />
             <span class="truncate text-sm font-medium leading-6">
               {{ file.name }}
             </span>
           </span>
           <ChevronRightIcon
-            class="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+            class="ml-4 h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500"
             aria-hidden="true"
           />
         </NuxtLink>

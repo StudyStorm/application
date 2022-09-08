@@ -36,17 +36,16 @@ const { isSwiping } = useSwipe(activeCard, {
   onSwipeEnd(_e: TouchEvent, direction: SwipeDirection) {
     switch (direction) {
       case "LEFT":
-        previousCard();
+        nextCard();
         break;
       case "RIGHT":
-        nextCard();
+        previousCard();
         break;
     }
   },
 });
 
 onKeyStroke("ArrowLeft", (e) => {
-  // TODO: find something better
   if ((e.target as HTMLElement).localName !== "body") return;
   e.preventDefault();
   if (e.repeat) return;
@@ -54,7 +53,6 @@ onKeyStroke("ArrowLeft", (e) => {
 });
 
 onKeyStroke("ArrowRight", (e) => {
-  // TODO: find something better
   if ((e.target as HTMLElement).localName !== "body") return;
   e.preventDefault();
   if (e.repeat) return;
@@ -62,7 +60,6 @@ onKeyStroke("ArrowRight", (e) => {
 });
 
 onKeyStroke(" ", (e) => {
-  // TODO: find something better
   if ((e.target as HTMLElement).localName !== "body") return;
   e.preventDefault();
   if (e.repeat) return;
@@ -74,13 +71,13 @@ const swipeTransition = ref<string>("");
 const previousCard = () => {
   learnStore.previousCard();
   activeCard.value.reset();
-  swipeTransition.value = "swipe-right";
+  swipeTransition.value = "swipe-left";
 };
 
 const nextCard = () => {
   learnStore.nextCard();
   activeCard.value.reset();
-  swipeTransition.value = "swipe-left";
+  swipeTransition.value = "swipe-right";
 };
 </script>
 
@@ -169,7 +166,7 @@ const nextCard = () => {
       </div>
     </div>
     <div class="mx-auto w-full max-w-md">
-      <div class="space-y-6 bg-white px-4 py-8 sm:rounded-lg sm:px-10">
+      <div class="space-y-6 bg-white p-4 sm:rounded-lg sm:px-10">
         <div>
           <ReportCardModal v-slot="{ open }">
             <button
