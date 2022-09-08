@@ -71,13 +71,13 @@ const swipeTransition = ref<string>("");
 const previousCard = () => {
   learnStore.previousCard();
   activeCard.value.reset();
-  swipeTransition.value = "swipe-right";
+  swipeTransition.value = "swipe-left";
 };
 
 const nextCard = () => {
   learnStore.nextCard();
   activeCard.value.reset();
-  swipeTransition.value = "swipe-left";
+  swipeTransition.value = "swipe-right";
 };
 </script>
 
