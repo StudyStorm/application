@@ -36,7 +36,7 @@ const formattedVotes = computed(() => {
 <template>
   <NuxtLink
     ref="el"
-    class="relative block rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
+    class="relative block truncate rounded-lg border border-gray-200 p-4 shadow-md transition hover:scale-105 hover:bg-gray-100"
     :to="{
       name: 'deck-id',
       params: {
