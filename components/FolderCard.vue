@@ -39,10 +39,10 @@ if (props.useDrag) {
   }));
 }
 
-function deleteFolder() {
-  store.deleteFolder(props.folder);
+const deleteFolder = async () => {
+  await store.deleteFolder(props.folder);
   emits("update");
-}
+};
 </script>
 
 <template>

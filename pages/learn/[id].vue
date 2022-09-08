@@ -46,7 +46,6 @@ const { isSwiping } = useSwipe(activeCard, {
 });
 
 onKeyStroke("ArrowLeft", (e) => {
-  // TODO: find something better
   if ((e.target as HTMLElement).localName !== "body") return;
   e.preventDefault();
   if (e.repeat) return;
@@ -54,7 +53,6 @@ onKeyStroke("ArrowLeft", (e) => {
 });
 
 onKeyStroke("ArrowRight", (e) => {
-  // TODO: find something better
   if ((e.target as HTMLElement).localName !== "body") return;
   e.preventDefault();
   if (e.repeat) return;
@@ -62,7 +60,6 @@ onKeyStroke("ArrowRight", (e) => {
 });
 
 onKeyStroke(" ", (e) => {
-  // TODO: find something better
   if ((e.target as HTMLElement).localName !== "body") return;
   e.preventDefault();
   if (e.repeat) return;
