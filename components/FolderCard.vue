@@ -39,10 +39,10 @@ if (props.useDrag) {
   }));
 }
 
-function deleteFolder() {
-  store.deleteFolder(props.folder);
+const deleteFolder = async () => {
+  await store.deleteFolder(props.folder);
   emits("update");
-}
+};
 </script>
 
 <template>
@@ -54,14 +54,14 @@ function deleteFolder() {
         folder: folder.id,
       },
     }"
-    class="rounded-lg bg-gray-100 p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
+    class="truncate rounded-lg bg-gray-100 p-4 shadow-md transition hover:scale-105 hover:bg-gray-200"
   >
     <div class="group flex items-center space-x-4 truncate">
       <div class="w-10 shrink-0">
         <FolderIcon />
       </div>
       <div class="min-w-0 flex-1">
-        <p class="truncate text-sm font-medium text-gray-900 dark:text-white">
+        <p class="truncate text-sm font-medium text-gray-900">
           {{ folder.name }}
         </p>
       </div>

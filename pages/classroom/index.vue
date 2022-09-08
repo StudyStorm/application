@@ -229,34 +229,41 @@ whenever(alt_k, () => {
                   <div class="flex items-center space-x-3 lg:pl-2">
                     <span class="truncate hover:text-gray-600">
                       <span
-                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
-                        :class="[
-                          classroom.permissions.is_member
-                            ? 'bg-gray-500 '
-                            : 'bg-gray-400 ',
-                        ]"
-                        >{{
-                          classroom.permissions.is_member
-                            ? $t("app.classrooms.table.isMember")
-                            : $t("app.classrooms.table.notMember")
-                        }}</span
+                        v-if="classroom.permissions.is_owner"
+                        class="ml-1.5 inline-flex items-center rounded-full bg-storm-purple px-2.5 py-0.5 text-xs font-medium text-white"
+                        >{{ $t("app.classrooms.table.isOwner") }}</span
                       >
-                      <span
-                        v-if="classroom.permissions.is_member"
-                        class="ml-1.5 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
-                        :class="[
-                          classroom.permissions.write
-                            ? 'bg-storm-blue'
-                            : 'bg-storm-dark',
-                        ]"
-                        >{{
-                          classroom.permissions.write
-                            ? `${$t("app.classrooms.table.read")} & ${$t(
-                                "app.classrooms.table.write"
-                              )}`
-                            : $t("app.classrooms.table.read")
-                        }}</span
-                      >
+                      <span v-else>
+                        <span
+                          class="ml-1.5 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
+                          :class="[
+                            classroom.permissions.is_member
+                              ? 'bg-gray-500 '
+                              : 'bg-gray-400 ',
+                          ]"
+                          >{{
+                            classroom.permissions.is_member
+                              ? $t("app.classrooms.table.isMember")
+                              : $t("app.classrooms.table.notMember")
+                          }}</span
+                        >
+                        <span
+                          v-if="classroom.permissions.is_member"
+                          class="ml-1.5 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
+                          :class="[
+                            classroom.permissions.write
+                              ? 'bg-storm-blue'
+                              : 'bg-storm-dark',
+                          ]"
+                          >{{
+                            classroom.permissions.write
+                              ? `${$t("app.classrooms.table.read")} & ${$t(
+                                  "app.classrooms.table.write"
+                                )}`
+                              : $t("app.classrooms.table.read")
+                          }}</span
+                        >
+                      </span>
                     </span>
                   </div>
                 </td>

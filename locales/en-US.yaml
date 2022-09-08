@@ -293,6 +293,7 @@ app:
       public: Public
       private: Private
       member: Member
+      isOwner: Owner
       isMember: Member
       notMember: Not-member
       write: Write

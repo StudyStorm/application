@@ -36,7 +36,7 @@ const formattedDate = computed(() => {
       <TrashIcon class="h-4" />
     </div>
     <div class="flex items-center justify-between">
-      <div class="truncate">
+      <div class="text-ellipsis">
         <h5 class="mb-2 text-ellipsis font-bold tracking-tight">
           {{ report.message }}
         </h5>
