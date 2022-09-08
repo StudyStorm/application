@@ -302,7 +302,7 @@ app:
       write: Écriture
       read: Lecture
     buttons:
-      delete: Delete
+      delete: Supprimer
   roles:
     read: Lecture
     write: Lecture + Ecriture
