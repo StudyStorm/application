@@ -160,7 +160,7 @@ onMounted(async () => {
                   "
                   class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white dark:border-gray-800"
                 >
-                  {{
+                  +{{
                     classroomStore.members.meta.total -
                     classroomStore.members.data.length
                   }}

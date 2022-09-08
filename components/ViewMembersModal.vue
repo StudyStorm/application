@@ -31,13 +31,13 @@ const addMember = async () => {
 const changePage = (page: number) => {
   if (page > 0 && page <= store.paginationMembers.last_page) {
     currentPage.value = page;
-    store.fetchClassroomUsers(store.classroom.id, 5, currentPage.value);
+    store.fetchClassroomUsers(store.classroom.id, 4, currentPage.value);
   }
 };
 
 const changeMemberRole = async (memberId: string, accessRight: string) => {
   await store.changeMemberRole(store.classroom.id, memberId, accessRight);
-  store.fetchClassroomUsers(store.classroom.id, 5, currentPage.value);
+  store.fetchClassroomUsers(store.classroom.id, 4, currentPage.value);
 };
 
 defineExpose({

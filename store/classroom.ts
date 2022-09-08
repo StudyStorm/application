@@ -165,7 +165,7 @@ export const useClassroomStore = defineStore("classroom", () => {
       if (!currentFolder.value) return;
       await this.fetchCurrentFolder(currentFolder.value.id);
     },
-    async fetchClassroomUsers(classroomId: string, limit = 5, page = 1) {
+    async fetchClassroomUsers(classroomId: string, limit = 4, page = 1) {
       const { data } = await useFetchAPI<Pagination<User>>(
         `/v1/classrooms/${classroomId}/users`,
         { params: { limit: limit, page: page } }
