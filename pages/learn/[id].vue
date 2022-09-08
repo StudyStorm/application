@@ -36,10 +36,10 @@ const { isSwiping } = useSwipe(activeCard, {
   onSwipeEnd(_e: TouchEvent, direction: SwipeDirection) {
     switch (direction) {
       case "LEFT":
-        previousCard();
+        nextCard();
         break;
       case "RIGHT":
-        nextCard();
+        previousCard();
         break;
     }
   },
@@ -166,7 +166,7 @@ const nextCard = () => {
       </div>
     </div>
     <div class="mx-auto w-full max-w-md">
-      <div class="space-y-6 bg-white px-4 py-8 sm:rounded-lg sm:px-10">
+      <div class="space-y-6 bg-white p-4 sm:rounded-lg sm:px-10">
         <div>
           <ReportCardModal v-slot="{ open }">
             <button

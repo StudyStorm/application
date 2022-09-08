@@ -297,6 +297,7 @@ app:
       public: Publique
       private: Privée
       member: Membre
+      isOwner: Propriétaire
       isMember: Membre
       notMember: Non-membre
       write: Écriture
