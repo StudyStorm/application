@@ -14,13 +14,13 @@ export const useDecksStore = defineStore("decks", {
 
     bestRatedDecks: [],
 
-    allDecks: {} as Pagination<Deck>,
-
     filteredDecks: {} as Pagination<Deck>,
 
     currentDeck: null,
 
     currentUserVote: 0,
+
+    lastVisitedDecks: [],
   }),
   getters: {
     decks: (state) => {
@@ -31,16 +31,6 @@ export const useDecksStore = defineStore("decks", {
     },
     lastUsedDecksIds: () => {
       return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "[]");
-    },
-    lastUsedDecks: (state) => {
-      const deckIds: string[] = JSON.parse(
-        localStorage.getItem(LOCAL_STORAGE_KEY)
-      );
-
-      if (!deckIds) return [];
-      return state.allDecks.data
-        ? state.allDecks.data.filter((deck) => deckIds.includes(deck.id))
-        : [];
     },
   },
   actions: {
@@ -63,14 +53,6 @@ export const useDecksStore = defineStore("decks", {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(used));
     },
 
-    async fetchAllDecks() {
-      const { data } = await useFetchAPI<Pagination<Deck>>(`/v1/decks`, {
-        method: "GET",
-      });
-
-      this.allDecks = data;
-    },
-
     async fetchDecks(page = 1) {
       const { data } = await useFetchAPI<Pagination<Deck>>(
         `/v1/decks?page=${page}&search=${this.searchFilter}`,
@@ -91,6 +73,22 @@ export const useDecksStore = defineStore("decks", {
       );
 
       this.bestRatedDecks = data.data;
+    },
+
+    async fetchLastVisited() {
+      const decksIds: string[] = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_KEY)
+      );
+
+      if (!decksIds) return [];
+
+      this.lastVisitedDecks = (
+        await Promise.all(
+          decksIds.map(
+            async (id) => (await useFetchAPI<Deck>(`v1/decks/${id}`)).data
+          )
+        )
+      ).filter((c) => c !== null);
     },
 
     async fetchDeck(deckId: string) {

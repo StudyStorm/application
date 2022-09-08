@@ -25,7 +25,6 @@ async function sendToken() {
 
   if (error) {
     status.value.err = true;
-    console.log(error);
   } else {
     status.value.success = true;
   }

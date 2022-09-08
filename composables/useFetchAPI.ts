@@ -58,7 +58,7 @@ export function useFetchAPI<DataT = never, ErrorT = never>(
 
 export async function useFetchAPIRef<DataT = never, ErrorT = never>(
   path: string,
-  options?: HTTPRequest
+  options?: FetchAPIOpts
 ): ResponseRef<DataT, ErrorT> {
   const { data, error } = await useFetchAPI<DataT, ErrorT>(path, options);
   return {

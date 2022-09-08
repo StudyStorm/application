@@ -16,6 +16,11 @@ export type RecursivePartial<T> = {
     : T[P];
 };
 
+export type Permission = {
+  write: boolean;
+  delete: boolean;
+};
+
 export type Pagination<T> = {
   meta: {
     total: number;

@@ -24,6 +24,7 @@ export default interface Classroom {
 
   permissions: {
     is_member: boolean;
+    is_owner: boolean;
     write: boolean;
     delete: boolean;
   };

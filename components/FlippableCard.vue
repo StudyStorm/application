@@ -9,7 +9,7 @@ const emit = defineEmits(["update:modelValue"]);
 const isFlipped = ref(false);
 
 function flip() {
-  emit("update:modelValue", props.modelValue);
+  emit("update:modelValue", !props.modelValue);
 }
 
 async function resetCard() {
@@ -24,11 +24,10 @@ defineExpose({
 </script>
 
 <template>
-  <div style="perspective: 600px; aspect-ratio: 1/1">
+  <div style="perspective: 600px; aspect-ratio: 1/1" @click="flip">
     <div
-      class="card h-full w-full shadow"
+      class="card h-full w-full"
       :class="{ isFlippable, flipCard: isFlippable && modelValue }"
-      @click="flip"
     >
       <div class="cardFace h-full w-full select-none bg-gray-50">
         <slot />
@@ -53,7 +52,7 @@ defineExpose({
 .cardFace {
   position: absolute;
   backface-visibility: hidden;
-  @apply min-h-0 overflow-hidden hover:overflow-y-auto;
+  @apply min-h-0 overflow-hidden hover:overflow-y-auto rounded-lg shadow;
 }
 
 .flipCard {

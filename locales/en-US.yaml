@@ -195,12 +195,23 @@ app:
       delete:
         title: Delete card
         content: Are you sure you want to delete this card? This action cannot be undone.
+  folders:
+    modal:
+      delete:
+        title: Delete folder
+        content: Are you sure you want to delete this folder? This action cannot be undone.
   dashboard:
     title: Home
     topDecks: Top decks
     recentDecks: Recent decks
     browseDecks: Browse decks
     noRecentDecks: No recent decks
+    search: Search decks
+    table:
+      title: Decks
+      deckName: Deck name
+      author: Author
+      votes: Votes
   decks:
     name: Deck name
     author: Author
@@ -254,6 +265,9 @@ app:
     markAsUnread: Mark as unread
     delete: Delete
     reportedBy: Reported by {name}
+    empty:
+      title: No notifications
+      content: You don't have any notifications yet.
   classrooms:
     title: Classrooms
     browseClassrooms: Browse classrooms
@@ -285,4 +299,10 @@ app:
       read: Read
     buttons:
       delete: Delete
+  roles:
+    read: Read
+    write: Read + Write
+    delete: Read + Write + Delete
+    owner: Owner
+    subscriber: Subscriber
 # HERE THE CONTENT FOR THE APP

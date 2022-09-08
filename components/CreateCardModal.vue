@@ -54,6 +54,7 @@ async function save() {
   content.answers = content.answers.filter((answer) => answer.label !== null);
   if (!content.answers.length) {
     hasError.value = true;
+    addAnswer();
     return;
   } else if (content.answers.length === 1) {
     content.answers[0].isTheAnswer = true;
@@ -92,7 +93,7 @@ function removeAnswer(answer: Answer) {
   <Modal v-if="card" v-model="showModal" :autoclose="false">
     <template #icon
       ><div
-        class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100 sm:mx-0 sm:h-10 sm:w-10"
+        class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-100 sm:mx-0 sm:mb-2 sm:h-10 sm:w-10"
       >
         <SquaresPlusIcon class="h-6 w-6 text-purple-600" aria-hidden="true" />
       </div>
@@ -106,7 +107,7 @@ function removeAnswer(answer: Answer) {
       </template>
     </template>
     <template #content>
-      <div class="mt-8 w-full space-y-4 px-7 sm:px-0 xl:mx-auto">
+      <div class="mt-4 w-full space-y-4 px-7 sm:px-0 xl:mx-auto">
         <div>
           <label for="question" class="block text-sm font-medium text-gray-700">
             {{ $t("app.deck.modal.labels.question") }}
@@ -136,16 +137,16 @@ function removeAnswer(answer: Answer) {
             ></XMarkIcon>
           </span>
         </div>
-        <div class="flex flex-wrap items-center justify-center">
+        <div class="flex flex-wrap-reverse items-center justify-center">
           <label
             for="answers"
-            class="m-auto block text-sm font-medium text-gray-700"
+            class="mx-auto mt-2 block text-sm font-medium text-gray-700 sm:mt-0"
           >
             {{ $t("app.deck.modal.labels.answers") }}
           </label>
           <button
             v-if="card.answers.length < MAX_CARD_ANSWERS"
-            class="inline-flex justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+            class="inline-flex justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
             @click="addAnswer"
           >
             {{ $t("app.deck.modal.buttons.addAnswer") }}
@@ -180,7 +181,7 @@ function removeAnswer(answer: Answer) {
     <template #footer>
       <button
         type="button"
-        class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+        class="inline-flex w-full justify-center rounded-md border border-transparent bg-storm-darkblue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-storm-blue focus:outline-none focus:ring-2 focus:ring-storm-blue focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
         @click="save"
       >
         <template v-if="isEditing">

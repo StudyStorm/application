@@ -23,7 +23,6 @@ async function resetPassword() {
 
   if (error) {
     errors.value = error.data;
-    console.log("error", error.data);
   } else {
     router.push("/login");
   }

@@ -11,6 +11,7 @@ const key = useRoute().query.key;
 // TODO: Make the fetch on server only
 const { error } = await useFetchAPI<never, { message: string }>("/v1/verify", {
   method: "POST",
+  useFetch: true,
   body: {
     key,
   },

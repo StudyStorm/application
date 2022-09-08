@@ -4,8 +4,10 @@ import Folder from "~/models/Folder";
 import User from "~~/models/User";
 import { FormError, Pagination } from "~~/types/app";
 import { useFetchAPI } from "~/composables/useFetchAPI";
+import { useEventBus } from "@vueuse/core";
 
 export const useClassroomStore = defineStore("classroom", () => {
+  const bus = useEventBus("studystorm");
   const classroom = ref<Classroom>(null);
   const currentFolder = ref<Folder>(null);
   const members = ref<Pagination<User>>(null);
@@ -14,25 +16,11 @@ export const useClassroomStore = defineStore("classroom", () => {
   const showFolderCreationModal = ref(false);
 
   const searchFilter = ref("");
-  const allClassrooms = ref<Pagination<Classroom>>(null);
   const filteredClassrooms = ref<Pagination<Classroom>>(null);
   const pinnedClassrooms = ref<Pagination<Classroom>>(null);
-  const currentClassroom = ref(null);
-  const LOCAL_STORAGE_KEY = "lastUsedClassrooms";
+  const LOCAL_STORAGE_KEY = "lastVisitedClassrooms";
   const MAX_LAST_VISITED_CLASSROOMS = 3;
-
-  const lastVisitedClassrooms = computed(() => {
-    const classroomIds: string[] = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEY)
-    );
-
-    if (!classroomIds) return [];
-    return allClassrooms.value.data
-      ? allClassrooms.value.data.filter((classroom) =>
-          classroomIds.includes(classroom.id)
-        )
-      : [];
-  });
+  const lastVisitedClassrooms = ref<Classroom[]>([]);
 
   const pagination = computed(() => {
     return filteredClassrooms.value.meta;
@@ -54,10 +42,8 @@ export const useClassroomStore = defineStore("classroom", () => {
     showDeckCreationModal,
     showFolderCreationModal,
     searchFilter,
-    allClassrooms,
     pinnedClassrooms,
     filteredClassrooms,
-    currentClassroom,
     LOCAL_STORAGE_KEY,
     MAX_LAST_VISITED_CLASSROOMS,
     lastVisitedClassrooms,
@@ -84,15 +70,23 @@ export const useClassroomStore = defineStore("classroom", () => {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(visited));
     },
 
-    async fetchAllClassrooms() {
-      const { data } = await useFetchAPI<Pagination<Classroom>>(
-        `/v1/classrooms`,
-        {
-          method: "GET",
-        }
+    async fetchLastVisited() {
+      const classroomIds: string[] = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_KEY)
       );
 
-      allClassrooms.value = data;
+      if (!classroomIds) return [];
+
+      lastVisitedClassrooms.value = (
+        await Promise.all(
+          classroomIds.map(
+            async (id) =>
+              (
+                await useFetchAPI<Classroom>(`v1/classrooms/${id}`)
+              ).data
+          )
+        )
+      ).filter((c) => c !== null);
     },
 
     async fetchClassrooms(page = 1) {
@@ -105,21 +99,14 @@ export const useClassroomStore = defineStore("classroom", () => {
 
       filteredClassrooms.value = data;
     },
-
     async fetchClassroom(classroomId: string) {
-      const { data, error } = await useFetchAPI<Classroom>(
+      const response = await useFetchAPI<Classroom>(
         `v1/classrooms/${classroomId}`
       );
-
-      if (error) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: "Classroom not found",
-          fatal: true,
-        });
-      } else {
-        classroom.value = data;
+      if (response.data) {
+        classroom.value = response.data;
       }
+      return response;
     },
 
     async createClassroom(classroom: { name: string; visibility: string }) {
@@ -130,6 +117,9 @@ export const useClassroomStore = defineStore("classroom", () => {
           body: classroom,
         }
       );
+      if (data) {
+        bus.emit("classroom:created");
+      }
       return { data, error };
     },
 
@@ -143,6 +133,9 @@ export const useClassroomStore = defineStore("classroom", () => {
           },
         }
       );
+      if (data) {
+        bus.emit("deck:created");
+      }
       return { data, error };
     },
 
@@ -156,30 +149,23 @@ export const useClassroomStore = defineStore("classroom", () => {
           },
         }
       );
+      if (data) {
+        bus.emit("folder:created");
+      }
       return { data, error };
     },
-    async fetchPinnedClassrooms() {
-      const { data: classrooms } = await useFetchAPI<Pagination<Classroom>>(
-        "/v1/classrooms/joined",
-        {
-          method: "GET",
-        }
-      );
 
-      pinnedClassrooms.value = classrooms;
-    },
     async fetchCurrentFolder(folderId: string) {
-      const { data: folder } = await useFetchAPI<Folder>(
-        `/v1/folders/${folderId}`
-      );
+      const response = await useFetchAPI<Folder>(`/v1/folders/${folderId}`);
 
-      currentFolder.value = folder;
+      currentFolder.value = response.data;
+      return response;
     },
     async refreshCurrentFolder() {
       if (!currentFolder.value) return;
       await this.fetchCurrentFolder(currentFolder.value.id);
     },
-    async fetchClassroomUsers(classroomId: string, limit = 5, page = 1) {
+    async fetchClassroomUsers(classroomId: string, limit = 4, page = 1) {
       const { data } = await useFetchAPI<Pagination<User>>(
         `/v1/classrooms/${classroomId}/users`,
         { params: { limit: limit, page: page } }
@@ -188,13 +174,17 @@ export const useClassroomStore = defineStore("classroom", () => {
       members.value = data;
     },
     async moveDeckInFolder(folder: Folder, deckId: string) {
-      await useFetchAPI(`/v1/decks/${deckId}`, {
+      const response = await useFetchAPI(`/v1/decks/${deckId}`, {
         method: "PATCH",
         useFetch: true,
         body: {
           folderId: folder.id,
         },
       });
+      if (response.data) {
+        bus.emit("deck:moved");
+      }
+      return response;
     },
     async moveFolderInFolder(folder: Folder, folderId: string) {
       await useFetchAPI(`/v1/folders/${folderId}`, {
@@ -206,11 +196,18 @@ export const useClassroomStore = defineStore("classroom", () => {
       });
     },
 
+    async deleteFolder(folder: Folder) {
+      await useFetchAPI(`/v1/folders/${folder.id}`, {
+        method: "DELETE",
+      });
+    },
+
     async subscribe(classroomId: string) {
       await useFetchAPI(`/v1/classrooms/${classroomId}/join`, {
         method: "POST",
       });
       this.fetchClassroom(classroomId);
+      this.fetchClassroomUsers(classroomId);
     },
 
     async unsubscribe(classroomId: string) {
@@ -247,9 +244,12 @@ export const useClassroomStore = defineStore("classroom", () => {
     },
 
     async deleteClassroom(classroomId: string) {
-      await useFetchAPI(`/v1/classrooms/${classroomId}`, {
+      const response = await useFetchAPI(`/v1/classrooms/${classroomId}`, {
         method: "DELETE",
       });
+      if (!response.error) {
+        bus.emit("classroom:deleted");
+      }
     },
   };
 });

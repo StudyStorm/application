@@ -12,17 +12,24 @@ const props = defineProps<{
 
 const route = useRoute();
 
-const folderId = computed(() => {
+const folderId = computed<string>(() => {
   return route.params.folder
-    ? route.params.folder
+    ? (route.params.folder as string)
     : props.classroom.root_folder.id;
 });
 
-await classroomStore.fetchCurrentFolder(folderId.value as string);
+const { error } = await classroomStore.fetchCurrentFolder(folderId.value);
+if (error) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Classroom not found",
+    fatal: true,
+  });
+}
 </script>
 
 <template>
-  <div>
+  <div v-if="classroomStore.currentFolder">
     <div
       class="mt-6 block items-center justify-start text-2xl font-medium leading-6 text-storm-dark sm:flex sm:truncate"
     >
@@ -56,6 +63,7 @@ await classroomStore.fetchCurrentFolder(folderId.value as string);
     <folder-content
       :folder="classroomStore.currentFolder"
       :mode="classroomStore.displayMode"
+      :permission="classroomStore.classroom.permissions"
       @show-folder-modal="classroomStore.showFolderCreationModal = true"
       @show-deck-modal="classroomStore.showDeckCreationModal = true"
     />

@@ -199,12 +199,23 @@ app:
       delete:
         title: Supprimer une carte
         content: Êtes-vous sûr de vouloir supprimer cette carte ?
+  folders:
+    modal:
+      delete:
+        title: Supprimer un dossier
+        content: Êtes-vous sûr de vouloir supprimer ce dossier ?
   dashboard:
     title: Accueil
     topDecks: Decks populaires
     recentDecks: Decks récentes
     browseDecks: Explorer les Decks
     noRecentDecks: Aucun deck récent
+    search: Rechercher des decks
+    table:
+      title: Decks
+      deckName: Nom du deck
+      author: Auteur
+      votes: Votes
   decks:
     name: Nom du deck
     author: Auteur
@@ -258,6 +269,9 @@ app:
     markAsUnread: Marquer comme non lu
     delete: Supprimer
     reportedBy: Reporté par {name}
+    empty:
+        title: Aucun message
+        content: Vous n'avez aucun message dans votre boîte de réception
   classrooms:
     title: Salles de classe
     browseClassrooms: Explorer les salles de classe
@@ -289,4 +303,10 @@ app:
       read: Lecture
     buttons:
       delete: Delete
+  roles:
+    read: Lecture
+    write: Lecture + Ecriture
+    delete: Lecture + Ecriture + Suppression
+    owner: Propriétaire
+    subscriber: Abonné
   # HERE THE CONTENT FOR THE APP
