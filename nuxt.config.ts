@@ -1,6 +1,16 @@
 import { defineNuxtConfig } from "nuxt";
 import { execSync } from "node:child_process";
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
+
+function gitRef() {
+  try {
+    return execSync("git rev-parse --short HEAD").toString().trim();
+  } catch (e) {
+    console.error("Failed to get git revision", e);
+    return "unknown";
+  }
+}
+
 export default defineNuxtConfig({
   modules: [
     "@nuxtjs-alt/auth",
@@ -64,7 +74,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL || "http://localhost:3000",
-      gitRef: execSync("git rev-parse --short HEAD").toString().trim(),
+      gitRef: gitRef(),
       apiURL:
         process.env.NODE_ENV === "production"
           ? process.env.PRODUCTION_API_URL
