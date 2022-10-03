@@ -52,7 +52,7 @@ defineExpose({
 .cardFace {
   position: absolute;
   backface-visibility: hidden;
-  @apply min-h-0 overflow-hidden hover:overflow-y-auto rounded-lg shadow;
+  @apply min-h-0 overflow-y-auto rounded-lg shadow;
 }
 
 .flipCard {
