@@ -13,6 +13,10 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+    touch-action: pan-y;
+}
+
 :root {
    --storm-dark: theme('colors.storm-dark');
    --storm-darkblue: theme('colors.storm-darkblue');
