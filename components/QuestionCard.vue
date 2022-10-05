@@ -46,9 +46,7 @@ async function deleteCard() {
         </template>
       </confirm-modal>
     </div>
-    <p
-      class="flex min-h-0 flex-1 items-center overflow-hidden hover:overflow-y-auto"
-    >
+    <p class="flex min-h-0 flex-1 items-center overflow-y-auto">
       {{ card.content.question }}
     </p>
     <div class="text-xs">

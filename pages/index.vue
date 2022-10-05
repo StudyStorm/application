@@ -24,7 +24,7 @@ const teamMembers = [
     title: t("landing.homePage.team.members.friedli_jonathan"),
     image: "/images/members/jonathan.png",
     github: "https://github.com/Marinlestylo",
-    linkedin: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    linkedin: "https://www.linkedin.com/in/jonathan-friedli-976183251/",
   },
   {
     name: "Pavicevic Lazar",
