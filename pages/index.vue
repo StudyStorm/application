@@ -44,23 +44,23 @@ const teamMembers = [
 
 const features = [
   {
-    title: t("landing.homePage.features.cards.title"),
-    description: t("landing.homePage.features.cards.description"),
+    title: "landing.homePage.features.cards.title",
+    description: "landing.homePage.features.cards.description",
     image: "/icons/cards.svg",
   },
   {
-    title: t("landing.homePage.features.classroom.title"),
-    description: t("landing.homePage.features.classroom.description"),
+    title: "landing.homePage.features.classroom.title",
+    description: "landing.homePage.features.classroom.description",
     image: "/icons/classroom.svg",
   },
   {
-    title: t("landing.homePage.features.community.title"),
-    description: t("landing.homePage.features.community.description"),
+    title: "landing.homePage.features.community.title",
+    description: "landing.homePage.features.community.description",
     image: "/icons/community.svg",
   },
   {
-    title: t("landing.homePage.features.rating.title"),
-    description: t("landing.homePage.features.rating.description"),
+    title: "landing.homePage.features.rating.title",
+    description: "landing.homePage.features.rating.description",
     image: "/icons/like.svg",
   },
 ];
@@ -139,10 +139,10 @@ definePageMeta({
             />
 
             <h3 class="mb-2 text-xl font-bold text-storm-dark">
-              {{ feature.title }}
+              {{ $t(feature.title) }}
             </h3>
             <p class="text-justify text-gray-500">
-              {{ feature.description }}
+              {{ $t(feature.description) }}
             </p>
           </div>
         </div>

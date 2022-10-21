@@ -10,15 +10,20 @@ landing:
       teams: The Team
       about: About
   homePage:
-    catchPhrase: Collaborate to learn in a new way...
+    catchPhrase: >-
+      Collaborate to learn in a new and original way.
+      Share your knowledge with collaborative flashcards!
     about:
       title: Designed for students by students.
       text: >-
-        StudyStorm application allows users to create collections of review cards and share them. 
-        The creator of a classroom can share his collections to everyone or make the classroom private,
-        by inviting only the users he/she wants to join the classroom. 
-        The organization of the collections is similar to a folder system. 
-        This allows cards to be grouped by topic, chapter, course unit, etc. 
+        The StudyStorm application allows users to create collections of flashcards and share them with other users of the platform.
+
+
+        Want to contribute to the common knowledge? Create a classroom!
+
+        The creator of a classroom can share his collections with everyone or make the classroom private and use an invite-only system. Organize your classroom in a way similar to a folder system to group cards by topic, chapter, course unit, etc...
+        
+
         The community can rate the content they liked or not. 
         The collections with the most positive votes will be displayed on the homepage. 
         Since the cards are made by people, it is possible that there are errors in the answer of a card, or that there is a more relevant answer. 
@@ -28,19 +33,19 @@ landing:
       title: Features
       cards:
         title: Cards
-        description: Review cards are a simple and effective way to learn and test knowledge on a subject.
+        description: Flashcards are a simple and effective way to learn and test knowledge on a subject. Create your cards and you can start a series of reviews. On the train, on your way to school, wherever you are, just launch the application and learn.
       classroom:
         title: Classroom
-        description: Set up a way to create and share card collections according to your preferences.
+        description: Set up a way to create and share card collections according to your preferences. With a public classroom, anyone can learn with your cards. With a private classroom, limit the visibility of your cards and invite only the users you want.
       community:
         title: Community
-        description: Organize, create and share content with your colleagues and friends.
+        description: Organize, create and share content with your colleagues and friends. Contribute to the quality of the questions and report errors in the cards.
       rating:
         title: Ratings
-        description: Rate the quality of a card collection. A collection with positive votes will be promoted to the list of best cards.
+        description: Vote on the quality of a card collection. A collection with positive votes will be promoted to the list of best cards. Discover new topics through research or suggestions of the most popular decks.
     team:
       title: Who are we?
-      text: We are a team of five students in software engineering from the HEIG-VD.
+      text: We are a team of five students in software engineering from the HEIG-VD, Switzerland. During the summer of 2022, we had to realize a group project over a period of 3 weeks, which results in a web application. This is when the idea of StudyStorm application came to our minds.
       members:
         bijelic_alen: Giga Chad
         crausaz_nicolas: Mega Chad
