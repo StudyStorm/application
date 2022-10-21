@@ -6,8 +6,8 @@ const rev = useGitRev();
 <template>
   <footer class="bg-gray-50 p-4 dark:bg-gray-800 sm:p-6">
     <div class="mx-auto max-w-screen-xl">
-      <div class="md:flex md:justify-between">
-        <div class="mb-6 md:mb-0">
+      <div class="flex items-center justify-between">
+        <div class="md:mb-0">
           <NuxtLink to="/" title="Landing page link" class="flex items-center">
             <nuxt-img
               src="/images/Logo.svg"
@@ -21,6 +21,30 @@ const rev = useGitRev();
             >
           </NuxtLink>
         </div>
+        <NuxtLink
+          to="https://www.youtube.com/watch?v=6uQC1ZmN5mw"
+          target="_blank"
+          title="Release Trailer | StudyStorm"
+          class="mt-0 text-gray-500 hover:text-gray-900 dark:hover:text-white sm:justify-center"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-5 w-5"
+            aria-hidden="true"
+          >
+            <path
+              d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"
+            ></path>
+            <polygon
+              points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"
+            ></polygon>
+          </svg>
+        </NuxtLink>
       </div>
       <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
